@@ -1,3 +1,10 @@
 .env
 .DS_Store
-node_modules/
+.vscode
+
+# client side
+client/node_modules/
+
+# server side
+server/__pycache__/
+server/db.sqlite3
