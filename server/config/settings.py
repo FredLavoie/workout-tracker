@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # Local
     'accounts',
     'workouts',
+    'records',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
