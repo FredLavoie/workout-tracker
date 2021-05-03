@@ -54,7 +54,6 @@ fs.readFile(inputFile, 'utf-8', (error, data) => {
 		resultString += `VALUES ('${uuid.v4()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`
 	}
 
-	const date = Date.now();
 	fs.writeFileSync(`./script/workout_migrations/${year}-${month}_migration.sql`, resultString);
 	console.log(`Completed creating migration for ${year}-${month}`);
 });
