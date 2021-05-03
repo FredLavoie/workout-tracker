@@ -10,4 +10,13 @@ class RecordList(generics.ListCreateAPIView):
     def get_queryset(self):
         id = self.kwargs['author_id']
         records = Record.objects.filter(author_id=id)
-        return records 
+        return records
+
+class RecordDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = RecordSerializer
+
+    # @login_required
+    def get_queryset(self):
+        id = self.kwargs['author_id']
+        record = Record.objects.filter(author_id=id)
+        return record
