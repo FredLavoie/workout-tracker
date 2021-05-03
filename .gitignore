@@ -1,6 +1,8 @@
 .env
 .DS_Store
 .vscode
+script/workout_migrations/*
+node_modules/
 
 # client side
 client/node_modules/
