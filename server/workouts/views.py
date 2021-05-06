@@ -1,22 +1,23 @@
-# from django.contrib.auth.decorators import login_required
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from .models import Workout
+from .permissions import IsAuthor
 from .serializers import WorkoutSerializer
 
 class WorkoutList(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = WorkoutSerializer
 
-    # @login_required
     def get_queryset(self):
         id = self.kwargs['author_id']
         workouts = Workout.objects.filter(author_id=id)
-        return workouts 
+        return workouts
 
 
 class WorkoutDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = WorkoutSerializer
 
-    # @login_required
     def get_queryset(self):
         id = self.kwargs['author_id']
         workout = Workout.objects.filter(author_id=id)
@@ -24,9 +25,9 @@ class WorkoutDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class WorkoutListMonth(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = WorkoutSerializer
 
-    # @login_required
     def get_queryset(self):
         id = self.kwargs['author_id']
         dt = self.kwargs['year_month']
