@@ -21,4 +21,5 @@ urlpatterns = [
     path('api/', include('workouts.urls')),
     path('api/', include('records.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
 ]
