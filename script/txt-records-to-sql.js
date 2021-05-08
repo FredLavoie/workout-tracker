@@ -2,7 +2,8 @@
  * This script will take all my workouts writen in txt files and convert them to insert statement in an sql file
  * that will be saved in the "workout_migrations" directory
  * 
- * To execute the script, run `node script/txt-records-to-sql.js <path_to_file.txt>`
+ * To execute the script, run:
+ * node script/txt-records-to-sql.js <path/to/file.txt>
  * 
  * The file can be be executed by running:
  * 	psql -U <user_name> -h <host_name> -d <database_name> < <path_to_file.sql>
@@ -23,9 +24,7 @@ fs.readFile(inputFile, 'utf-8', (error, data) => {
 	
 	const tempArray = [];
 	for (let subArray of arrayData) {
-		let temp = subArray.filter(ea => {
-			return ea !== '';
-		});
+		let temp = subArray.filter(ea => ea !== '');
 		tempArray.push(temp);
 	}
 
