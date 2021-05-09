@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import { isAuthenticated, login } from '../helpers/authentication';
+import NavBarLogin from '../components/NavBarLogin';
 
 
 const useStyles = makeStyles({
@@ -45,7 +43,7 @@ function Login() {
     return history.push('/dashboard');
   }
 
-  if (isAuthenticated()) {
+  if (isAuthenticated() === true) {
     return <Redirect to='/dashboard' />;
   }
 
@@ -55,13 +53,7 @@ function Login() {
 
   return (
     <div>
-      <AppBar position='fixed' elevation={0} color='primary'>
-        <Toolbar>
-          <Typography variant='h5' display='block' align='center'>
-            Workout Tracker
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <NavBarLogin />
       <Grid
         container
         spacing={0}
