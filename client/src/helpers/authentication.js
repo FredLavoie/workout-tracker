@@ -12,6 +12,7 @@ async function login(username, password) {
 	.then(response => response.json())
 	.then(data => {
 		if (data.key) {
+			localStorage.setItem('username', username);
 			localStorage.setItem('token', data.key);
 		}
 		return data;
@@ -30,7 +31,10 @@ async function logout() {
 	.then(response => console.log('respose: ', response))
 	.catch(error => console.log('error: ', error));
 
-	return localStorage.removeItem('token');
+	localStorage.removeItem('token');
+	localStorage.removeItem('accountId');
+	localStorage.removeItem('username');
+	return;
 }
 
 function isAuthenticated() {

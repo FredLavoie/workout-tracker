@@ -73,7 +73,6 @@ function Login() {
               type={'input'}
               name={'username'}
               color='secondary'
-              required
             />
             <TextField
               onChange={(e) => changePassword(e.target.value)}
@@ -84,7 +83,6 @@ function Login() {
               type={'password'}
               name={'password'}
               color='secondary'
-              required
             />
             <Button
               fullWidth
