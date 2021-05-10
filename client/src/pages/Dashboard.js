@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import Typography from '@material-ui/core/Typography'
-import NavBarMain from '../components/NavBarMain';
+import Typography from '@material-ui/core/Typography';
 
-function Dashboard() {  
+function Dashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -18,10 +17,8 @@ function Dashboard() {
 
   return (
     <div>
-      <NavBarMain />
-
       <Typography variant='h1'>
-        Hello world!
+        Dashboard
       </Typography>
     </div>
   )
