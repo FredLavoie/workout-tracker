@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
+import Container from '@material-ui/core/Container';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import { isAuthenticated, login } from '../helpers/authentication';
 import NavBarLogin from '../components/NavBarLogin';
@@ -52,17 +53,16 @@ function Login() {
   }
 
   return (
-    <div>
+    <Container>
       <NavBarLogin />
       <Grid
         container
-        spacing={0}
         direction='column'
         alignItems='center'
         justify='center'
         style={{ minHeight: '100vh' }}
       >
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <form noValidate onSubmit={handleSubmit}>
             <TextField
               onChange={(e) => changeUsername(e.target.value)}
@@ -103,7 +103,7 @@ function Login() {
           Wrong username or password! Please try again.
         </Alert>
       </Snackbar>
-    </div>
+    </Container>
   );
 }
 
