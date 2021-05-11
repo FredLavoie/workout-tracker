@@ -17,7 +17,7 @@ const calPath = `/cal/${dateArray[0]}-${dateArray[1]}`;
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) =>({
   page: {
     background: '#f9f9f9',
     width: '100%',
@@ -36,7 +36,8 @@ const useStyles = makeStyles({
   active: {
     background: '#f4f4f4'
   },
-});
+	toolbar: theme.mixins.toolbar,
+}));
 
 function Layout({ children }) {
 	const classes = useStyles();
@@ -81,6 +82,7 @@ function Layout({ children }) {
 				</List>
 			</Drawer>
 			<div className={classes.page}>
+				<div className={classes.toolbar}></div>
 				{ children }
 			</div>
 		</div>
