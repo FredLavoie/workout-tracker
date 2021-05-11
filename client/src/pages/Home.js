@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { isAuthenticated } from '../helpers/authentication';
+import { isAuthenticated } from '../services/authentication';
 
 function Home() {
 	if (isAuthenticated() === true){

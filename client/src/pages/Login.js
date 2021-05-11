@@ -8,7 +8,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import Container from '@material-ui/core/Container';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import { isAuthenticated, login } from '../helpers/authentication';
+import { isAuthenticated, login } from '../services/authentication';
 import NavBarLogin from '../components/NavBarLogin';
 
 

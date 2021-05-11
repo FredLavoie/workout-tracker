@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
-import { logout } from '../helpers/authentication';
+import { logout } from '../services/authentication';
 
 
 const useStyles = makeStyles((theme) =>({
