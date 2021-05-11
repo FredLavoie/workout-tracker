@@ -31,11 +31,12 @@ const useStyles = makeStyles({
   },
   drawerPaper: {
     width: drawerWidth,
+		paddingTop: 56
   },
   active: {
     background: '#f4f4f4'
   },
-})
+});
 
 function Layout({ children }) {
 	const classes = useStyles();
@@ -44,45 +45,43 @@ function Layout({ children }) {
 
 
 	return (
-		<div>
+		<div className={classes.root}>
 			<NavBarMain />
-			<div className={classes.root}>
-				<Drawer
-					className={classes.drawer}
-					variant="permanent"
-					classes={{ paper: classes.drawerPaper }}
-					anchor="left"
-				>
-					<List>
-						<ListItem 
+			<Drawer
+				className={classes.drawer}
+				variant="permanent"
+				classes={{ paper: classes.drawerPaper }}
+				anchor="left"
+			>
+				<List>
+					<ListItem
+						button
+						onClick={() => history.push('/dashboard')}
+						className={location.pathname === '/dashboard' ? classes.active : null}
+					>
+						<ListItemIcon><HomeIcon /></ListItemIcon>
+						<ListItemText primary='Dashboard' />
+					</ListItem>
+					<ListItem
+						button
+						onClick={() => history.push(calPath)}
+						className={location.pathname.includes('/cal/') ? classes.active : null}
+					>
+						<ListItemIcon><TodayIcon /></ListItemIcon>
+						<ListItemText primary='Calendar' />
+					</ListItem>
+					<ListItem
 							button
-							onClick={() => history.push('/dashboard')}
-							className={location.pathname === '/dashboard' ? classes.active : null}
+							onClick={() => console.log('/search')}
+							className={location.pathname === '/search' ? classes.active : null}
 						>
-							<ListItemIcon><HomeIcon /></ListItemIcon>
-							<ListItemText primary='Dashboard' />
-						</ListItem>
-						<ListItem 
-							button
-							onClick={() => history.push(calPath)}
-							className={location.pathname.includes('/cal/') ? classes.active : null}
-						>
-							<ListItemIcon><TodayIcon /></ListItemIcon>
-							<ListItemText primary='Calendar' />
-						</ListItem>
-						<ListItem 
-								button
-								onClick={() => console.log('/search')}
-								className={location.pathname === '/search' ? classes.active : null}
-							>
-								<ListItemIcon><SearchIcon /></ListItemIcon>
-								<ListItemText primary='Search' />
-						</ListItem>
-					</List>
-				</Drawer>
-				<div className={classes.page}>
-					{ children }
-				</div>
+							<ListItemIcon><SearchIcon /></ListItemIcon>
+							<ListItemText primary='Search' />
+					</ListItem>
+				</List>
+			</Drawer>
+			<div className={classes.page}>
+				{ children }
 			</div>
 		</div>
 	)
