@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 function NavBarLogin() {
 	return (
-    <AppBar position='fixed' elevation={0} color='primary'>
+    <AppBar position='fixed' elevation={1} color='primary'>
 			<Toolbar>
 				<Typography variant='h5' display='block'>
 					Workout Tracker

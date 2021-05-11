@@ -42,7 +42,7 @@ function NavBarMain() {
     <AppBar
       position='fixed'
       color='primary'
-      elevation={0}
+      elevation={1}
       className={classes.root}
     >
       <Toolbar>
