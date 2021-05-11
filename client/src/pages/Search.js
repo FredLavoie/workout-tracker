@@ -1,14 +1,14 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
-function Calendar() {
+function Search() {
 	return (
 	<div>
 		<Typography variant='h3'>
-			Calendar
+			Search
 		</Typography>
 	</div>
 	)
 }
 
-export default Calendar;
+export default Search;

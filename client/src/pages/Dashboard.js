@@ -17,7 +17,7 @@ function Dashboard() {
 
   return (
     <div>
-      <Typography variant='h1'>
+      <Typography variant='h3'>
         Dashboard
       </Typography>
     </div>

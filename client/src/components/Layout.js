@@ -73,7 +73,7 @@ function Layout({ children }) {
 					</ListItem>
 					<ListItem
 							button
-							onClick={() => console.log('/search')}
+							onClick={() => history.push('/search')}
 							className={location.pathname === '/search' ? classes.active : null}
 						>
 							<ListItemIcon><SearchIcon /></ListItemIcon>

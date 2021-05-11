@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Calendar from './pages/Calendar';
+import Search from './pages/Search';
 import './App.css';
 
 const myTheme = createMuiTheme({
@@ -29,6 +30,7 @@ function App() {
           <Layout>
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
             <PrivateRoute exact path='/cal/:date' component={Calendar} />
+            <PrivateRoute exact path='/search' component={Search} />
           </Layout>
         </Switch>
       </Router>
