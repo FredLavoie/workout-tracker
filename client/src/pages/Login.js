@@ -9,7 +9,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Container from '@material-ui/core/Container';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import { isAuthenticated, login } from '../services/authentication';
-import NavBarLogin from '../components/NavBarLogin';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
+
 
 
 const useStyles = makeStyles({
@@ -54,7 +57,13 @@ function Login() {
 
   return (
     <Container>
-      <NavBarLogin />
+      <AppBar position='fixed' elevation={1} color='primary'>
+        <Toolbar>
+          <Typography variant='h5' display='block'>
+            Workout Tracker
+          </Typography>
+        </Toolbar>
+		  </AppBar>
       <Grid
         container
         direction='column'
