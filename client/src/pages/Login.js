@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
+
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
+import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
-import Container from '@material-ui/core/Container';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import { isAuthenticated, login } from '../services/authentication';
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
 
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+
+import { isAuthenticated, login } from '../services/authentication';
 
 
 const useStyles = makeStyles({
@@ -27,7 +29,7 @@ const useStyles = makeStyles({
 });
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />;
+  return <MuiAlert elevation={4} variant='filled' {...props} />;
 }
 
 function Login() {
