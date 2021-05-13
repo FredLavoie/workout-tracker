@@ -223,6 +223,7 @@ function Layout({ children }) {
 
       {/*********************************** Content ***********************************/}
       <div className={classes.page}>
+        {/* adds padding to push content below appbar */}
         <div className={classes.toolbar}></div>
         { children }
       </div>
