@@ -40,8 +40,8 @@ function Login() {
   const history = useHistory();
 
   // handle login
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
     const data = await login(username, password);
     if (data.non_field_errors) {
       return setOpen(true);
