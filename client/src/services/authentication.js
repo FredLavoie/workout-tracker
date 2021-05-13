@@ -37,9 +37,25 @@ async function logout() {
 	return;
 }
 
+async function changePassword(newPassword1 , newPassword2) {
+	const token = localStorage.getItem('token');
+	return fetch(`http://localhost:8000/api/dj-rest-auth/password/change/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json',
+			'authorization': `Token ${token}`
+		},
+		body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 })
+	})
+	.then(response => response.json())
+	.then(data => data)
+	.catch(error => console.log('error: ', error));
+}
+
 function isAuthenticated() {
 	const token = localStorage.getItem('token');
 	return token !== null && token !== undefined;
 }
 
-export { login, logout, isAuthenticated }
+export { login, logout, changePassword, isAuthenticated }
