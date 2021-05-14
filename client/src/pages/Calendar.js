@@ -4,32 +4,33 @@ import Typography from '@material-ui/core/Typography';
 import { fetchMonthData } from '../services/fetchData';
 
 function Calendar() {
-	const [workouts, setWorkouts] = useState([]);
-	const location = useLocation();
-	let monthToFetch = location.pathname.split('/')[2];
+  const [workouts, setWorkouts] = useState([]);
+  const location = useLocation();
+  let monthToFetch = location.pathname.split('/')[2];
 
-	useEffect(() => {
-  	fetchMonthData(monthToFetch).then(data => setWorkouts(data));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    fetchMonthData(monthToFetch).then(data => setWorkouts(data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-	return (
-	<div>
-		<Typography variant='h3'>
-			Calendar
+  return (
+    <div>
+      <Typography variant='h3'>
+        Calendar
 		</Typography>
-		{workouts.map(workout => (
-			<div key={workout.id}>
-				<Typography variant='body1'>
-					{workout.date}
-				</Typography>
-				<Typography variant='body2'>
-					{workout.body}
-				</Typography>
-			</div>
-		))}
-	</div>
-	)
+      {workouts.map(workout => (
+        <div key={workout.id}>
+          <Typography variant='body1'>
+            {workout.date}
+          </Typography>
+          {/* add a body.split('\n').map(ea => ...) */}
+          <Typography variant='body2'>
+            {workout.body}
+          </Typography>
+        </div>
+      ))}
+    </div>
+  )
 }
 
-export default Calendar;
+export default Calendar

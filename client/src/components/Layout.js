@@ -30,7 +30,7 @@ const calPath = `/cal/${dateArray[0]}-${dateArray[1]}`;
 
 const drawerWidth = 200;
 
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles((theme) => ({
   page: {
     background: '#f9f9f9',
     width: '100%',
@@ -132,12 +132,12 @@ function Layout({ children }) {
         <ListItemText primary='Calendar' />
       </ListItem>
       <ListItem
-          button
-          onClick={() => handleMenuItemClick('/search')}
-          className={location.pathname === '/search' ? classes.active : null}
-        >
-          <ListItemIcon><SearchIcon /></ListItemIcon>
-          <ListItemText primary='Search' />
+        button
+        onClick={() => handleMenuItemClick('/search')}
+        className={location.pathname === '/search' ? classes.active : null}
+      >
+        <ListItemIcon><SearchIcon /></ListItemIcon>
+        <ListItemText primary='Search' />
       </ListItem>
     </List>
   );
@@ -149,21 +149,21 @@ function Layout({ children }) {
 
       {/********************************** Navbar *************************************/}
       <AppBar
-      position='fixed'
-      color='primary'
-      elevation={1}
-      className={classes.root2}
+        position='fixed'
+        color='primary'
+        elevation={1}
+        className={classes.root2}
       >
         <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography edge='start' variant='h5' className={classes.title}>
             Workout Tracker
           </Typography>
@@ -204,7 +204,7 @@ function Layout({ children }) {
             keepMounted: true,
           }}
         >
-          { drawer }
+          {drawer}
         </Drawer>
       </Hidden>
 
@@ -216,7 +216,7 @@ function Layout({ children }) {
           classes={{ paper: classes.drawerPaper }}
           anchor="left"
         >
-          { drawer }
+          {drawer}
         </Drawer>
       </Hidden>
 
@@ -225,7 +225,7 @@ function Layout({ children }) {
       <div className={classes.page}>
         {/* adds padding to push content below appbar */}
         <div className={classes.toolbar}></div>
-        { children }
+        {children}
       </div>
     </div>
   )

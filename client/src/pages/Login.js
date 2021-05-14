@@ -34,8 +34,8 @@ function Alert(props) {
 
 function Login() {
   const classes = useStyles();
-  const [username, changeUsername] =  useState('');
-  const [password, changePassword] =  useState('');
+  const [username, changeUsername] = useState('');
+  const [password, changePassword] = useState('');
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
@@ -65,7 +65,7 @@ function Login() {
             Workout Tracker
           </Typography>
         </Toolbar>
-		  </AppBar>
+      </AppBar>
       <Grid
         container
         direction='column'
@@ -102,7 +102,7 @@ function Login() {
               color='primary'
               variant='contained'
               endIcon={<KeyboardArrowRightIcon />}
-              disabled={ !username || !password ? true : false }
+              disabled={!username || !password ? true : false}
             >
               Login
             </Button>

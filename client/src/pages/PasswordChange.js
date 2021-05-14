@@ -16,9 +16,9 @@ import { validatePasswordChange } from '../lib/helperFunctions';
 
 const useStyles = makeStyles({
   root: {
-		minHeight: 'calc(100vh - 64px)'
-	},
-	field: {
+    minHeight: 'calc(100vh - 64px)'
+  },
+  field: {
     marginTop: 20,
     markginBottom: 20,
     display: 'block'
@@ -33,32 +33,32 @@ function Alert(props) {
 }
 
 function Password() {
-	const classes = useStyles();
-  const [newPassword1, changeNewPassword1] =  useState('');
-  const [newPassword2, changeNewPassword2] =  useState('');
+  const classes = useStyles();
+  const [newPassword1, changeNewPassword1] = useState('');
+  const [newPassword2, changeNewPassword2] = useState('');
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
-	async function handleSubmit(event) {
-		event.preventDefault();
-		const validatedInput = validatePasswordChange(newPassword1, newPassword2);
-		if (validatedInput === false) {
-			return setOpen(true);
-		}
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const validatedInput = validatePasswordChange(newPassword1, newPassword2);
+    if (validatedInput === false) {
+      return setOpen(true);
+    }
 
-		const data = await changePassword(newPassword1, newPassword2);
-		if (data.detail !== 'New password has been saved.') {
-			return setOpen(true);
-		}
-		return history.push('/dashboard');
-	}
+    const data = await changePassword(newPassword1, newPassword2);
+    if (data.detail !== 'New password has been saved.') {
+      return setOpen(true);
+    }
+    return history.push('/dashboard');
+  }
 
   function handleClose() {
     setOpen(false);
   }
 
-	return (
-		<Container>
+  return (
+    <Container>
       <Grid
         container
         direction='column'
@@ -66,12 +66,12 @@ function Password() {
         justify='center'
         className={classes.root}
       >
-				<Typography variant='h4' gutterBottom>
-					Password Reset
+        <Typography variant='h4' gutterBottom>
+          Password Reset
 				</Typography>
-				<Divider />
-				<Typography variant='subtitle1' gutterBottom>
-					Your password must contain at least 8 characters and cannot be entirely numeric.
+        <Divider />
+        <Typography variant='subtitle1' gutterBottom>
+          Your password must contain at least 8 characters and cannot be entirely numeric.
 				</Typography>
         <Grid item xs={12} md={3}>
           <form noValidate onSubmit={handleSubmit}>
@@ -85,7 +85,7 @@ function Password() {
               name={'newPassword1'}
               color='secondary'
             />
-						<TextField
+            <TextField
               onChange={(e) => changeNewPassword2(e.target.value)}
               className={classes.field}
               label='New Password'
@@ -101,7 +101,7 @@ function Password() {
               className={classes.btn}
               color='primary'
               variant='contained'
-              disabled={ !newPassword1 || !newPassword2 ? true : false }
+              disabled={!newPassword1 || !newPassword2 ? true : false}
             >
               Change Password
             </Button>
@@ -114,7 +114,7 @@ function Password() {
         </Alert>
       </Snackbar>
     </Container>
-	);
+  );
 }
 
 export default Password;

@@ -7,17 +7,17 @@ async function login(username, password) {
 			'Content-Type': 'application/json',
 			'Accept': 'application/json',
 		},
-		body: JSON.stringify({username, password})
+		body: JSON.stringify({ username, password })
 	})
-	.then(response => response.json())
-	.then(data => {
-		if (data.key) {
-			localStorage.setItem('username', username);
-			localStorage.setItem('token', data.key);
-		}
-		return data;
- })
-	.catch(error => console.log('error: ', error));
+		.then(response => response.json())
+		.then(data => {
+			if (data.key) {
+				localStorage.setItem('username', username);
+				localStorage.setItem('token', data.key);
+			}
+			return data;
+		})
+		.catch(error => console.log('error: ', error));
 }
 
 async function logout() {
@@ -28,8 +28,8 @@ async function logout() {
 			'Accept': 'application/json',
 		},
 	})
-	.then(response => console.log('respose: ', response))
-	.catch(error => console.log('error: ', error));
+		.then(response => console.log('respose: ', response))
+		.catch(error => console.log('error: ', error));
 
 	localStorage.removeItem('token');
 	localStorage.removeItem('accountId');
@@ -37,7 +37,7 @@ async function logout() {
 	return;
 }
 
-async function changePassword(newPassword1 , newPassword2) {
+async function changePassword(newPassword1, newPassword2) {
 	const token = localStorage.getItem('token');
 	return fetch(`http://localhost:8000/api/dj-rest-auth/password/change/`, {
 		method: 'POST',
@@ -48,9 +48,9 @@ async function changePassword(newPassword1 , newPassword2) {
 		},
 		body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 })
 	})
-	.then(response => response.json())
-	.then(data => data)
-	.catch(error => console.log('error: ', error));
+		.then(response => response.json())
+		.then(data => data)
+		.catch(error => console.log('error: ', error));
 }
 
 function isAuthenticated() {
@@ -58,4 +58,4 @@ function isAuthenticated() {
 	return token !== null && token !== undefined;
 }
 
-export { login, logout, changePassword, isAuthenticated }
+export { login, logout, changePassword, isAuthenticated };
