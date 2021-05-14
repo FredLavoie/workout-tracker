@@ -6,13 +6,13 @@ import { isAuthenticated } from '../services/authentication';
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (
-    <Route {...rest} render={props => {
+    <Route {...rest} render={(props) => {
       if (isAuthenticated() === true) {
-        return <Component {...props} />
+        return <Component {...props} />;
       }
-      return <Redirect to='/login' />
+      return <Redirect to='/login' />;
     }} />
-  )
-};
+  );
+}
 
-export default PrivateRoute
+export default PrivateRoute;

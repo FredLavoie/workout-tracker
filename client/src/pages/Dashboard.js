@@ -14,7 +14,7 @@ function Dashboard() {
         Dashboard
       </Typography>
     </div>
-  )
+  );
 }
 
 export default Dashboard;

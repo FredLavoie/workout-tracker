@@ -93,25 +93,25 @@ function Layout({ children }) {
 
   function handleClickAvatar(event) {
     setAnchorEl(event.currentTarget);
-  };
+  }
 
   function handleClose() {
     setAnchorEl(null);
-  };
+  }
 
   function handleDrawerToggle() {
     setMobileOpen(!mobileOpen);
-  };
+  }
 
   function handleMenuItemClick(path) {
     if (mobileOpen) handleDrawerToggle();
     history.push(path);
-  };
+  }
 
   function handleChangePasswordClick() {
     handleClose();
     history.push('/password-change');
-  };
+  }
 
   const drawer = (
     <List>
@@ -228,7 +228,7 @@ function Layout({ children }) {
         {children}
       </div>
     </div>
-  )
+  );
 }
 
 export default Layout;

@@ -11,7 +11,7 @@ function fetchMonthData(monthToFetch) {
       'authorization': `Token ${token}`
     },
   })
-    .then(res => res.json());
+    .then((res) => res.json());
 }
 
 function fetchAccountId() {
@@ -25,8 +25,8 @@ function fetchAccountId() {
       'authorization': `Token ${token}`
     },
   })
-    .then(res => res.json())
-    .then(data => localStorage.setItem('accountId', data[0].id));
+    .then((res) => res.json())
+    .then((data) => localStorage.setItem('accountId', data[0].id));
 }
 
 

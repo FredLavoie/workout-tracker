@@ -6,9 +6,9 @@ function Search() {
     <div>
       <Typography variant='h3'>
         Search
-		</Typography>
+      </Typography>
     </div>
-  )
+  );
 }
 
 export default Search;

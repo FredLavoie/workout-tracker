@@ -8,4 +8,4 @@ function validatePasswordChange(pass1, pass2) {
   return true;
 }
 
-export { validatePasswordChange }
+export { validatePasswordChange };

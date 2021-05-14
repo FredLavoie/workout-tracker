@@ -68,11 +68,11 @@ function Password() {
       >
         <Typography variant='h4' gutterBottom>
           Password Reset
-				</Typography>
+        </Typography>
         <Divider />
         <Typography variant='subtitle1' gutterBottom>
           Your password must contain at least 8 characters and cannot be entirely numeric.
-				</Typography>
+        </Typography>
         <Grid item xs={12} md={3}>
           <form noValidate onSubmit={handleSubmit}>
             <TextField
@@ -110,7 +110,7 @@ function Password() {
       </Grid>
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert severity='error'>
-          New passwords don't match or wrong old password.
+          New passwords do not match or wrong old password.
         </Alert>
       </Snackbar>
     </Container>
