@@ -11,7 +11,6 @@
 
 const fs = require('fs');
 const uuid = require('uuid');
-// eslint-disable-next-line no-undef
 const inputFile = process.argv[2];
 
 fs.readFile(inputFile, 'utf-8', (error, data) => {
