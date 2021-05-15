@@ -11,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
     flexBasis: '10%',
-    border: '1px solid #999999',
+    border: '1.5px solid #d9d9d9',
   },
   daySquare: {
     width: '13%',
     paddingBottom: '8%',
-    border: '1px solid #d9d9d9',
+    border: '1.5px solid #d9d9d9',
     display: 'flex',
     flexGrow: '1',
     justifyContent: 'right'
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main
   },
   innerText: {
-    padding: 8
+    padding: 4
   },
   today: {
     backgroundColor: theme.palette.primary.main,
