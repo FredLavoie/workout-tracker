@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
   },
   monthTitle: {
-    width: '25%'
+    width: '25%',
+    textAlign: 'center'
   }
 }));
 
