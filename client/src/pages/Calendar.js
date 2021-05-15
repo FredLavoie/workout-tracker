@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-around',
   },
+  monthTitle: {
+    width: '25%'
+  }
 }));
 
 
@@ -72,7 +75,7 @@ function Calendar() {
     <div className={classes.calendarContainer}>
       <div className={classes.monthNav}>
         <Button onClick={handleClickPrevious}>Previous</Button>
-        <Typography variant='h4' gutterBottom>
+        <Typography variant='h4' gutterBottom className={classes.monthTitle}>
           {`${currentMonthString} ${currentYear}`}
         </Typography>
         <Button onClick={handleClickNext}>Next</Button>
