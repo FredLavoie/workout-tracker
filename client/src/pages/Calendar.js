@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { makeStyles } from '@material-ui/core';
-import { fetchMonthData } from '../services/fetchData';
+
 import CalendarGrid from '../components/CalendarGrid';
+import { fetchMonthData } from '../services/fetchData';
 import { calculateMonth } from '../lib/helperFunctions';
 import months from '../lib/months';
 
