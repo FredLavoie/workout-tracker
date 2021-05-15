@@ -20,9 +20,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   outline: {
-    width: '100%',
-    border: '1px solid #d9d9d9',
     display: 'flex',
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '65vw',
+      // height: '45vw',
+    },
+    border: '1px solid #d9d9d9',
   }
 }));
 
@@ -31,7 +35,8 @@ function Calendar() {
   const [workouts, setWorkouts] = useState([]);
   const location = useLocation();
   const monthToFetch = location.pathname.split('/')[2]; // ex: 2021-05
-  const currentMonth = months[monthToFetch.split('-')[1]]; // May
+  const currentMonthString = months[monthToFetch.split('-')[1]]; // May
+  const currentMonth = monthToFetch.split('-')[1]; // 05
   const currentYear = monthToFetch.split('-')[0]; // 2021
 
 
@@ -43,10 +48,12 @@ function Calendar() {
   return (
     <div className={classes.calendarContainer}>
       <Typography variant='h4' gutterBottom>
-        {`${currentMonth} ${currentYear}`}
+        {`${currentMonthString} ${currentYear}`}
       </Typography>
+      {/* add navigation (nex/previous month) */}
       <div className={classes.outline}>
-        <CalendarGrid workouts={workouts} currentMonth={currentMonth} currentYear={currentYear} />
+        {/* add days of the week */}
+        <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
       </div>
     </div>
   );
