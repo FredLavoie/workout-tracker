@@ -64,6 +64,7 @@ function CalendarGrid(props) {
     }
     contentArray.push(obj);
   }
+
   for (const ea of contentArray) {
     for (const workout of props.workouts) {
       if (ea.dayNumber === Number(workout.date.split('-')[2])) {
