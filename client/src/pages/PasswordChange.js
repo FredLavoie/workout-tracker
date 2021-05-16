@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import TextField from '@material-ui/core/TextField';
@@ -69,7 +68,6 @@ function Password() {
         <Typography variant='h4' gutterBottom>
           Password Reset
         </Typography>
-        <Divider />
         <Typography variant='subtitle1' gutterBottom>
           Your password must contain at least 8 characters and cannot be entirely numeric.
         </Typography>

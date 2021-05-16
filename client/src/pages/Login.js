@@ -11,7 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { isAuthenticated, login } from '../services/authentication';
