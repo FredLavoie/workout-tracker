@@ -8,6 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Workout from './pages/Workout';
 import Calendar from './pages/Calendar';
 import Search from './pages/Search';
 import Password from './pages/PasswordChange';
@@ -30,6 +31,8 @@ function App() {
           <Route exact path='/login' component={Login} />
           <Layout>
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/workouts/new' component={Workout} />
+            <PrivateRoute exact path='/workouts/:uuid' component={Workout} />
             <PrivateRoute exact path='/cal/:date' component={Calendar} />
             <PrivateRoute exact path='/search' component={Search} />
             <PrivateRoute exact path='/password-change' component={Password} />
