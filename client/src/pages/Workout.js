@@ -160,7 +160,7 @@ function Workout() {
           {
             newOrEdit === 1
               ?
-              <Button onClick={handleCancel} className={classes.btn}>Cancel</Button>
+              <Button onClick={handleCancel} className={classes.btn} variant='outlined'>Cancel</Button>
               :
               <ButtonGroup fullWidth className={classes.btnGrp}>
                 <Button onClick={handleCancel}>Cancel</Button>

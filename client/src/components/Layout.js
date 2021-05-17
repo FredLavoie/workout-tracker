@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import List from '@material-ui/core/List';
@@ -16,6 +17,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
+import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -138,6 +140,15 @@ function Layout({ children }) {
       >
         <ListItemIcon><SearchIcon /></ListItemIcon>
         <ListItemText primary='Search' />
+      </ListItem>
+      <Divider />
+      <ListItem
+        button
+        onClick={() => handleMenuItemClick('/workouts/new')}
+        className={location.pathname === '/workouts/new' ? classes.active : null}
+      >
+        <ListItemIcon><AddIcon /></ListItemIcon>
+        <ListItemText primary='New Workout' />
       </ListItem>
     </List>
   );
