@@ -31,8 +31,7 @@ function App() {
           <Route exact path='/login' component={Login} />
           <Layout>
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
-            <PrivateRoute exact path='/workouts/new' component={Workout} />
-            <PrivateRoute exact path='/workouts/:uuid' component={Workout} />
+            <PrivateRoute path='/workouts' component={Workout} />
             <PrivateRoute exact path='/cal/:date' component={Calendar} />
             <PrivateRoute exact path='/search' component={Search} />
             <PrivateRoute exact path='/password-change' component={Password} />
