@@ -44,7 +44,7 @@ function CalendarGrid(props) {
 
   const weekDayFirstMonthDay = new Date(`${props.year}/${props.month}/01`).getDay();
   const numberOfDaysInMonth = new Date(props.year, props.month, 0).getDate();
-  const currentDate = new Date().toISOString().split('T')[0];
+  const currentDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0];
 
   const contentArray = [];
   let dayOfTheMonth = 0;
@@ -57,9 +57,9 @@ function CalendarGrid(props) {
       obj.dayNumber = dayOfTheMonth;
       dayOfTheMonth += 1;
     }
-    if (Number(currentDate.split('-')[2]) + 1 === dayOfTheMonth
-      && currentDate.split('-')[1] === props.month
-      && currentDate.split('-')[0] === props.year) {
+    if (Number(currentDate.split('/')[1]) + 1 === dayOfTheMonth
+      && currentDate.split('/')[0].padStart(2, '0') === props.month
+      && currentDate.split('/')[2] === props.year) {
       obj.today = true;
     }
     if (dayOfTheMonth > numberOfDaysInMonth && i === 34) {
