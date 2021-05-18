@@ -4,11 +4,15 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core';
 
+import MuiAlert from '@material-ui/lab/Alert';
+
 import { fetchWorkout, postWorkout, updateWorkout, deleteWorkout } from '../services/fetchData';
+import { validateNewWorkout } from '../lib/helperFunctions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +57,10 @@ function convertTime(timeArr) {
   return `${hour}:00`;
 }
 
+function Alert(props) {
+  return <MuiAlert elevation={4} variant='filled' {...props} />;
+}
+
 
 function Workout() {
   const classes = useStyles();
@@ -69,6 +77,7 @@ function Workout() {
   const [selectedTime, setSelectedTime] = useState(currentTime);
   const [workoutBody, setWorkoutBody] = useState('');
   const [newOrEdit, changeNewOrEdit] = useState(1);
+  const [open, setOpen] = useState(false);
 
 
   useEffect(() => {
@@ -93,11 +102,19 @@ function Workout() {
     event.preventDefault();
 
     if (workoutId === 'new') {
-      await postWorkout(selectedDate, selectedTime, workoutBody);
-      return history.goBack();
+      const valid = validateNewWorkout(selectedDate, selectedTime, workoutBody);
+      if (valid) {
+        await postWorkout(selectedDate, selectedTime, workoutBody);
+        return history.goBack();
+      }
+      return setOpen(true);
     } else {
-      await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
-      return history.goBack();
+      const valid = validateNewWorkout(selectedDate, selectedTime, workoutBody);
+      if (valid) {
+        await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
+        return history.goBack();
+      }
+      return setOpen(true);
     }
   }
 
@@ -108,6 +125,10 @@ function Workout() {
   async function handleDelete() {
     await deleteWorkout(workoutId);
     return history.goBack();
+  }
+
+  function handleClose() {
+    setOpen(false);
   }
 
   return (
@@ -171,6 +192,11 @@ function Workout() {
           }
         </form>
       </Grid>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+        <Alert severity='error'>
+          Invalid input. Check that the time format is 00:00 and the date format is YYY:MM:DD
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 }
