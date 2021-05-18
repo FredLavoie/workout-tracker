@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
@@ -22,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'right'
   },
   active: {
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
+    cursor: 'pointer'
   },
   innerText: {
     padding: 4
@@ -37,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 function CalendarGrid(props) {
   const classes = useStyles();
+  const history = useHistory();
 
   const weekDayFirstMonthDay = new Date(`${props.year}/${props.month}/01`).getDay();
   const numberOfDaysInMonth = new Date(props.year, props.month, 0).getDate();
@@ -69,17 +73,34 @@ function CalendarGrid(props) {
     for (const workout of props.workouts) {
       if (ea.dayNumber === Number(workout.date.split('-')[2])) {
         ea.active = true;
+        ea.workoutId = workout.id;
       }
+    }
+  }
+
+  async function handleClickActive(target) {
+    if (!target.firstChild || !target.firstChild.id) return;
+    if (target.firstChild.id.length === 36) {
+      history.push(`/workouts/${target.firstChild.id}`);
     }
   }
 
   return (
     <div className={classes.container}>
       {contentArray.map((ea, index) => (
-        <div key={index} className={`${classes.daySquare} ${ea.active ? classes.active : ''}`}>
+        <div
+          onClick={(e) => handleClickActive(e.target)}
+          key={index}
+          className={`${classes.daySquare} ${ea.active ? classes.active : ''}`}
+        >
           {ea.dayNumber !== 0
             ?
-            <Typography variant='body2' className={`${classes.innerText} ${ea.today ? classes.today : ''}`}>
+            <Typography
+              onClick={(e) => handleClickActive(e.target.id)}
+              variant='body2'
+              id={ea.workoutId}
+              className={`${classes.innerText} ${ea.today ? classes.today : ''}`}
+            >
               {ea.dayNumber}
             </Typography>
             :
