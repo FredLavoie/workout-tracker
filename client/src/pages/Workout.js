@@ -45,10 +45,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function convertTime(time) {
-  let newTime = time.split(':')[0];
-  newTime -= 3;
-  return `${newTime}:00`;
+// this functionality breaks if a workout is created past 23:00 on a given day
+function convertTime(timeArr) {
+  const hour = Number(timeArr[0]) + 1;
+  return `${hour}:00`;
 }
 
 
@@ -60,7 +60,7 @@ function Workout() {
   const workoutId = location.pathname.split('/')[2];
   const newDate = new Date().toISOString().split('T');
   const currentDate = newDate[0];
-  const currentTime = convertTime(newDate[1]);
+  const currentTime = convertTime(new Date().toTimeString().split(':').splice(0, 2));
 
 
   const [selectedDate, setSelectedDate] = useState(currentDate);
