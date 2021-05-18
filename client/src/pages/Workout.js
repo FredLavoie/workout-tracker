@@ -92,20 +92,20 @@ function Workout() {
 
     if (workoutId === 'new') {
       await postWorkout(selectedDate, selectedTime, workoutBody);
-      return history.push('/dashboard');
+      return history.goBack();
     } else {
       await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
-      return history.push('/dashboard');
+      return history.goBack();
     }
   }
 
   function handleCancel() {
-    return history.push('/dashboard');
+    return history.goBack();
   }
 
   async function handleDelete() {
     await deleteWorkout(workoutId);
-    return history.push('/dashboard');
+    return history.goBack();
   }
 
   return (
@@ -163,7 +163,7 @@ function Workout() {
               <Button onClick={handleCancel} className={classes.btn} variant='outlined'>Cancel</Button>
               :
               <ButtonGroup fullWidth className={classes.btnGrp}>
-                <Button onClick={handleCancel}>Cancel</Button>
+                <Button onClick={handleCancel}>Go Back</Button>
                 <Button onClick={handleDelete}>Delete</Button>
               </ButtonGroup>
           }
