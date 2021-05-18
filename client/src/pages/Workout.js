@@ -45,8 +45,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// this functionality breaks if a workout is created past 23:00 on a given day
+
 function convertTime(timeArr) {
+  if (timeArr[0] === '23') return '23:00';
+
   const hour = Number(timeArr[0]) + 1;
   return `${hour}:00`;
 }
