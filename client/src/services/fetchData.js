@@ -1,18 +1,3 @@
-async function fetchMonthData(monthToFetch) {
-  const token = localStorage.getItem('token');
-  const id = localStorage.getItem('accountId');
-
-  return fetch(`http://localhost:8000/api/${id}/cal/${monthToFetch}/`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'authorization': `Token ${token}`
-    },
-  })
-    .then((res) => res.json());
-}
-
 async function fetchAccountId() {
   if (localStorage.getItem('accountId')) return;
 
@@ -26,6 +11,24 @@ async function fetchAccountId() {
   })
     .then((res) => res.json())
     .then((data) => localStorage.setItem('accountId', data[0].id));
+}
+
+/***************************************** WORKOUTS *****************************************/
+/********************************************************************************************/
+
+async function fetchMonthData(monthToFetch) {
+  const token = localStorage.getItem('token');
+  const id = localStorage.getItem('accountId');
+
+  return fetch(`http://localhost:8000/api/${id}/cal/${monthToFetch}/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+  })
+    .then((res) => res.json());
 }
 
 async function fetchWorkout(workout_id) {
@@ -93,6 +96,75 @@ async function deleteWorkout(workout_id) {
     .catch((error) => console.log('error: ', error));
 }
 
+/****************************************** RECORDS *****************************************/
+/********************************************************************************************/
+
+async function fetchRecord(record_id) {
+  const token = localStorage.getItem('token');
+  const accountId = localStorage.getItem('accountId');
+
+  return fetch(`http://localhost:8000/api/${accountId}/records/${record_id}/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+  })
+    .then((res) => res.json());
+}
+
+async function updateRecord(record_id, date, event, score) {
+  const token = localStorage.getItem('token');
+  const accountId = localStorage.getItem('accountId');
+
+  return fetch(`http://localhost:8000/api/${accountId}/records/${record_id}/`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+    body: JSON.stringify({ date, event, score })
+  })
+    .then((response) => console.log('respose: ', response))
+    .catch((error) => console.log('error: ', error));
+}
+
+async function postRecord(date, event, score) {
+  const token = localStorage.getItem('token');
+  const accountId = localStorage.getItem('accountId');
+
+  return fetch(`http://localhost:8000/api/${accountId}/records/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+    body: JSON.stringify({ author: accountId, date, event, score })
+  })
+    .then((response) => console.log('respose: ', response))
+    .catch((error) => console.log('error: ', error));
+}
+
+async function deleteRecord(record_id) {
+  const token = localStorage.getItem('token');
+  const accountId = localStorage.getItem('accountId');
+
+  return fetch(`http://localhost:8000/api/${accountId}/records/${record_id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+  })
+    .then((response) => console.log('respose: ', response))
+    .catch((error) => console.log('error: ', error));
+}
+
+/********************************************************************************************/
 
 export {
   fetchMonthData,
@@ -100,5 +172,9 @@ export {
   fetchWorkout,
   postWorkout,
   updateWorkout,
-  deleteWorkout
+  deleteWorkout,
+  fetchRecord,
+  updateRecord,
+  postRecord,
+  deleteRecord,
 };
