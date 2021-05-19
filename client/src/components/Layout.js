@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -25,7 +25,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import TodayIcon from '@material-ui/icons/Today';
 
-import { logout } from '../services/authentication';
+import { logout, isAuthenticated } from '../services/authentication';
 
 
 const dateArray = new Date().toISOString().split('T')[0].split('-');
@@ -79,6 +79,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Layout({ children }) {
+  if (isAuthenticated() === false) {
+    return <Redirect to='/login' />;
+  }
+
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
