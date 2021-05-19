@@ -19,13 +19,15 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 'calc(100vh - 64px)',
   },
   field: {
-    markginBottom: 16
+    marginBottom: 16
   },
   btn: {
-    marginTop: 16
+    marginTop: 16,
+    marginBottom: 32
   },
   btnGrp: {
     marginTop: 16,
+    marginBottom: 32,
     display: 'felx'
   },
   formSize: {
