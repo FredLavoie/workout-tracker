@@ -1,5 +1,4 @@
 # workout-tracker
-Personal workout tracker
 
 This app was built for my partner and I to use everyday to track our workouts, our personal records and to search previous workouts for inspiration or to redo a workout to try and beat or score.
 
