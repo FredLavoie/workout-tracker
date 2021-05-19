@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
+// import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
       margin: 'auto',
     },
   },
+  score: {
+    marginTop: 16
+  },
 }));
 
 
@@ -82,6 +85,7 @@ function Record() {
     } else {
       fetchRecord(recordId)
         .then((data) => {
+          console.log('data: ', data);
           setSelectedDate(data.date);
           setRecordEvent(data.event);
           setRecordScore(data.score);
@@ -138,14 +142,18 @@ function Record() {
       </Typography>
       <Grid className={classes.formSize}>
         <form noValidate onSubmit={handleSubmit} className={classes.formContainer}>
+          <Typography variant="caption" className={classes.score}>
+            Date
+          </Typography>
           <TextField
             onChange={(e) => setSelectedDate(e.target.value)}
             margin='normal'
             id='date-picker'
-            label='Date'
             value={selectedDate}
           />
-          <InputLabel>Event</InputLabel>
+          <Typography variant="caption" className={classes.score}>
+            Event
+          </Typography>
           <Select
             onChange={(e) => setRecordEvent(e.target.value)}
             className={classes.field}
@@ -156,12 +164,14 @@ function Record() {
               <MenuItem key={index} value={ea}>{ea}</MenuItem>
             ))}
           </Select>
+          <Typography variant="caption" className={classes.score}>
+            Score
+          </Typography>
           <TextField
             onChange={(e) => setRecordScore(e.target.value)}
             className={classes.field}
             id='record-score'
-            label='Score'
-            defaultValue={recordScore}
+            value={recordScore}
             variant='outlined'
           />
           <Button

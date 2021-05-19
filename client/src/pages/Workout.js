@@ -159,7 +159,7 @@ function Workout() {
             label='Time'
             value={selectedTime}
           />
-          <Typography className={classes.workout}>
+          <Typography variant="caption" className={classes.workout}>
             Workout
           </Typography>
           <TextField
