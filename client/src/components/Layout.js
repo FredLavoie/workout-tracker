@@ -17,7 +17,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
-import AddIcon from '@material-ui/icons/Add';
+import StarIcon from '@material-ui/icons/Star';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import HomeIcon from '@material-ui/icons/Home';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -148,7 +149,7 @@ function Layout({ children }) {
         onClick={() => handleMenuItemClick('/workouts/new')}
         className={location.pathname === '/workouts/new' ? classes.active : null}
       >
-        <ListItemIcon><AddIcon /></ListItemIcon>
+        <ListItemIcon><FitnessCenterIcon /></ListItemIcon>
         <ListItemText primary='New Workout' />
       </ListItem>
       <ListItem
@@ -156,7 +157,7 @@ function Layout({ children }) {
         onClick={() => handleMenuItemClick('/records/new')}
         className={location.pathname === '/records/new' ? classes.active : null}
       >
-        <ListItemIcon><AddIcon /></ListItemIcon>
+        <ListItemIcon><StarIcon /></ListItemIcon>
         <ListItemText primary='New Record' />
       </ListItem>
     </List>

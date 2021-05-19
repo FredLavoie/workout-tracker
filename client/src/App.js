@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Workout from './pages/Workout';
+import Record from './pages/Record';
 import Calendar from './pages/Calendar';
 import Search from './pages/Search';
 import Password from './pages/PasswordChange';
@@ -32,6 +33,7 @@ function App() {
           <Layout>
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
             <PrivateRoute path='/workouts' component={Workout} />
+            <PrivateRoute path='/records' component={Record} />
             <PrivateRoute exact path='/cal/:date' component={Calendar} />
             <PrivateRoute exact path='/search' component={Search} />
             <PrivateRoute exact path='/password-change' component={Password} />
