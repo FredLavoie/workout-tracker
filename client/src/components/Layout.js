@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   page: {
     background: '#f9f9f9',
     width: '100%',
-    height: '100vh',
+    minHeight: '100vh',
+    height: '100%',
   },
   root1: {
     display: 'flex',
@@ -149,6 +150,14 @@ function Layout({ children }) {
       >
         <ListItemIcon><AddIcon /></ListItemIcon>
         <ListItemText primary='New Workout' />
+      </ListItem>
+      <ListItem
+        button
+        onClick={() => handleMenuItemClick('/records/new')}
+        className={location.pathname === '/records/new' ? classes.active : null}
+      >
+        <ListItemIcon><AddIcon /></ListItemIcon>
+        <ListItemText primary='New Record' />
       </ListItem>
     </List>
   );
