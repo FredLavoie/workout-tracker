@@ -17,17 +17,16 @@ import { validateNewWorkout } from '../lib/helperFunctions';
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: 'calc(100vh - 64px)',
+    marginBottom: 32
   },
   field: {
     marginBottom: 16
   },
   btn: {
     marginTop: 16,
-    marginBottom: 32
   },
   btnGrp: {
     marginTop: 16,
-    marginBottom: 32,
     display: 'felx'
   },
   formSize: {
