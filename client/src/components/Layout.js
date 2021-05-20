@@ -162,7 +162,7 @@ function Layout({ children }) {
         className={location.pathname === '/records/new' ? classes.active : null}
       >
         <ListItemIcon><StarIcon /></ListItemIcon>
-        <ListItemText primary='New Record' />
+        <ListItemText primary='New PR' />
       </ListItem>
     </List>
   );
