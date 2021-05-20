@@ -150,7 +150,7 @@ function Record() {
           <RadioGroup
             row
             name="recordType"
-            defaultValue={recordType}
+            value={recordType}
             className={classes.elementMargin}
             onChange={(e) => setRecordType(e.target.value)}
           >
