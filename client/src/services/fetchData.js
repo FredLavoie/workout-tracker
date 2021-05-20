@@ -114,7 +114,7 @@ async function fetchRecord(record_id) {
     .then((res) => res.json());
 }
 
-async function updateRecord(record_id, date, event, score) {
+async function updateRecord(record_id, date, type, event, score) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -125,13 +125,13 @@ async function updateRecord(record_id, date, event, score) {
       'Accept': 'application/json',
       'authorization': `Token ${token}`
     },
-    body: JSON.stringify({ date, event, score })
+    body: JSON.stringify({ date, type, event, score })
   })
     .then((response) => console.log('respose: ', response))
     .catch((error) => console.log('error: ', error));
 }
 
-async function postRecord(date, event, score) {
+async function postRecord(date, type, event, score) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -142,7 +142,7 @@ async function postRecord(date, event, score) {
       'Accept': 'application/json',
       'authorization': `Token ${token}`
     },
-    body: JSON.stringify({ author: accountId, date, event, score })
+    body: JSON.stringify({ author: accountId, date, type, event, score })
   })
     .then((response) => console.log('respose: ', response))
     .catch((error) => console.log('error: ', error));

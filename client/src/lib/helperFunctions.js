@@ -28,8 +28,9 @@ function validateNewWorkout(date, time, body) {
   return true;
 }
 
-function validateRecord(date, event, score) {
+function validateRecord(date, type, event, score) {
   if (date === '') return false;
+  if (type === '') return false;
   if (event === '') return false;
   if (score === '') return false;
 

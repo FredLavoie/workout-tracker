@@ -3,17 +3,18 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
-// import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';
-import Typography from '@material-ui/core/Typography';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
 import MuiAlert from '@material-ui/lab/Alert';
-
 
 import { fetchRecord, updateRecord, postRecord, deleteRecord } from '../services/fetchData';
 import { validateRecord } from '../lib/helperFunctions';
@@ -22,17 +23,7 @@ import recordList from '../lib/recordList';
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: 'calc(100vh - 64px)',
-    marginBottom: 32
-  },
-  field: {
-    marginTop: 16
-  },
-  btn: {
-    marginTop: 16
-  },
-  btnGrp: {
-    marginTop: 16,
-    display: 'felx'
+    marginBottom: 32,
   },
   formSize: {
     width: '100%',
@@ -50,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
       margin: 'auto',
     },
   },
-  score: {
-    marginTop: 16
+  elementMargin: {
+    marginTop: 16,
   },
 }));
 
@@ -72,6 +63,7 @@ function Record() {
 
 
   const [selectedDate, setSelectedDate] = useState(currentDate);
+  const [recordType, setRecordType] = useState('strength');
   const [recordEvent, setRecordEvent] = useState('');
   const [recordScore, setRecordScore] = useState('');
   const [newOrEdit, changeNewOrEdit] = useState(1);
@@ -87,6 +79,7 @@ function Record() {
         .then((data) => {
           console.log('data: ', data);
           setSelectedDate(data.date);
+          setRecordType(data.type);
           setRecordEvent(data.event);
           setRecordScore(data.score);
           changeNewOrEdit(0);
@@ -100,16 +93,16 @@ function Record() {
     event.preventDefault();
 
     if (recordId === 'new') {
-      const valid = validateRecord(selectedDate, recordEvent, recordScore);
+      const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
-        await postRecord(selectedDate, recordEvent, recordScore);
+        await postRecord(selectedDate, recordType, recordEvent, recordScore);
         return history.goBack();
       }
       return setOpen(true);
     } else {
-      const valid = validateRecord(selectedDate, recordEvent, recordScore);
+      const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
-        await updateRecord(recordId, selectedDate, recordEvent, recordScore);
+        await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
         return history.goBack();
       }
       return setOpen(true);
@@ -138,11 +131,11 @@ function Record() {
       className={classes.root}
     >
       <Typography variant='h4' gutterBottom>
-        Record
+        Personal Record
       </Typography>
       <Grid className={classes.formSize}>
         <form noValidate onSubmit={handleSubmit} className={classes.formContainer}>
-          <Typography variant="caption" className={classes.score}>
+          <Typography className={classes.elementMargin}>
             Date
           </Typography>
           <TextField
@@ -151,33 +144,61 @@ function Record() {
             id='date-picker'
             value={selectedDate}
           />
-          <Typography variant="caption" className={classes.score}>
+          <Typography className={classes.elementMargin}>
+            Event Type
+          </Typography>
+          <RadioGroup
+            row
+            name="recordType"
+            defaultValue={recordType}
+            className={classes.elementMargin}
+            onChange={(e) => setRecordType(e.target.value)}
+          >
+            <FormControlLabel
+              value="strength"
+              control={<Radio color="primary" />}
+              label="Strength"
+              labelPlacement="top"
+            />
+            <FormControlLabel
+              value="endurance"
+              control={<Radio color="primary" />}
+              label="Endurance"
+              labelPlacement="top"
+            />
+            <FormControlLabel
+              value="wod"
+              control={<Radio color="primary" />}
+              label="WOD"
+              labelPlacement="top"
+            />
+          </RadioGroup>
+          <Typography className={classes.elementMargin}>
             Event
           </Typography>
           <Select
             onChange={(e) => setRecordEvent(e.target.value)}
-            className={classes.field}
+            className={classes.elementMargin}
             id='record-event'
             value={recordEvent}
           >
-            {recordList.map((ea, index) => (
+            {recordList[recordType].map((ea, index) => (
               <MenuItem key={index} value={ea}>{ea}</MenuItem>
             ))}
           </Select>
-          <Typography variant="caption" className={classes.score}>
+          <Typography className={classes.elementMargin}>
             Score
           </Typography>
           <TextField
             onChange={(e) => setRecordScore(e.target.value)}
-            className={classes.field}
+            className={classes.elementMargin}
             id='record-score'
             value={recordScore}
-            variant='outlined'
           />
           <Button
             fullWidth
             type={'submit'}
-            className={classes.btn}
+            className={classes.elementMargin}
             color='primary'
             variant='contained'
             disabled={!selectedDate || !recordEvent || !recordScore ? true : false}
@@ -187,9 +208,9 @@ function Record() {
           {
             newOrEdit === 1
               ?
-              <Button onClick={handleCancel} className={classes.btn} variant='outlined'>Cancel</Button>
+              <Button onClick={handleCancel} className={classes.elementMargin} variant='outlined'>Cancel</Button>
               :
-              <ButtonGroup fullWidth className={classes.btnGrp}>
+              <ButtonGroup fullWidth className={classes.elementMargin}>
                 <Button onClick={handleCancel}>Go Back</Button>
                 <Button onClick={handleDelete}>Delete</Button>
               </ButtonGroup>
