@@ -1,6 +1,8 @@
+require('dotenv').config();
+const URL = process.env.REACT_APP_BASE_URL;
 
 async function login(username, password) {
-  return fetch('http://localhost:8000/api/dj-rest-auth/login/', {
+  return fetch(`${URL}/dj-rest-auth/login/`, {
     method: 'POST',
     credentials: 'omit',
     headers: {
@@ -21,7 +23,7 @@ async function login(username, password) {
 }
 
 async function logout() {
-  fetch(`http://localhost:8000/api/dj-rest-auth/logout/`, {
+  fetch(`${URL}/dj-rest-auth/logout/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -39,7 +41,7 @@ async function logout() {
 
 async function changePassword(newPassword1, newPassword2) {
   const token = localStorage.getItem('token');
-  return fetch(`http://localhost:8000/api/dj-rest-auth/password/change/`, {
+  return fetch(`${URL}/dj-rest-auth/password/change/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
