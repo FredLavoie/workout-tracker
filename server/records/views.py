@@ -1,8 +1,10 @@
+from django.contrib.postgres.search import SearchVector, SearchQuery
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Record
 from .permissions import IsAuthor
 from .serializers import RecordSerializer
+
 
 class RecordList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, IsAuthor,)
@@ -13,6 +15,7 @@ class RecordList(generics.ListCreateAPIView):
         records = Record.objects.filter(author_id=id)
         return records
 
+
 class RecordDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = RecordSerializer
@@ -21,3 +24,19 @@ class RecordDetail(generics.RetrieveUpdateDestroyAPIView):
         id = self.kwargs['author_id']
         record = Record.objects.filter(author_id=id)
         return record
+
+
+class RecordSearch(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, IsAuthor,)
+    serializer_class = RecordSerializer
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', '')
+
+        object_list = Record.objects.annotate(
+            search=SearchVector('type')+SearchVector('event')
+        ).filter(
+            search=SearchQuery(query)
+        )
+
+        return object_list

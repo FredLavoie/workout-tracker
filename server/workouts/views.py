@@ -1,8 +1,10 @@
+from django.contrib.postgres.search import SearchVector, SearchQuery
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Workout
 from .permissions import IsAuthor
 from .serializers import WorkoutSerializer
+
 
 class WorkoutList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, IsAuthor,)
@@ -33,3 +35,19 @@ class WorkoutListMonth(generics.ListCreateAPIView):
         dt = self.kwargs['year_month']
         workout = Workout.objects.filter(author_id=id, date__contains=dt)
         return workout
+
+
+class WorkoutSearch(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, IsAuthor,)
+    serializer_class = WorkoutSerializer
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', '')
+
+        object_list = Workout.objects.annotate(
+            search=SearchVector('workout_body')
+        ).filter(
+            search=SearchQuery(query)
+        )
+
+        return object_list
