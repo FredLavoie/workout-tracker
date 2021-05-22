@@ -37,7 +37,7 @@ class WorkoutListMonth(generics.ListCreateAPIView):
         return workout
 
 
-class WorkoutSearch(generics.ListCreateAPIView):
+class WorkoutSearch(generics.ListAPIView):
     permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = WorkoutSerializer
 

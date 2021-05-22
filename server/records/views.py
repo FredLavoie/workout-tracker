@@ -26,7 +26,7 @@ class RecordDetail(generics.RetrieveUpdateDestroyAPIView):
         return record
 
 
-class RecordSearch(generics.ListCreateAPIView):
+class RecordSearch(generics.ListAPIView):
     permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = RecordSerializer
 
