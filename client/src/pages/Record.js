@@ -158,19 +158,16 @@ function Record() {
               value="strength"
               control={<Radio color="primary" />}
               label="Strength"
-              labelPlacement="top"
             />
             <FormControlLabel
               value="endurance"
               control={<Radio color="primary" />}
               label="Endurance"
-              labelPlacement="top"
             />
             <FormControlLabel
               value="wod"
               control={<Radio color="primary" />}
               label="WOD"
-              labelPlacement="top"
             />
           </RadioGroup>
           <Typography className={classes.elementMargin}>
