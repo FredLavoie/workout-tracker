@@ -19,31 +19,40 @@ async function fetchAccountId() {
 /****************************************** SEARCH ******************************************/
 /********************************************************************************************/
 
-async function fetchSearchResults(q) {
+async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
+  if (!checkedWorkout && !checkedRecord) return [];
+
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
+  const trimmedQuery = query.trim().split(' ').join('+');
+  let workoutResults = [];
+  let recordResults = [];
 
-  const query = q.trim().split(' ').joint('+');
+  if (checkedWorkout) {
+    await fetch(`${URL}/${id}/workouts/search/?q=${trimmedQuery}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'authorization': `Token ${token}`
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => workoutResults = data);
+  }
 
-  const workoutResults = await fetch(`${URL}/${id}/workouts/search/?q=${query}/`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'authorization': `Token ${token}`
-    },
-  })
-    .then((res) => res.json());
-
-  const recordResults = await fetch(`${URL}/${id}/records/search/?q=${query}/`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'authorization': `Token ${token}`
-    },
-  })
-    .then((res) => res.json());
+  if (checkedRecord) {
+    await fetch(`${URL}/${id}/records/search/?q=${trimmedQuery}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'authorization': `Token ${token}`
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => recordResults = data);
+  }
 
   return [...workoutResults, ...recordResults];
 }
