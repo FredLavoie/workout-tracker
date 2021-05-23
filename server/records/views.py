@@ -32,11 +32,14 @@ class RecordSearch(generics.ListAPIView):
 
     def get_queryset(self):
         query = self.request.GET.get('q', '')
+        id = self.kwargs['author_id']
 
         object_list = Record.objects.annotate(
             search=SearchVector('type')+SearchVector('event')
         ).filter(
             search=SearchQuery(query)
+        ).filter(
+            author_id=id
         )
 
         return object_list

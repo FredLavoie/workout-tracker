@@ -43,11 +43,14 @@ class WorkoutSearch(generics.ListAPIView):
 
     def get_queryset(self):
         query = self.request.GET.get('q', '')
+        id = self.kwargs['author_id']
 
         object_list = Workout.objects.annotate(
             search=SearchVector('workout_body')
         ).filter(
             search=SearchQuery(query)
+        ).filter(
+            author_id=id
         )
 
         return object_list
