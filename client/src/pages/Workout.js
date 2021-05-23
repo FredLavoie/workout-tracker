@@ -16,7 +16,7 @@ import { validateNewWorkout } from '../lib/helperFunctions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: 'calc(100vh - 64px)',
+    minHeight: 'calc(100vh - 96px)',
     marginBottom: 32
   },
   field: {

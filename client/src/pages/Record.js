@@ -22,7 +22,7 @@ import recordList from '../lib/recordList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: 'calc(100vh - 64px)',
+    minHeight: 'calc(100vh - 96px)',
     marginBottom: 32,
   },
   formSize: {
