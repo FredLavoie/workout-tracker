@@ -14,13 +14,11 @@ import { fetchSearchResults } from '../services/fetchData';
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
     marginBottom: 32,
     marginTop: 16,
   },
   title: {
-    marginBottom: 32,
+    marginBottom: 16,
   },
   searchBox: {
     marginTop: 16,
@@ -42,15 +40,13 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     flexWrap: 'wrap',
     width: '100%',
+    marginBottom: 16,
   },
   buttonContainer: {
     width: 208,
     display: 'flex',
     justifyContent: 'space-around'
   },
-  content: {
-
-  }
 });
 
 
@@ -70,7 +66,6 @@ function Search() {
     event.preventDefault();
     const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
     const sortedResults = results.sort((a, b) => b.date > a.date);
-    console.log('sortedResults: ', sortedResults);
     setSearchResults(sortedResults);
   }
 
@@ -135,14 +130,8 @@ function Search() {
           </Button>
         </div>
       </form>
-      <main className={classes.content}>
-        {searchResults.length > 0
-          ?
-          <SearchResultCard content={searchResults} />
-          :
-          <div></div>
-        }
-      </main>
+      {searchResults.length > 0 ? <Typography gutterBottom color='primary'>( Number of results found: {searchResults.length} )</Typography> : ''}
+      {searchResults.length > 0 ? <SearchResultCard content={searchResults} /> : <div></div>}
     </Grid>
   );
 }
