@@ -9,56 +9,69 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
+import SearchResultCard from '../components/SearchResultCard';
 import { fetchSearchResults } from '../services/fetchData';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
-    minHeight: 'calc(100vh - 64px)',
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: 32,
+    marginTop: 16,
+  },
+  title: {
     marginBottom: 32,
   },
-  formSize: {
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '60%',
-    },
-  },
   searchBox: {
-    marginTop: 32,
-    width: 320,
+    marginTop: 16,
+    width: 272,
   },
   elementMargin: {
-    marginTop: 32,
+    marginTop: 16,
   },
   checkboxes: {
-    marginTop: 32,
+    marginTop: 16,
+    marginLeft: 16,
+    width: 208,
     display: 'flex',
     justifyContent: 'center',
+  },
+  formElement: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    width: '100%',
+  },
+  buttonContainer: {
+    width: 208,
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  content: {
+
   }
-}));
+});
 
 
 function Search() {
   const classes = useStyles();
-  const [state, setState] = useState({
-    checkedWorkout: true,
-    checkedRecord: false,
-    searchQuery: '',
-    searchResults: [],
-  });
+  const [checkedWorkout, setCheckedWorkout] = useState(true);
+  const [checkedRecord, setCheckedRecord] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
-  const handleCheck = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-
-  const handleSearchInput = (event) => {
-    setState({ ...state, searchQuery: event.target.value });
-  };
+  function handleClear() {
+    setSearchQuery('');
+    setSearchResults([]);
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const results = await fetchSearchResults(state.checkedWorkout, state.checkedRecord, state.searchQuery);
-    setState({ ...state, searchResults: results });
-    console.log('state.searchResults: ', state.searchResults.sort((a, b) => b.date > a.date));
+    const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
+    const sortedResults = results.sort((a, b) => b.date > a.date);
+    console.log('sortedResults: ', sortedResults);
+    setSearchResults(sortedResults);
   }
 
   return (
@@ -69,40 +82,66 @@ function Search() {
       justify='center'
       className={classes.root}
     >
-      <Typography variant='h4'>
+      <Typography variant='h4' className={classes.title}>
         Search
       </Typography>
-      <form noValidate onSubmit={handleSubmit} >
+      <form noValidate onSubmit={handleSubmit} className={classes.formElement}>
         <TextField
-          onChange={handleSearchInput}
+          onChange={(e) => setSearchQuery(e.target.value)}
           className={classes.searchBox}
           id='record-score'
           placeholder='Search workouts...'
-          value={state.searchQuery}
+          value={searchQuery}
         />
         <FormGroup row className={classes.checkboxes}>
           <FormControlLabel
-            control={<Checkbox checked={state.checkedWorkout} onChange={handleCheck} name='checkedWorkout' color='primary' />}
+            control={
+              <Checkbox
+                checked={checkedWorkout}
+                onChange={(e) => setCheckedWorkout(e.target.checked)}
+                name='checkedWorkout'
+                color='primary'
+              />}
             label='Workouts'
           />
           <FormControlLabel
-            control={<Checkbox checked={state.checkedRecord} onChange={handleCheck} name='checkedRecord' color='primary' />}
-            label='Records'
+            control={
+              <Checkbox
+                checked={checkedRecord}
+                onChange={(e) => setCheckedRecord(e.target.checked)}
+                name='checkedRecord'
+                color='primary'
+              />}
+            label='PRs'
           />
         </FormGroup>
-        <Button
-          fullWidth
-          type={'submit'}
-          className={classes.elementMargin}
-          color='primary'
-          variant='contained'
-          disabled={state.searchQuery === '' ? true : false}
-        >
-          Search
-        </Button>
+        <div className={classes.buttonContainer}>
+          <Button
+            type={'submit'}
+            className={classes.elementMargin}
+            color='primary'
+            variant='contained'
+            disabled={searchQuery === '' ? true : false}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={handleClear}
+            className={classes.elementMargin}
+            color='primary'
+            variant='outlined'
+          >
+            Clear
+          </Button>
+        </div>
       </form>
-      <main>
-        { }
+      <main className={classes.content}>
+        {searchResults.length > 0
+          ?
+          <SearchResultCard content={searchResults} />
+          :
+          <div></div>
+        }
       </main>
     </Grid>
   );
