@@ -74,7 +74,6 @@ function Search() {
       container
       direction='column'
       alignItems='center'
-      justify='center'
       className={classes.root}
     >
       <Typography variant='h4' className={classes.title}>
@@ -130,7 +129,7 @@ function Search() {
           </Button>
         </div>
       </form>
-      {searchResults.length > 0 ? <Typography gutterBottom color='primary'>( Number of results found: {searchResults.length} )</Typography> : ''}
+      {searchResults.length > 0 ? <Typography color='primary'>( Number of results found: {searchResults.length} )</Typography> : ''}
       {searchResults.length > 0 ? <SearchResultCard content={searchResults} /> : <div></div>}
     </Grid>
   );

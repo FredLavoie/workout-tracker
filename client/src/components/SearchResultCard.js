@@ -11,14 +11,21 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: 32,
+    marginTop: 16,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       width: '90%',
     },
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
   },
   cardStyle: {
     width: 256,
-    margin: '0px auto 16px auto'
+    margin: '0px auto 16px auto',
+    [theme.breakpoints.up('sm')]: {
+      margin: '0px 16px 16px 8px',
+    },
   },
   header: {
     paddingBottom: 0,
@@ -37,8 +44,6 @@ function SearchResultCard({ content }) {
 
   return (
     <Grid
-      container
-      justify='center'
       className={classes.root}
     >
       {content.map((ea, index) => (
