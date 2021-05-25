@@ -14,6 +14,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { isAuthenticated, login } from '../services/authentication';
+import { fetchAccountId } from '../services/fetchData';
 
 
 const useStyles = makeStyles({
@@ -45,6 +46,7 @@ function Login() {
     if (data.non_field_errors) {
       return setOpen(true);
     }
+    await fetchAccountId();
     return history.push('/dashboard');
   }
 

@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+
 import Typography from '@material-ui/core/Typography';
-import { fetchAccountId } from '../services/fetchData';
+// import { makeStyles } from '@material-ui/core';
+
+// const useStyles = makeStyles({
+
+// });
 
 function Dashboard() {
-
-  useEffect(() => {
-    fetchAccountId();
-  }, []);
+  // const classes = useStyles();
 
   return (
     <div>
-      <Typography variant='h3'>
+      <Typography variant='h4'>
         Dashboard
       </Typography>
     </div>
