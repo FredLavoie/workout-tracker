@@ -159,6 +159,21 @@ async function fetchRecord(record_id) {
     .then((res) => res.json());
 }
 
+async function fetchRecords() {
+  const token = localStorage.getItem('token');
+  const accountId = localStorage.getItem('accountId');
+
+  return fetch(`${URL}/${accountId}/records/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+  })
+    .then((res) => res.json());
+}
+
 async function updateRecord(record_id, date, type, event, score) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
@@ -220,6 +235,7 @@ export {
   updateWorkout,
   deleteWorkout,
   fetchRecord,
+  fetchRecords,
   updateRecord,
   postRecord,
   deleteRecord,
