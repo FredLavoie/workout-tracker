@@ -76,6 +76,21 @@ async function fetchMonthData(monthToFetch) {
     .then((res) => res.json());
 }
 
+async function fetchYearData(yearToFetch) {
+  const token = localStorage.getItem('token');
+  const id = localStorage.getItem('accountId');
+
+  return fetch(`${URL}/${id}/workouts/${yearToFetch}/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+  })
+    .then((res) => res.json());
+}
+
 async function fetchWorkout(workout_id) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
@@ -230,6 +245,7 @@ export {
   fetchAccountId,
   fetchSearchResults,
   fetchMonthData,
+  fetchYearData,
   fetchWorkout,
   postWorkout,
   updateWorkout,
