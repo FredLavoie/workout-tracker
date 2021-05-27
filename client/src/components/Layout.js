@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.text.secondary,
   },
   menuButton: {
     color: theme.palette.secondary.main,
