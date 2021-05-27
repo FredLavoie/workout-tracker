@@ -17,12 +17,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
-import StarIcon from '@material-ui/icons/Star';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
-import HomeIcon from '@material-ui/icons/Home';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import StarIcon from '@material-ui/icons/Star';
 import TodayIcon from '@material-ui/icons/Today';
 
 import { logout, isAuthenticated } from '../services/authentication';
@@ -129,7 +129,7 @@ function Layout({ children }) {
         onClick={() => handleMenuItemClick('/dashboard')}
         className={location.pathname === '/dashboard' ? classes.active : null}
       >
-        <ListItemIcon><HomeIcon /></ListItemIcon>
+        <ListItemIcon><DashboardIcon /></ListItemIcon>
         <ListItemText primary='Dashboard' />
       </ListItem>
       <ListItem
