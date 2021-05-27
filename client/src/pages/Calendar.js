@@ -89,7 +89,6 @@ function Calendar() {
 
   useEffect(() => {
     fetchMonthData(monthToFetch).then((data) => setWorkouts(data));
-    // eslint-disable-next-line
   }, []);
 
   return (

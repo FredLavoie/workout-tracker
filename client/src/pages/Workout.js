@@ -95,7 +95,6 @@ function Workout() {
           changeNewOrEdit(0);
         });
     }
-    // eslint-disable-next-line
   }, []);
 
 
