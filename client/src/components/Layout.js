@@ -3,6 +3,7 @@ import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -10,12 +11,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
 
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
@@ -173,7 +173,7 @@ function Layout({ children }) {
   return (
     <div className={classes.root1}>
 
-      {/********************************** Navbar *************************************/}
+      {/*********************************** Navbar ************************************/}
       <AppBar
         position='fixed'
         color='primary'
