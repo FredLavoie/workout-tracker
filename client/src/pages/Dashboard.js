@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
 import { fetchMonthData, fetchYearData, fetchRecords } from '../services/fetchData';
+import StrengthRecordTable from '../components/StrengthRecordTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +22,24 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     flexWrap: 'wrap'
   },
+  title: {
+    marginBottom: 16,
+  },
+  dashboardContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
+  },
   cardStyle: {
-    width: 320,
+    width: 360,
+    margin: '0px auto 16px auto',
+    [theme.breakpoints.up('sm')]: {
+      margin: '0px 16px 16px 8px',
+    },
+  },
+  summaryCardStyle: {
+    width: 360,
+    height: 200,
     margin: '0px auto 16px auto',
     [theme.breakpoints.up('sm')]: {
       margin: '0px 16px 16px 8px',
@@ -48,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   centerText: {
     paddingTop: 4,
-  }
+  },
 }));
 
 const currentDate = new Date().toISOString().split('T')[0].split('-');
@@ -62,15 +79,11 @@ function Dashboard() {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    console.log('***** Dashboard: useEffect got called *****');
     fetchRecords().then((data) => setRecords(data));
     fetchMonthData(currentYearMonth).then((data) => setMonthWorkouts(data));
     fetchYearData(currentYear).then((data) => setYearWorkouts(data));
   }, []);
 
-  console.log('monthWorkouts: ', monthWorkouts);
-  console.log('yearWorkouts: ', yearWorkouts);
-  console.log('records: ', records);
 
   return (
     <Grid
@@ -79,23 +92,36 @@ function Dashboard() {
       alignItems='center'
       className={classes.root}
     >
-      <Typography variant='h4'>
+      <Typography variant='h4' className={classes.title}>
         Dashboard
       </Typography>
-      <Card elevation={2} className={classes.cardStyle}>
-        <CardHeader
-          title='Summary'
-          className={classes.header}
-        />
-        <CardContent className={classes.content}>
-          <Typography className={classes.textCol}>
-            <span className={classes.centerText}>Workouts (YTD): </span><span className={classes.dataBackground}>{yearWorkouts.length}</span>
-          </Typography>
-          <Typography className={classes.textCol}>
-            <span className={classes.centerText}>Workouts (This month): </span><span className={classes.dataBackground}>{monthWorkouts.length}</span>
-          </Typography>
-        </CardContent>
-      </Card>
+      <div className={classes.dashboardContainer}>
+        {/*************************************** SUMMARY ***************************************/}
+        <Card elevation={2} className={classes.summaryCardStyle}>
+          <CardHeader
+            title='Summary'
+            className={classes.header}
+          />
+          <CardContent className={classes.content}>
+            <Typography className={classes.textCol}>
+              <span className={classes.centerText}>Workouts (YTD)</span>
+              <span className={classes.dataBackground}>{yearWorkouts.length}</span>
+            </Typography>
+            <Typography className={classes.textCol}>
+              <span className={classes.centerText}>Workouts (This month)</span>
+              <span className={classes.dataBackground}>{monthWorkouts.length}</span>
+            </Typography>
+          </CardContent>
+        </Card>
+        {/************************************* STRENGTH PRs ************************************/}
+        <Card elevation={2} className={classes.cardStyle}>
+          <CardHeader
+            title='Strength Records'
+            className={classes.header}
+          />
+          <StrengthRecordTable records={records.filter((ea) => ea.type === 'strength')} />
+        </Card>
+      </div>
     </Grid>
   );
 }
