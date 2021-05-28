@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
   monthTitle: {
     width: '30%',
-    textAlign: 'center'
+    textAlign: 'center',
+    cursor: 'pointer',
   },
   weekNames: {
     display: 'flex',
@@ -95,7 +96,7 @@ function Calendar() {
     <div className={classes.calendarContainer}>
       <div className={classes.monthNav}>
         <Button onClick={handleClickPrevious} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Previous</Button>
-        <Typography onClick={handleReturnToCurrent} button variant='h5' gutterBottom className={classes.monthTitle}>
+        <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom className={classes.monthTitle}>
           {`${currentMonthString} ${currentYear}`}
         </Typography>
         <Button onClick={handleClickNext} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
