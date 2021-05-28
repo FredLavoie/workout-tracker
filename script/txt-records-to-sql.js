@@ -49,7 +49,7 @@ fs.readFile(inputFile, 'utf-8', (error, data) => {
   for (let i = 0; i < resultArray.length; i += 2) {
     const day = resultArray[i].split(' ')[1];
     const body = resultArray[i + 1].join('\n');
-    resultString += 'INSERT INTO workouts_workout(id, author_id, date, time, body, created_at, updated_at)\n';
+    resultString += 'INSERT INTO workouts_workout(id, author_id, date, time, workout_body, created_at, updated_at)\n';
     resultString += `VALUES ('${uuid.v4()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`;
   }
 
