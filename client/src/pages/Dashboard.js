@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dashboardContainer: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     flexWrap: 'wrap'
   },
   cardStyle: {
@@ -61,13 +61,13 @@ const useStyles = makeStyles((theme) => ({
   },
   dataBackground: {
     backgroundColor: theme.palette.secondary.main,
-    padding: 4,
-    borderRadius: 16,
+    padding: '2px 4px',
+    borderRadius: 6,
     width: 24,
     textAlign: 'center',
   },
   centerText: {
-    paddingTop: 4,
+    paddingTop: 2,
   },
 }));
 
@@ -98,24 +98,24 @@ function Dashboard() {
       <Typography variant='h4' className={classes.title}>
         Dashboard
       </Typography>
+      {/*************************************** SUMMARY ***************************************/}
+      <Card elevation={2} className={classes.summaryCardStyle}>
+        <CardHeader
+          title='Summary'
+          className={classes.header}
+        />
+        <CardContent className={classes.content}>
+          <Typography className={classes.textCol}>
+            <span className={classes.centerText}>Workouts (YTD)</span>
+            <span className={classes.dataBackground}>{yearWorkouts.length}</span>
+          </Typography>
+          <Typography className={classes.textCol}>
+            <span className={classes.centerText}>Workouts (This month)</span>
+            <span className={classes.dataBackground}>{monthWorkouts.length}</span>
+          </Typography>
+        </CardContent>
+      </Card>
       <div className={classes.dashboardContainer}>
-        {/*************************************** SUMMARY ***************************************/}
-        <Card elevation={2} className={classes.summaryCardStyle}>
-          <CardHeader
-            title='Summary'
-            className={classes.header}
-          />
-          <CardContent className={classes.content}>
-            <Typography className={classes.textCol}>
-              <span className={classes.centerText}>Workouts (YTD)</span>
-              <span className={classes.dataBackground}>{yearWorkouts.length}</span>
-            </Typography>
-            <Typography className={classes.textCol}>
-              <span className={classes.centerText}>Workouts (This month)</span>
-              <span className={classes.dataBackground}>{monthWorkouts.length}</span>
-            </Typography>
-          </CardContent>
-        </Card>
         {/************************************* STRENGTH PRs ************************************/}
         <Card elevation={2} className={classes.cardStyle}>
           <CardHeader
