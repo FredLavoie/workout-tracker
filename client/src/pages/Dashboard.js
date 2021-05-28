@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core';
 
 import { fetchMonthData, fetchYearData, fetchRecords } from '../services/fetchData';
 import StrengthRecordTable from '../components/StrengthRecordTable';
+import EnduranceRecordTable from '../components/EnduranceRecordTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,10 +117,18 @@ function Dashboard() {
         {/************************************* STRENGTH PRs ************************************/}
         <Card elevation={2} className={classes.cardStyle}>
           <CardHeader
-            title='Strength Records'
+            title='Strength PRs'
             className={classes.header}
           />
           <StrengthRecordTable records={records.filter((ea) => ea.type === 'strength')} />
+        </Card>
+        {/************************************* ENDURANCE PRs ***********************************/}
+        <Card elevation={2} className={classes.cardStyle}>
+          <CardHeader
+            title='Endurance PRs'
+            className={classes.header}
+          />
+          <EnduranceRecordTable records={records.filter((ea) => ea.type === 'endurance')} />
         </Card>
       </div>
     </Grid>
