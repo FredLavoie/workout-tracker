@@ -10,6 +10,8 @@ import { makeStyles } from '@material-ui/core';
 import { fetchMonthData, fetchYearData, fetchRecords } from '../services/fetchData';
 import StrengthRecordTable from '../components/StrengthRecordTable';
 import EnduranceRecordTable from '../components/EnduranceRecordTable';
+import WODRecordTable from '../components/WODRecordTable';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dashboardContainer: {
     display: 'flex',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     flexWrap: 'wrap'
   },
   cardStyle: {
@@ -129,6 +131,14 @@ function Dashboard() {
             className={classes.header}
           />
           <EnduranceRecordTable records={records.filter((ea) => ea.type === 'endurance')} />
+        </Card>
+        {/**************************************** WOD PRs **************************************/}
+        <Card elevation={2} className={classes.cardStyle}>
+          <CardHeader
+            title='WOD PRs'
+            className={classes.header}
+          />
+          <WODRecordTable records={records.filter((ea) => ea.type === 'wod')} />
         </Card>
       </div>
     </Grid>

@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 
 import recordList from '../lib/recordList';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   content: {
     padding: '0 32px 32px 32px',
   },
@@ -18,8 +18,20 @@ const useStyles = makeStyles({
   },
   eventContainer: {
     marginBottom: 16,
-  }
-});
+  },
+  eventTitle: {
+    borderBottom: '1px solid #f0f0f5',
+  },
+  score: {
+    backgroundColor: theme.palette.secondary.main,
+    padding: '2px 4px',
+    borderRadius: 6,
+    margin: '2px 0',
+  },
+  date: {
+    margin: '2px 0',
+  },
+}));
 
 function StrengthRecordTable({ records }) {
   const classes = useStyles();
@@ -29,7 +41,6 @@ function StrengthRecordTable({ records }) {
   const filteredEventList = recordList.strength.filter((ea) => records.find((rec) => rec.event === ea));
 
   function handleClickActive(target) {
-    console.log('id inside StrengthRecordTable component: ', target.id);
     history.push(`/records/${target.id}`);
   }
 
@@ -37,7 +48,7 @@ function StrengthRecordTable({ records }) {
     <CardContent className={classes.content}>
       {filteredEventList.map((event, index) => (
         <div key={index} className={classes.eventContainer}>
-          <Typography gutterBottom variant={'subtitle1'}>
+          <Typography gutterBottom variant={'subtitle1'} className={classes.eventTitle}>
             {event}
           </Typography>
           <div>
@@ -50,10 +61,10 @@ function StrengthRecordTable({ records }) {
                     className={classes.individualContainer}
                     onClick={(e) => handleClickActive(e.target.id)}
                   >
-                    <Typography variant={'body2'}>
+                    <Typography variant={'body2'} className={classes.date}>
                       {ea.date}
                     </Typography>
-                    <Typography variant={'body2'}>
+                    <Typography variant={'body2'} className={classes.score}>
                       {ea.score}
                     </Typography>
                   </div>

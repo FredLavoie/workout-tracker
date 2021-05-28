@@ -33,12 +33,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EnduranceRecordTable({ records }) {
+function WODRecordTable({ records }) {
   const classes = useStyles();
   const history = useHistory();
 
   const sortedRecords = records.sort((a, b) => b.date > a.date);
-  const filteredEventList = recordList.endurance.filter((ea) => records.find((rec) => rec.event === ea));
+  const filteredEventList = recordList.wod.filter((ea) => records.find((rec) => rec.event === ea));
 
   function handleClickActive(target) {
     history.push(`/records/${target.id}`);
@@ -79,4 +79,4 @@ function EnduranceRecordTable({ records }) {
   );
 }
 
-export default EnduranceRecordTable;
+export default WODRecordTable;
