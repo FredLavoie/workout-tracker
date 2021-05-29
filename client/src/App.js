@@ -32,13 +32,15 @@ function App() {
           <Route exact path='/' component={Home} />
           <Route exact path='/login' component={Login} />
           <Layout>
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
-            <PrivateRoute path='/workouts' component={Workout} />
-            <PrivateRoute path='/records' component={Record} />
-            <PrivateRoute exact path='/cal/:date' component={Calendar} />
-            <PrivateRoute exact path='/search' component={Search} />
-            <PrivateRoute exact path='/password-change' component={Password} />
-            <Route path='' component={NotFound} />
+            <Switch>
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute path='/workouts' component={Workout} />
+              <PrivateRoute path='/records' component={Record} />
+              <PrivateRoute exact path='/cal/:date' component={Calendar} />
+              <PrivateRoute exact path='/search' component={Search} />
+              <PrivateRoute exact path='/password-change' component={Password} />
+              <Route component={NotFound} />
+            </Switch>
           </Layout>
         </Switch>
       </Router>
