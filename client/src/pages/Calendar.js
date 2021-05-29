@@ -65,6 +65,7 @@ function Calendar() {
   const currentMonthString = months[monthToFetch.split('-')[1]]; // May
   const currentMonth = monthToFetch.split('-')[1]; // 05
   const currentYear = monthToFetch.split('-')[0]; // 2021
+  if (!currentMonthString || Number(currentYear) % 1 !== 0) history.push(`/404`);
   const prevMonth = calculateMonth(currentMonth, currentYear, 'prev');
   const nextMonth = calculateMonth(currentMonth, currentYear, 'next');
 
