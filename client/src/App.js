@@ -13,6 +13,7 @@ import Record from './pages/Record';
 import Calendar from './pages/Calendar';
 import Search from './pages/Search';
 import Password from './pages/PasswordChange';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 const myTheme = createMuiTheme({
@@ -37,6 +38,7 @@ function App() {
             <PrivateRoute exact path='/cal/:date' component={Calendar} />
             <PrivateRoute exact path='/search' component={Search} />
             <PrivateRoute exact path='/password-change' component={Password} />
+            <Route path='' component={NotFound} />
           </Layout>
         </Switch>
       </Router>
