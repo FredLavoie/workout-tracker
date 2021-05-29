@@ -75,14 +75,14 @@ const currentYear = currentDate[0];
 
 function Dashboard() {
   const classes = useStyles();
-  const [monthWorkouts, setMonthWorkouts] = useState([]);
-  const [yearWorkouts, setYearWorkouts] = useState([]);
+  const [monthWorkouts, setMonthWorkouts] = useState(0);
+  const [yearWorkouts, setYearWorkouts] = useState(0);
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
     fetchRecords().then((data) => setRecords(data));
-    fetchMonthData(currentYearMonth).then((data) => setMonthWorkouts(data));
-    fetchYearData(currentYear).then((data) => setYearWorkouts(data));
+    fetchMonthData(currentYearMonth).then((data) => setMonthWorkouts(data.length));
+    fetchYearData(currentYear).then((data) => setYearWorkouts(data.length));
   }, []);
 
 
@@ -105,11 +105,11 @@ function Dashboard() {
         <CardContent className={classes.content}>
           <Typography className={classes.textCol}>
             <span className={classes.centerText}>Workouts (YTD)</span>
-            <span className={classes.dataBackground}>{yearWorkouts.length}</span>
+            <span className={classes.dataBackground}>{yearWorkouts}</span>
           </Typography>
           <Typography className={classes.textCol}>
             <span className={classes.centerText}>Workouts (This month)</span>
-            <span className={classes.dataBackground}>{monthWorkouts.length}</span>
+            <span className={classes.dataBackground}>{monthWorkouts}</span>
           </Typography>
         </CardContent>
       </Card>
