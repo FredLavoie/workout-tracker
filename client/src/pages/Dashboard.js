@@ -8,9 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
 import { fetchMonthData, fetchYearData, fetchRecords } from '../services/fetchData';
-import StrengthRecordTable from '../components/StrengthRecordTable';
-import EnduranceRecordTable from '../components/EnduranceRecordTable';
-import WODRecordTable from '../components/WODRecordTable';
+import RecordTable from '../components/RecordTable';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -98,7 +96,7 @@ function Dashboard() {
       <Typography variant='h4' className={classes.title}>
         Dashboard
       </Typography>
-      {/*************************************** SUMMARY ***************************************/}
+      {/******************************************* SUMMARY *******************************************/}
       <Card elevation={2} className={classes.summaryCardStyle}>
         <CardHeader
           title='Summary'
@@ -116,29 +114,29 @@ function Dashboard() {
         </CardContent>
       </Card>
       <div className={classes.dashboardContainer}>
-        {/************************************* STRENGTH PRs ************************************/}
+        {/**************************************** STRENGTH PRs ***************************************/}
         <Card elevation={2} className={classes.cardStyle}>
           <CardHeader
             title='Strength PRs'
             className={classes.header}
           />
-          <StrengthRecordTable records={records.filter((ea) => ea.type === 'strength')} />
+          <RecordTable type={'strength'} records={records.filter((ea) => ea.type === 'strength')} />
         </Card>
-        {/************************************* ENDURANCE PRs ***********************************/}
+        {/**************************************** ENDURANCE PRs **************************************/}
         <Card elevation={2} className={classes.cardStyle}>
           <CardHeader
             title='Endurance PRs'
             className={classes.header}
           />
-          <EnduranceRecordTable records={records.filter((ea) => ea.type === 'endurance')} />
+          <RecordTable type={'endurance'} records={records.filter((ea) => ea.type === 'endurance')} />
         </Card>
-        {/**************************************** WOD PRs **************************************/}
+        {/******************************************* WOD PRs *****************************************/}
         <Card elevation={2} className={classes.cardStyle}>
           <CardHeader
             title='WOD PRs'
             className={classes.header}
           />
-          <WODRecordTable records={records.filter((ea) => ea.type === 'wod')} />
+          <RecordTable type={'wod'} records={records.filter((ea) => ea.type === 'wod')} />
         </Card>
       </div>
     </Grid>
