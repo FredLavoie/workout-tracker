@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -76,6 +77,7 @@ const currentYear = currentDate[0];
 
 function Dashboard() {
   const classes = useStyles();
+  const history = useHistory();
   const [monthWorkouts, setMonthWorkouts] = useState(0);
   const [yearWorkouts, setYearWorkouts] = useState(0);
   const [records, setRecords] = useState([]);
@@ -91,7 +93,10 @@ function Dashboard() {
       setMonthWorkouts(data[1].length);
       setYearWorkouts(data[2].length);
       setIsLoading(false);
-    });
+    })
+      .catch(() => {
+        history.push('/500-server-error');
+      });
   }, []);
 
 

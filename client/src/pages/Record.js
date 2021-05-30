@@ -79,13 +79,15 @@ function Record() {
     } else {
       fetchRecord(recordId)
         .then((data) => {
-          console.log('data: ', data);
           setSelectedDate(data.date);
           setRecordType(data.type);
           setRecordEvent(data.event);
           setRecordScore(data.score);
           changeNewOrEdit(0);
           setIsLoading(false);
+        })
+        .catch(() => {
+          history.push('/500-server-error');
         });
     }
   }, []);

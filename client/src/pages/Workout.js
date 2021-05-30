@@ -96,6 +96,9 @@ function Workout() {
           setWorkoutBody(data.workout_body);
           changeNewOrEdit(0);
           setIsLoading(false);
+        })
+        .catch(() => {
+          history.push('/500-server-error');
         });
     }
   }, []);

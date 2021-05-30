@@ -82,7 +82,10 @@ function Calendar() {
     fetchMonthData(prevMonth).then((data) => {
       setWorkouts(data);
       setIsLoading(false);
-    });
+    })
+      .catch(() => {
+        history.push('/500-server-error');
+      });
     history.push(`/cal/${prevMonth}`);
   }
 
@@ -92,7 +95,10 @@ function Calendar() {
     fetchMonthData(nextMonth).then((data) => {
       setWorkouts(data);
       setIsLoading(false);
-    });
+    })
+      .catch(() => {
+        history.push('/500-server-error');
+      });
     history.push(`/cal/${nextMonth}`);
   }
 
@@ -102,9 +108,13 @@ function Calendar() {
     const currentDate = new Date().toISOString().split('T')[0].split('-');
     const dateString = `${currentDate[0]}-${currentDate[1]}`;
     fetchMonthData(dateString).then((data) => {
+      console.log('error: ', data);
       setWorkouts(data);
       setIsLoading(false);
-    });
+    })
+      .catch(() => {
+        history.push('/500-server-error');
+      });
     history.push(`/cal/${dateString}`);
   }
 
@@ -112,7 +122,10 @@ function Calendar() {
     fetchMonthData(monthToFetch).then((data) => {
       setWorkouts(data);
       setIsLoading(false);
-    });
+    })
+      .catch(() => {
+        history.push('/500-server-error');
+      });
   }, []);
 
   return (
