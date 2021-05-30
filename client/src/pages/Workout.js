@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
@@ -79,6 +80,7 @@ function Workout() {
   const [workoutBody, setWorkoutBody] = useState('');
   const [newOrEdit, changeNewOrEdit] = useState(1);
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
@@ -93,6 +95,7 @@ function Workout() {
           setSelectedTime(data.time.split(':').slice(0, 2).join(':'));
           setWorkoutBody(data.workout_body);
           changeNewOrEdit(0);
+          setIsLoading(false);
         });
     }
   }, []);
@@ -136,13 +139,13 @@ function Workout() {
       container
       direction='column'
       alignItems='center'
-      justify='center'
       className={classes.root}
     >
       <Typography variant='h4' gutterBottom>
         Workout
       </Typography>
-      <Grid className={classes.formSize}>
+      {isLoading && <CircularProgress />}
+      {!isLoading && <Grid className={classes.formSize}>
         <form noValidate onSubmit={handleSubmit} className={classes.formContainer}>
           <TextField
             onChange={(e) => setSelectedDate(e.target.value)}
@@ -191,7 +194,7 @@ function Workout() {
               </ButtonGroup>
           }
         </form>
-      </Grid>
+      </Grid>}
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert severity='error'>
           Invalid input. Check that the time format is 00:00 and the date format is YYY:MM:DD

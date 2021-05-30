@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -68,6 +69,7 @@ function Record() {
   const [recordScore, setRecordScore] = useState('');
   const [newOrEdit, changeNewOrEdit] = useState(1);
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
@@ -83,6 +85,7 @@ function Record() {
           setRecordEvent(data.event);
           setRecordScore(data.score);
           changeNewOrEdit(0);
+          setIsLoading(false);
         });
     }
   }, []);
@@ -126,13 +129,13 @@ function Record() {
       container
       direction='column'
       alignItems='center'
-      justify='center'
       className={classes.root}
     >
       <Typography variant='h4' gutterBottom>
         Personal Record
       </Typography>
-      <Grid className={classes.formSize}>
+      {isLoading && <CircularProgress />}
+      {!isLoading && <Grid className={classes.formSize}>
         <form noValidate onSubmit={handleSubmit} className={classes.formContainer}>
           <Typography className={classes.elementMargin}>
             Date
@@ -212,7 +215,7 @@ function Record() {
               </ButtonGroup>
           }
         </form>
-      </Grid>
+      </Grid>}
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert severity='error'>
           Invalid input. Check that the date format is YYY:MM:DD

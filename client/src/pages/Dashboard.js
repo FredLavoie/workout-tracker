@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
@@ -78,11 +79,19 @@ function Dashboard() {
   const [monthWorkouts, setMonthWorkouts] = useState(0);
   const [yearWorkouts, setYearWorkouts] = useState(0);
   const [records, setRecords] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchRecords().then((data) => setRecords(data));
-    fetchMonthData(currentYearMonth).then((data) => setMonthWorkouts(data.length));
-    fetchYearData(currentYear).then((data) => setYearWorkouts(data.length));
+    Promise.all([
+      fetchRecords(),
+      fetchMonthData(currentYearMonth),
+      fetchYearData(currentYear),
+    ]).then((data) => {
+      setRecords(data[0]);
+      setMonthWorkouts(data[1].length);
+      setYearWorkouts(data[2].length);
+      setIsLoading(false);
+    });
   }, []);
 
 
@@ -96,8 +105,9 @@ function Dashboard() {
       <Typography variant='h4' className={classes.title}>
         Dashboard
       </Typography>
+      {isLoading && <CircularProgress />}
       {/******************************************* SUMMARY *******************************************/}
-      <Card elevation={2} className={classes.summaryCardStyle}>
+      {!isLoading && <Card elevation={2} className={classes.summaryCardStyle}>
         <CardHeader
           title='Summary'
           className={classes.header}
@@ -112,8 +122,8 @@ function Dashboard() {
             <span className={classes.dataBackground}>{monthWorkouts}</span>
           </Typography>
         </CardContent>
-      </Card>
-      <div className={classes.dashboardContainer}>
+      </Card>}
+      {!isLoading && <div className={classes.dashboardContainer}>
         {/**************************************** STRENGTH PRs ***************************************/}
         <Card elevation={2} className={classes.cardStyle}>
           <CardHeader
@@ -138,7 +148,7 @@ function Dashboard() {
           />
           <RecordTable type={'wod'} records={records.filter((ea) => ea.type === 'wod')} />
         </Card>
-      </div>
+      </div>}
     </Grid>
   );
 }

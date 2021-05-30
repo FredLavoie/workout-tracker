@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core';
 
 import CalendarGrid from '../components/CalendarGrid';
 import { fetchMonthData } from '../services/fetchData';
@@ -51,6 +52,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-around',
     marginTop: '16px'
+  },
+  loading: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '10%',
   }
 }));
 
@@ -58,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 function Calendar() {
   const classes = useStyles();
   const [workouts, setWorkouts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const location = useLocation();
 
@@ -71,49 +78,67 @@ function Calendar() {
 
   function handleClickPrevious() {
     setWorkouts([]);
-    fetchMonthData(prevMonth).then((data) => setWorkouts(data));
+    setIsLoading(true);
+    fetchMonthData(prevMonth).then((data) => {
+      setWorkouts(data);
+      setIsLoading(false);
+    });
     history.push(`/cal/${prevMonth}`);
   }
 
   function handleClickNext() {
     setWorkouts([]);
-    fetchMonthData(nextMonth).then((data) => setWorkouts(data));
+    setIsLoading(true);
+    fetchMonthData(nextMonth).then((data) => {
+      setWorkouts(data);
+      setIsLoading(false);
+    });
     history.push(`/cal/${nextMonth}`);
   }
 
   function handleReturnToCurrent() {
     setWorkouts([]);
+    setIsLoading(true);
     const currentDate = new Date().toISOString().split('T')[0].split('-');
     const dateString = `${currentDate[0]}-${currentDate[1]}`;
-    fetchMonthData(dateString).then((data) => setWorkouts(data));
+    fetchMonthData(dateString).then((data) => {
+      setWorkouts(data);
+      setIsLoading(false);
+    });
     history.push(`/cal/${dateString}`);
   }
 
   useEffect(() => {
-    fetchMonthData(monthToFetch).then((data) => setWorkouts(data));
+    fetchMonthData(monthToFetch).then((data) => {
+      setWorkouts(data);
+      setIsLoading(false);
+    });
   }, []);
 
   return (
-    <div className={classes.calendarContainer}>
-      <div className={classes.monthNav}>
-        <Button onClick={handleClickPrevious} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Previous</Button>
-        <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom className={classes.monthTitle}>
-          {`${currentMonthString} ${currentYear}`}
-        </Typography>
-        <Button onClick={handleClickNext} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
-      </div>
-      <div className={classes.outline}>
-        <div className={classes.weekNames}>
-          <Typography>SUN</Typography>
-          <Typography>MON</Typography>
-          <Typography>TUE</Typography>
-          <Typography>WED</Typography>
-          <Typography>THU</Typography>
-          <Typography>FRI</Typography>
-          <Typography>SAT</Typography>
+    <div>
+      {isLoading && <div className={classes.loading}><CircularProgress /></div>}
+      {!isLoading && <div className={classes.calendarContainer}>
+        <div className={classes.monthNav}>
+          <Button onClick={handleClickPrevious} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Previous</Button>
+          <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom className={classes.monthTitle}>
+            {`${currentMonthString} ${currentYear}`}
+          </Typography>
+          <Button onClick={handleClickNext} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
         </div>
-        <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
-      </div>
+        <div className={classes.outline}>
+          <div className={classes.weekNames}>
+            <Typography>SUN</Typography>
+            <Typography>MON</Typography>
+            <Typography>TUE</Typography>
+            <Typography>WED</Typography>
+            <Typography>THU</Typography>
+            <Typography>FRI</Typography>
+            <Typography>SAT</Typography>
+          </div>
+          <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
+        </div>
+      </div>}
     </div>
   );
 }
