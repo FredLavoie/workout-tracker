@@ -10,4 +10,4 @@ The stack for the app is made up of [Django](https://www.djangoproject.com/) + [
 <img src="./docs/dashboard_view.png" width="800">
 
 ### Mobile Screenshots
-<img src="./docs/mobile_views.png" width="800">
+<img src="./docs/mobile_views2.png" width="800">
