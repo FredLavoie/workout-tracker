@@ -108,7 +108,6 @@ function Calendar() {
     const currentDate = new Date().toISOString().split('T')[0].split('-');
     const dateString = `${currentDate[0]}-${currentDate[1]}`;
     fetchMonthData(dateString).then((data) => {
-      console.log('error: ', data);
       setWorkouts(data);
       setIsLoading(false);
     })
