@@ -1,7 +1,7 @@
 require('dotenv').config();
 const URL = process.env.REACT_APP_BASE_URL;
 
-async function fetchAccountId() {
+export async function fetchAccountId() {
   if (localStorage.getItem('accountId')) return;
 
   const token = localStorage.getItem('token');
@@ -19,7 +19,7 @@ async function fetchAccountId() {
 /****************************************** SEARCH ******************************************/
 /********************************************************************************************/
 
-async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
+export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
   if (!checkedWorkout && !checkedRecord) return [];
 
   const token = localStorage.getItem('token');
@@ -61,7 +61,7 @@ async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
 /***************************************** WORKOUTS *****************************************/
 /********************************************************************************************/
 
-async function fetchMonthData(monthToFetch) {
+export async function fetchMonthData(monthToFetch) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
 
@@ -76,7 +76,7 @@ async function fetchMonthData(monthToFetch) {
     .then((res) => res.json());
 }
 
-async function fetchYearData(yearToFetch) {
+export async function fetchYearData(yearToFetch) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
 
@@ -91,7 +91,7 @@ async function fetchYearData(yearToFetch) {
     .then((res) => res.json());
 }
 
-async function fetchWorkout(workout_id) {
+export async function fetchWorkout(workout_id) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -106,7 +106,7 @@ async function fetchWorkout(workout_id) {
     .then((res) => res.json());
 }
 
-async function updateWorkout(workout_id, date, time, workout_body) {
+export async function updateWorkout(workout_id, date, time, workout_body) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -123,7 +123,7 @@ async function updateWorkout(workout_id, date, time, workout_body) {
     .catch((error) => console.log('error: ', error));
 }
 
-async function postWorkout(date, time, workout_body) {
+export async function postWorkout(date, time, workout_body) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -140,7 +140,7 @@ async function postWorkout(date, time, workout_body) {
     .catch((error) => console.log('error: ', error));
 }
 
-async function deleteWorkout(workout_id) {
+export async function deleteWorkout(workout_id) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -159,7 +159,7 @@ async function deleteWorkout(workout_id) {
 /****************************************** RECORDS *****************************************/
 /********************************************************************************************/
 
-async function fetchRecord(record_id) {
+export async function fetchRecord(record_id) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -174,7 +174,7 @@ async function fetchRecord(record_id) {
     .then((res) => res.json());
 }
 
-async function fetchRecords() {
+export async function fetchRecords() {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -189,7 +189,7 @@ async function fetchRecords() {
     .then((res) => res.json());
 }
 
-async function updateRecord(record_id, date, type, event, score) {
+export async function updateRecord(record_id, date, type, event, score) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -206,7 +206,7 @@ async function updateRecord(record_id, date, type, event, score) {
     .catch((error) => console.log('error: ', error));
 }
 
-async function postRecord(date, type, event, score) {
+export async function postRecord(date, type, event, score) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -223,7 +223,7 @@ async function postRecord(date, type, event, score) {
     .catch((error) => console.log('error: ', error));
 }
 
-async function deleteRecord(record_id) {
+export async function deleteRecord(record_id) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -238,21 +238,3 @@ async function deleteRecord(record_id) {
     .then((response) => console.log('respose: ', response))
     .catch((error) => console.log('error: ', error));
 }
-
-/********************************************************************************************/
-
-export {
-  fetchAccountId,
-  fetchSearchResults,
-  fetchMonthData,
-  fetchYearData,
-  fetchWorkout,
-  postWorkout,
-  updateWorkout,
-  deleteWorkout,
-  fetchRecord,
-  fetchRecords,
-  updateRecord,
-  postRecord,
-  deleteRecord,
-};

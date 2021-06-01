@@ -1,4 +1,4 @@
-function validatePasswordChange(pass1, pass2) {
+export function validatePasswordChange(pass1, pass2) {
   if (pass1 === pass2) {
     if (pass1.length < 8) return false;
     if (Number(pass1) % 1 === 0) return false;
@@ -7,7 +7,7 @@ function validatePasswordChange(pass1, pass2) {
   return false;
 }
 
-function validateNewWorkout(date, time, body) {
+export function validateNewWorkout(date, time, body) {
   if (date === '' || !date.includes('-')) return false;
   if (time === '' || !time.includes(':')) return false;
   if (body === '') return false;
@@ -28,7 +28,7 @@ function validateNewWorkout(date, time, body) {
   return true;
 }
 
-function validateRecord(date, type, event, score) {
+export function validateRecord(date, type, event, score) {
   if (date === '') return false;
   if (type === '') return false;
   if (event === '') return false;
@@ -44,7 +44,7 @@ function validateRecord(date, type, event, score) {
   return true;
 }
 
-function calculateMonth(month, year, req) {
+export function calculateMonth(month, year, req) {
   if (month === '01' && req === 'prev') return `${Number(year) - 1}-12`;
   if (month === '12' && req === 'next') return `${Number(year) + 1}-01`;
   if (Number(month) <= 10 && req === 'prev') return `${year}-0${Number(month) - 1}`;
@@ -52,5 +52,3 @@ function calculateMonth(month, year, req) {
   if (req === 'prev') return `${year}-${Number(month) - 1}`;
   if (req === 'next') return `${year}-${Number(month) + 1}`;
 }
-
-export { validatePasswordChange, validateNewWorkout, validateRecord, calculateMonth };
