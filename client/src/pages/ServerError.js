@@ -15,9 +15,9 @@ function ServerError() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Typography variant='h2' align='center'>
+      <Typography variant='h4' align='center'>
         <br />
-        500 - Server Error
+        500 - Server error
       </Typography>
     </Container>
   );

@@ -15,7 +15,7 @@ function NotFound() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Typography variant='h2' align='center'>
+      <Typography variant='h4' align='center'>
         <br />
         404 - Resource not found
       </Typography>
