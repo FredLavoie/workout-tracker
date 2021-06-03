@@ -19,6 +19,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 import { fetchRecord, updateRecord, postRecord, deleteRecord } from '../services/fetchData';
 import { validateRecord } from '../lib/helperFunctions';
+import ServerError from '../components/ServerError';
 import recordList from '../lib/recordList';
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +71,7 @@ function Record() {
   const [newOrEdit, changeNewOrEdit] = useState(1);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
 
   useEffect(() => {
@@ -79,6 +81,10 @@ function Record() {
       setIsLoading(false);
     } else {
       fetchRecord(recordId)
+        .then((res) => {
+          if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+          return res.json();
+        })
         .then((data) => {
           setSelectedDate(data.date);
           setRecordType(data.type);
@@ -87,8 +93,9 @@ function Record() {
           changeNewOrEdit(0);
           setIsLoading(false);
         })
-        .catch(() => {
-          history.push('/500-server-error');
+        .catch((error) => {
+          setIsLoading(false);
+          setError(error.message);
         });
     }
   }, []);
@@ -137,8 +144,9 @@ function Record() {
       <Typography variant='h4' gutterBottom>
         Personal Record
       </Typography>
+      {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
-      {!isLoading && <Grid className={classes.formSize}>
+      {!error && !isLoading && <Grid className={classes.formSize}>
         <form noValidate onSubmit={handleSubmit} className={classes.formContainer}>
           <Typography className={classes.elementMargin}>
             Date
