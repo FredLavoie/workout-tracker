@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
 import CalendarGrid from '../components/CalendarGrid';
+import ServerError from '../components/ServerError';
 import { fetchMonthData } from '../services/fetchData';
 import { calculateMonth } from '../lib/helperFunctions';
 import months from '../lib/months';
@@ -63,28 +64,38 @@ const useStyles = makeStyles((theme) => ({
 
 function Calendar() {
   const classes = useStyles();
-  const [workouts, setWorkouts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const location = useLocation();
+  const [workouts, setWorkouts] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const monthToFetch = location.pathname.split('/')[2]; // ex: 2021-05
   const currentMonthString = months[monthToFetch.split('-')[1]]; // May
   const currentMonth = monthToFetch.split('-')[1]; // 05
   const currentYear = monthToFetch.split('-')[0]; // 2021
-  if (!currentMonthString || Number(currentYear) % 1 !== 0) history.push('/404');
+  if (!currentMonthString || Number(currentYear) % 1 !== 0) {
+    history.push('/');
+    history.push('/404');
+  }
   const prevMonth = calculateMonth(currentMonth, currentYear, 'prev');
   const nextMonth = calculateMonth(currentMonth, currentYear, 'next');
 
   function handleClickPrevious() {
     setWorkouts([]);
     setIsLoading(true);
-    fetchMonthData(prevMonth).then((data) => {
-      setWorkouts(data);
-      setIsLoading(false);
-    })
-      .catch(() => {
-        history.push('/500-server-error');
+    fetchMonthData(prevMonth)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setWorkouts(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(error.message);
       });
     history.push(`/cal/${prevMonth}`);
   }
@@ -92,12 +103,18 @@ function Calendar() {
   function handleClickNext() {
     setWorkouts([]);
     setIsLoading(true);
-    fetchMonthData(nextMonth).then((data) => {
-      setWorkouts(data);
-      setIsLoading(false);
-    })
-      .catch(() => {
-        history.push('/500-server-error');
+    fetchMonthData(nextMonth)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setWorkouts(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(error.message);
       });
     history.push(`/cal/${nextMonth}`);
   }
@@ -107,30 +124,43 @@ function Calendar() {
     setIsLoading(true);
     const currentDate = new Date().toISOString().split('T')[0].split('-');
     const dateString = `${currentDate[0]}-${currentDate[1]}`;
-    fetchMonthData(dateString).then((data) => {
-      setWorkouts(data);
-      setIsLoading(false);
-    })
-      .catch(() => {
-        history.push('/500-server-error');
+    fetchMonthData(dateString)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setWorkouts(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(error.message);
       });
     history.push(`/cal/${dateString}`);
   }
 
   useEffect(() => {
-    fetchMonthData(monthToFetch).then((data) => {
-      setWorkouts(data);
-      setIsLoading(false);
-    })
-      .catch(() => {
-        history.push('/500-server-error');
+    fetchMonthData(monthToFetch)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setWorkouts(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(error.message);
       });
   }, []);
 
   return (
     <div>
+      {error && <ServerError errorMessage={error} />}
       {isLoading && <div className={classes.loading}><CircularProgress /></div>}
-      {!isLoading && <div className={classes.calendarContainer}>
+      {workouts && !isLoading && <div className={classes.calendarContainer}>
         <div className={classes.monthNav}>
           <Button onClick={handleClickPrevious} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Previous</Button>
           <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom className={classes.monthTitle}>
