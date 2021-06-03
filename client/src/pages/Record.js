@@ -81,10 +81,6 @@ function Record() {
       setIsLoading(false);
     } else {
       fetchRecord(recordId)
-        .then((res) => {
-          if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-          return res.json();
-        })
         .then((data) => {
           setSelectedDate(data.date);
           setRecordType(data.type);

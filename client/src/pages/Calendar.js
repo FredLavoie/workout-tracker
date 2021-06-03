@@ -85,10 +85,6 @@ function Calendar() {
     setWorkouts([]);
     setIsLoading(true);
     fetchMonthData(prevMonth)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-        return res.json();
-      })
       .then((data) => {
         setWorkouts(data);
         setIsLoading(false);
@@ -104,10 +100,6 @@ function Calendar() {
     setWorkouts([]);
     setIsLoading(true);
     fetchMonthData(nextMonth)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-        return res.json();
-      })
       .then((data) => {
         setWorkouts(data);
         setIsLoading(false);
@@ -125,10 +117,6 @@ function Calendar() {
     const currentDate = new Date().toISOString().split('T')[0].split('-');
     const dateString = `${currentDate[0]}-${currentDate[1]}`;
     fetchMonthData(dateString)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-        return res.json();
-      })
       .then((data) => {
         setWorkouts(data);
         setIsLoading(false);
@@ -142,10 +130,6 @@ function Calendar() {
 
   useEffect(() => {
     fetchMonthData(monthToFetch)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-        return res.json();
-      })
       .then((data) => {
         setWorkouts(data);
         setIsLoading(false);

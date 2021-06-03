@@ -14,6 +14,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 import { fetchWorkout, postWorkout, updateWorkout, deleteWorkout } from '../services/fetchData';
 import { validateNewWorkout } from '../lib/helperFunctions';
+import ServerError from '../components/ServerError';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +82,7 @@ function Workout() {
   const [newOrEdit, changeNewOrEdit] = useState(1);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
 
   useEffect(() => {
@@ -98,8 +100,9 @@ function Workout() {
           changeNewOrEdit(0);
           setIsLoading(false);
         })
-        .catch(() => {
-          history.push('/500-server-error');
+        .catch((error) => {
+          setIsLoading(false);
+          setError(error.message);
         });
     }
   }, []);
@@ -148,8 +151,9 @@ function Workout() {
       <Typography variant='h4' gutterBottom>
         Workout
       </Typography>
+      {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
-      {!isLoading && <Grid className={classes.formSize}>
+      {!error && !isLoading && <Grid className={classes.formSize}>
         <form noValidate onSubmit={handleSubmit} className={classes.formContainer}>
           <TextField
             onChange={(e) => setSelectedDate(e.target.value)}
