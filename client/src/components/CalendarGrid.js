@@ -32,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
   today: {
     backgroundColor: theme.palette.primary.main,
+    borderRadius: 4,
+    padding: '4px 6px',
     color: '#fff'
   }
 }));
