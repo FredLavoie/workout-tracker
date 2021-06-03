@@ -14,7 +14,6 @@ import Calendar from './pages/Calendar';
 import Search from './pages/Search';
 import Password from './pages/PasswordChange';
 import NotFound from './pages/NotFound';
-import ServerError from './pages/ServerError';
 import './App.css';
 
 const myTheme = createMuiTheme({
@@ -40,7 +39,7 @@ function App() {
               <PrivateRoute exact path='/cal/:date' component={Calendar} />
               <PrivateRoute exact path='/search' component={Search} />
               <PrivateRoute exact path='/password-change' component={Password} />
-              <Route exact path='/500-server-error' component={ServerError} />
+              <Route exact path='/404' component={NotFound} />
               <Route component={NotFound} />
             </Switch>
           </Layout>
