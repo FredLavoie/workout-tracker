@@ -72,7 +72,7 @@ function Workout() {
   const workoutId = location.pathname.split('/')[2];
   const newDate = new Date().toISOString().split('T');
   const currentDate = newDate[0];
-  const currentTime = convertTime(new Date().toTimeString().split(':').splice(0, 2));
+  const currentTime = convertTime(new Date().toTimeString().split(':').splice(0, 2)); // add padding for hours less than 10
 
 
   const [selectedDate, setSelectedDate] = useState(currentDate);
@@ -88,6 +88,7 @@ function Workout() {
       setSelectedDate(currentDate);
       setSelectedTime(currentTime);
       changeNewOrEdit(1);
+      setIsLoading(false);
     } else {
       fetchWorkout(workoutId)
         .then((data) => {

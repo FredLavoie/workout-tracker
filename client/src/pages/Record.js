@@ -76,6 +76,7 @@ function Record() {
     if (recordId === 'new') {
       setSelectedDate(currentDate);
       changeNewOrEdit(1);
+      setIsLoading(false);
     } else {
       fetchRecord(recordId)
         .then((data) => {
