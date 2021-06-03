@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -11,6 +10,7 @@ import { makeStyles } from '@material-ui/core';
 
 import { fetchMonthData, fetchYearData, fetchRecords } from '../services/fetchData';
 import RecordTable from '../components/RecordTable';
+import ServerError from '../components/ServerError';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -77,11 +77,11 @@ const currentYear = currentDate[0];
 
 function Dashboard() {
   const classes = useStyles();
-  const history = useHistory();
   const [monthWorkouts, setMonthWorkouts] = useState(0);
   const [yearWorkouts, setYearWorkouts] = useState(0);
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -94,8 +94,9 @@ function Dashboard() {
       setYearWorkouts(data[2].length);
       setIsLoading(false);
     })
-      .catch(() => {
-        history.push('/500-server-error');
+      .catch((error) => {
+        setIsLoading(false);
+        setError(error.message);
       });
   }, []);
 
@@ -110,9 +111,10 @@ function Dashboard() {
       <Typography variant='h4' className={classes.title}>
         Dashboard
       </Typography>
+      {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
       {/******************************************* SUMMARY *******************************************/}
-      {!isLoading && <Card elevation={2} className={classes.summaryCardStyle}>
+      {!error && !isLoading && <Card elevation={2} className={classes.summaryCardStyle}>
         <CardHeader
           title='Summary'
           className={classes.header}
@@ -128,7 +130,7 @@ function Dashboard() {
           </Typography>
         </CardContent>
       </Card>}
-      {!isLoading && <div className={classes.dashboardContainer}>
+      {!error && !isLoading && <div className={classes.dashboardContainer}>
         {/**************************************** STRENGTH PRs ***************************************/}
         <Card elevation={2} className={classes.cardStyle}>
           <CardHeader

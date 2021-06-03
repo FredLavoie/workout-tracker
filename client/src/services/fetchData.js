@@ -19,7 +19,7 @@ export async function fetchAccountId() {
 /****************************************** SEARCH ******************************************/
 /********************************************************************************************/
 
-export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
+export function fetchSearchResults(checkedWorkout, checkedRecord, query) {
   if (!checkedWorkout && !checkedRecord) return [];
 
   const token = localStorage.getItem('token');
@@ -29,7 +29,7 @@ export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
   let recordResults = [];
 
   if (checkedWorkout) {
-    await fetch(`${URL}/${id}/workouts/search/?q=${trimmedQuery}/`, {
+    fetch(`${URL}/${id}/workouts/search/?q=${trimmedQuery}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
   }
 
   if (checkedRecord) {
-    await fetch(`${URL}/${id}/records/search/?q=${trimmedQuery}/`, {
+    fetch(`${URL}/${id}/records/search/?q=${trimmedQuery}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,10 @@ export async function fetchMonthData(monthToFetch) {
       'authorization': `Token ${token}`
     },
   })
-    .then((res) => res.json());
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      return res.json();
+    });
 }
 
 export async function fetchYearData(yearToFetch) {
@@ -88,7 +91,10 @@ export async function fetchYearData(yearToFetch) {
       'authorization': `Token ${token}`
     },
   })
-    .then((res) => res.json());
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      return res.json();
+    });
 }
 
 export async function fetchWorkout(workout_id) {
@@ -103,7 +109,10 @@ export async function fetchWorkout(workout_id) {
       'authorization': `Token ${token}`
     },
   })
-    .then((res) => res.json());
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      return res.json();
+    });
 }
 
 export async function updateWorkout(workout_id, date, time, workout_body) {
@@ -171,7 +180,10 @@ export async function fetchRecord(record_id) {
       'authorization': `Token ${token}`
     },
   })
-    .then((res) => res.json());
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      return res.json();
+    });
 }
 
 export async function fetchRecords() {
@@ -186,7 +198,10 @@ export async function fetchRecords() {
       'authorization': `Token ${token}`
     },
   })
-    .then((res) => res.json());
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      return res.json();
+    });
 }
 
 export async function updateRecord(record_id, date, type, event, score) {
