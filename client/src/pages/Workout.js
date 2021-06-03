@@ -55,8 +55,9 @@ const useStyles = makeStyles((theme) => ({
 function convertTime(timeArr) {
   if (timeArr[0] === '23') return '23:00';
 
-  const hour = Number(timeArr[0]) + 1;
-  return `${hour}:00`;
+  const hour = (Number(timeArr[0]) + 1).toString();
+  const paddedHour = hour.padStart(2, '0');
+  return `${paddedHour}:00`;
 }
 
 function Alert(props) {
@@ -72,8 +73,7 @@ function Workout() {
   const workoutId = location.pathname.split('/')[2];
   const newDate = new Date().toISOString().split('T');
   const currentDate = newDate[0];
-  const currentTime = convertTime(new Date().toTimeString().split(':').splice(0, 2)); // add padding for hours less than 10
-
+  const currentTime = convertTime(new Date().toTimeString().split(':').splice(0, 2));
 
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedTime, setSelectedTime] = useState(currentTime);
