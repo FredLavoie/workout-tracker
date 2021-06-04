@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -13,7 +13,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import MuiAlert from '@material-ui/lab/Alert';
 import Toolbar from '@material-ui/core/Toolbar';
+import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core';
 
@@ -79,6 +81,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={4} variant='filled' {...props} />;
+}
+
 function Layout({ children }) {
   if (isAuthenticated() === false) {
     return <Redirect to='/login' />;
@@ -90,14 +96,23 @@ function Layout({ children }) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = useState(false);
 
   const username = localStorage.getItem('username');
   const firstTwoLetter = `${username[0].toUpperCase()}${username[1].toUpperCase()}`;
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await logout();
-    return history.push('/login');
+    await logout()
+      .then(() => history.push('/login'))
+      .catch(() => {
+        console.log('INSIDE CATCH BLOCK');
+        return setOpen(true);
+      });
+  }
+
+  function handleCloseError() {
+    setOpen(false);
   }
 
   function handleClickAvatar(event) {
@@ -253,6 +268,11 @@ function Layout({ children }) {
         <div className={classes.toolbar}></div>
         {children}
       </div>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleCloseError}>
+        <Alert severity='error'>
+          Server error
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

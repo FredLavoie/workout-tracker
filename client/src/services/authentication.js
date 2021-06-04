@@ -25,20 +25,21 @@ export async function login(username, password) {
 }
 
 export async function logout() {
-  fetch(`${URL}/dj-rest-auth/logout/`, {
+  return fetch(`${URL}/dj-rest-auth/logout/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
   })
-    .then((res) => console.log('respose: ', res))
-    .catch((error) => console.log('error: ', error));
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      localStorage.removeItem('token');
+      localStorage.removeItem('accountId');
+      localStorage.removeItem('username');
+      return;
+    });
 
-  localStorage.removeItem('token');
-  localStorage.removeItem('accountId');
-  localStorage.removeItem('username');
-  return;
 }
 
 export async function changePassword(newPassword1, newPassword2) {
