@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
 import SearchResultCard from '../components/SearchResultCard';
+import ServerError from '../components/ServerError';
 import { fetchSearchResults } from '../services/fetchData';
 
 const useStyles = makeStyles({
@@ -63,16 +64,24 @@ function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   function handleClear() {
     setSearchQuery('');
     setSearchResults(null);
+    setError(null);
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
     const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
+    if (results.error) {
+      setIsLoading(false);
+      setSearchResults(null);
+      setError(results.error);
+      return;
+    }
     const sortedResults = results.sort((a, b) => b.date > a.date);
     setSearchResults(sortedResults);
     setIsLoading(false);
@@ -138,6 +147,7 @@ function Search() {
           </Button>
         </div>
       </form>
+      {error && <ServerError errorMessage={error} />}
       {isLoading && <div className={classes.loading}><CircularProgress /></div>}
       {searchResults && searchResults.length > 0 ? <Typography color='primary'>( Number of results found: {searchResults.length} )</Typography> : ''}
       {searchResults && searchResults.length > 0 ? <SearchResultCard content={searchResults} /> : <div></div>}

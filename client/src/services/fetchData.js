@@ -19,17 +19,17 @@ export async function fetchAccountId() {
 /****************************************** SEARCH ******************************************/
 /********************************************************************************************/
 
-export function fetchSearchResults(checkedWorkout, checkedRecord, query) {
+export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
   if (!checkedWorkout && !checkedRecord) return [];
 
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
   const trimmedQuery = query.trim().split(' ').join('+');
-  let workoutResults = [];
-  let recordResults = [];
+  const results = [];
+  let errorMessage = null;
 
   if (checkedWorkout) {
-    fetch(`${URL}/${id}/workouts/search/?q=${trimmedQuery}/`, {
+    await fetch(`${URL}/${id}/workouts/search/?q=${trimmedQuery}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -37,12 +37,16 @@ export function fetchSearchResults(checkedWorkout, checkedRecord, query) {
         'authorization': `Token ${token}`
       },
     })
-      .then((res) => res.json())
-      .then((data) => workoutResults = data);
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+        return res.json();
+      })
+      .then((data) => results.push(...data))
+      .catch((error) => errorMessage = { error: error.message });
   }
 
   if (checkedRecord) {
-    fetch(`${URL}/${id}/records/search/?q=${trimmedQuery}/`, {
+    await fetch(`${URL}/${id}/records/search/?q=${trimmedQuery}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -50,11 +54,15 @@ export function fetchSearchResults(checkedWorkout, checkedRecord, query) {
         'authorization': `Token ${token}`
       },
     })
-      .then((res) => res.json())
-      .then((data) => recordResults = data);
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+        return res.json();
+      })
+      .then((data) => results.push(...data))
+      .catch((error) => errorMessage = { error: error.message });
   }
-
-  return [...workoutResults, ...recordResults];
+  if (errorMessage) return errorMessage;
+  return results;
 }
 
 
