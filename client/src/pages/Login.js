@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
+import ServerError from '../components/ServerError';
 import { isAuthenticated, login } from '../services/authentication';
 import { fetchAccountId } from '../services/fetchData';
 
@@ -34,20 +35,28 @@ function Alert(props) {
 
 function Login() {
   const classes = useStyles();
+  const history = useHistory();
   const [username, changeUsername] = useState('');
   const [password, changePassword] = useState('');
   const [open, setOpen] = useState(false);
-  const history = useHistory();
+  const [error, setError] = useState(null);
 
-  // handle login
   async function handleSubmit(event) {
     event.preventDefault();
-    const data = await login(username, password);
-    if (data.non_field_errors) {
-      return setOpen(true);
-    }
-    await fetchAccountId();
-    return history.push('/dashboard');
+    login(username, password)
+      .then((data) => {
+        if (data.non_field_errors) {
+          return setOpen(true);
+        }
+        fetchAccountId()
+          .then(() => history.push('/dashboard'))
+          .catch((error) => {
+            return setError(error.message);
+          });
+      })
+      .catch((error) => {
+        return setError(error.message);
+      });
   }
 
   if (isAuthenticated() === true) {
@@ -109,6 +118,7 @@ function Login() {
             </Button>
           </form>
         </Grid>
+        {error && <ServerError errorMessage={error} />}
       </Grid>
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert severity='error'>

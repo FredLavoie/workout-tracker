@@ -2,7 +2,7 @@ require('dotenv').config();
 const URL = process.env.REACT_APP_BASE_URL;
 
 export async function login(username, password) {
-  return fetch(`${URL}/dj-rest-auth/login/`, {
+  return await fetch(`${URL}/dj-rest-auth/login/`, {
     method: 'POST',
     credentials: 'omit',
     headers: {
@@ -11,15 +11,17 @@ export async function login(username, password) {
     },
     body: JSON.stringify({ username, password })
   })
-    .then((response) => response.json())
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      return res.json();
+    })
     .then((data) => {
       if (data.key) {
         localStorage.setItem('username', username);
         localStorage.setItem('token', data.key);
       }
       return data;
-    })
-    .catch((error) => console.log('error: ', error));
+    });
 }
 
 export async function logout() {
@@ -30,7 +32,7 @@ export async function logout() {
       'Accept': 'application/json',
     },
   })
-    .then((response) => console.log('respose: ', response))
+    .then((res) => console.log('respose: ', res))
     .catch((error) => console.log('error: ', error));
 
   localStorage.removeItem('token');
@@ -50,7 +52,7 @@ export async function changePassword(newPassword1, newPassword2) {
     },
     body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 })
   })
-    .then((response) => response.json())
+    .then((res) => res.json())
     .then((data) => data)
     .catch((error) => console.log('error: ', error));
 }
