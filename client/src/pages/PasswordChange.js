@@ -33,23 +33,31 @@ function Alert(props) {
 
 function Password() {
   const classes = useStyles();
+  const history = useHistory();
   const [newPassword1, changeNewPassword1] = useState('');
   const [newPassword2, changeNewPassword2] = useState('');
   const [open, setOpen] = useState(false);
-  const history = useHistory();
+  const [alertMessage, setAlertMessage] = useState(null);
 
   async function handleSubmit(event) {
     event.preventDefault();
     const validatedInput = validatePasswordChange(newPassword1, newPassword2);
     if (validatedInput === false) {
-      return setOpen(true);
+      setAlertMessage({ severity: 'error', message: 'New passwords do not match or wrong old password.' });
+      setOpen(true);
+      return;
     }
-
-    const data = await changePassword(newPassword1, newPassword2);
-    if (data.detail !== 'New password has been saved.') {
-      return setOpen(true);
-    }
-    return history.push('/dashboard');
+    await changePassword(newPassword1, newPassword2)
+      .then(() => {
+        setAlertMessage({ severity: 'success', message: 'Successfully changed password.' });
+        setOpen(true);
+        setTimeout(() => history.push('/dashboard'), 2500);
+        return;
+      })
+      .catch((error) => {
+        setAlertMessage({ severity: 'error', message: error.message });
+        return setOpen(true);
+      });
   }
 
   function handleClose() {
@@ -107,9 +115,7 @@ function Password() {
         </Grid>
       </Grid>
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-        <Alert severity='error'>
-          New passwords do not match or wrong old password.
-        </Alert>
+        {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Container>
   );

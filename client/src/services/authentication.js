@@ -53,9 +53,10 @@ export async function changePassword(newPassword1, newPassword2) {
     },
     body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 })
   })
-    .then((res) => res.json())
-    .then((data) => data)
-    .catch((error) => console.log('error: ', error));
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      return res.json();
+    });
 }
 
 export function isAuthenticated() {
