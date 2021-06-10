@@ -43,7 +43,7 @@ function Password() {
     event.preventDefault();
     const validatedInput = validatePasswordChange(newPassword1, newPassword2);
     if (validatedInput === false) {
-      setAlertMessage({ severity: 'error', message: 'New passwords do not match or wrong old password.' });
+      setAlertMessage({ severity: 'error', message: 'The two passwords do not match or don\'t meet the requirements.' });
       setOpen(true);
       return;
     }

@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { fetchWorkout, postWorkout, updateWorkout, deleteWorkout } from '../services/fetchData';
-import { validateNewWorkout } from '../lib/helperFunctions';
+import { validateWorkout } from '../lib/helperFunctions';
 import ServerError from '../components/ServerError';
 
 const useStyles = makeStyles((theme) => ({
@@ -112,14 +112,14 @@ function Workout() {
     event.preventDefault();
 
     if (workoutId === 'new') {
-      const valid = validateNewWorkout(selectedDate, selectedTime, workoutBody);
+      const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
         await postWorkout(selectedDate, selectedTime, workoutBody);
         return history.goBack();
       }
       return setOpen(true);
     } else {
-      const valid = validateNewWorkout(selectedDate, selectedTime, workoutBody);
+      const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
         await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
         return history.goBack();
