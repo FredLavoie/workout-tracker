@@ -69,8 +69,9 @@ function Record() {
   const [recordEvent, setRecordEvent] = useState('');
   const [recordScore, setRecordScore] = useState('');
   const [newOrEdit, changeNewOrEdit] = useState(1);
-  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
   const [error, setError] = useState(null);
 
 
@@ -103,17 +104,39 @@ function Record() {
     if (recordId === 'new') {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
-        await postRecord(selectedDate, recordType, recordEvent, recordScore);
-        return history.goBack();
+        await postRecord(selectedDate, recordType, recordEvent, recordScore)
+          .then(() => {
+            setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
+            setOpen(true);
+            setTimeout(() => history.push('/dashboard'), 2500);
+            return;
+          })
+          .catch((error) => {
+            setAlertMessage({ severity: 'error', message: error.message });
+            return setOpen(true);
+          });
+      } else {
+        setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
+        return setOpen(true);
       }
-      return setOpen(true);
     } else {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
-        await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
-        return history.goBack();
+        await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore)
+          .then(() => {
+            setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
+            setOpen(true);
+            setTimeout(() => history.push('/dashboard'), 2500);
+            return;
+          })
+          .catch((error) => {
+            setAlertMessage({ severity: 'error', message: error.message });
+            return setOpen(true);
+          });
+      } else {
+        setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
+        return setOpen(true);
       }
-      return setOpen(true);
     }
   }
 
@@ -122,8 +145,17 @@ function Record() {
   }
 
   async function handleDelete() {
-    await deleteRecord(recordId);
-    return history.goBack();
+    await deleteRecord(recordId)
+      .then(() => {
+        setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
+        setOpen(true);
+        setTimeout(() => history.push('/dashboard'), 2500);
+        return;
+      })
+      .catch((error) => {
+        setAlertMessage({ severity: 'error', message: error.message });
+        return setOpen(true);
+      });
   }
 
   function handleClose() {
@@ -224,9 +256,7 @@ function Record() {
         </form>
       </Grid>}
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-        <Alert severity='error'>
-          Invalid input. Check that the date format is YYY:MM:DD
-        </Alert>
+        {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Grid>
   );
