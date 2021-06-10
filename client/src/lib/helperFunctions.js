@@ -7,7 +7,7 @@ export function validatePasswordChange(pass1, pass2) {
   return false;
 }
 
-export function validateNewWorkout(date, time, body) {
+export function validateWorkout(date, time, body) {
   if (date === '' || !date.includes('-')) return false;
   if (time === '' || !time.includes(':')) return false;
   if (body === '') return false;
@@ -32,7 +32,7 @@ export function validateRecord(date, type, event, score) {
   if (date === '') return false;
   if (type === '') return false;
   if (event === '') return false;
-  if (score === '') return false;
+  if (score.trim() === '') return false;
 
   const dateArr = date.split('-');
 
