@@ -80,8 +80,9 @@ function Workout() {
   const [selectedTime, setSelectedTime] = useState(currentTime);
   const [workoutBody, setWorkoutBody] = useState('');
   const [newOrEdit, changeNewOrEdit] = useState(1);
-  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
   const [error, setError] = useState(null);
 
 
@@ -114,17 +115,39 @@ function Workout() {
     if (workoutId === 'new') {
       const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
-        await postWorkout(selectedDate, selectedTime, workoutBody);
-        return history.goBack();
+        await postWorkout(selectedDate, selectedTime, workoutBody)
+          .then(() => {
+            setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
+            setOpen(true);
+            setTimeout(() => history.push('/dashboard'), 2500);
+            return;
+          })
+          .catch((error) => {
+            setAlertMessage({ severity: 'error', message: error.message });
+            return setOpen(true);
+          });
+      } else {
+        setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
+        return setOpen(true);
       }
-      return setOpen(true);
     } else {
       const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
-        await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
-        return history.goBack();
+        await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody)
+          .then(() => {
+            setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
+            setOpen(true);
+            setTimeout(() => history.push('/dashboard'), 2500);
+            return;
+          })
+          .catch((error) => {
+            setAlertMessage({ severity: 'error', message: error.message });
+            return setOpen(true);
+          });
+      } else {
+        setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
+        return setOpen(true);
       }
-      return setOpen(true);
     }
   }
 
@@ -133,8 +156,17 @@ function Workout() {
   }
 
   async function handleDelete() {
-    await deleteWorkout(workoutId);
-    return history.goBack();
+    await deleteWorkout(workoutId)
+      .then(() => {
+        setAlertMessage({ severity: 'success', message: 'Successfully deleted workout.' });
+        setOpen(true);
+        setTimeout(() => history.push('/dashboard'), 2500);
+        return;
+      })
+      .catch((error) => {
+        setAlertMessage({ severity: 'error', message: error.message });
+        return setOpen(true);
+      });
   }
 
   function handleClose() {
@@ -204,9 +236,7 @@ function Workout() {
         </form>
       </Grid>}
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-        <Alert severity='error'>
-          Invalid input. Check that the time format is 00:00 and the date format is YYY:MM:DD
-        </Alert>
+        {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Grid>
   );
