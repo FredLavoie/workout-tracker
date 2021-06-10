@@ -106,7 +106,6 @@ function Layout({ children }) {
     await logout()
       .then(() => history.push('/login'))
       .catch(() => {
-        console.log('INSIDE CATCH BLOCK');
         return setOpen(true);
       });
   }
@@ -269,9 +268,7 @@ function Layout({ children }) {
         {children}
       </div>
       <Snackbar open={open} autoHideDuration={4000} onClose={handleCloseError}>
-        <Alert severity='error'>
-          Server error
-        </Alert>
+        <Alert severity='error'>Server error</Alert>
       </Snackbar>
     </div>
   );
