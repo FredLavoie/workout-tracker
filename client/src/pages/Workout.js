@@ -103,8 +103,11 @@ function Workout() {
           setIsLoading(false);
         })
         .catch((error) => {
-          setIsLoading(false);
-          setError(error.message);
+          if (error.name === 'AbortError') return;
+          else {
+            setIsLoading(false);
+            setError(error.message);
+          }
         });
     }
     return () => abortCont.abort();
