@@ -76,12 +76,13 @@ function Record() {
 
 
   useEffect(() => {
+    const abortCont = new AbortController();
     if (recordId === 'new') {
       setSelectedDate(currentDate);
       changeNewOrEdit(1);
       setIsLoading(false);
     } else {
-      fetchRecord(recordId)
+      fetchRecord(recordId, abortCont)
         .then((data) => {
           setSelectedDate(data.date);
           setRecordType(data.type);
@@ -95,6 +96,7 @@ function Record() {
           setError(error.message);
         });
     }
+    return () => abortCont.abort();
   }, []);
 
 

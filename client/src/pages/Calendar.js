@@ -129,7 +129,8 @@ function Calendar() {
   }
 
   useEffect(() => {
-    fetchMonthData(monthToFetch)
+    const abortCont = new AbortController();
+    fetchMonthData(monthToFetch, abortCont)
       .then((data) => {
         setWorkouts(data);
         setIsLoading(false);
@@ -138,6 +139,7 @@ function Calendar() {
         setIsLoading(false);
         setError(error.message);
       });
+    return () => abortCont.abort();
   }, []);
 
   return (

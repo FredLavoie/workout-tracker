@@ -84,10 +84,11 @@ function Dashboard() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const abortCont = new AbortController();
     Promise.all([
-      fetchRecords(),
-      fetchMonthData(currentYearMonth),
-      fetchYearData(currentYear),
+      fetchRecords(abortCont),
+      fetchMonthData(currentYearMonth, abortCont),
+      fetchYearData(currentYear, abortCont),
     ]).then((data) => {
       setRecords(data[0]);
       setMonthWorkouts(data[1].length);
@@ -98,6 +99,7 @@ function Dashboard() {
         setIsLoading(false);
         setError(error.message);
       });
+    return () => abortCont.abort();
   }, []);
 
 

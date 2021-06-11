@@ -72,12 +72,13 @@ export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
 /***************************************** WORKOUTS *****************************************/
 /********************************************************************************************/
 
-export async function fetchMonthData(monthToFetch) {
+export async function fetchMonthData(monthToFetch, abortCont) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
 
   return fetch(`${URL}/${id}/cal/${monthToFetch}/`, {
     method: 'GET',
+    signal: abortCont.signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -90,12 +91,13 @@ export async function fetchMonthData(monthToFetch) {
     });
 }
 
-export async function fetchYearData(yearToFetch) {
+export async function fetchYearData(yearToFetch, abortCont) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
 
   return fetch(`${URL}/${id}/workouts/${yearToFetch}/`, {
     method: 'GET',
+    signal: abortCont.signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -108,12 +110,13 @@ export async function fetchYearData(yearToFetch) {
     });
 }
 
-export async function fetchWorkout(workout_id) {
+export async function fetchWorkout(workout_id, abortCont) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
   return fetch(`${URL}/${accountId}/workouts/${workout_id}/`, {
     method: 'GET',
+    signal: abortCont.signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -185,12 +188,13 @@ export async function deleteWorkout(workout_id) {
 /****************************************** RECORDS *****************************************/
 /********************************************************************************************/
 
-export async function fetchRecord(record_id) {
+export async function fetchRecord(record_id, abortCont) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
   return fetch(`${URL}/${accountId}/records/${record_id}/`, {
     method: 'GET',
+    signal: abortCont.signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -203,12 +207,13 @@ export async function fetchRecord(record_id) {
     });
 }
 
-export async function fetchRecords() {
+export async function fetchRecords(abortCont) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
   return fetch(`${URL}/${accountId}/records/`, {
     method: 'GET',
+    signal: abortCont.signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

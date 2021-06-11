@@ -87,13 +87,14 @@ function Workout() {
 
 
   useEffect(() => {
+    const abortCont = new AbortController();
     if (workoutId === 'new') {
       setSelectedDate(currentDate);
       setSelectedTime(currentTime);
       changeNewOrEdit(1);
       setIsLoading(false);
     } else {
-      fetchWorkout(workoutId)
+      fetchWorkout(workoutId, abortCont)
         .then((data) => {
           setSelectedDate(data.date);
           setSelectedTime(data.time.split(':').slice(0, 2).join(':'));
@@ -106,6 +107,7 @@ function Workout() {
           setError(error.message);
         });
     }
+    return () => abortCont.abort();
   }, []);
 
 
