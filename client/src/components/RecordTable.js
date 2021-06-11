@@ -41,7 +41,8 @@ function StrengthRecordTable({ type, records }) {
   const filteredEventList = recordList[type].filter((ea) => records.find((rec) => rec.event === ea));
 
   function handleClickActive(target) {
-    history.push(`/records/${target.id}`);
+    if (target.id) history.push(`/records/${target.id}`);
+    else history.push(`/records/${target.parentNode.id}`);
   }
 
   return (
@@ -59,7 +60,7 @@ function StrengthRecordTable({ type, records }) {
                     key={ea.id}
                     id={ea.id}
                     className={classes.individualContainer}
-                    onClick={(e) => handleClickActive(e.target.id)}
+                    onClick={(e) => handleClickActive(e.target)}
                   >
                     <Typography variant={'body2'} className={classes.date}>
                       {ea.date}
