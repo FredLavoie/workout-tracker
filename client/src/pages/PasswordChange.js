@@ -3,12 +3,18 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import Snackbar from '@material-ui/core/Snackbar';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
 import MuiAlert from '@material-ui/lab/Alert';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Snackbar from '@material-ui/core/Snackbar';
+import Typography from '@material-ui/core/Typography';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { makeStyles } from '@material-ui/core';
 
 import { changePassword } from '../services/authentication';
 import { validatePasswordChange } from '../lib/helperFunctions';
@@ -17,14 +23,13 @@ const useStyles = makeStyles({
   root: {
     minHeight: 'calc(100vh - 64px)'
   },
-  field: {
-    marginTop: 20,
-    markginBottom: 20,
-    display: 'block'
-  },
   btn: {
     marginTop: 20
-  }
+  },
+  textField: {
+    width: '100%',
+    margin: '8px 0px',
+  },
 });
 
 function Alert(props) {
@@ -38,6 +43,7 @@ function Password() {
   const [newPassword2, changeNewPassword2] = useState('');
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -64,6 +70,14 @@ function Password() {
     setOpen(false);
   }
 
+  function handleClickShowPassword() {
+    setShowPassword(!showPassword);
+  }
+
+  function handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
   return (
     <Container>
       <Grid
@@ -81,26 +95,37 @@ function Password() {
         </Typography>
         <Grid item xs={12} md={3}>
           <form noValidate onSubmit={handleSubmit}>
-            <TextField
-              onChange={(e) => changeNewPassword1(e.target.value)}
-              className={classes.field}
-              label='New Password'
-              variant='outlined'
-              value={newPassword1}
-              type={'input'}
-              name={'newPassword1'}
-              color='secondary'
-            />
-            <TextField
-              onChange={(e) => changeNewPassword2(e.target.value)}
-              className={classes.field}
-              label='New Password'
-              variant='outlined'
-              value={newPassword2}
-              type={'input'}
-              name={'newPassword2'}
-              color='secondary'
-            />
+            <FormControl className={classes.textField} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <OutlinedInput
+                onChange={(e) => changeNewPassword1(e.target.value)}
+                value={newPassword1}
+                type={showPassword ? 'input' : 'password'}
+                name={'newPassword1'}
+                color='secondary'
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                labelWidth={70}
+              />
+            </FormControl>
+            <FormControl className={classes.textField} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <OutlinedInput
+                onChange={(e) => changeNewPassword2(e.target.value)}
+                value={newPassword2}
+                type={showPassword ? 'input' : 'password'}
+                name={'newPassword2'}
+                color='secondary'
+              />
+            </FormControl>
             <Button
               fullWidth
               type={'submit'}
