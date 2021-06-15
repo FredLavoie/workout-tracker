@@ -3,6 +3,7 @@
 .vscode
 script/workout_migrations/*
 node_modules/
+NOTES.md
 
 # client side
 client/node_modules/
