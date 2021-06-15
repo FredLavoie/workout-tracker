@@ -9,5 +9,5 @@ NOTES.md
 client/node_modules/
 
 # server side
-server/__pycache__/
+__pycache__/
 server/db.sqlite3
