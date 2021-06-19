@@ -1,5 +1,5 @@
 require('dotenv').config();
-const URL = process.env.REACT_APP_BASE_URL;
+const URL = process.env.REACT_APP_BASE_URL || 'https://workout-tracker.xyz/api';
 
 export async function login(username, password) {
   return await fetch(`${URL}/dj-rest-auth/login/`, {
