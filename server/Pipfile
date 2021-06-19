@@ -8,6 +8,8 @@ django = "~=3.2"
 psycopg2-binary = "==2.8.6"
 djangorestframework = "~=3.12.4"
 django-cors-headers = "==3.7.0"
+python-dotenv = "~=0.17.0"
+dj-rest-auth = "*"
 
 [dev-packages]
 
