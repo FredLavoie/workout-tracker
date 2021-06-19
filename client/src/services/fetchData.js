@@ -75,10 +75,11 @@ export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
 export async function fetchMonthData(monthToFetch, abortCont) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
+  const signal = abortCont === null ? null : abortCont.signal;
 
-  return fetch(`${URL}/${id}/cal/${monthToFetch}/`, {
+  return await fetch(`${URL}/${id}/cal/${monthToFetch}/`, {
     method: 'GET',
-    signal: abortCont.signal,
+    signal: signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -94,10 +95,11 @@ export async function fetchMonthData(monthToFetch, abortCont) {
 export async function fetchYearData(yearToFetch, abortCont) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
+  const signal = abortCont === null ? null : abortCont.signal;
 
   return fetch(`${URL}/${id}/workouts/${yearToFetch}/`, {
     method: 'GET',
-    signal: abortCont.signal,
+    signal: signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -113,10 +115,11 @@ export async function fetchYearData(yearToFetch, abortCont) {
 export async function fetchWorkout(workout_id, abortCont) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
+  const signal = abortCont === null ? null : abortCont.signal;
 
   return fetch(`${URL}/${accountId}/workouts/${workout_id}/`, {
     method: 'GET',
-    signal: abortCont.signal,
+    signal: signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -191,10 +194,11 @@ export async function deleteWorkout(workout_id) {
 export async function fetchRecord(record_id, abortCont) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
+  const signal = abortCont === null ? null : abortCont.signal;
 
   return fetch(`${URL}/${accountId}/records/${record_id}/`, {
     method: 'GET',
-    signal: abortCont.signal,
+    signal: signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -210,10 +214,11 @@ export async function fetchRecord(record_id, abortCont) {
 export async function fetchRecords(abortCont) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
+  const signal = abortCont === null ? null : abortCont.signal;
 
   return fetch(`${URL}/${accountId}/records/`, {
     method: 'GET',
-    signal: abortCont.signal,
+    signal: signal,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

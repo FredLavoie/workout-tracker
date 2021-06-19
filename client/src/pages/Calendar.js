@@ -82,9 +82,10 @@ function Calendar() {
   const nextMonth = calculateMonth(currentMonth, currentYear, 'next');
 
   function handleClickPrevious() {
-    setWorkouts([]);
+    setWorkouts(null);
     setIsLoading(true);
-    fetchMonthData(prevMonth)
+    history.push(`/cal/${prevMonth}`);
+    fetchMonthData(prevMonth, null)
       .then((data) => {
         setWorkouts(data);
         setIsLoading(false);
@@ -93,13 +94,13 @@ function Calendar() {
         setIsLoading(false);
         setError(error.message);
       });
-    history.push(`/cal/${prevMonth}`);
   }
 
   function handleClickNext() {
-    setWorkouts([]);
+    setWorkouts(null);
     setIsLoading(true);
-    fetchMonthData(nextMonth)
+    history.push(`/cal/${nextMonth}`);
+    fetchMonthData(nextMonth, null)
       .then((data) => {
         setWorkouts(data);
         setIsLoading(false);
@@ -108,15 +109,15 @@ function Calendar() {
         setIsLoading(false);
         setError(error.message);
       });
-    history.push(`/cal/${nextMonth}`);
   }
 
   function handleReturnToCurrent() {
-    setWorkouts([]);
+    setWorkouts(null);
     setIsLoading(true);
     const currentDate = new Date().toISOString().split('T')[0].split('-');
     const dateString = `${currentDate[0]}-${currentDate[1]}`;
-    fetchMonthData(dateString)
+    history.push(`/cal/${dateString}`);
+    fetchMonthData(dateString, null)
       .then((data) => {
         setWorkouts(data);
         setIsLoading(false);
@@ -125,7 +126,6 @@ function Calendar() {
         setIsLoading(false);
         setError(error.message);
       });
-    history.push(`/cal/${dateString}`);
   }
 
   useEffect(() => {
