@@ -182,7 +182,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_WHITELIST = (
-    'workout-tracker.xyz',
+    'http://workout-tracker.xyz',
     'http://localhost:3000',  # React frontend
     'http://localhost:8000',  # Django API
 )
