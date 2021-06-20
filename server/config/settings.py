@@ -30,17 +30,24 @@ SECRET_KEY = os.getenv('DJANGO_SECRETE_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [os.getenv('HOST')]
-
-SECURE_SSL_REDIRECT = True
-
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SECURE = True
-
-SECURE_HSTS_SECONDS = 2592000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+if os.getenv('DJANGO_DEVELOPMENT') == True:
+    DEBUG = False
+    ALLOWED_HOSTS = [os.getenv('HOST')]
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 2592000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = []
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    SECURE_HSTS_SECONDS = 0
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+    SECURE_HSTS_PRELOAD = False
 
 
 # Application definition
@@ -177,6 +184,3 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',  # React frontend
     'http://localhost:8000',  # Django API
 )
-
-if os.environ.get('DJANGO_DEVELOPMENT'):
-    from .settings_dev import *
