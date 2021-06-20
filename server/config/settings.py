@@ -32,8 +32,8 @@ DEBUG = False
 
 if os.getenv('DJANGO_DEVELOPMENT') == True:
     DEBUG = False
-    ALLOWED_HOSTS = [os.getenv('HOST')]
-    SECURE_SSL_REDIRECT = True
+    ALLOWED_HOSTS = ['workout-tracker.xyz', '127.0.0.1', 'localhost']
+    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT')
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 2592000
