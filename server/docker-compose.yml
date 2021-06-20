@@ -2,12 +2,8 @@ services:
   web:
     build: .
     command: "${SERVER_RUN_COMMAND:-gunicorn config.wsgi -b 0.0.0.0:8000}"
-    env_file:
-      - .env
-    environment:
-      - "DJANGO_DEVELOPMENT=${DJANGO_DEVELOPMENT}"
     volumes:
-      - ./server:/server_src
+      - .:/server_src
     ports:
       - 8000:8000
     depends_on:
