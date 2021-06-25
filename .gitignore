@@ -4,6 +4,7 @@
 script/workout_migrations/*
 node_modules/
 NOTES.md
+BACKUP/
 
 # client side
 client/node_modules/

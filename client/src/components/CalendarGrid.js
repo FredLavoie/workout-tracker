@@ -21,11 +21,17 @@ const useStyles = makeStyles((theme) => ({
     border: '1.5px solid #d9d9d9',
     display: 'flex',
     flexGrow: '1',
-    justifyContent: 'right'
+    justifyContent: 'right',
   },
   active: {
     backgroundColor: theme.palette.secondary.main,
     cursor: 'pointer'
+  },
+  dayOfMonth: {
+    backgroundColor: '#ede7f6',
+  },
+  notDayOfMonth: {
+    ackgroundColor: '#fff',
   },
   innerText: {
     padding: 4
@@ -87,18 +93,26 @@ function CalendarGrid(props) {
     }
   }
 
+  function applySquareStyle(ea) {
+    if (ea.active) return classes.active;
+    if (ea.dayNumber > 0) return classes.dayOfMonth;
+    return classes.notDayOfMonth;
+  }
+
   return (
     <div className={classes.container}>
       {contentArray.map((ea, index) => (
         <div
           onClick={(e) => handleClickActive(e.target)}
+          ontouchstart={(e) => handleClickActive(e.target)}
           key={index}
-          className={`${classes.daySquare} ${ea.active ? classes.active : ''}`}
+          className={`${classes.daySquare} ${applySquareStyle(ea)}`}
         >
           {ea.dayNumber !== 0
             ?
             <Typography
               onClick={(e) => handleClickActive(e.target.id)}
+              ontouchstart={(e) => handleClickActive(e.target.id)}
               variant='body2'
               id={ea.workoutId}
               className={`${classes.innerText} ${ea.today ? classes.today : ''}`}
