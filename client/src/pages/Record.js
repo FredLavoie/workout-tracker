@@ -114,15 +114,14 @@ function Record() {
             setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
             setOpen(true);
             setTimeout(() => history.push('/dashboard'), 1500);
-            return;
           })
           .catch((error) => {
             setAlertMessage({ severity: 'error', message: error.message });
-            return setOpen(true);
+            setOpen(true);
           });
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
-        return setOpen(true);
+        setOpen(true);
       }
     } else {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
@@ -132,21 +131,20 @@ function Record() {
             setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
             setOpen(true);
             setTimeout(() => history.push('/dashboard'), 1500);
-            return;
           })
           .catch((error) => {
             setAlertMessage({ severity: 'error', message: error.message });
-            return setOpen(true);
+            setOpen(true);
           });
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
-        return setOpen(true);
+        setOpen(true);
       }
     }
   }
 
   function handleCancel() {
-    return history.goBack();
+    history.goBack();
   }
 
   async function handleDelete() {
@@ -155,11 +153,10 @@ function Record() {
         setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
         setOpen(true);
         setTimeout(() => history.push('/dashboard'), 1500);
-        return;
       })
       .catch((error) => {
         setAlertMessage({ severity: 'error', message: error.message });
-        return setOpen(true);
+        setOpen(true);
       });
   }
 

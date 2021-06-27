@@ -125,15 +125,14 @@ function Workout() {
             setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
             setOpen(true);
             setTimeout(() => history.goBack(), 1500);
-            return;
           })
           .catch((error) => {
             setAlertMessage({ severity: 'error', message: error.message });
-            return setOpen(true);
+            setOpen(true);
           });
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
-        return setOpen(true);
+        setOpen(true);
       }
     } else {
       const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
@@ -143,21 +142,20 @@ function Workout() {
             setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
             setOpen(true);
             setTimeout(() => history.goBack(), 1500);
-            return;
           })
           .catch((error) => {
             setAlertMessage({ severity: 'error', message: error.message });
-            return setOpen(true);
+            setOpen(true);
           });
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
-        return setOpen(true);
+        setOpen(true);
       }
     }
   }
 
   function handleCancel() {
-    return history.goBack();
+    history.goBack();
   }
 
   async function handleDelete() {
@@ -166,11 +164,10 @@ function Workout() {
         setAlertMessage({ severity: 'success', message: 'Successfully deleted workout.' });
         setOpen(true);
         setTimeout(() => history.goBack(), 1500);
-        return;
       })
       .catch((error) => {
         setAlertMessage({ severity: 'error', message: error.message });
-        return setOpen(true);
+        setOpen(true);
       });
   }
 
