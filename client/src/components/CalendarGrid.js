@@ -87,14 +87,15 @@ function CalendarGrid(props) {
     }
   }
 
-  async function handleClickActive(target, dayNum) {
+  async function handleClickActive(id, dayNum) {
     if (dayNum === 0) return;
-    if (!target.firstChild || !target.firstChild.id) {
+    if (!id) {
       history.push('/workouts/new');
-    } else if (target.firstChild.id.length === 36) {
-      history.push(`/workouts/${target.firstChild.id}`);
+    } else {
+      history.push(`/workouts/${id}`);
     }
   }
+
 
   function applySquareStyle(ea) {
     if (ea.active) return classes.active;
@@ -106,9 +107,10 @@ function CalendarGrid(props) {
     <div className={classes.container}>
       {contentArray.map((ea, index) => (
         <div
-          onTouchStart={(e) => handleClickActive(e.target, ea.dayNumber)}
-          onClick={(e) => handleClickActive(e.target, ea.dayNumber)}
+          onTouchStart={(e) => handleClickActive(e.target.id, ea.dayNumber)}
+          onClick={(e) => handleClickActive(e.target.id, ea.dayNumber)}
           key={index}
+          id={ea.workoutId ? ea.workoutId : ''}
           className={`${classes.daySquare} ${applySquareStyle(ea)}`}
         >
           {ea.dayNumber !== 0
@@ -117,7 +119,7 @@ function CalendarGrid(props) {
               onTouchStart={(e) => handleClickActive(e.target.id, ea.dayNumber)}
               onClick={(e) => handleClickActive(e.target.id, ea.dayNumber)}
               variant='body2'
-              id={ea.workoutId}
+              id={ea.workoutId ? ea.workoutId : ''}
               className={`${classes.innerText} ${ea.today ? classes.today : ''}`}
             >
               {ea.dayNumber}
