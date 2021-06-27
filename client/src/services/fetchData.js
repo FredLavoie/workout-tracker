@@ -184,7 +184,7 @@ export async function deleteWorkout(workout_id) {
   })
     .then((res) => {
       if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-      return res.json();
+      return;
     });
 }
 
@@ -283,6 +283,6 @@ export async function deleteRecord(record_id) {
   })
     .then((res) => {
       if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-      return res.json();
+      return;
     });
 }
