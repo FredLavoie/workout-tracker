@@ -124,7 +124,7 @@ function Workout() {
           .then(() => {
             setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
             setOpen(true);
-            setTimeout(() => history.push('/dashboard'), 1500);
+            setTimeout(() => history.goBack(), 1500);
             return;
           })
           .catch((error) => {
@@ -142,7 +142,7 @@ function Workout() {
           .then(() => {
             setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
             setOpen(true);
-            setTimeout(() => history.push('/dashboard'), 1500);
+            setTimeout(() => history.goBack(), 1500);
             return;
           })
           .catch((error) => {
@@ -165,7 +165,7 @@ function Workout() {
       .then(() => {
         setAlertMessage({ severity: 'success', message: 'Successfully deleted workout.' });
         setOpen(true);
-        setTimeout(() => history.push('/dashboard'), 1500);
+        setTimeout(() => history.goBack(), 1500);
         return;
       })
       .catch((error) => {
