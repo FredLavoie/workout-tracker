@@ -25,10 +25,11 @@ const useStyles = makeStyles((theme) => ({
   },
   active: {
     backgroundColor: theme.palette.secondary.main,
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   dayOfMonth: {
     backgroundColor: '#ede7f6',
+    cursor: 'pointer',
   },
   notDayOfMonth: {
     ackgroundColor: '#fff',
@@ -86,9 +87,11 @@ function CalendarGrid(props) {
     }
   }
 
-  async function handleClickActive(target) {
-    if (!target.firstChild || !target.firstChild.id) return;
-    if (target.firstChild.id.length === 36) {
+  async function handleClickActive(target, dayNum) {
+    if (dayNum === 0) return;
+    if (!target.firstChild || !target.firstChild.id) {
+      history.push('/workouts/new');
+    } else if (target.firstChild.id.length === 36) {
       history.push(`/workouts/${target.firstChild.id}`);
     }
   }
@@ -103,16 +106,16 @@ function CalendarGrid(props) {
     <div className={classes.container}>
       {contentArray.map((ea, index) => (
         <div
-          onClick={(e) => handleClickActive(e.target)}
-          onTouchStart={(e) => handleClickActive(e.target)}
+          onTouchStart={(e) => handleClickActive(e.target, ea.dayNumber)}
+          onClick={(e) => handleClickActive(e.target, ea.dayNumber)}
           key={index}
           className={`${classes.daySquare} ${applySquareStyle(ea)}`}
         >
           {ea.dayNumber !== 0
             ?
             <Typography
-              onClick={(e) => handleClickActive(e.target.id)}
-              onTouchStart={(e) => handleClickActive(e.target.id)}
+              onTouchStart={(e) => handleClickActive(e.target.id, ea.dayNumber)}
+              onClick={(e) => handleClickActive(e.target.id, ea.dayNumber)}
               variant='body2'
               id={ea.workoutId}
               className={`${classes.innerText} ${ea.today ? classes.today : ''}`}
