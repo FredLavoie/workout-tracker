@@ -132,6 +132,7 @@ function Password() {
               className={classes.btn}
               color='primary'
               variant='contained'
+              key={`${!newPassword1 || !newPassword2 ? true : false}`}
               disabled={!newPassword1 || !newPassword2 ? true : false}
             >
               Change Password

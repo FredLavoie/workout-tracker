@@ -224,6 +224,7 @@ function Workout() {
             className={classes.btn}
             color='primary'
             variant='contained'
+            key={`${!workoutBody ? true : false}`}
             disabled={!workoutBody ? true : false}
           >
             Save

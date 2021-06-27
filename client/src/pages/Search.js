@@ -133,6 +133,7 @@ function Search() {
             className={classes.elementMargin}
             color='primary'
             variant='contained'
+            key={`${searchQuery === '' ? true : false}`}
             disabled={searchQuery === '' ? true : false}
           >
             Search

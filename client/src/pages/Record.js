@@ -244,6 +244,7 @@ function Record() {
             className={classes.elementMargin}
             color='primary'
             variant='contained'
+            key={`${!selectedDate || !recordEvent || !recordScore ? true : false}`}
             disabled={!selectedDate || !recordEvent || !recordScore ? true : false}
           >
             Save
