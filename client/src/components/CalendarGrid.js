@@ -107,7 +107,6 @@ function CalendarGrid(props) {
     <div className={classes.container}>
       {contentArray.map((ea, index) => (
         <div
-          onTouchStart={(e) => handleClickActive(e.target.id, ea.dayNumber)}
           onClick={(e) => handleClickActive(e.target.id, ea.dayNumber)}
           key={index}
           id={ea.workoutId ? ea.workoutId : ''}
@@ -116,8 +115,6 @@ function CalendarGrid(props) {
           {ea.dayNumber !== 0
             ?
             <Typography
-              onTouchStart={(e) => handleClickActive(e.target.id, ea.dayNumber)}
-              onClick={(e) => handleClickActive(e.target.id, ea.dayNumber)}
               variant='body2'
               id={ea.workoutId ? ea.workoutId : ''}
               className={`${classes.innerText} ${ea.today ? classes.today : ''}`}
