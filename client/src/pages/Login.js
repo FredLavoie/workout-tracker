@@ -27,7 +27,8 @@ import { fetchAccountId } from '../services/fetchData';
 
 const useStyles = makeStyles({
   btn: {
-    marginTop: 20
+    marginTop: 20,
+    color: '#fff',
   },
   textField: {
     width: '100%',
@@ -137,6 +138,7 @@ function Login() {
               className={classes.btn}
               color='primary'
               variant='contained'
+              key={`${!username || !password ? true : false}`}
               endIcon={<KeyboardArrowRightIcon />}
               disabled={!username || !password ? true : false}
             >

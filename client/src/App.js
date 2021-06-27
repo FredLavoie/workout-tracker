@@ -21,7 +21,12 @@ const myTheme = createMuiTheme({
     type: 'light',
     primary: deepPurple,
     secondary: teal
-  }
+  },
+  MuiButton: {
+    root: {
+      transition: 'color .01s',
+    },
+  },
 });
 
 function App() {
