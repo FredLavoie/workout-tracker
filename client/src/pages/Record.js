@@ -113,7 +113,7 @@ function Record() {
           .then(() => {
             setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
             setOpen(true);
-            setTimeout(() => history.push('/dashboard'), 2500);
+            setTimeout(() => history.push('/dashboard'), 1500);
             return;
           })
           .catch((error) => {
@@ -131,7 +131,7 @@ function Record() {
           .then(() => {
             setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
             setOpen(true);
-            setTimeout(() => history.push('/dashboard'), 2500);
+            setTimeout(() => history.push('/dashboard'), 1500);
             return;
           })
           .catch((error) => {
@@ -154,7 +154,7 @@ function Record() {
       .then(() => {
         setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
         setOpen(true);
-        setTimeout(() => history.push('/dashboard'), 2500);
+        setTimeout(() => history.push('/dashboard'), 1500);
         return;
       })
       .catch((error) => {

@@ -57,7 +57,7 @@ function Password() {
       .then(() => {
         setAlertMessage({ severity: 'success', message: 'Successfully changed password.' });
         setOpen(true);
-        setTimeout(() => history.push('/dashboard'), 2500);
+        setTimeout(() => history.push('/dashboard'), 1500);
         return;
       })
       .catch((error) => {
