@@ -75,6 +75,7 @@ function Workout() {
   const newDate = new Date().toISOString().split('T');
   const currentDate = newDate[0];
   const currentTime = convertTime(new Date().toTimeString().split(':').splice(0, 2));
+  const navDate = currentDate.split('-').splice(0, 2).join('-');
 
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedTime, setSelectedTime] = useState(currentTime);
@@ -124,7 +125,7 @@ function Workout() {
           .then(() => {
             setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
             setOpen(true);
-            setTimeout(() => history.goBack(), 1500);
+            setTimeout(() => history.push(`/cal/${navDate}`), 1500);
           })
           .catch((error) => {
             setAlertMessage({ severity: 'error', message: error.message });
@@ -141,7 +142,7 @@ function Workout() {
           .then(() => {
             setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
             setOpen(true);
-            setTimeout(() => history.goBack(), 1500);
+            setTimeout(() => history.push(`/cal/${navDate}`), 1500);
           })
           .catch((error) => {
             setAlertMessage({ severity: 'error', message: error.message });
@@ -163,7 +164,7 @@ function Workout() {
       .then(() => {
         setAlertMessage({ severity: 'success', message: 'Successfully deleted workout.' });
         setOpen(true);
-        setTimeout(() => history.goBack(), 1500);
+        setTimeout(() => history.push(`/cal/${navDate}`), 1500);
       })
       .catch((error) => {
         setAlertMessage({ severity: 'error', message: error.message });
