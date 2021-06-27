@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   monthTitle: {
     width: '30%',
+    minWidth: 200,
     textAlign: 'center',
     cursor: 'pointer',
   },
@@ -58,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: '10%',
+  },
+  navLink: {
+    minWidth: 80,
   }
 }));
 
@@ -151,11 +155,11 @@ function Calendar() {
       {isLoading && <div className={classes.loading}><CircularProgress /></div>}
       {workouts && !isLoading && <div className={classes.calendarContainer}>
         <div className={classes.monthNav}>
-          <Button onClick={handleClickPrevious} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Previous</Button>
+          <Button onClick={handleClickPrevious} className={classes.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Previous</Button>
           <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom className={classes.monthTitle}>
             {`${currentMonthString} ${currentYear}`}
           </Typography>
-          <Button onClick={handleClickNext} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
+          <Button onClick={handleClickNext} className={classes.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
         </div>
         <div className={classes.outline}>
           <div className={classes.weekNames}>
