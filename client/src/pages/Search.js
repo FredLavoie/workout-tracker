@@ -82,7 +82,11 @@ function Search() {
       setError(results.error);
       return;
     }
-    const sortedResults = results.sort((a, b) => b.date > a.date);
+    const sortedResults = results.sort((a, b) => {
+      const aSeconds = new Date(a).getTime();
+      const bSeconds = new Date(b).getTime();
+      return bSeconds > aSeconds;
+    });
     setSearchResults(sortedResults);
     setIsLoading(false);
   }
