@@ -83,8 +83,8 @@ function Search() {
       return;
     }
     const sortedResults = results.sort((a, b) => {
-      const aSeconds = new Date(a).getTime();
-      const bSeconds = new Date(b).getTime();
+      const aSeconds = new Date(a.date).getTime();
+      const bSeconds = new Date(b.date).getTime();
       return bSeconds > aSeconds;
     });
     setSearchResults(sortedResults);
