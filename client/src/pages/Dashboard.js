@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     padding: '2px 4px',
     borderRadius: 6,
-    width: 24,
     textAlign: 'center',
   },
   centerText: {
