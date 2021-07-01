@@ -117,24 +117,24 @@ function Dashboard() {
       </Typography>
       {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
-      {/******************************************* SUMMARY *******************************************/}
-      {!error && !isLoading && <Card elevation={2} className={classes.summaryCardStyle}>
-        <CardHeader
-          title='Summary'
-          className={classes.header}
-        />
-        <CardContent className={classes.content}>
-          <Typography className={classes.textCol}>
-            <span className={classes.centerText}>Workouts (YTD)</span>
-            <span className={classes.dataBackground}>{yearWorkouts}</span>
-          </Typography>
-          <Typography className={classes.textCol}>
-            <span className={classes.centerText}>Workouts (This month)</span>
-            <span className={classes.dataBackground}>{monthWorkouts}</span>
-          </Typography>
-        </CardContent>
-      </Card>}
       {!error && !isLoading && <div className={classes.dashboardContainer}>
+        {/******************************************* SUMMARY *******************************************/}
+        <Card elevation={2} className={classes.summaryCardStyle}>
+          <CardHeader
+            title='Summary'
+            className={classes.header}
+          />
+          <CardContent className={classes.content}>
+            <Typography className={classes.textCol}>
+              <span className={classes.centerText}>Workouts (YTD)</span>
+              <span className={classes.dataBackground}>{yearWorkouts}</span>
+            </Typography>
+            <Typography className={classes.textCol}>
+              <span className={classes.centerText}>Workouts (This month)</span>
+              <span className={classes.dataBackground}>{monthWorkouts}</span>
+            </Typography>
+          </CardContent>
+        </Card>
         {/**************************************** STRENGTH PRs ***************************************/}
         <Card elevation={2} className={classes.cardStyle}>
           <CardHeader
