@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { fetchWorkout, postWorkout, updateWorkout, deleteWorkout } from '../services/fetchData';
-import { validateWorkout } from '../lib/helperFunctions';
+import { validateWorkout } from '../utils/validateWorkout';
 import ServerError from '../components/ServerError';
 
 const useStyles = makeStyles((theme) => ({

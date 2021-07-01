@@ -17,7 +17,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { makeStyles } from '@material-ui/core';
 
 import { changePassword } from '../services/authentication';
-import { validatePasswordChange } from '../lib/helperFunctions';
+import { validatePasswordChange } from '../utils/validatePasswordChange';
 
 const useStyles = makeStyles({
   root: {

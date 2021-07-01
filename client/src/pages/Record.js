@@ -18,7 +18,7 @@ import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { fetchRecord, updateRecord, postRecord, deleteRecord } from '../services/fetchData';
-import { validateRecord } from '../lib/helperFunctions';
+import { validateRecord } from '../utils/validateRecord';
 import ServerError from '../components/ServerError';
 import recordList from '../lib/recordList';
 

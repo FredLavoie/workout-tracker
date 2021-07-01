@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core';
 import CalendarGrid from '../components/CalendarGrid';
 import ServerError from '../components/ServerError';
 import { fetchMonthData } from '../services/fetchData';
-import { calculateMonth } from '../lib/helperFunctions';
+import { calculateMonth } from '../utils/calculateMonth';
 import months from '../lib/months';
 
 
