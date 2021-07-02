@@ -8,7 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
-import { fetchMonthData, fetchYearData, fetchRecords } from '../services/fetchData';
+import { fetchYearData, fetchRecords } from '../services/fetchData';
+import months from '../lib/months';
 import RecordTable from '../components/RecordTable';
 import ServerError from '../components/ServerError';
 
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   summaryCardStyle: {
     width: 360,
-    height: 200,
+    height: 600,
     margin: '0px auto 16px auto',
     [theme.breakpoints.up('sm')]: {
       margin: '0px 16px 16px 8px',
@@ -68,16 +69,19 @@ const useStyles = makeStyles((theme) => ({
   centerText: {
     paddingTop: 2,
   },
+  horzLine: {
+    borderTop: '1px solid #f0f0f5',
+    paddingTop: 8,
+  },
 }));
 
 const currentDate = new Date().toISOString().split('T')[0].split('-');
-const currentYearMonth = `${currentDate[0]}-${currentDate[1]}`;
 const currentYear = currentDate[0];
+const monthNumbersArr = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
 function Dashboard() {
   const classes = useStyles();
-  const [monthWorkouts, setMonthWorkouts] = useState(0);
-  const [yearWorkouts, setYearWorkouts] = useState(0);
+  const [yearWorkouts, setYearWorkouts] = useState([]);
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -86,12 +90,10 @@ function Dashboard() {
     const abortCont = new AbortController();
     Promise.all([
       fetchRecords(abortCont),
-      fetchMonthData(currentYearMonth, abortCont),
       fetchYearData(currentYear, abortCont),
     ]).then((data) => {
       setRecords(data[0]);
-      setMonthWorkouts(data[1].length);
-      setYearWorkouts(data[2].length);
+      setYearWorkouts(data[1]);
       setIsLoading(false);
     })
       .catch((error) => {
@@ -104,6 +106,12 @@ function Dashboard() {
     return () => abortCont.abort();
   }, []);
 
+  function filterWorkoutsForMonth(workouts, monthNumber) {
+    const numberOfWorkouts = workouts.filter((ea) => {
+      return ea.date.split('-')[1] === monthNumber;
+    });
+    return numberOfWorkouts.length;
+  }
 
   return (
     <Grid
@@ -125,13 +133,17 @@ function Dashboard() {
             className={classes.header}
           />
           <CardContent className={classes.content}>
-            <Typography className={classes.textCol}>
-              <span className={classes.centerText}>Workouts (YTD)</span>
-              <span className={classes.dataBackground}>{yearWorkouts}</span>
-            </Typography>
-            <Typography className={classes.textCol}>
-              <span className={classes.centerText}>Workouts (This month)</span>
-              <span className={classes.dataBackground}>{monthWorkouts}</span>
+            {monthNumbersArr.map((ea, index) => (
+              <Typography key={index} className={classes.textCol}>
+                <span className={classes.centerText}>{months[ea]}</span>
+                <span className={classes.dataBackground}>{
+                  filterWorkoutsForMonth(yearWorkouts, ea)
+                }</span>
+              </Typography>
+            ))}
+            <Typography className={`${classes.textCol} ${classes.horzLine}`}>
+              <span className={classes.centerText}>Year-to-date</span>
+              <span className={classes.dataBackground}>{yearWorkouts.length}</span>
             </Typography>
           </CardContent>
         </Card>
