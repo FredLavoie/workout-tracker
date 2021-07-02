@@ -5,15 +5,15 @@ import deepPurple from '@material-ui/core/colors/deepPurple';
 import teal from '@material-ui/core/colors/teal';
 import Layout from './components/Layout';
 import PrivateRoute from './components/PrivateRoute';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Workout from './pages/Workout';
-import Record from './pages/Record';
-import Calendar from './pages/Calendar';
-import Search from './pages/Search';
-import Password from './pages/PasswordChange';
-import NotFound from './pages/NotFound';
+import Home from './views/Home';
+import Login from './views/Login';
+import Dashboard from './views/Dashboard';
+import Workout from './views/Workout';
+import Record from './views/Record';
+import Calendar from './views/Calendar';
+import Search from './views/Search';
+import Password from './views/PasswordChange';
+import NotFound from './views/NotFound';
 import './App.css';
 
 const myTheme = createMuiTheme({
