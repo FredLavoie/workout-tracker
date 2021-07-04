@@ -43,3 +43,14 @@ class RecordSearch(generics.ListAPIView):
         )
 
         return object_list
+
+
+class EventRecordList(generics.ListAPIView):
+    permission_classes = (IsAuthenticated, IsAuthor,)
+    serializer_class = RecordSerializer
+
+    def get_queryset(self):
+        id = self.kwargs['author_id']
+        event = self.kwargs['event'].replace('-', ' ').title()
+        records = Record.objects.filter(author_id=id, event=event)
+        return records
