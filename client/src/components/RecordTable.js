@@ -42,7 +42,7 @@ function RecordTable({ type, records }) {
 
   function handleClickActive(target) {
     const encodedString = target.parentNode.id.toLowerCase().replace(/ /g, '-');
-    history.push(`/records/details/${encodedString}`);
+    history.push(`/records/event/${encodedString}`);
   }
 
   return (

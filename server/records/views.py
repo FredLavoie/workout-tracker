@@ -54,6 +54,6 @@ class EventRecordList(generics.ListAPIView):
         event = self.kwargs['event'].replace('-', ' ').title()
         eventFixedKm = event.replace('Km', 'km')
         eventFixedM = eventFixedKm.replace('0M', '0m')
-        eventFixedMin = eventFixedM.replace('Min', 'min')
+        eventFixedMin = eventFixedM.replace(' Min', ' min')
         records = Record.objects.filter(author_id=id, event=eventFixedMin)
         return records

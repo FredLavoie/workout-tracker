@@ -41,7 +41,7 @@ function App() {
             <Switch>
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute path='/workouts' component={Workout} />
-              <PrivateRoute exact path='/records/details/:event' component={DetailRecord} />
+              <PrivateRoute exact path='/records/event/:event' component={DetailRecord} />
               <PrivateRoute exact path='/records/:id' component={Record} />
               <PrivateRoute exact path='/cal/:date' component={Calendar} />
               <PrivateRoute exact path='/search' component={Search} />
