@@ -292,7 +292,7 @@ export async function fetchEventRecords(event, abortCont) {
   const accountId = localStorage.getItem('accountId');
   const signal = abortCont === null ? null : abortCont.signal;
 
-  return fetch(`${URL}/${accountId}/records/event/${event}`, {
+  return fetch(`${URL}/${accountId}/records/event/${event}/`, {
     method: 'GET',
     signal: signal,
     headers: {
