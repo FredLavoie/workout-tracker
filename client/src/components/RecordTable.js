@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   eventContainer: {
-    marginBottom: 16,
-  },
-  eventTitle: {
-    borderBottom: '1px solid #f0f0f5',
+    marginBottom: 8,
+    display: 'flex',
+    justifyContent: 'space-between',
+    cursor: 'pointer',
   },
   score: {
     backgroundColor: theme.palette.secondary.main,
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function StrengthRecordTable({ type, records }) {
+function RecordTable({ type, records }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -41,43 +41,34 @@ function StrengthRecordTable({ type, records }) {
   const filteredEventList = recordList[type].filter((ea) => records.find((rec) => rec.event === ea));
 
   function handleClickActive(target) {
-    if (target.id) history.push(`/records/${target.id}`);
-    else history.push(`/records/${target.parentNode.id}`);
+    const encodedString = target.parentNode.id.toLowerCase().replace(/ /g, '-');
+    history.push(`/records/details/${encodedString}`);
   }
 
   return (
     <CardContent className={classes.content}>
       {filteredEventList.map((event, index) => (
-        <div key={index} className={classes.eventContainer}>
-          <Typography gutterBottom variant={'subtitle1'} className={classes.eventTitle}>
+        <div key={index} id={event} className={classes.eventContainer} onClick={(e) => handleClickActive(e.target)}>
+          <Typography variant={'subtitle1'} >
             {event}
           </Typography>
-          <div>
-            {sortedRecords.map((ea) => {
-              if (ea.event === event) {
-                return (
-                  <div
-                    key={ea.id}
-                    id={ea.id}
-                    className={classes.individualContainer}
-                    onClick={(e) => handleClickActive(e.target)}
-                  >
-                    <Typography variant={'body2'} className={classes.date}>
-                      {ea.date}
-                    </Typography>
-                    <Typography variant={'body2'} className={classes.score}>
-                      {ea.score}
-                    </Typography>
-                  </div>
-                );
-              }
-            }
-            )}
-          </div>
+
+          {[sortedRecords.find((ea) => ea.event === event)].map((ea) => {
+            return (
+              <div
+                key={ea.id}
+                id={ea.event}
+              >
+                <Typography variant={'body2'} className={classes.score}>
+                  {ea.score}
+                </Typography>
+              </div>
+            );
+          })}
         </div>
       ))}
     </CardContent>
   );
 }
 
-export default StrengthRecordTable;
+export default RecordTable;

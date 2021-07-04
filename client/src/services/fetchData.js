@@ -286,3 +286,23 @@ export async function deleteRecord(record_id) {
       return;
     });
 }
+
+export async function fetchEventRecords(event, abortCont) {
+  const token = localStorage.getItem('token');
+  const accountId = localStorage.getItem('accountId');
+  const signal = abortCont === null ? null : abortCont.signal;
+
+  return fetch(`${URL}/${accountId}/records/${event}`, {
+    method: 'GET',
+    signal: signal,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+      return res.json();
+    });
+}
