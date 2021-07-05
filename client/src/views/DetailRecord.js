@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     width: 360,
     margin: '0px auto 16px auto',
     [theme.breakpoints.up('sm')]: {
-      margin: '0px 16px 16px 8px',
+      margin: '0px 0px 16px 0px',
     },
   },
   individualContainer: {
@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     width: 360,
+    marginTop: 16,
   }
 }));
 
