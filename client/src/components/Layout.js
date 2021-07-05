@@ -26,6 +26,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import StarIcon from '@material-ui/icons/Star';
 import TodayIcon from '@material-ui/icons/Today';
+import ViewDayIcon from '@material-ui/icons/ViewDay';
 
 import { logout, isAuthenticated } from '../services/authentication';
 
@@ -153,6 +154,14 @@ function Layout({ children }) {
       >
         <ListItemIcon><TodayIcon /></ListItemIcon>
         <ListItemText primary='Calendar' />
+      </ListItem>
+      <ListItem
+        button
+        onClick={() => handleMenuItemClick('/week')}
+        className={location.pathname.includes('/week/') ? classes.active : null}
+      >
+        <ListItemIcon><ViewDayIcon /></ListItemIcon>
+        <ListItemText primary='Week' />
       </ListItem>
       <ListItem
         button
