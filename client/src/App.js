@@ -13,6 +13,7 @@ import Record from './views/Record';
 import DetailRecord from './views/DetailRecord';
 import Calendar from './views/Calendar';
 import Search from './views/Search';
+import Week from './views/Week';
 import Password from './views/PasswordChange';
 import NotFound from './views/NotFound';
 import './App.css';
@@ -46,6 +47,7 @@ function App() {
               <PrivateRoute exact path='/cal/:date' component={Calendar} />
               <PrivateRoute exact path='/search' component={Search} />
               <PrivateRoute exact path='/password-change' component={Password} />
+              <PrivateRoute path='/week' component={Week} />
               <Route exact path='/404' component={NotFound} />
               <Route component={NotFound} />
             </Switch>
