@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       margin: '0px 16px 16px 8px',
     },
+    cursor: 'pointer',
   },
   header: {
     paddingBottom: 0,
@@ -41,13 +43,28 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchResultCard({ content }) {
   const classes = useStyles();
+  const history = useHistory();
+
+  function handleClickActive(id, workout) {
+    if (workout === true) {
+      history.push(`/workouts/${id}`);
+    } else {
+      history.push(`/records/${id}`);
+    }
+  }
 
   return (
     <Grid
       className={classes.root}
     >
       {content.map((ea, index) => (
-        <Card elevation={2} key={index} className={classes.cardStyle}>
+        <Card
+          elevation={2}
+          key={index}
+          id={ea.id}
+          className={classes.cardStyle}
+          onClick={(e) => handleClickActive(e.currentTarget.id, !!ea.workout_body)}
+        >
           <CardHeader
             title={ea.workout_body ? 'Workout' : 'Personal Record'}
             subheader={ea.date}
