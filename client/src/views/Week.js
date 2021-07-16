@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { useHistory, useLocation } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,39 +17,45 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 32,
     marginTop: 16,
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '90%',
-    },
-    display: 'flex',
-    justifyDirection: 'column',
   },
   title: {
     marginBottom: 16,
   },
   header: {
-    paddingLeft: 32,
+    paddingLeft: 16,
     paddingBottom: 8,
+    paddingTop: 8,
   },
   cardStyle: {
-    width: 360,
+    minWidth: 200,
+    maxWidth: 300,
+    flexGrow: '1',
     margin: '0px auto 16px auto',
     [theme.breakpoints.up('sm')]: {
-      margin: '0px 16px 16px 8px',
+      margin: '8px 0px 4px 8px',
     },
   },
   content: {
-    padding: '0 32px 32px 32px',
+    padding: '0 16px 16px 16px',
   },
   bodyText: {
     font: 'inherit',
     margin: 0,
+  },
+  weekContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    [theme.breakpoints.up('lg')]: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    marginRight: 8,
   }
 }));
 
 function Week() {
   const classes = useStyles();
-  // const history = useHistory();
-  // const location = useLocation();
   const [workouts, setWorkouts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -102,13 +107,13 @@ function Week() {
       {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
       {!error && !isLoading &&
-        <div>
+        <div className={classes.weekContainer}>
           <Card elevation={2} className={classes.cardStyle}>
             <Typography variant='body1' color='textSecondary' className={classes.header}>
               {`Sunday, ${months[weekArr[0].split('-')[1]]} ${weekArr[0].split('-')[2]}`}
             </Typography>
             <CardContent className={classes.content}>
-              <Typography>
+              <Typography component='div'>
                 <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[0])?.workout_body || 'Rest'}</pre>
               </Typography>
             </CardContent>
@@ -118,7 +123,7 @@ function Week() {
               {`Monday ${months[weekArr[1].split('-')[1]]} ${weekArr[1].split('-')[2]}`}
             </Typography>
             <CardContent className={classes.content}>
-              <Typography>
+              <Typography component='div'>
                 <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[1])?.workout_body || 'Rest'}</pre>
               </Typography>
             </CardContent>
@@ -128,7 +133,7 @@ function Week() {
               {`Tuesday ${months[weekArr[2].split('-')[1]]} ${weekArr[2].split('-')[2]}`}
             </Typography>
             <CardContent className={classes.content}>
-              <Typography>
+              <Typography component='div'>
                 <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[2])?.workout_body || 'Rest'}</pre>
               </Typography>
             </CardContent>
@@ -138,7 +143,7 @@ function Week() {
               {`Wednesday ${months[weekArr[3].split('-')[1]]} ${weekArr[3].split('-')[2]}`}
             </Typography>
             <CardContent className={classes.content}>
-              <Typography>
+              <Typography component='div'>
                 <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[3])?.workout_body || 'Rest'}</pre>
               </Typography>
             </CardContent>
@@ -148,7 +153,7 @@ function Week() {
               {`Thursday ${months[weekArr[4].split('-')[1]]} ${weekArr[4].split('-')[2]}`}
             </Typography>
             <CardContent className={classes.content}>
-              <Typography>
+              <Typography component='div'>
                 <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[4])?.workout_body || 'Rest'}</pre>
               </Typography>
             </CardContent>
@@ -158,7 +163,7 @@ function Week() {
               {`Friday ${months[weekArr[5].split('-')[1]]} ${weekArr[5].split('-')[2]}`}
             </Typography>
             <CardContent className={classes.content}>
-              <Typography>
+              <Typography component='div'>
                 <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[5])?.workout_body || 'Rest'}</pre>
               </Typography>
             </CardContent>
@@ -168,7 +173,7 @@ function Week() {
               {`Saturday ${months[weekArr[6].split('-')[1]]} ${weekArr[6].split('-')[2]}`}
             </Typography>
             <CardContent className={classes.content}>
-              <Typography>
+              <Typography component='div'>
                 <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[6])?.workout_body || 'Rest'}</pre>
               </Typography>
             </CardContent>
