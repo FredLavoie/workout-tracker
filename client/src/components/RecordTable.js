@@ -41,14 +41,14 @@ function RecordTable({ type, records }) {
   const filteredEventList = recordList[type].filter((ea) => records.find((rec) => rec.event === ea));
 
   function handleClickActive(target) {
-    const encodedString = target.parentNode.id.toLowerCase().replace(/ /g, '-');
+    const encodedString = target.id.toLowerCase().replace(/ /g, '-');
     history.push(`/records/event/${encodedString}`);
   }
 
   return (
     <CardContent className={classes.content}>
       {filteredEventList.map((event, index) => (
-        <div key={index} id={event} className={classes.eventContainer} onClick={(e) => handleClickActive(e.target)}>
+        <div key={index} id={event} className={classes.eventContainer} onClick={(e) => handleClickActive(e.currentTarget)}>
           <Typography variant={'subtitle1'} >
             {event}
           </Typography>

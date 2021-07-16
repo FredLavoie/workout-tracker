@@ -107,7 +107,7 @@ function CalendarGrid(props) {
     <div className={classes.container}>
       {contentArray.map((ea, index) => (
         <div
-          onClick={(e) => handleClickActive(e.target.id, ea.dayNumber)}
+          onClick={(e) => handleClickActive(e.currentTarget.id, ea.dayNumber)}
           key={index}
           id={ea.workoutId ? ea.workoutId : ''}
           className={`${classes.daySquare} ${applySquareStyle(ea)}`}
