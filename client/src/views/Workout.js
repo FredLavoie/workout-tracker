@@ -14,6 +14,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 import { fetchWorkout, postWorkout, updateWorkout, deleteWorkout } from '../services/fetchData';
 import { validateWorkout } from '../utils/validateWorkout';
+import { convertTime } from '../utils/convertTime';
 import ServerError from '../components/ServerError';
 
 const useStyles = makeStyles((theme) => ({
@@ -52,14 +53,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-function convertTime(timeArr) {
-  if (timeArr[0] === '23') return '23:00';
-
-  const hour = (Number(timeArr[0]) + 1).toString();
-  const paddedHour = hour.padStart(2, '0');
-  return `${paddedHour}:00`;
-}
 
 function Alert(props) {
   return <MuiAlert elevation={4} variant='filled' {...props} />;
