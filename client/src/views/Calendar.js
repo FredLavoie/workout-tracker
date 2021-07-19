@@ -129,7 +129,7 @@ function Calendar() {
       {isLoading && <div className={classes.loading}><CircularProgress /></div>}
       {workouts && !isLoading && <div className={classes.calendarContainer}>
         <div className={classes.monthNav}>
-          <Button onClick={handleClickPrevious} className={classes.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Previous</Button>
+          <Button onClick={handleClickPrevious} className={classes.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
           <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom className={classes.monthTitle}>
             {`${currentMonthString} ${currentYear}`}
           </Typography>
