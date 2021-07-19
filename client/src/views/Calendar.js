@@ -133,6 +133,7 @@ function Calendar() {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     const abortCont = new AbortController();
     fetchMonthData(monthToFetch, abortCont)
       .then((data) => {
@@ -147,7 +148,7 @@ function Calendar() {
         }
       });
     return () => abortCont.abort();
-  }, []);
+  }, [monthToFetch]);
 
   return (
     <div>
