@@ -89,30 +89,12 @@ function Calendar() {
     setWorkouts(null);
     setIsLoading(true);
     history.push(`/cal/${prevMonth}`);
-    fetchMonthData(prevMonth, null)
-      .then((data) => {
-        setWorkouts(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError(error.message);
-      });
   }
 
   function handleClickNext() {
     setWorkouts(null);
     setIsLoading(true);
     history.push(`/cal/${nextMonth}`);
-    fetchMonthData(nextMonth, null)
-      .then((data) => {
-        setWorkouts(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError(error.message);
-      });
   }
 
   function handleReturnToCurrent() {
@@ -121,15 +103,6 @@ function Calendar() {
     const currentDate = new Date().toISOString().split('T')[0].split('-');
     const dateString = `${currentDate[0]}-${currentDate[1]}`;
     history.push(`/cal/${dateString}`);
-    fetchMonthData(dateString, null)
-      .then((data) => {
-        setWorkouts(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError(error.message);
-      });
   }
 
   useEffect(() => {
