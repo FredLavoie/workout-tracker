@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 8,
   },
   cardStyle: {
-    minWidth: 200,
-    maxWidth: 300,
+    width: 256,
     flexGrow: '1',
     margin: '0px auto 16px auto',
     [theme.breakpoints.up('sm')]: {
