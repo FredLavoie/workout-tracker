@@ -1,6 +1,11 @@
 export function calculateWeek(dateArr) {
   const numDaysInMonth = new Date(dateArr[2], dateArr[0], 0).getDate();
-  const numDaysPrevMonth = new Date(dateArr[2], Number(dateArr[0] - 1), 0).getDate();
+  let numDaysPrevMonth = null;
+  if (dateArr[0] === '1') {
+    numDaysPrevMonth = new Date(Number(dateArr[2]) - 1, '1', 0).getDate();
+  } else {
+    numDaysPrevMonth = new Date(dateArr[2], Number(dateArr[0]) - 1, 0).getDate();
+  }
   const weekObj = {};
   let dayOfTheWeek = Number(new Date().getDay().toLocaleString('en-US', { timeZone: 'America/New_York' }));
   if (dayOfTheWeek === 7) dayOfTheWeek = 0;

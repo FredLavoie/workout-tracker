@@ -87,19 +87,16 @@ function Calendar() {
 
   function handleClickPrevious() {
     setWorkouts(null);
-    setIsLoading(true);
     history.push(`/cal/${prevMonth}`);
   }
 
   function handleClickNext() {
     setWorkouts(null);
-    setIsLoading(true);
     history.push(`/cal/${nextMonth}`);
   }
 
   function handleReturnToCurrent() {
     setWorkouts(null);
-    setIsLoading(true);
     const currentDate = new Date().toISOString().split('T')[0].split('-');
     const dateString = `${currentDate[0]}-${currentDate[1]}`;
     history.push(`/cal/${dateString}`);
