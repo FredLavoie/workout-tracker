@@ -65,6 +65,7 @@ function Workout() {
   const history = useHistory();
 
   const workoutId = location.pathname.split('/')[2];
+  const newWorkoutDate = location.pathname.split('/')[3] || null;
   const newDate = new Date().toISOString().split('T');
   const currentDate = newDate[0];
   const currentTime = convertTime(new Date().toTimeString().split(':').splice(0, 2));
@@ -83,7 +84,7 @@ function Workout() {
   useEffect(() => {
     const abortCont = new AbortController();
     if (workoutId === 'new') {
-      setSelectedDate(currentDate);
+      setSelectedDate(newWorkoutDate !== null ? newWorkoutDate : currentDate);
       setSelectedTime(currentTime);
       changeNewOrEdit(1);
       setIsLoading(false);
