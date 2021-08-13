@@ -90,7 +90,7 @@ function CalendarGrid(props) {
   async function handleClickActive(id, dayNum) {
     if (dayNum === 0) return;
     if (!id) {
-      history.push(`/workouts/new/${props.year}-${props.month}-${dayNum}`);
+      history.push(`/workouts/new/${props.year}-${props.month}-${String(dayNum).padStart(2, '0')}`);
     } else {
       history.push(`/workouts/${id}`);
     }
