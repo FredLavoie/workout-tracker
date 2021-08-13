@@ -28,11 +28,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 8,
   },
   cardStyle: {
-    width: 256,
+    width: '100%',
     flexGrow: '1',
     margin: '0px auto 16px auto',
     [theme.breakpoints.up('sm')]: {
       margin: '8px 0px 4px 8px',
+      width: 256,
     },
   },
   content: {
@@ -49,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       flexDirection: 'row',
       flexWrap: 'wrap',
+      marginRight: 8,
     },
-    marginRight: 8,
   },
   weekNav: {
     width: '100%',
