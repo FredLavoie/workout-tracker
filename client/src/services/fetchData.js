@@ -137,7 +137,7 @@ export async function updateWorkout(workout_id, date, time, workout_body) {
   const accountId = localStorage.getItem('accountId');
 
   return fetch(`${URL}/${accountId}/workouts/${workout_id}/`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
