@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import deepPurple from '@material-ui/core/colors/deepPurple';
-import teal from '@material-ui/core/colors/teal';
+import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material';
 import Layout from './components/Layout';
 import PrivateRoute from './components/PrivateRoute';
 import Home from './views/Home';
@@ -18,9 +16,11 @@ import Password from './views/PasswordChange';
 import NotFound from './views/NotFound';
 import './App.css';
 
-const myTheme = createMuiTheme({
+import { deepPurple, teal } from '@mui/material/colors';
+
+const myTheme = createTheme(adaptV4Theme({
   palette: {
-    type: 'light',
+    mode: 'light',
     primary: deepPurple,
     secondary: teal
   },
@@ -29,32 +29,34 @@ const myTheme = createMuiTheme({
       transition: 'color .01s',
     },
   },
-});
+}));
 
 function App() {
   return (
-    <ThemeProvider theme={myTheme}>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/login' component={Login} />
-          <Layout>
-            <Switch>
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute path='/workouts' component={Workout} />
-              <PrivateRoute exact path='/records/event/:event' component={DetailRecord} />
-              <PrivateRoute exact path='/records/:id' component={Record} />
-              <PrivateRoute exact path='/cal/:date' component={Calendar} />
-              <PrivateRoute exact path='/search' component={Search} />
-              <PrivateRoute exact path='/password-change' component={Password} />
-              <PrivateRoute path='/week' component={Week} />
-              <Route exact path='/404' component={NotFound} />
-              <Route component={NotFound} />
-            </Switch>
-          </Layout>
-        </Switch>
-      </Router>
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={myTheme}>
+        <Router>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/login' component={Login} />
+            <Layout>
+              <Switch>
+                <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                <PrivateRoute path='/workouts' component={Workout} />
+                <PrivateRoute exact path='/records/event/:event' component={DetailRecord} />
+                <PrivateRoute exact path='/records/:id' component={Record} />
+                <PrivateRoute exact path='/cal/:date' component={Calendar} />
+                <PrivateRoute exact path='/search' component={Search} />
+                <PrivateRoute exact path='/password-change' component={Password} />
+                <PrivateRoute path='/week' component={Week} />
+                <Route exact path='/404' component={NotFound} />
+                <Route component={NotFound} />
+              </Switch>
+            </Layout>
+          </Switch>
+        </Router>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 
