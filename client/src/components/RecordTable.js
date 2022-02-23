@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
-import { makeStyles } from '@material-ui/core';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import makeStyles from '@mui/styles/makeStyles';
 
 import recordList from '../lib/recordList';
 

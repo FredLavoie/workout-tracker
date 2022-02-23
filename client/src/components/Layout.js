@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
-import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MuiAlert from '@material-ui/lab/Alert';
-import Toolbar from '@material-ui/core/Toolbar';
-import Snackbar from '@material-ui/core/Snackbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core';
+import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import Hidden from '@mui/material/Hidden';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MuiAlert from '@mui/material/Alert';
+import Toolbar from '@mui/material/Toolbar';
+import Snackbar from '@mui/material/Snackbar';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material';
 
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import StarIcon from '@material-ui/icons/Star';
-import TodayIcon from '@material-ui/icons/Today';
-import ViewDayIcon from '@material-ui/icons/ViewDay';
+import makeStyles from '@mui/styles/makeStyles';
+
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import StarIcon from '@mui/icons-material/Star';
+import TodayIcon from '@mui/icons-material/Today';
+import ViewDayIcon from '@mui/icons-material/ViewDay';
 
 import { logout, isAuthenticated } from '../services/authentication';
 
@@ -48,13 +50,14 @@ const useStyles = makeStyles((theme) => ({
   },
   root2: {
     flexGrow: 1,
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: 2,
   },
   drawer: {
     width: drawerWidth,
   },
   drawerPaper: {
     width: drawerWidth,
+    zIndex: 1,
     [theme.breakpoints.up('sm')]: {
       paddingTop: 56,
     },
@@ -210,6 +213,7 @@ function Layout({ children }) {
             edge="start"
             onClick={handleDrawerToggle}
             className={classes.menuButton}
+            size="large"
           >
             <MenuIcon />
           </IconButton>
@@ -258,7 +262,7 @@ function Layout({ children }) {
       </Hidden>
 
       {/******************** Desktop drawer - permanent left **************************/}
-      <Hidden xsDown implementation="css">
+      <Hidden smDown implementation="css">
         <Drawer
           className={classes.drawer}
           variant="permanent"
