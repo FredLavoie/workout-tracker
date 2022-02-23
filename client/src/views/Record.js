@@ -49,9 +49,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Alert(props) {
-  return <MuiAlert elevation={4} variant='filled' {...props} />;
-}
+// eslint-disable-next-line prefer-arrow-callback
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={4} ref={ref} {...props} />;
+});
 
 
 function Record() {
@@ -258,7 +259,7 @@ function Record() {
           }
         </form>
       </Grid>}
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Grid>

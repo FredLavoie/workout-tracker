@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material';
+import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material';
 import Layout from './components/Layout';
 import PrivateRoute from './components/PrivateRoute';
 import Home from './views/Home';
@@ -18,7 +18,7 @@ import './App.css';
 
 import { deepPurple, teal } from '@mui/material/colors';
 
-const myTheme = createTheme(adaptV4Theme({
+const myTheme = createTheme({
   palette: {
     mode: 'light',
     primary: deepPurple,
@@ -29,7 +29,7 @@ const myTheme = createTheme(adaptV4Theme({
       transition: 'color .01s',
     },
   },
-}));
+});
 
 function App() {
   return (
