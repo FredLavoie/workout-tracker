@@ -50,13 +50,14 @@ const useStyles = makeStyles((theme) => ({
   },
   root2: {
     flexGrow: 1,
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: 2,
   },
   drawer: {
     width: drawerWidth,
   },
   drawerPaper: {
     width: drawerWidth,
+    zIndex: 1,
     [theme.breakpoints.up('sm')]: {
       paddingTop: 56,
     },
