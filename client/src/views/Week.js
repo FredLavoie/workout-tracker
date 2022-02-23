@@ -47,11 +47,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    [theme.breakpoints.up('lg')]: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      marginRight: 8,
-    },
+    alignItems: 'center',
   },
   weekNav: {
     width: '100%',
