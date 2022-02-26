@@ -219,6 +219,7 @@ function Workout() {
             variant='contained'
             key={`${!workoutBody ? true : false}`}
             disabled={!workoutBody ? true : false}
+            onTouchTap={(e) => e.preventDefault()}
           >
             Save
           </Button>
