@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     border: '1.5px solid #d9d9d9',
     display: 'flex',
     flexGrow: '1',
-    justifyContent: 'right',
+    justifyContent: 'right',  // check this on Safari
   },
   active: {
     backgroundColor: theme.palette.secondary.main,
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   notDayOfMonth: {
-    ackgroundColor: '#fff',
+    backgroundColor: '#fff',
   },
   innerText: {
     padding: 4
