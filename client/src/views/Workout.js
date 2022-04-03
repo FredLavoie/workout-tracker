@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   btnGrp: {
     marginTop: 16,
-    display: 'felx'
   },
   formSize: {
     width: '100%',
@@ -207,7 +206,7 @@ function Workout() {
             className={classes.field}
             id='workout-body'
             multiline
-            rows={20}
+            rows={10}
             defaultValue={workoutBody}
             variant='outlined'
           />
