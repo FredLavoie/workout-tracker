@@ -83,43 +83,39 @@ function Record() {
       changeNewOrEdit(1);
       setIsLoading(false);
     } else {
-      fetchRecord(recordId, abortCont)
-        .then((data) => {
-          setSelectedDate(data.date);
-          setRecordType(data.type);
-          setRecordEvent(data.event);
-          setRecordScore(data.score);
-          changeNewOrEdit(0);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          else {
-            setIsLoading(false);
-            setError(error.message);
-          }
-        });
+      try {
+        const data = fetchRecord(recordId, abortCont);
+        setSelectedDate(data.date);
+        setRecordType(data.type);
+        setRecordEvent(data.event);
+        setRecordScore(data.score);
+        changeNewOrEdit(0);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        setIsLoading(false);
+        setError(error.message);
+      }
     }
     return () => abortCont.abort();
   }, []);
 
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
 
     if (recordId === 'new') {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
-        await postRecord(selectedDate, recordType, recordEvent, recordScore)
-          .then(() => {
-            setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
-            setOpen(true);
-            setTimeout(() => history.push('/dashboard'), 1500);
-          })
-          .catch((error) => {
-            setAlertMessage({ severity: 'error', message: error.message });
-            setOpen(true);
-          });
+        try {
+          postRecord(selectedDate, recordType, recordEvent, recordScore);
+          setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
+          setOpen(true);
+          setTimeout(() => history.push('/dashboard'), 1500);
+        } catch (error) {
+          setAlertMessage({ severity: 'error', message: error.message });
+          setOpen(true);
+        }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
         setOpen(true);
@@ -127,16 +123,15 @@ function Record() {
     } else {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
-        await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore)
-          .then(() => {
-            setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
-            setOpen(true);
-            setTimeout(() => history.push('/dashboard'), 1500);
-          })
-          .catch((error) => {
-            setAlertMessage({ severity: 'error', message: error.message });
-            setOpen(true);
-          });
+        try {
+          updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
+          setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
+          setOpen(true);
+          setTimeout(() => history.push('/dashboard'), 1500);
+        } catch (error) {
+          setAlertMessage({ severity: 'error', message: error.message });
+          setOpen(true);
+        }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
         setOpen(true);
@@ -148,17 +143,16 @@ function Record() {
     history.goBack();
   }
 
-  async function handleDelete() {
-    await deleteRecord(recordId)
-      .then(() => {
-        setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
-        setOpen(true);
-        setTimeout(() => history.push('/dashboard'), 1500);
-      })
-      .catch((error) => {
-        setAlertMessage({ severity: 'error', message: error.message });
-        setOpen(true);
-      });
+  function handleDelete() {
+    try {
+      deleteRecord(recordId);
+      setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
+      setOpen(true);
+      setTimeout(() => history.push('/dashboard'), 1500);
+    } catch (error) {
+      setAlertMessage({ severity: 'error', message: error.message });
+      setOpen(true);
+    }
   }
 
   function handleClose() {

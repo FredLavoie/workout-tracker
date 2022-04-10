@@ -48,22 +48,21 @@ function Password() {
   async function handleSubmit(event) {
     event.preventDefault();
     const validatedInput = validatePasswordChange(newPassword1, newPassword2);
-    if (validatedInput === false) {
+    if (!validatedInput) {
       setAlertMessage({ severity: 'error', message: 'The two passwords do not match or don\'t meet the requirements.' });
       setOpen(true);
       return;
     }
-    await changePassword(newPassword1, newPassword2)
-      .then(() => {
-        setAlertMessage({ severity: 'success', message: 'Successfully changed password.' });
-        setOpen(true);
-        setTimeout(() => history.push('/dashboard'), 1500);
-        return;
-      })
-      .catch((error) => {
-        setAlertMessage({ severity: 'error', message: error.message });
-        return setOpen(true);
-      });
+    try {
+      changePassword(newPassword1, newPassword2);
+      setAlertMessage({ severity: 'success', message: 'Successfully changed password.' });
+      setOpen(true);
+      setTimeout(() => history.push('/dashboard'), 1500);
+      return; // TODO: is this needed?
+    } catch (error) {
+      setAlertMessage({ severity: 'error', message: error.message });
+      return setOpen(true);
+    }
   }
 
   function handleClose() {

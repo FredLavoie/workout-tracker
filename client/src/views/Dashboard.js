@@ -88,21 +88,20 @@ function Dashboard() {
 
   useEffect(() => {
     const abortCont = new AbortController();
-    Promise.all([
-      fetchRecords(abortCont),
-      fetchYearData(currentYear, abortCont),
-    ]).then((data) => {
+    try {
+      const data = [
+        fetchRecords(abortCont),
+        fetchYearData(currentYear, abortCont)
+      ];
       setRecords(data[0]);
       setYearWorkouts(data[1]);
       setIsLoading(false);
-    })
-      .catch((error) => {
-        if (error.name === 'AbortError') return;
-        else {
-          setIsLoading(false);
-          setError(error.message);
-        }
-      });
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      setIsLoading(false);
+      setError(error.message);
+    }
+
     return () => abortCont.abort();
   }, []);
 

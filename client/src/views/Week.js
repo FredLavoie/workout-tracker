@@ -81,6 +81,7 @@ function Week() {
   const weekArr = calculateWeek(dateArr);
 
   function handleClickPrevious() {
+    // TODO: fix bug when pressing PREV where the next month's workouts are missing in the list
     const weekToFetch = dateArr.map((ea, index) => {
       if (index === 1) return String(Number(ea) - 7);
       else return ea;
@@ -123,29 +124,17 @@ function Week() {
   useEffect(() => {
     setIsLoading(true);
     const abortCont = new AbortController();
-    fetchMonthData(currentMonthToFetch, abortCont)
-      .then((data1) => {
-        fetchMonthData(nextMonthToFetch, abortCont)
-          .then((data2) => {
-            const newWorkouts = [...data1, ...data2];
-            setWorkouts(newWorkouts);
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            else {
-              setIsLoading(false);
-              setError(error.message);
-            }
-          });
-      })
-      .catch((error) => {
-        if (error.name === 'AbortError') return;
-        else {
-          setIsLoading(false);
-          setError(error.message);
-        }
-      });
+    try {
+      const data1 = fetchMonthData(currentMonthToFetch, abortCont);
+      const data2 = fetchMonthData(nextMonthToFetch, abortCont);
+      const newWorkouts = [...data1, ...data2];
+      setWorkouts(newWorkouts);
+      setIsLoading(false);
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      setIsLoading(false);
+      setError(error.message);
+    }
     return () => abortCont.abort();
   }, [dateArr]);
 

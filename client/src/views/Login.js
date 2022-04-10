@@ -49,22 +49,23 @@ function Login() {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
-    login(username, password)
-      .then((data) => {
-        if (data.non_field_errors) {
-          return setOpen(true);
-        }
-        fetchAccountId()
-          .then(() => history.push('/dashboard'))
-          .catch((error) => {
-            return setError(error.message);
-          });
-      })
-      .catch((error) => {
+    try {
+      const data = login(username, password);
+      if (data.non_field_errors) {
+        return setOpen(true);
+      }
+      try {
+        fetchAccountId();
+        history.push('/dashboard');
+
+      } catch (error) {
         return setError(error.message);
-      });
+      }
+    } catch (error) {
+      return setError(error.message);
+    }
   }
 
   if (isAuthenticated() === true) {

@@ -105,13 +105,14 @@ function Layout({ children }) {
   const username = localStorage.getItem('username');
   const firstTwoLetter = `${username[0].toUpperCase()}${username[1].toUpperCase()}`;
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
-    await logout()
-      .then(() => history.push('/login'))
-      .catch(() => {
-        return setOpen(true);
-      });
+    try {
+      logout();
+      history.push('/login');
+    } catch (error) {
+      return setOpen(true);
+    }
   }
 
   function handleCloseError() {

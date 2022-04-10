@@ -105,18 +105,15 @@ function Calendar() {
   useEffect(() => {
     setIsLoading(true);
     const abortCont = new AbortController();
-    fetchMonthData(monthToFetch, abortCont)
-      .then((data) => {
-        setWorkouts(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        if (error.name === 'AbortError') return;
-        else {
-          setIsLoading(false);
-          setError(error.message);
-        }
-      });
+    try {
+      const data = fetchMonthData(monthToFetch, abortCont);
+      setWorkouts(data);
+      setIsLoading(false);
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      setIsLoading(false);
+      setError(error.message);
+    }
     return () => abortCont.abort();
   }, [monthToFetch]);
 
