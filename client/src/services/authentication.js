@@ -1,7 +1,7 @@
 const URL = process.env.REACT_APP_BASE_URL || 'https://workout-tracker.xyz/api';
 
 export async function login(username, password) {
-  return await fetch(`${URL}/dj-rest-auth/login/`, {
+  const res = await fetch(`${URL}/dj-rest-auth/login/`, {
     method: 'POST',
     credentials: 'omit',
     headers: {
@@ -9,41 +9,36 @@ export async function login(username, password) {
       'Accept': 'application/json',
     },
     body: JSON.stringify({ username, password })
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-      return res.json();
-    })
-    .then((data) => {
-      if (data.key) {
-        localStorage.setItem('username', username);
-        localStorage.setItem('token', data.key);
-      }
-      return data;
-    });
+  });
+  if (!res.ok)
+    throw new Error(`Server error - status ${res.status}`);
+  const data = await res.json();
+  if (data.key) {
+    localStorage.setItem('username', username);
+    localStorage.setItem('token', data.key);
+  }
+  return data;
 }
 
 export async function logout() {
-  return fetch(`${URL}/dj-rest-auth/logout/`, {
+  const res = await fetch(`${URL}/dj-rest-auth/logout/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-      localStorage.removeItem('token');
-      localStorage.removeItem('accountId');
-      localStorage.removeItem('username');
-      return;
-    });
-
+  });
+  if (!res.ok)
+    throw new Error(`Server error - status ${res.status}`);
+  localStorage.removeItem('token');
+  localStorage.removeItem('accountId');
+  localStorage.removeItem('username');
+  return;
 }
 
 export async function changePassword(newPassword1, newPassword2) {
   const token = localStorage.getItem('token');
-  return fetch(`${URL}/dj-rest-auth/password/change/`, {
+  const res = await fetch(`${URL}/dj-rest-auth/password/change/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -51,11 +46,10 @@ export async function changePassword(newPassword1, newPassword2) {
       'authorization': `Token ${token}`
     },
     body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 })
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error(`Server error - status ${res.status}`);
-      return res.json();
-    });
+  });
+  if (!res.ok)
+    throw new Error(`Server error - status ${res.status}`);
+  return await res.json();
 }
 
 export function isAuthenticated() {
