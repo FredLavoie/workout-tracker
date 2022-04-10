@@ -86,15 +86,13 @@ function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  useEffect(async () => {
     const abortCont = new AbortController();
     try {
-      const data = [
-        fetchRecords(abortCont),
-        fetchYearData(currentYear, abortCont)
-      ];
-      setRecords(data[0]);
-      setYearWorkouts(data[1]);
+      const recordData = await fetchRecords(abortCont);
+      const yearData = await fetchYearData(currentYear, abortCont);
+      setRecords(recordData);
+      setYearWorkouts(yearData);
       setIsLoading(false);
     } catch (error) {
       if (error.name === 'AbortError') return;
@@ -105,6 +103,7 @@ function Dashboard() {
     return () => abortCont.abort();
   }, []);
 
+  // return the number of workouts for each month
   function filterWorkoutsForMonth(workouts, monthNumber) {
     const numberOfWorkouts = workouts.filter((ea) => {
       return ea.date.split('-')[1] === monthNumber;

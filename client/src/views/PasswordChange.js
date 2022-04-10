@@ -54,7 +54,7 @@ function Password() {
       return;
     }
     try {
-      changePassword(newPassword1, newPassword2);
+      await changePassword(newPassword1, newPassword2);
       setAlertMessage({ severity: 'success', message: 'Successfully changed password.' });
       setOpen(true);
       setTimeout(() => history.push('/dashboard'), 1500);

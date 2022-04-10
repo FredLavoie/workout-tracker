@@ -121,12 +121,14 @@ function Week() {
     setNextMonthToFetch(`${String(nextYear)}-${String(nextMonth).padStart(2, '0')}`);
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     setIsLoading(true);
     const abortCont = new AbortController();
     try {
-      const data1 = fetchMonthData(currentMonthToFetch, abortCont);
-      const data2 = fetchMonthData(nextMonthToFetch, abortCont);
+      const data1 = await fetchMonthData(currentMonthToFetch, abortCont);
+      const data2 = await fetchMonthData(nextMonthToFetch, abortCont);
+      // TODO: this might be the source of missing data when looking at week view
+      // and the previous months data is not present
       const newWorkouts = [...data1, ...data2];
       setWorkouts(newWorkouts);
       setIsLoading(false);

@@ -68,10 +68,10 @@ function DetailRecord() {
 
   const eventToFetch = location.pathname.split('/')[3];
 
-  useEffect(() => {
+  useEffect(async () => {
     const abortCont = new AbortController();
     try {
-      const data = fetchEventRecords(eventToFetch, abortCont);
+      const data = await fetchEventRecords(eventToFetch, abortCont);
       const sortedRecords = data.sort((a, b) => b.date > a.date);
       setRecrods(sortedRecords);
       setIsLoading(false);

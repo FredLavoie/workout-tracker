@@ -102,11 +102,11 @@ function Calendar() {
     history.push(`/cal/${dateString}`);
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     setIsLoading(true);
     const abortCont = new AbortController();
     try {
-      const data = fetchMonthData(monthToFetch, abortCont);
+      const data = await fetchMonthData(monthToFetch, abortCont);
       setWorkouts(data);
       setIsLoading(false);
     } catch (error) {

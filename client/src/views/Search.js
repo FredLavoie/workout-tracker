@@ -72,11 +72,11 @@ function Search() {
     setError(null);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const results = fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
+      const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
       const sortedResults = results.sort((a, b) => {
         const aSeconds = new Date(a.date).getTime();
         const bSeconds = new Date(b.date).getTime();

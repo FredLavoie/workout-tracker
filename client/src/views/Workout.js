@@ -81,7 +81,7 @@ function Workout() {
   const [error, setError] = useState(null);
 
 
-  useEffect(() => {
+  useEffect(async () => {
     const abortCont = new AbortController();
     if (workoutId === 'new') {
       setSelectedDate(newWorkoutDate !== null ? newWorkoutDate : currentDate);
@@ -90,7 +90,7 @@ function Workout() {
       setIsLoading(false);
     } else {
       try {
-        const data = fetchWorkout(workoutId, abortCont);
+        const data = await fetchWorkout(workoutId, abortCont);
         setSelectedDate(data.date);
         setSelectedTime(data.time.split(':').slice(0, 2).join(':'));
         setWorkoutBody(data.workout_body);
@@ -108,14 +108,14 @@ function Workout() {
   }, []);
 
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (workoutId === 'new') {
       const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
         try {
-          postWorkout(selectedDate, selectedTime, workoutBody);
+          await postWorkout(selectedDate, selectedTime, workoutBody);
           setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
           setOpen(true);
           setTimeout(() => history.push(`/cal/${navDate}`), 1500);
@@ -131,7 +131,7 @@ function Workout() {
       const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
         try {
-          updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
+          await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
           setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
           setOpen(true);
           setTimeout(() => history.push(`/cal/${navDate}`), 1500);
@@ -152,7 +152,7 @@ function Workout() {
 
   async function handleDelete() {
     try {
-      deleteWorkout(workoutId);
+      await deleteWorkout(workoutId);
       setAlertMessage({ severity: 'success', message: 'Successfully deleted workout.' });
       setOpen(true);
       setTimeout(() => history.push(`/cal/${navDate}`), 1500);

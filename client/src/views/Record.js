@@ -76,7 +76,7 @@ function Record() {
   const [error, setError] = useState(null);
 
 
-  useEffect(() => {
+  useEffect(async () => {
     const abortCont = new AbortController();
     if (recordId === 'new') {
       setSelectedDate(currentDate);
@@ -84,7 +84,7 @@ function Record() {
       setIsLoading(false);
     } else {
       try {
-        const data = fetchRecord(recordId, abortCont);
+        const data = await fetchRecord(recordId, abortCont);
         setSelectedDate(data.date);
         setRecordType(data.type);
         setRecordEvent(data.event);
@@ -101,14 +101,14 @@ function Record() {
   }, []);
 
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (recordId === 'new') {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
         try {
-          postRecord(selectedDate, recordType, recordEvent, recordScore);
+          await postRecord(selectedDate, recordType, recordEvent, recordScore);
           setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
           setOpen(true);
           setTimeout(() => history.push('/dashboard'), 1500);
@@ -124,7 +124,7 @@ function Record() {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
         try {
-          updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
+          await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
           setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
           setOpen(true);
           setTimeout(() => history.push('/dashboard'), 1500);
@@ -143,9 +143,9 @@ function Record() {
     history.goBack();
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     try {
-      deleteRecord(recordId);
+      await deleteRecord(recordId);
       setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
       setOpen(true);
       setTimeout(() => history.push('/dashboard'), 1500);

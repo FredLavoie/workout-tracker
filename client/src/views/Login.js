@@ -49,15 +49,15 @@ function Login() {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const data = login(username, password);
+      const data = await login(username, password);
       if (data.non_field_errors) {
         return setOpen(true);
       }
       try {
-        fetchAccountId();
+        await fetchAccountId();
         history.push('/dashboard');
 
       } catch (error) {

@@ -105,10 +105,10 @@ function Layout({ children }) {
   const username = localStorage.getItem('username');
   const firstTwoLetter = `${username[0].toUpperCase()}${username[1].toUpperCase()}`;
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     try {
-      logout();
+      await logout();
       history.push('/login');
     } catch (error) {
       return setOpen(true);
