@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import makeStyles from '@mui/styles/makeStyles';
 
-import recordList from '../lib/recordList';
+import { recordList } from '../lib/recordList';
 
 const useStyles = makeStyles((theme) => ({
   content: {

@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
 import ServerError from '../components/ServerError';
-import months from '../lib/months';
+import { months } from '../lib/months';
 import { calculateWeek } from '../utils/calculateWeek';
 import { correctDate } from '../utils/correctDate';
 import { fetchMonthData } from '../services/fetchData';

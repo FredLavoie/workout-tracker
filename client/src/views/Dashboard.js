@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
 import { fetchYearData, fetchRecords } from '../services/fetchData';
-import months from '../lib/months';
+import { months } from '../lib/months';
 import RecordTable from '../components/RecordTable';
 import ServerError from '../components/ServerError';
 

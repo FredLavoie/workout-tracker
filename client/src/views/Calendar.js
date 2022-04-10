@@ -12,7 +12,7 @@ import CalendarGrid from '../components/CalendarGrid';
 import ServerError from '../components/ServerError';
 import { fetchMonthData } from '../services/fetchData';
 import { calculateMonth } from '../utils/calculateMonth';
-import months from '../lib/months';
+import { months } from '../lib/months';
 
 
 const useStyles = makeStyles((theme) => ({

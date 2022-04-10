@@ -20,7 +20,7 @@ import MuiAlert from '@mui/material/Alert';
 import { fetchRecord, updateRecord, postRecord, deleteRecord } from '../services/fetchData';
 import { validateRecord } from '../utils/validateRecord';
 import ServerError from '../components/ServerError';
-import recordList from '../lib/recordList';
+import { recordList } from '../lib/recordList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
