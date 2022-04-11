@@ -19,7 +19,7 @@ export async function fetchAccountId() {
 /****************************************** SEARCH ******************************************/
 /********************************************************************************************/
 
-export async function fetchSearchResults(checkedWorkout, checkedRecord, query) { // convert to async
+export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
   if (!checkedWorkout && !checkedRecord) return [];
 
   const token = localStorage.getItem('token');
@@ -51,7 +51,7 @@ export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
       },
     });
     if (!resRecord.ok) throw new Error(`Server error - status ${resRecord.status}`);
-    const dataRecord = resRecord.json();
+    const dataRecord = await resRecord.json();
     results.push(...dataRecord);
   }
   return results;
