@@ -149,7 +149,7 @@ function Week() {
     >
       {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
-      {!error && !isLoading &&
+      {workouts && !isLoading &&
         <div>
           <div className={classes.weekNav}>
             <Button onClick={handleClickPrevious} className={classes.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
