@@ -224,7 +224,7 @@ function Layout({ children }) {
 
           <Button>
             <Avatar
-              button
+              button="true"
               className={classes.avatar}
               onClick={handleClickAvatar}
               aria-controls="simple-menu"

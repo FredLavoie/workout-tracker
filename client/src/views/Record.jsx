@@ -238,7 +238,6 @@ function Record() {
             variant='contained'
             key={`${!selectedDate || !recordEvent || !recordScore ? true : false}`}
             disabled={!selectedDate || !recordEvent || !recordScore ? true : false}
-            onTouchTap={(e) => e.preventDefault()}
           >
             Save
           </Button>
