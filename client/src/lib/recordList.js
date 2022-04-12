@@ -1,4 +1,4 @@
-module.exports = {
+export const recordList = {
   strength: [
     'Back Squat',
     'Bench Press',

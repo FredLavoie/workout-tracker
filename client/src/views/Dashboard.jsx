@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
 import { fetchYearData, fetchRecords } from '../services/fetchData';
-import months from '../lib/months';
+import { months } from '../lib/months';
 import RecordTable from '../components/RecordTable';
 import ServerError from '../components/ServerError';
 
@@ -86,26 +86,24 @@ function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  useEffect(async () => {
     const abortCont = new AbortController();
-    Promise.all([
-      fetchRecords(abortCont),
-      fetchYearData(currentYear, abortCont),
-    ]).then((data) => {
-      setRecords(data[0]);
-      setYearWorkouts(data[1]);
+    try {
+      const recordData = await fetchRecords(abortCont);
+      const yearData = await fetchYearData(currentYear, abortCont);
+      setRecords(recordData);
+      setYearWorkouts(yearData);
       setIsLoading(false);
-    })
-      .catch((error) => {
-        if (error.name === 'AbortError') return;
-        else {
-          setIsLoading(false);
-          setError(error.message);
-        }
-      });
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      setIsLoading(false);
+      setError(error.message);
+    }
+
     return () => abortCont.abort();
   }, []);
 
+  // return the number of workouts for each month
   function filterWorkoutsForMonth(workouts, monthNumber) {
     const numberOfWorkouts = workouts.filter((ea) => {
       return ea.date.split('-')[1] === monthNumber;

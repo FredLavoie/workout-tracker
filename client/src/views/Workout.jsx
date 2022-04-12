@@ -81,7 +81,7 @@ function Workout() {
   const [error, setError] = useState(null);
 
 
-  useEffect(() => {
+  useEffect(async () => {
     const abortCont = new AbortController();
     if (workoutId === 'new') {
       setSelectedDate(newWorkoutDate !== null ? newWorkoutDate : currentDate);
@@ -89,21 +89,20 @@ function Workout() {
       changeNewOrEdit(1);
       setIsLoading(false);
     } else {
-      fetchWorkout(workoutId, abortCont)
-        .then((data) => {
-          setSelectedDate(data.date);
-          setSelectedTime(data.time.split(':').slice(0, 2).join(':'));
-          setWorkoutBody(data.workout_body);
-          changeNewOrEdit(0);
+      try {
+        const data = await fetchWorkout(workoutId, abortCont);
+        setSelectedDate(data.date);
+        setSelectedTime(data.time.split(':').slice(0, 2).join(':'));
+        setWorkoutBody(data.workout_body);
+        changeNewOrEdit(0);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        else {
           setIsLoading(false);
-        })
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          else {
-            setIsLoading(false);
-            setError(error.message);
-          }
-        });
+          setError(error.message);
+        }
+      }
     }
     return () => abortCont.abort();
   }, []);
@@ -115,16 +114,15 @@ function Workout() {
     if (workoutId === 'new') {
       const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
-        await postWorkout(selectedDate, selectedTime, workoutBody)
-          .then(() => {
-            setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
-            setOpen(true);
-            setTimeout(() => history.push(`/cal/${navDate}`), 1500);
-          })
-          .catch((error) => {
-            setAlertMessage({ severity: 'error', message: error.message });
-            setOpen(true);
-          });
+        try {
+          await postWorkout(selectedDate, selectedTime, workoutBody);
+          setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
+          setOpen(true);
+          setTimeout(() => history.push(`/cal/${navDate}`), 1500);
+        } catch (error) {
+          setAlertMessage({ severity: 'error', message: error.message });
+          setOpen(true);
+        }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
         setOpen(true);
@@ -132,16 +130,15 @@ function Workout() {
     } else {
       const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
-        await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody)
-          .then(() => {
-            setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
-            setOpen(true);
-            setTimeout(() => history.push(`/cal/${navDate}`), 1500);
-          })
-          .catch((error) => {
-            setAlertMessage({ severity: 'error', message: error.message });
-            setOpen(true);
-          });
+        try {
+          await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
+          setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
+          setOpen(true);
+          setTimeout(() => history.push(`/cal/${navDate}`), 1500);
+        } catch (error) {
+          setAlertMessage({ severity: 'error', message: error.message });
+          setOpen(true);
+        }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
         setOpen(true);
@@ -154,16 +151,15 @@ function Workout() {
   }
 
   async function handleDelete() {
-    await deleteWorkout(workoutId)
-      .then(() => {
-        setAlertMessage({ severity: 'success', message: 'Successfully deleted workout.' });
-        setOpen(true);
-        setTimeout(() => history.push(`/cal/${navDate}`), 1500);
-      })
-      .catch((error) => {
-        setAlertMessage({ severity: 'error', message: error.message });
-        setOpen(true);
-      });
+    try {
+      await deleteWorkout(workoutId);
+      setAlertMessage({ severity: 'success', message: 'Successfully deleted workout.' });
+      setOpen(true);
+      setTimeout(() => history.push(`/cal/${navDate}`), 1500);
+    } catch (error) {
+      setAlertMessage({ severity: 'error', message: error.message });
+      setOpen(true);
+    }
   }
 
   function handleClose() {
@@ -218,7 +214,6 @@ function Workout() {
             variant='contained'
             key={`${!workoutBody ? true : false}`}
             disabled={!workoutBody ? true : false}
-            onTouchTap={(e) => e.preventDefault()}
           >
             Save
           </Button>

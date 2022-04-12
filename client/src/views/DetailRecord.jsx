@@ -68,21 +68,18 @@ function DetailRecord() {
 
   const eventToFetch = location.pathname.split('/')[3];
 
-  useEffect(() => {
+  useEffect(async () => {
     const abortCont = new AbortController();
-    fetchEventRecords(eventToFetch, abortCont)
-      .then((data) => {
-        const sortedRecords = data.sort((a, b) => b.date > a.date);
-        setRecrods(sortedRecords);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        if (error.name === 'AbortError') return;
-        else {
-          setIsLoading(false);
-          setError(error.message);
-        }
-      });
+    try {
+      const data = await fetchEventRecords(eventToFetch, abortCont);
+      const sortedRecords = data.sort((a, b) => b.date > a.date);
+      setRecrods(sortedRecords);
+      setIsLoading(false);
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      setIsLoading(false);
+      setError(error.message);
+    }
     return () => abortCont.abort();
   }, []);
 

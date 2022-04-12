@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
 import ServerError from '../components/ServerError';
-import months from '../lib/months';
+import { months } from '../lib/months';
 import { calculateWeek } from '../utils/calculateWeek';
 import { correctDate } from '../utils/correctDate';
 import { fetchMonthData } from '../services/fetchData';
@@ -81,6 +81,7 @@ function Week() {
   const weekArr = calculateWeek(dateArr);
 
   function handleClickPrevious() {
+    // TODO: fix bug when pressing PREV where the next month's workouts are missing in the list
     const weekToFetch = dateArr.map((ea, index) => {
       if (index === 1) return String(Number(ea) - 7);
       else return ea;
@@ -120,32 +121,22 @@ function Week() {
     setNextMonthToFetch(`${String(nextYear)}-${String(nextMonth).padStart(2, '0')}`);
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     setIsLoading(true);
     const abortCont = new AbortController();
-    fetchMonthData(currentMonthToFetch, abortCont)
-      .then((data1) => {
-        fetchMonthData(nextMonthToFetch, abortCont)
-          .then((data2) => {
-            const newWorkouts = [...data1, ...data2];
-            setWorkouts(newWorkouts);
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            else {
-              setIsLoading(false);
-              setError(error.message);
-            }
-          });
-      })
-      .catch((error) => {
-        if (error.name === 'AbortError') return;
-        else {
-          setIsLoading(false);
-          setError(error.message);
-        }
-      });
+    try {
+      const data1 = await fetchMonthData(currentMonthToFetch, abortCont);
+      const data2 = await fetchMonthData(nextMonthToFetch, abortCont);
+      // TODO: this might be the source of missing data when looking at week view
+      // and the previous months data is not present
+      const newWorkouts = [...data1, ...data2];
+      setWorkouts(newWorkouts);
+      setIsLoading(false);
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      setIsLoading(false);
+      setError(error.message);
+    }
     return () => abortCont.abort();
   }, [dateArr]);
 
@@ -158,7 +149,7 @@ function Week() {
     >
       {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
-      {!error && !isLoading &&
+      {workouts && !isLoading &&
         <div>
           <div className={classes.weekNav}>
             <Button onClick={handleClickPrevious} className={classes.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>

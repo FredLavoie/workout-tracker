@@ -75,20 +75,21 @@ function Search() {
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
-    if (results.error) {
+    try {
+      const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
+      const sortedResults = results.sort((a, b) => {
+        const aSeconds = new Date(a.date).getTime();
+        const bSeconds = new Date(b.date).getTime();
+        return bSeconds > aSeconds;
+      });
+      setSearchResults(sortedResults);
+      setIsLoading(false);
+    } catch (error) {
       setIsLoading(false);
       setSearchResults(null);
-      setError(results.error);
+      setError(error);
       return;
     }
-    const sortedResults = results.sort((a, b) => {
-      const aSeconds = new Date(a.date).getTime();
-      const bSeconds = new Date(b.date).getTime();
-      return bSeconds > aSeconds;
-    });
-    setSearchResults(sortedResults);
-    setIsLoading(false);
   }
 
   return (

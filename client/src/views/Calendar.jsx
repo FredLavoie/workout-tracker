@@ -12,7 +12,7 @@ import CalendarGrid from '../components/CalendarGrid';
 import ServerError from '../components/ServerError';
 import { fetchMonthData } from '../services/fetchData';
 import { calculateMonth } from '../utils/calculateMonth';
-import months from '../lib/months';
+import { months } from '../lib/months';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -102,21 +102,18 @@ function Calendar() {
     history.push(`/cal/${dateString}`);
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     setIsLoading(true);
     const abortCont = new AbortController();
-    fetchMonthData(monthToFetch, abortCont)
-      .then((data) => {
-        setWorkouts(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        if (error.name === 'AbortError') return;
-        else {
-          setIsLoading(false);
-          setError(error.message);
-        }
-      });
+    try {
+      const data = await fetchMonthData(monthToFetch, abortCont);
+      setWorkouts(data);
+      setIsLoading(false);
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      setIsLoading(false);
+      setError(error.message);
+    }
     return () => abortCont.abort();
   }, [monthToFetch]);
 

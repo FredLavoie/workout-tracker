@@ -107,11 +107,12 @@ function Layout({ children }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await logout()
-      .then(() => history.push('/login'))
-      .catch(() => {
-        return setOpen(true);
-      });
+    try {
+      await logout();
+      history.push('/login');
+    } catch (error) {
+      return setOpen(true);
+    }
   }
 
   function handleCloseError() {
@@ -223,7 +224,7 @@ function Layout({ children }) {
 
           <Button>
             <Avatar
-              button
+              button="true"
               className={classes.avatar}
               onClick={handleClickAvatar}
               aria-controls="simple-menu"

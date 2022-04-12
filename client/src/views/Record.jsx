@@ -20,7 +20,7 @@ import MuiAlert from '@mui/material/Alert';
 import { fetchRecord, updateRecord, postRecord, deleteRecord } from '../services/fetchData';
 import { validateRecord } from '../utils/validateRecord';
 import ServerError from '../components/ServerError';
-import recordList from '../lib/recordList';
+import { recordList } from '../lib/recordList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,29 +76,26 @@ function Record() {
   const [error, setError] = useState(null);
 
 
-  useEffect(() => {
+  useEffect(async () => {
     const abortCont = new AbortController();
     if (recordId === 'new') {
       setSelectedDate(currentDate);
       changeNewOrEdit(1);
       setIsLoading(false);
     } else {
-      fetchRecord(recordId, abortCont)
-        .then((data) => {
-          setSelectedDate(data.date);
-          setRecordType(data.type);
-          setRecordEvent(data.event);
-          setRecordScore(data.score);
-          changeNewOrEdit(0);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          else {
-            setIsLoading(false);
-            setError(error.message);
-          }
-        });
+      try {
+        const data = await fetchRecord(recordId, abortCont);
+        setSelectedDate(data.date);
+        setRecordType(data.type);
+        setRecordEvent(data.event);
+        setRecordScore(data.score);
+        changeNewOrEdit(0);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        setIsLoading(false);
+        setError(error.message);
+      }
     }
     return () => abortCont.abort();
   }, []);
@@ -110,16 +107,15 @@ function Record() {
     if (recordId === 'new') {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
-        await postRecord(selectedDate, recordType, recordEvent, recordScore)
-          .then(() => {
-            setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
-            setOpen(true);
-            setTimeout(() => history.push('/dashboard'), 1500);
-          })
-          .catch((error) => {
-            setAlertMessage({ severity: 'error', message: error.message });
-            setOpen(true);
-          });
+        try {
+          await postRecord(selectedDate, recordType, recordEvent, recordScore);
+          setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
+          setOpen(true);
+          setTimeout(() => history.push('/dashboard'), 1500);
+        } catch (error) {
+          setAlertMessage({ severity: 'error', message: error.message });
+          setOpen(true);
+        }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
         setOpen(true);
@@ -127,16 +123,15 @@ function Record() {
     } else {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
-        await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore)
-          .then(() => {
-            setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
-            setOpen(true);
-            setTimeout(() => history.push('/dashboard'), 1500);
-          })
-          .catch((error) => {
-            setAlertMessage({ severity: 'error', message: error.message });
-            setOpen(true);
-          });
+        try {
+          await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
+          setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
+          setOpen(true);
+          setTimeout(() => history.push('/dashboard'), 1500);
+        } catch (error) {
+          setAlertMessage({ severity: 'error', message: error.message });
+          setOpen(true);
+        }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
         setOpen(true);
@@ -149,16 +144,15 @@ function Record() {
   }
 
   async function handleDelete() {
-    await deleteRecord(recordId)
-      .then(() => {
-        setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
-        setOpen(true);
-        setTimeout(() => history.push('/dashboard'), 1500);
-      })
-      .catch((error) => {
-        setAlertMessage({ severity: 'error', message: error.message });
-        setOpen(true);
-      });
+    try {
+      await deleteRecord(recordId);
+      setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
+      setOpen(true);
+      setTimeout(() => history.push('/dashboard'), 1500);
+    } catch (error) {
+      setAlertMessage({ severity: 'error', message: error.message });
+      setOpen(true);
+    }
   }
 
   function handleClose() {
@@ -244,7 +238,6 @@ function Record() {
             variant='contained'
             key={`${!selectedDate || !recordEvent || !recordScore ? true : false}`}
             disabled={!selectedDate || !recordEvent || !recordScore ? true : false}
-            onTouchTap={(e) => e.preventDefault()}
           >
             Save
           </Button>
