@@ -17,7 +17,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import makeStyles from '@mui/styles/makeStyles';
 
 import { changePassword } from '../services/authentication';
-import { validatePasswordChange } from '../utils/validatePasswordChange';
+import { validatePasswordChange } from '../utils';
 
 const useStyles = makeStyles({
   root: {
