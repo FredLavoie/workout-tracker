@@ -12,9 +12,12 @@ import makeStyles from '@mui/styles/makeStyles';
 
 import ServerError from '../components/ServerError';
 import { months } from '../lib/months';
-import { calculateWeek } from '../utils/calculateWeek';
-import { correctDate } from '../utils/correctDate';
 import { fetchMonthData } from '../services/fetchData';
+import {
+  calculateWeek,
+  correctDate,
+  determineNextMonth
+} from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,6 +77,7 @@ function Week() {
   const [workouts, setWorkouts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  // dateArr example: Jan 31, 2020 -> ["1", "31", "2020"]
   const [dateArr, setDateArr] = useState(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/'));
   const [currentMonthToFetch, setCurrentMonthToFetch] = useState(`${dateArr[2]}-${dateArr[0].padStart(2, '0')}`);
   const [nextMonthToFetch, setNextMonthToFetch] = useState(`${dateArr[2]}-${String(Number(dateArr[0]) - 1).padStart(2, '0')}`);
@@ -81,44 +85,27 @@ function Week() {
   const weekArr = calculateWeek(dateArr);
 
   function handleClickPrevious() {
-    // TODO: fix bug when pressing PREV where the next month's workouts are missing in the list
-    const weekToFetch = dateArr.map((ea, index) => {
+    const dateOfWeekToFetch = dateArr.map((ea, index) => {
       if (index === 1) return String(Number(ea) - 7);
       else return ea;
     });
-    const correctedDate = correctDate(weekToFetch);
-    setDateArr(correctedDate);
+    const correctedDate = correctDate(dateOfWeekToFetch);
+    const nextMonthToFetch = determineNextMonth(correctedDate);
     setCurrentMonthToFetch(`${correctedDate[2]}-${correctedDate[0].padStart(2, '0')}`);
-    let nextMonth = -1;
-    let nextYear = -1;
-    if (Number(correctedDate[0]) - 1 === 0) {
-      nextMonth = 12;
-      nextYear = Number(correctedDate[2] - 1);
-    } else {
-      nextMonth = Number(correctedDate[0]) - 1;
-      nextYear = Number(correctedDate[2]);
-    }
-    setNextMonthToFetch(`${String(nextYear)}-${String(nextMonth).padStart(2, '0')}`);
+    setNextMonthToFetch(`${nextMonthToFetch[0]}-${nextMonthToFetch[1].padStart(2, '0')}`);
+    setDateArr(correctedDate);
   }
 
   function handleClickNext() {
-    const weekToFetch = dateArr.map((ea, index) => {
+    const dateOfWeekToFetch = dateArr.map((ea, index) => {
       if (index === 1) return String(Number(ea) + 7);
       else return ea;
     });
-    const correctedDate = correctDate(weekToFetch);
-    setDateArr(correctedDate);
+    const correctedDate = correctDate(dateOfWeekToFetch);
+    const nextMonthToFetch = determineNextMonth(correctedDate);
     setCurrentMonthToFetch(`${correctedDate[2]}-${correctedDate[0].padStart(2, '0')}`);
-    let nextMonth = -1;
-    let nextYear = -1;
-    if (Number(correctedDate[0]) + 1 === 13) {
-      nextMonth = 1;
-      nextYear = Number(correctedDate[2] + 1);
-    } else {
-      nextMonth = Number(correctedDate[0]) + 1;
-      nextYear = Number(correctedDate[2]);
-    }
-    setNextMonthToFetch(`${String(nextYear)}-${String(nextMonth).padStart(2, '0')}`);
+    setNextMonthToFetch(`${nextMonthToFetch[0]}-${nextMonthToFetch[1].padStart(2, '0')}`);
+    setDateArr(correctedDate);
   }
 
   useEffect(async () => {
@@ -127,8 +114,6 @@ function Week() {
     try {
       const data1 = await fetchMonthData(currentMonthToFetch, abortCont);
       const data2 = await fetchMonthData(nextMonthToFetch, abortCont);
-      // TODO: this might be the source of missing data when looking at week view
-      // and the previous months data is not present
       const newWorkouts = [...data1, ...data2];
       setWorkouts(newWorkouts);
       setIsLoading(false);
@@ -159,76 +144,18 @@ function Week() {
             <Button onClick={handleClickNext} className={classes.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
           </div>
           <div className={classes.weekContainer}>
-            <Card elevation={2} className={classes.cardStyle}>
-              <Typography variant='body1' color='textSecondary' className={classes.header}>
-                {`Sunday, ${months[weekArr[0].split('-')[1]]} ${weekArr[0].split('-')[2]}`}
-              </Typography>
-              <CardContent className={classes.content}>
-                <Typography component='div'>
-                  <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[0])?.workout_body || 'Rest'}</pre>
+            {weekArr.map((day, index) => (
+              <Card elevation={2} className={classes.cardStyle} key={index}>
+                <Typography variant='body1' color='textSecondary' className={classes.header}>
+                  {`Sunday, ${months[day.split('-')[1]]} ${day.split('-')[2]}`}
                 </Typography>
-              </CardContent>
-            </Card>
-            <Card elevation={2} className={classes.cardStyle}>
-              <Typography variant='body1' color='textSecondary' className={classes.header}>
-                {`Monday ${months[weekArr[1].split('-')[1]]} ${weekArr[1].split('-')[2]}`}
-              </Typography>
-              <CardContent className={classes.content}>
-                <Typography component='div'>
-                  <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[1])?.workout_body || 'Rest'}</pre>
-                </Typography>
-              </CardContent>
-            </Card>
-            <Card elevation={2} className={classes.cardStyle}>
-              <Typography variant='body1' color='textSecondary' className={classes.header}>
-                {`Tuesday ${months[weekArr[2].split('-')[1]]} ${weekArr[2].split('-')[2]}`}
-              </Typography>
-              <CardContent className={classes.content}>
-                <Typography component='div'>
-                  <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[2])?.workout_body || 'Rest'}</pre>
-                </Typography>
-              </CardContent>
-            </Card>
-            <Card elevation={2} className={classes.cardStyle}>
-              <Typography variant='body1' color='textSecondary' className={classes.header}>
-                {`Wednesday ${months[weekArr[3].split('-')[1]]} ${weekArr[3].split('-')[2]}`}
-              </Typography>
-              <CardContent className={classes.content}>
-                <Typography component='div'>
-                  <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[3])?.workout_body || 'Rest'}</pre>
-                </Typography>
-              </CardContent>
-            </Card>
-            <Card elevation={2} className={classes.cardStyle}>
-              <Typography variant='body1' color='textSecondary' className={classes.header}>
-                {`Thursday ${months[weekArr[4].split('-')[1]]} ${weekArr[4].split('-')[2]}`}
-              </Typography>
-              <CardContent className={classes.content}>
-                <Typography component='div'>
-                  <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[4])?.workout_body || 'Rest'}</pre>
-                </Typography>
-              </CardContent>
-            </Card>
-            <Card elevation={2} className={classes.cardStyle}>
-              <Typography variant='body1' color='textSecondary' className={classes.header}>
-                {`Friday ${months[weekArr[5].split('-')[1]]} ${weekArr[5].split('-')[2]}`}
-              </Typography>
-              <CardContent className={classes.content}>
-                <Typography component='div'>
-                  <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[5])?.workout_body || 'Rest'}</pre>
-                </Typography>
-              </CardContent>
-            </Card>
-            <Card elevation={2} className={classes.cardStyle}>
-              <Typography variant='body1' color='textSecondary' className={classes.header}>
-                {`Saturday ${months[weekArr[6].split('-')[1]]} ${weekArr[6].split('-')[2]}`}
-              </Typography>
-              <CardContent className={classes.content}>
-                <Typography component='div'>
-                  <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === weekArr[6])?.workout_body || 'Rest'}</pre>
-                </Typography>
-              </CardContent>
-            </Card>
+                <CardContent className={classes.content}>
+                  <Typography component='div'>
+                    <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === day)?.workout_body || 'Rest'}</pre>
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>}
     </Grid>
