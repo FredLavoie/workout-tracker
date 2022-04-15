@@ -1,9 +1,25 @@
+/**
+ * Utility function that takes a date as an array and determines the 7 days that exist in that week and returns
+ * the 7 dates in an array.
+ * 
+ * Example:
+ * dateArr ["04", "14", "2022"]
+ * results ["2022-04-10", "2022-04-11", "2022-04-12", "2022-04-13", "2022-04-14", "2022-04-15", "2022-04-16"]
+ * 
+ * @param {string[]} dataArr a simple date array containing a month, day and year respectively
+ * @return {string[]} an array of 7 dates. The dates will be used to fetch the workouts on those days which will
+ * then be displayed in the Week view 
+ */
 export function calculateWeek(dateArr) {
   const numDaysInMonth = new Date(dateArr[2], dateArr[0], 0).getDate();
   let numDaysPrevMonth = null;
   if (dateArr[0] === '1') {
-    numDaysPrevMonth = new Date(Number(dateArr[2]) - 1, '1', 0).getDate();
+    // Current month is Jan, therefore the previous month is Dec and it has 31 days
+    numDaysPrevMonth = 31;
   } else {
+    // setting the day = 0 and calling the .getDate() method returns the number of days
+    // in the previous month. The month in the dateArr is the actual month number, therefore
+    // we need to subtract 1 to get the index of the current month
     numDaysPrevMonth = new Date(dateArr[2], Number(dateArr[0]) - 1, 0).getDate();
   }
   const weekObj = {};
