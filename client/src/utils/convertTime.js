@@ -1,6 +1,11 @@
-// Take a time array and converts it into a time with the format 00:00
+/**
+ * Take a time array and return the time as a string with the minutes set to "00"
+ * 
+ * Example: ["13", "43"] => "13:00"
+ * 
+ * @param {string} timeArr array of current time
+ * @return {string} time in 24h format
+ */
 export function convertTime(timeArr) {
-  const hour = Number(timeArr[0]).toString();
-  const paddedHour = hour.padStart(2, '0');
-  return `${paddedHour}:00`;
+  return `${timeArr[0]}:00`;
 }

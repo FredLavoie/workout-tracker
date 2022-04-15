@@ -1,3 +1,12 @@
+/**
+ * Utility function that validates a workout entry ensuring that the date and time are formatted correctly, as well
+ * as ensuring that the body is not empty.
+ * 
+ * @param {string} date date of the workout, ex: 2022-04-06
+ * @param {string} time time of day in 24h time format 24:00
+ * @param {string} body the content of the workout
+ * @return {boolean} if the data is valid, return true, else return false
+ */
 export function validateWorkout(date, time, body) {
   if (date === '' || !date.includes('-')) return false;
   if (time === '' || !time.includes(':')) return false;
