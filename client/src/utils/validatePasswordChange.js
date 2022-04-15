@@ -1,6 +1,6 @@
 /**
- * Utility function to validate that the new password is of a minimum length, isn't just a number and that it was entered
- * with the same characters both times.
+ * Utility function to validate that the new password is of a minimum length, isn't just a
+ * number and that it was entered with the same characters both times.
  * 
  * @param {string} pass1 new password
  * @param {string} pass2 new password
