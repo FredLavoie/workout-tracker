@@ -1,5 +1,5 @@
 /**
- * Utility functtion that takes the currently viewing year and month, and returns a date for the next or
+ * Utility function that takes the currently viewing year and month, and returns a date for the next or
  * previous month to fetch the date for.
  * 
  * @param {string} month

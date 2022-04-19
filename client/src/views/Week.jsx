@@ -12,6 +12,7 @@ import makeStyles from '@mui/styles/makeStyles';
 
 import ServerError from '../components/ServerError';
 import { months } from '../lib/months';
+import { weekdayNames } from '../lib/weekdayNames';
 import { fetchMonthData } from '../services/fetchData';
 import {
   calculateWeek,
@@ -147,7 +148,7 @@ function Week() {
             {weekArr.map((day, index) => (
               <Card elevation={2} className={classes.cardStyle} key={index}>
                 <Typography variant='body1' color='textSecondary' className={classes.header}>
-                  {`Sunday, ${months[day.split('-')[1]]} ${day.split('-')[2]}`}
+                  {`${weekdayNames[index]}, ${months[day.split('-')[1]]} ${day.split('-')[2]}`}
                 </Typography>
                 <CardContent className={classes.content}>
                   <Typography component='div'>

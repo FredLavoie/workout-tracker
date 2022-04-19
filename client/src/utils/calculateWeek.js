@@ -6,7 +6,7 @@
  * dateArr ["04", "14", "2022"]
  * results ["2022-04-10", "2022-04-11", "2022-04-12", "2022-04-13", "2022-04-14", "2022-04-15", "2022-04-16"]
  * 
- * @param {string[]} dataArr a simple date array containing a month, day and year respectively
+ * @param {string[]} dateArr a simple date array containing a month, day and year respectively
  * @return {string[]} an array of 7 dates. The dates will be used to fetch the workouts on those days which will
  * then be displayed in the Week view 
  */
@@ -23,8 +23,7 @@ export function calculateWeek(dateArr) {
     numDaysPrevMonth = new Date(dateArr[2], Number(dateArr[0]) - 1, 0).getDate();
   }
   const weekObj = {};
-  let dayOfTheWeek = Number(new Date().getDay().toLocaleString('en-US', { timeZone: 'America/New_York' }));
-  if (dayOfTheWeek === 7) dayOfTheWeek = 0;
+  const dayOfTheWeek = Number(new Date(dateArr).getDay());
 
   for (let i = 0; i < 7; i++) {
     let year = Number(dateArr[2]);
@@ -49,6 +48,5 @@ export function calculateWeek(dateArr) {
     }
     weekObj[i] = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   }
-
   return Object.values(weekObj);
 }
