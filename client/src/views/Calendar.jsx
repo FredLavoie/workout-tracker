@@ -8,7 +8,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
-import CalendarGrid from '../components/CalendarGrid';
+import { CalendarGrid } from '../components/CalendarGrid';
 import ServerError from '../components/ServerError';
 import { fetchMonthData } from '../services/fetchData';
 import { calculateMonth } from '../utils';
