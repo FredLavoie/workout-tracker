@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material';
 import Layout from './components/Layout';
-import PrivateRoute from './components/PrivateRoute';
+import { PrivateRoute } from './components/PrivateRoute';
 import Home from './views/Home';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
