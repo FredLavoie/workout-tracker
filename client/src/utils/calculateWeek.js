@@ -23,8 +23,8 @@ export function calculateWeek(dateArr) {
     numDaysPrevMonth = new Date(dateArr[2], Number(dateArr[0]) - 1, 0).getDate();
   }
   const weekObj = {};
-  const dayOfTheWeek = Number(new Date(dateArr).getDay());
-
+  const dateArrAsString = `${dateArr[2]}-${dateArr[0].padStart(2, '0')}-${dateArr[1].padStart(2, '0')}`;
+  const dayOfTheWeek = Number(new Date(dateArrAsString).getDay());
   for (let i = 0; i < 7; i++) {
     let year = Number(dateArr[2]);
     let month = Number(dateArr[0]);
