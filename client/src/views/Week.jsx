@@ -10,7 +10,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
-import ServerError from '../components/ServerError';
+import { ServerError } from '../components/ServerError';
 import { months } from '../lib/months';
 import { weekdayNames } from '../lib/weekdayNames';
 import { fetchMonthData } from '../services/fetchData';

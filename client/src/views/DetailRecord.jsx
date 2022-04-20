@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
 import { fetchEventRecords } from '../services/fetchData';
-import ServerError from '../components/ServerError';
+import { ServerError } from '../components/ServerError';
 
 const useStyles = makeStyles((theme) => ({
   root: {

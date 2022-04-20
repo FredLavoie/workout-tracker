@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
 import SearchResultCard from '../components/SearchResultCard';
-import ServerError from '../components/ServerError';
+import { ServerError } from '../components/ServerError';
 import { fetchSearchResults } from '../services/fetchData';
 
 const useStyles = makeStyles({

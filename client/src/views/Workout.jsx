@@ -14,7 +14,7 @@ import MuiAlert from '@mui/material/Alert';
 
 import { fetchWorkout, postWorkout, updateWorkout, deleteWorkout } from '../services/fetchData';
 import { convertTime, validateWorkout } from '../utils';
-import ServerError from '../components/ServerError';
+import { ServerError } from '../components/ServerError';
 
 const useStyles = makeStyles((theme) => ({
   root: {

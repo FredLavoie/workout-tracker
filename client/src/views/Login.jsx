@@ -20,7 +20,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import makeStyles from '@mui/styles/makeStyles';
 
-import ServerError from '../components/ServerError';
+import { ServerError } from '../components/ServerError';
 import { isAuthenticated, login } from '../services/authentication';
 import { fetchAccountId } from '../services/fetchData';
 
