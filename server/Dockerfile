@@ -8,8 +8,8 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /server_src
 
 # Install dependencies
-COPY ./Pipfile ./Pipfile.lock /server_src/
-RUN pip install pipenv && pipenv install --system
+COPY requirements.txt /server_src/
+RUN pip install -r requirements.txt
 
 # Copy project
 COPY . /server_src/
