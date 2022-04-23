@@ -5,6 +5,7 @@ script/workout_migrations/*
 node_modules/
 NOTES.md
 BACKUP/
+venv/
 
 # client side
 client/node_modules/
