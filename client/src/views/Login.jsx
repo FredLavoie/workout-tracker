@@ -3,6 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 
 import {
   AppBar,
+  Box,
   Button,
   Container,
   FormControl,
@@ -20,7 +21,7 @@ import {
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import makeStyles from '@mui/styles/makeStyles';
+
 import MuiAlert from '@mui/material/Alert';
 
 import { ServerError } from '../components/ServerError';
@@ -28,23 +29,11 @@ import { isAuthenticated, login } from '../services/authentication';
 import { fetchAccountId } from '../services/fetchData';
 
 
-const useStyles = makeStyles({
-  btn: {
-    marginTop: 20,
-    color: '#fff',
-  },
-  textField: {
-    width: '100%',
-    margin: '8px 0px',
-  },
-});
-
 function Alert(props) {
   return <MuiAlert elevation={4} variant='filled' {...props} />;
 }
 
 export function Login() {
-  const classes = useStyles();
   const history = useHistory();
   const [username, changeUsername] = useState('');
   const [password, changePassword] = useState('');
@@ -104,10 +93,10 @@ export function Login() {
         style={{ minHeight: '100vh' }}
       >
         <Grid item xs={12} md={3}>
-          <form noValidate onSubmit={handleSubmit}>
+          <Box component='form' noValidate onSubmit={handleSubmit}>
             <TextField
               onChange={(e) => changeUsername(e.target.value)}
-              className={classes.textField}
+              sx={style.textField}
               label='Username'
               variant='outlined'
               value={username}
@@ -115,7 +104,7 @@ export function Login() {
               name={'username'}
               color='secondary'
             />
-            <FormControl className={classes.textField} variant="outlined">
+            <FormControl sx={style.textField} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
                 onChange={(e) => changePassword(e.target.value)}
@@ -140,7 +129,7 @@ export function Login() {
             <Button
               fullWidth
               type={'submit'}
-              className={classes.btn}
+              sx={style.btn}
               color='primary'
               variant='contained'
               key={`${!username || !password ? true : false}`}
@@ -149,7 +138,7 @@ export function Login() {
             >
               Login
             </Button>
-          </form>
+          </Box>
         </Grid>
         {error && <ServerError errorMessage={error} />}
       </Grid>
@@ -161,3 +150,15 @@ export function Login() {
     </Container>
   );
 }
+
+
+const style = {
+  btn: {
+    marginTop: '20px',
+    color: '#fff',
+  },
+  textField: {
+    width: '100%',
+    margin: '8px 0px',
+  },
+};
