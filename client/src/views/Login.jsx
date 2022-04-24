@@ -29,9 +29,10 @@ import { isAuthenticated, login } from '../services/authentication';
 import { fetchAccountId } from '../services/fetchData';
 
 
-function Alert(props) {
-  return <MuiAlert elevation={4} variant='filled' {...props} />;
-}
+// eslint-disable-next-line prefer-arrow-callback
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={4} ref={ref} {...props} />;
+});
 
 export function Login() {
   const history = useHistory();
@@ -142,7 +143,7 @@ export function Login() {
         </Grid>
         {error && <ServerError errorMessage={error} />}
       </Grid>
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         <Alert severity='error'>
           Wrong username or password! Please try again.
         </Alert>
