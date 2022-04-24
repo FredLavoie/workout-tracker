@@ -3,7 +3,7 @@
  * the 7 dates in an array.
  * 
  * Example:
- * dateArr ["04", "14", "2022"]
+ * dateArr ["4", "14", "2022"]
  * results ["2022-04-10", "2022-04-11", "2022-04-12", "2022-04-13", "2022-04-14", "2022-04-15", "2022-04-16"]
  * 
  * @param {string[]} dateArr a simple date array containing a month, day and year respectively
@@ -23,7 +23,7 @@ export function calculateWeek(dateArr) {
     numDaysPrevMonth = new Date(dateArr[2], Number(dateArr[0]) - 1, 0).getDate();
   }
   const weekObj = {};
-  const dateArrAsString = `${dateArr[2]}-${dateArr[0].padStart(2, '0')}-${dateArr[1].padStart(2, '0')}`;
+  const dateArrAsString = `${dateArr[2]}-${dateArr[0].padStart(2, '0')}-${dateArr[1].padStart(2, '0')}T00:00:00`;
   const dayOfTheWeek = Number(new Date(dateArrAsString).getDay());
   for (let i = 0; i < 7; i++) {
     let year = Number(dateArr[2]);
