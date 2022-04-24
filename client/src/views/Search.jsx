@@ -1,64 +1,23 @@
 import React, { useState } from 'react';
 
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
+import {
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormGroup,
+  FormControlLabel,
+  Grid,
+  TextField,
+  Typography
+} from '@mui/material';
 
-import SearchResultCard from '../components/SearchResultCard';
-import ServerError from '../components/ServerError';
+import { SearchResultCard } from '../components/SearchResultCard';
+import { ServerError } from '../components/ServerError';
 import { fetchSearchResults } from '../services/fetchData';
 
-const useStyles = makeStyles({
-  root: {
-    marginBottom: 32,
-    marginTop: 16,
-  },
-  title: {
-    marginBottom: 16,
-  },
-  searchBox: {
-    marginTop: 16,
-    width: 272,
-  },
-  elementMargin: {
-    marginTop: 16,
-  },
-  checkboxes: {
-    marginTop: 16,
-    marginLeft: 16,
-    width: 208,
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  formElement: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    width: '100%',
-    marginBottom: 16,
-  },
-  buttonContainer: {
-    width: 208,
-    display: 'flex',
-    justifyContent: 'space-around'
-  },
-  loading: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '10%',
-  },
-});
 
-
-function Search() {
-  const classes = useStyles();
+export function Search() {
   const [checkedWorkout, setCheckedWorkout] = useState(true);
   const [checkedRecord, setCheckedRecord] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -97,20 +56,20 @@ function Search() {
       container
       direction='column'
       alignItems='center'
-      className={classes.root}
+      sx={style.root}
     >
-      <Typography variant='h4' className={classes.title}>
+      <Typography variant='h4' sx={style.title}>
         Search
       </Typography>
-      <form noValidate onSubmit={handleSubmit} className={classes.formElement}>
+      <Box component='form' noValidate onSubmit={handleSubmit} sx={style.formElement}>
         <TextField
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={classes.searchBox}
+          sx={style.searchBox}
           id='record-score'
           placeholder='Search workouts...'
           value={searchQuery}
         />
-        <FormGroup row className={classes.checkboxes}>
+        <FormGroup row sx={style.checkboxes}>
           <FormControlLabel
             control={
               <Checkbox
@@ -132,10 +91,10 @@ function Search() {
             label='PRs'
           />
         </FormGroup>
-        <div className={classes.buttonContainer}>
+        <Box sx={style.buttonContainer}>
           <Button
             type={'submit'}
-            className={classes.elementMargin}
+            sx={style.elementMargin}
             color='primary'
             variant='contained'
             key={`${searchQuery === '' ? true : false}`}
@@ -145,20 +104,60 @@ function Search() {
           </Button>
           <Button
             onClick={handleClear}
-            className={classes.elementMargin}
+            sx={style.elementMargin}
             color='primary'
             variant='outlined'
           >
             Clear
           </Button>
-        </div>
-      </form>
+        </Box>
+      </Box>
       {error && <ServerError errorMessage={error} />}
-      {isLoading && <div className={classes.loading}><CircularProgress /></div>}
+      {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
       {searchResults && searchResults.length > 0 ? <Typography color='primary'>( Number of results found: {searchResults.length} )</Typography> : ''}
-      {searchResults && searchResults.length > 0 ? <SearchResultCard content={searchResults} /> : <div></div>}
+      {searchResults && searchResults.length > 0 ? <SearchResultCard content={searchResults} /> : <></>}
     </Grid>
   );
 }
 
-export default Search;
+const style = {
+  root: {
+    marginBottom: '32px',
+    marginTop: '16px',
+  },
+  title: {
+    marginBottom: '16px',
+  },
+  searchBox: {
+    marginTop: '16px',
+    width: '272px',
+  },
+  elementMargin: {
+    marginTop: '16px',
+  },
+  checkboxes: {
+    marginTop: '16px',
+    marginLeft: '16px',
+    width: '208px',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  formElement: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    width: '100%',
+    marginBottom: '16px',
+  },
+  buttonContainer: {
+    width: '208px',
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  loading: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '10%',
+  },
+};

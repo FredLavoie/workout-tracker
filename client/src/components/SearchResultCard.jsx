@@ -1,48 +1,16 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Grid,
+  Typography
+} from '@mui/material';
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: 32,
-    marginTop: 16,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '90%',
-    },
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap'
-  },
-  cardStyle: {
-    width: 256,
-    margin: '0px auto 16px auto',
-    [theme.breakpoints.up('sm')]: {
-      margin: '0px 16px 16px 8px',
-    },
-    cursor: 'pointer',
-  },
-  header: {
-    paddingBottom: 0,
-  },
-  detail: {
-    pading: 'none',
-  },
-  bodyText: {
-    font: 'inherit',
-    margin: 0,
-  }
-}));
-
-function SearchResultCard({ content }) {
-  const classes = useStyles();
+export function SearchResultCard({ content }) {
   const history = useHistory();
 
   function handleClickActive(id, workout) {
@@ -55,26 +23,26 @@ function SearchResultCard({ content }) {
 
   return (
     <Grid
-      className={classes.root}
+      sx={style.root}
     >
       {content.map((ea, index) => (
         <Card
           elevation={2}
           key={index}
           id={ea.id}
-          className={classes.cardStyle}
+          sx={style.cardStyle}
           onClick={(e) => handleClickActive(e.currentTarget.id, !!ea.workout_body)}
         >
           <CardHeader
             title={ea.workout_body ? 'Workout' : 'Personal Record'}
             subheader={ea.date}
-            className={classes.header}
+            sx={style.header}
           />
           {ea.workout_body
             ?
             <CardContent>
               <Typography component='div' variant='body2' color='textSecondary'>
-                <pre className={classes.bodyText}>{ea.workout_body}</pre>
+                <Typography component='pre' sx={style.bodyText}>{ea.workout_body}</Typography>
               </Typography>
             </CardContent>
             :
@@ -94,4 +62,28 @@ function SearchResultCard({ content }) {
   );
 }
 
-export default SearchResultCard;
+const style = {
+  root: {
+    marginBottom: '32px',
+    marginTop: '16px',
+    width: { md: '100%', sm: '90%' },
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
+  },
+  cardStyle: {
+    width: '256px',
+    margin: '0px auto 16px auto',
+    cursor: 'pointer',
+  },
+  header: {
+    paddingBottom: '0px',
+  },
+  detail: {
+    pading: 'none',
+  },
+  bodyText: {
+    font: 'inherit',
+    margin: '0px',
+  }
+};

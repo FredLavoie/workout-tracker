@@ -1,100 +1,52 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
-import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import Hidden from '@mui/material/Hidden';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MuiAlert from '@mui/material/Alert';
-import Toolbar from '@mui/material/Toolbar';
-import Snackbar from '@mui/material/Snackbar';
-import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material';
-
-import makeStyles from '@mui/styles/makeStyles';
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Snackbar,
+  Typography
+} from '@mui/material';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import StarIcon from '@mui/icons-material/Star';
 import TodayIcon from '@mui/icons-material/Today';
 import ViewDayIcon from '@mui/icons-material/ViewDay';
 
+import { useTheme } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
+
 import { logout, isAuthenticated } from '../services/authentication';
 
+const dateArray = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/');
+const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, '0')}`;
 
-const dateArray = new Date().toISOString().split('T')[0].split('-');
-const calPath = `/cal/${dateArray[0]}-${dateArray[1]}`;
+// eslint-disable-next-line prefer-arrow-callback
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={4} ref={ref} {...props} />;
+});
 
-const drawerWidth = 200;
-
-const useStyles = makeStyles((theme) => ({
-  page: {
-    background: '#f9f9f9',
-    width: '100%',
-    minHeight: '100vh',
-    height: '100%',
-  },
-  root1: {
-    display: 'flex',
-  },
-  root2: {
-    flexGrow: 1,
-    zIndex: 2,
-  },
-  drawer: {
-    width: drawerWidth,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    zIndex: 1,
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: 56,
-    },
-  },
-  active: {
-    background: '#f4f4f4'
-  },
-  toolbar: theme.mixins.toolbar,
-  logoutButton: {
-    color: theme.palette.secondary.main,
-  },
-  avatar: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.text.secondary,
-  },
-  menuButton: {
-    color: theme.palette.secondary.main,
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
-function Alert(props) {
-  return <MuiAlert elevation={4} variant='filled' {...props} />;
-}
-
-function Layout({ children }) {
+export function Layout({ children }) {
   if (isAuthenticated() === false) {
     return <Redirect to='/login' />;
   }
 
-  const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
   const theme = useTheme();
@@ -146,7 +98,7 @@ function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/dashboard')}
-        className={location.pathname === '/dashboard' ? classes.active : null}
+        sx={(location.pathname === '/dashboard' && style.active)}
       >
         <ListItemIcon><DashboardIcon /></ListItemIcon>
         <ListItemText primary='Dashboard' />
@@ -154,7 +106,7 @@ function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick(calPath)}
-        className={location.pathname.includes('/cal/') ? classes.active : null}
+        sx={(location.pathname.includes('/cal/') && style.active)}
       >
         <ListItemIcon><TodayIcon /></ListItemIcon>
         <ListItemText primary='Calendar' />
@@ -162,7 +114,7 @@ function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/week')}
-        className={location.pathname.includes('/week/') ? classes.active : null}
+        sx={(location.pathname.includes('/week/') && style.active)}
       >
         <ListItemIcon><ViewDayIcon /></ListItemIcon>
         <ListItemText primary='Week' />
@@ -170,7 +122,7 @@ function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/search')}
-        className={location.pathname === '/search' ? classes.active : null}
+        sx={(location.pathname === '/search' && style.active)}
       >
         <ListItemIcon><SearchIcon /></ListItemIcon>
         <ListItemText primary='Search' />
@@ -179,7 +131,7 @@ function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/workouts/new')}
-        className={location.pathname === '/workouts/new' ? classes.active : null}
+        sx={(location.pathname === '/workouts/new' && style.active)}
       >
         <ListItemIcon><FitnessCenterIcon /></ListItemIcon>
         <ListItemText primary='New Workout' />
@@ -187,7 +139,7 @@ function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/records/new')}
-        className={location.pathname === '/records/new' ? classes.active : null}
+        sx={(location.pathname === '/records/new' && style.active)}
       >
         <ListItemIcon><StarIcon /></ListItemIcon>
         <ListItemText primary='New PR' />
@@ -198,14 +150,14 @@ function Layout({ children }) {
 
 
   return (
-    <div className={classes.root1}>
+    <Box sx={style.root1}>
 
       {/*********************************** Navbar ************************************/}
       <AppBar
         position='fixed'
         color='primary'
         elevation={1}
-        className={classes.root2}
+        sx={style.root2}
       >
         <Toolbar>
           <IconButton
@@ -213,19 +165,19 @@ function Layout({ children }) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            className={classes.menuButton}
+            sx={style.menuButton}
             size="large"
           >
             <MenuIcon />
           </IconButton>
-          <Typography edge='start' variant='h5' className={classes.title}>
+          <Typography edge='start' variant='h5' sx={style.title}>
             Workout Tracker
           </Typography>
 
           <Button>
             <Avatar
               button="true"
-              className={classes.avatar}
+              sx={style.avatar}
               onClick={handleClickAvatar}
               aria-controls="simple-menu"
               aria-haspopup="true"
@@ -253,7 +205,7 @@ function Layout({ children }) {
           anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          classes={{ paper: classes.drawerPaper }}
+          sx={style.mobileDrawer}
           ModalProps={{
             keepMounted: true,
           }}
@@ -265,9 +217,8 @@ function Layout({ children }) {
       {/******************** Desktop drawer - permanent left **************************/}
       <Hidden smDown implementation="css">
         <Drawer
-          className={classes.drawer}
+          sx={style.desktopDrawer}
           variant="permanent"
-          classes={{ paper: classes.drawerPaper }}
           anchor="left"
         >
           {drawer}
@@ -276,16 +227,66 @@ function Layout({ children }) {
 
 
       {/*********************************** Content ***********************************/}
-      <div className={classes.page}>
-        {/* adds padding to push content below appbar */}
-        <div className={classes.toolbar}></div>
+      <Box sx={style.page}>
+        {/* this element adds margin to push content below the appbar */}
+        <Box sx={style.toolbarMargin}></Box>
         {children}
-      </div>
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleCloseError}>
+      </Box>
+      <Snackbar
+        open={open} autoHideDuration={4000}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
         <Alert severity='error'>Server error</Alert>
       </Snackbar>
-    </div>
+    </Box>
   );
 }
 
-export default Layout;
+const drawerWidth = '200px';
+const style = {
+  page: {
+    background: '#f9f9f9',
+    width: '100%',
+    minHeight: '100vh',
+    height: '100%',
+  },
+  root1: {
+    display: 'flex',
+  },
+  root2: {
+    flexGrow: '1',
+    height: '56px',
+    zIndex: '1250',
+    [`& .MuiToolbar-root`]: { minHeight: '56px' },
+  },
+  mobileDrawer: {
+    width: drawerWidth,
+    zIndex: '1300',
+  },
+  desktopDrawer: {
+    width: drawerWidth,
+    [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '56px' },
+  },
+  active: {
+    background: '#f4f4f4'
+  },
+  toolbarMargin: {
+    height: '56px',
+  },
+  logoutButton: {
+    color: 'secondary.main',
+  },
+  avatar: {
+    backgroundColor: 'secondary.main',
+    color: 'text.secondary',
+  },
+  menuButton: {
+    color: 'secondary.main',
+    marginRight: '16px',
+    display: { sm: 'none' },
+  },
+  title: {
+    flexGrow: '1',
+  },
+};

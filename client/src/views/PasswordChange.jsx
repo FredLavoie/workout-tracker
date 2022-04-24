@@ -1,43 +1,31 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import FormControl from '@mui/material/FormControl';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Snackbar,
+  Typography
+} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Snackbar from '@mui/material/Snackbar';
-import Typography from '@mui/material/Typography';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import makeStyles from '@mui/styles/makeStyles';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { changePassword } from '../services/authentication';
 import { validatePasswordChange } from '../utils';
 
-const useStyles = makeStyles({
-  root: {
-    minHeight: 'calc(100vh - 64px)'
-  },
-  btn: {
-    marginTop: 20
-  },
-  textField: {
-    width: '100%',
-    margin: '8px 0px',
-  },
+// eslint-disable-next-line prefer-arrow-callback
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-function Alert(props) {
-  return <MuiAlert elevation={4} variant='filled' {...props} />;
-}
-
-function Password() {
-  const classes = useStyles();
+export function Password() {
   const history = useHistory();
   const [newPassword1, changeNewPassword1] = useState('');
   const [newPassword2, changeNewPassword2] = useState('');
@@ -58,7 +46,6 @@ function Password() {
       setAlertMessage({ severity: 'success', message: 'Successfully changed password.' });
       setOpen(true);
       setTimeout(() => history.push('/dashboard'), 1500);
-      return; // TODO: is this needed?
     } catch (error) {
       setAlertMessage({ severity: 'error', message: error.message });
       return setOpen(true);
@@ -84,7 +71,7 @@ function Password() {
         direction='column'
         alignItems='center'
         justifyContent='center'
-        className={classes.root}
+        sx={style.root}
       >
         <Typography variant='h4' gutterBottom>
           Password Reset
@@ -93,8 +80,8 @@ function Password() {
           Your password must contain at least 8 characters and cannot be entirely numeric.
         </Typography>
         <Grid item xs={12} md={3}>
-          <form noValidate onSubmit={handleSubmit}>
-            <FormControl className={classes.textField} variant="outlined">
+          <Box component='form' noValidate onSubmit={handleSubmit}>
+            <FormControl sx={style.textField} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
                 onChange={(e) => changeNewPassword1(e.target.value)}
@@ -116,7 +103,7 @@ function Password() {
                 labelWidth={70}
               />
             </FormControl>
-            <FormControl className={classes.textField} variant="outlined">
+            <FormControl sx={style.textField} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
                 onChange={(e) => changeNewPassword2(e.target.value)}
@@ -129,7 +116,7 @@ function Password() {
             <Button
               fullWidth
               type={'submit'}
-              className={classes.btn}
+              sx={style.btn}
               color='primary'
               variant='contained'
               key={`${!newPassword1 || !newPassword2 ? true : false}`}
@@ -137,14 +124,25 @@ function Password() {
             >
               Change Password
             </Button>
-          </form>
+          </Box>
         </Grid>
       </Grid>
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Container>
   );
 }
 
-export default Password;
+const style = {
+  root: {
+    minHeight: 'calc(100vh - 64px)'
+  },
+  btn: {
+    marginTop: '20px',
+  },
+  textField: {
+    width: '100%',
+    margin: '8px 0px',
+  },
+};

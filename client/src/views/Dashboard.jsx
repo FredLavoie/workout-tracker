@@ -1,86 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardContent,
+  CircularProgress,
+  Grid,
+  Typography
+} from '@mui/material';
 
 import { fetchYearData, fetchRecords } from '../services/fetchData';
 import { months } from '../lib/months';
-import RecordTable from '../components/RecordTable';
-import ServerError from '../components/ServerError';
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: 32,
-    marginTop: 16,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '90%',
-    },
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap'
-  },
-  title: {
-    marginBottom: 16,
-  },
-  dashboardContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap'
-  },
-  cardStyle: {
-    width: 360,
-    margin: '0px auto 16px auto',
-    [theme.breakpoints.up('sm')]: {
-      margin: '0px 16px 16px 8px',
-    },
-  },
-  summaryCardStyle: {
-    width: 360,
-    height: 600,
-    margin: '0px auto 16px auto',
-    [theme.breakpoints.up('sm')]: {
-      margin: '0px 16px 16px 8px',
-    },
-  },
-  header: {
-    padding: 32,
-  },
-  content: {
-    padding: '0 32px 32px 32px',
-  },
-  textCol: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  dataBackground: {
-    backgroundColor: theme.palette.secondary.main,
-    padding: '2px 4px',
-    borderRadius: 6,
-    textAlign: 'center',
-  },
-  centerText: {
-    paddingTop: 2,
-  },
-  horzLine: {
-    borderTop: '1px solid #f0f0f5',
-    paddingTop: 8,
-  },
-}));
+import { RecordTable } from '../components/RecordTable';
+import { ServerError } from '../components/ServerError';
 
 const currentDate = new Date().toISOString().split('T')[0].split('-');
 const currentYear = currentDate[0];
 const monthNumbersArr = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
-function Dashboard() {
-  const classes = useStyles();
+export function Dashboard() {
   const [yearWorkouts, setYearWorkouts] = useState([]);
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -116,62 +55,112 @@ function Dashboard() {
       container
       direction='column'
       alignItems='center'
-      className={classes.root}
+      sx={style.root}
     >
-      <Typography variant='h4' className={classes.title}>
+      <Typography variant='h4' sx={style.title}>
         Dashboard
       </Typography>
       {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
-      {!error && !isLoading && <div className={classes.dashboardContainer}>
+      {!error && !isLoading && <Box sx={style.dashboardContainer}>
         {/******************************************* SUMMARY *******************************************/}
-        <Card elevation={2} className={classes.summaryCardStyle}>
+        <Card elevation={2} sx={style.summaryCardStyle}>
           <CardHeader
             title='Summary'
-            className={classes.header}
+            sx={style.header}
           />
-          <CardContent className={classes.content}>
+          <CardContent sx={style.content}>
             {monthNumbersArr.map((ea, index) => (
-              <Typography key={index} className={classes.textCol}>
-                <span className={classes.centerText}>{months[ea]}</span>
-                <span className={classes.dataBackground}>{
+              <Typography key={index} sx={style.textCol}>
+                <Box component='span' sx={style.centerText}>{months[ea]}</Box>
+                <Box component='span' sx={style.dataBackground}>{
                   filterWorkoutsForMonth(yearWorkouts, ea)
-                }</span>
+                }</Box>
               </Typography>
             ))}
-            <Typography className={`${classes.textCol} ${classes.horzLine}`}>
-              <span className={classes.centerText}>Year-to-date</span>
-              <span className={classes.dataBackground}>{yearWorkouts.length}</span>
+            <Typography sx={{ ...style.textCol, ...style.horzLine }}>
+              <Box component='span' sx={style.centerText}>Year-to-date</Box>
+              <Box component='span' sx={style.dataBackground}>{yearWorkouts.length}</Box>
             </Typography>
           </CardContent>
         </Card>
         {/**************************************** STRENGTH PRs ***************************************/}
-        <Card elevation={2} className={classes.cardStyle}>
+        <Card elevation={2} sx={style.cardStyle}>
           <CardHeader
             title='Strength PRs'
-            className={classes.header}
+            sx={style.header}
           />
           <RecordTable type={'strength'} records={records.filter((ea) => ea.type === 'strength')} />
         </Card>
         {/**************************************** ENDURANCE PRs **************************************/}
-        <Card elevation={2} className={classes.cardStyle}>
+        <Card elevation={2} sx={style.cardStyle}>
           <CardHeader
             title='Endurance PRs'
-            className={classes.header}
+            sx={style.header}
           />
           <RecordTable type={'endurance'} records={records.filter((ea) => ea.type === 'endurance')} />
         </Card>
         {/******************************************* WOD PRs *****************************************/}
-        <Card elevation={2} className={classes.cardStyle}>
+        <Card elevation={2} sx={style.cardStyle}>
           <CardHeader
             title='WOD PRs'
-            className={classes.header}
+            sx={style.header}
           />
           <RecordTable type={'wod'} records={records.filter((ea) => ea.type === 'wod')} />
         </Card>
-      </div>}
-    </Grid>
+      </Box>}
+    </Grid >
   );
 }
 
-export default Dashboard;
+const style = {
+  root: {
+    marginBottom: '32px',
+    marginTop: '16px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
+  },
+  title: {
+    marginBottom: '16px',
+  },
+  dashboardContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap'
+  },
+  cardStyle: {
+    width: '360px',
+    margin: { md: '0px 16px 16px 8px', sm: '0px auto 16px auto' },
+  },
+  summaryCardStyle: {
+    width: '360px',
+    height: '600px',
+    margin: { md: '0px 16px 16px 8px', sm: '0px auto 16px auto' },
+  },
+  header: {
+    padding: '32px',
+  },
+  content: {
+    padding: '0 32px 32px 32px',
+  },
+  textCol: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '8px',
+  },
+  dataBackground: {
+    backgroundColor: 'secondary.main',
+    padding: '2px 4px',
+    borderRadius: '6px',
+    textAlign: 'center',
+  },
+  centerText: {
+    paddingTop: '2px',
+  },
+  horzLine: {
+    borderTop: '1px solid #f0f0f5',
+    paddingTop: '8px',
+  },
+};

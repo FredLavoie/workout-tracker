@@ -4,7 +4,7 @@ import { isAuthenticated } from '../services/authentication';
 
 
 
-function PrivateRoute({ component: Component, ...rest }) {
+export function PrivateRoute({ component: Component, ...rest }) {
   return (
     <Route {...rest} render={(props) => {
       if (isAuthenticated() === true) {
@@ -14,5 +14,3 @@ function PrivateRoute({ component: Component, ...rest }) {
     }} />
   );
 }
-
-export default PrivateRoute;

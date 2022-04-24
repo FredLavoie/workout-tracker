@@ -1,73 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Typography
+} from '@mui/material';
+
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
 
-import CalendarGrid from '../components/CalendarGrid';
-import ServerError from '../components/ServerError';
+import { CalendarGrid } from '../components/CalendarGrid';
+import { ServerError } from '../components/ServerError';
 import { fetchMonthData } from '../services/fetchData';
 import { calculateMonth } from '../utils';
 import { months } from '../lib/months';
 
 
-const useStyles = makeStyles((theme) => ({
-  calendarContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    [theme.breakpoints.up('sm')]: {
-      marginTop: 16,
-      marginLeft: 16,
-      marginRight: 8,
-    },
-  },
-  outline: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '65vw',
-    },
-  },
-  monthNav: {
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '65vw',
-    },
-    display: 'flex',
-    justifyContent: 'space-around',
-    marginTop: '16px'
-  },
-  monthTitle: {
-    width: '30%',
-    minWidth: 200,
-    textAlign: 'center',
-    cursor: 'pointer',
-  },
-  weekNames: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    marginTop: '16px'
-  },
-  loading: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '10%',
-  },
-  navLink: {
-    minWidth: 80,
-  }
-}));
-
-
-function Calendar() {
-  const classes = useStyles();
+export function Calendar() {
   const history = useHistory();
   const location = useLocation();
   const [workouts, setWorkouts] = useState(null);
@@ -118,19 +69,19 @@ function Calendar() {
   }, [monthToFetch]);
 
   return (
-    <div>
+    <Box>
       {error && <ServerError errorMessage={error} />}
-      {isLoading && <div className={classes.loading}><CircularProgress /></div>}
-      {workouts && !isLoading && <div className={classes.calendarContainer}>
-        <div className={classes.monthNav}>
-          <Button onClick={handleClickPrevious} className={classes.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
-          <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom className={classes.monthTitle}>
+      {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
+      {workouts && !isLoading && <Box sx={style.calendarContainer}>
+        <Box sx={style.monthNav}>
+          <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
+          <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom sx={style.monthTitle}>
             {`${currentMonthString} ${currentYear}`}
           </Typography>
-          <Button onClick={handleClickNext} className={classes.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
-        </div>
-        <div className={classes.outline}>
-          <div className={classes.weekNames}>
+          <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
+        </Box>
+        <Box sx={style.outline}>
+          <Box sx={style.weekNames}>
             <Typography>SUN</Typography>
             <Typography>MON</Typography>
             <Typography>TUE</Typography>
@@ -138,12 +89,50 @@ function Calendar() {
             <Typography>THU</Typography>
             <Typography>FRI</Typography>
             <Typography>SAT</Typography>
-          </div>
+          </Box>
           <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
-        </div>
-      </div>}
-    </div>
+        </Box>
+      </Box>}
+    </Box>
   );
 }
 
-export default Calendar;
+const style = {
+  calendarContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    margin: { sm: '16px 8px 0 16px', xs: '0 8px 0 4px' }
+  },
+  outline: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: { md: '65vw', sm: '100%' },
+  },
+  monthNav: {
+    width: { md: '65vw', sm: '100%' },
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: '16px'
+  },
+  monthTitle: {
+    width: '30%',
+    minWidth: '200px',
+    textAlign: 'center',
+    cursor: 'pointer',
+  },
+  weekNames: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: '16px'
+  },
+  loading: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '10%',
+  },
+  navLink: {
+    minWidth: '80px',
+  }
+};

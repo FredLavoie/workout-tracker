@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Grid,
+  Typography
+} from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
 
-import ServerError from '../components/ServerError';
+import { ServerError } from '../components/ServerError';
 import { months } from '../lib/months';
 import { weekdayNames } from '../lib/weekdayNames';
 import { fetchMonthData } from '../services/fetchData';
@@ -20,61 +22,7 @@ import {
   determineNextMonth
 } from '../utils';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: 32,
-    marginTop: 16,
-    width: '100%',
-  },
-  header: {
-    paddingLeft: 16,
-    paddingBottom: 8,
-    paddingTop: 8,
-  },
-  cardStyle: {
-    width: '100%',
-    flexGrow: '1',
-    margin: '0px auto 16px auto',
-    [theme.breakpoints.up('sm')]: {
-      margin: '8px 0px 4px 8px',
-      width: 256,
-    },
-  },
-  content: {
-    padding: '0 16px 16px 16px',
-  },
-  bodyText: {
-    font: 'inherit',
-    margin: 0,
-  },
-  weekContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  weekNav: {
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '65vw',
-      margin: '16px auto',
-    },
-    display: 'flex',
-    justifyContent: 'space-around',
-    marginTop: '16px'
-  },
-  monthTitle: {
-    width: '30%',
-    minWidth: 200,
-    textAlign: 'center',
-  },
-  navLink: {
-    minWidth: 80,
-  }
-}));
-
-function Week() {
-  const classes = useStyles();
+export function Week() {
   const [workouts, setWorkouts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -131,36 +79,85 @@ function Week() {
       container
       direction='column'
       alignItems='center'
-      className={classes.root}
+      sx={style.root}
     >
       {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
       {workouts && !isLoading &&
-        <div>
-          <div className={classes.weekNav}>
-            <Button onClick={handleClickPrevious} className={classes.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
-            <Typography variant='h5' gutterBottom className={classes.monthTitle}>
+        <Box>
+          <Box sx={style.weekNav}>
+            <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
+            <Typography variant='h5' gutterBottom sx={style.monthTitle}>
               {`Week of ${months[weekArr[0].split('-')[1]]} ${weekArr[0].split('-')[2]}`}
             </Typography>
-            <Button onClick={handleClickNext} className={classes.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
-          </div>
-          <div className={classes.weekContainer}>
+            <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
+          </Box>
+          <Box sx={style.weekContainer}>
             {weekArr.map((day, index) => (
-              <Card elevation={2} className={classes.cardStyle} key={index}>
-                <Typography variant='body1' color='textSecondary' className={classes.header}>
+              <Card className="***TEST***" elevation={2} sx={style.cardStyle} key={index}>
+                <Typography variant='body1' color='textSecondary' sx={style.header}>
                   {`${weekdayNames[index]}, ${months[day.split('-')[1]]} ${day.split('-')[2]}`}
                 </Typography>
-                <CardContent className={classes.content}>
+                <CardContent sx={style.content}>
                   <Typography component='div'>
-                    <pre className={classes.bodyText}>{workouts.find((ea) => ea.date === day)?.workout_body || 'Rest'}</pre>
+                    <Typography
+                      component='pre'
+                      sx={style.bodyText}
+                    >
+                      {workouts.find((ea) => ea.date === day)?.workout_body || 'Rest'}
+                    </Typography>
                   </Typography>
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>}
+          </Box>
+        </Box>}
     </Grid>
   );
 }
 
-export default Week;
+const style = {
+  root: {
+    marginBottom: '32px',
+    marginTop: '16px',
+    width: '100%',
+  },
+  header: {
+    paddingLeft: '16px',
+    paddingBottom: '8px',
+    paddingTop: '8px',
+  },
+  content: {
+    padding: '0 16px 16px 16px',
+  },
+  bodyText: {
+    font: 'inherit',
+    margin: '0px',
+  },
+  monthTitle: {
+    width: '30%',
+    minWidth: '200px',
+    textAlign: 'center',
+  },
+  navLink: {
+    minWidth: '80px',
+  },
+  weekNav: {
+    width: { sm: '65vw', sx: '100%' },
+    margin: '16px auto',
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: '16px'
+  },
+  weekContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardStyle: {
+    width: { md: '100%', xs: '256px' },
+    flexGrow: '1',
+    margin: { md: '0px auto 16px auto', xs: '8px 0px 4px 8px' },
+  },
+};

@@ -1,11 +1,14 @@
 import React from 'react';
 
-import AppBar from '@mui/material/AppBar';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import {
+  AppBar,
+  Container,
+  Toolbar,
+  Typography
+} from '@mui/material';
 
-function NotFound() {
+
+export function NotFound() {
   return (
     <Container>
       <AppBar position='fixed' elevation={1} color='primary'>
@@ -22,5 +25,3 @@ function NotFound() {
     </Container>
   );
 }
-
-export default NotFound;

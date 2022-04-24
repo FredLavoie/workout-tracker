@@ -1,54 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, Typography } from '@mui/material';
 
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    width: '100%',
-    display: 'flex',
-    flexGrow: '1',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    flexBasis: '10%',
-    border: '1.5px solid #d9d9d9',
-  },
-  daySquare: {
-    width: '13%',
-    paddingBottom: '8%',
-    border: '1.5px solid #d9d9d9',
-    display: 'flex',
-    flexGrow: '1',
-    justifyContent: 'right',  // check this on Safari
-  },
-  active: {
-    backgroundColor: theme.palette.secondary.main,
-    cursor: 'pointer',
-  },
-  dayOfMonth: {
-    backgroundColor: '#ede7f6',
-    cursor: 'pointer',
-  },
-  notDayOfMonth: {
-    backgroundColor: '#fff',
-  },
-  innerText: {
-    padding: 4
-  },
-  today: {
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: 4,
-    padding: '4px 6px',
-    color: '#fff'
-  }
-}));
-
-
-
-function CalendarGrid(props) {
-  const classes = useStyles();
+export function CalendarGrid(props) {
   const history = useHistory();
 
   const weekDayFirstMonthDay = new Date(`${props.year}/${props.month}/01`).getDay();
@@ -96,38 +51,71 @@ function CalendarGrid(props) {
     }
   }
 
-
-  function applySquareStyle(ea) {
-    if (ea.active) return classes.active;
-    if (ea.dayNumber > 0) return classes.dayOfMonth;
-    return classes.notDayOfMonth;
-  }
-
   return (
-    <div className={classes.container}>
+    <Box sx={style.container}>
       {contentArray.map((ea, index) => (
-        <div
+        <Box
           onClick={(e) => handleClickActive(e.currentTarget.id, ea.dayNumber)}
           key={index}
           id={ea.workoutId ? ea.workoutId : ''}
-          className={`${classes.daySquare} ${applySquareStyle(ea)}`}
+          sx={{ ...style.daySquare, ...(ea.active ? style.active : ea.dayNumber > 0 ? style.dayOfMonth : style.notDayOfMonth) }}
         >
           {ea.dayNumber !== 0
             ?
             <Typography
               variant='body2'
               id={ea.workoutId ? ea.workoutId : ''}
-              className={`${classes.innerText} ${ea.today ? classes.today : ''}`}
+              sx={{ ...style.innerText, ...(ea.today && style.today) }}
             >
               {ea.dayNumber}
             </Typography>
             :
             ''
           }
-        </div>
-      ))}
-    </div>
+        </Box>
+      ))
+      }
+    </Box >
   );
 }
 
-export default CalendarGrid;
+
+const style = {
+  container: {
+    width: '100%',
+    display: 'flex',
+    flexGrow: '1',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    flexBasis: '10%',
+    border: '1.5px solid #d9d9d9',
+  },
+  daySquare: {
+    width: '13%',
+    paddingBottom: '8%',
+    border: '1.5px solid #d9d9d9',
+    display: 'flex',
+    flexGrow: '1',
+    justifyContent: 'right',  // check this on Safari
+  },
+  active: {
+    backgroundColor: 'secondary.main',
+    cursor: 'pointer',
+  },
+  dayOfMonth: {
+    backgroundColor: '#ede7f6',
+    cursor: 'pointer',
+  },
+  notDayOfMonth: {
+    backgroundColor: '#fff',
+  },
+  innerText: {
+    padding: '4px'
+  },
+  today: {
+    backgroundColor: 'primary.main',
+    borderRadius: '4px',
+    padding: '4px 6px',
+    color: '#fff'
+  }
+};
