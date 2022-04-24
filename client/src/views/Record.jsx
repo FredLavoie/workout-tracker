@@ -148,7 +148,7 @@ export function Record() {
       {isLoading && <CircularProgress />}
       {!error && !isLoading &&
         <Grid sx={style.formSize}>
-          <Box className='FORM-CONTAINER' component='form' noValidate onSubmit={handleSubmit} sx={style.formContainer}>
+          <Box component='form' noValidate onSubmit={handleSubmit} sx={style.formContainer}>
             <Typography sx={style.elementMargin}>
               Date
             </Typography>

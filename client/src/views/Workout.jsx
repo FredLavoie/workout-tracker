@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import {
+  Box,
   Button,
   ButtonGroup,
   CircularProgress,
@@ -11,48 +12,11 @@ import {
   TextField,
 } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
 import MuiAlert from '@mui/material/Alert';
 
 import { fetchWorkout, postWorkout, updateWorkout, deleteWorkout } from '../services/fetchData';
 import { convertTime, validateWorkout } from '../utils';
 import { ServerError } from '../components/ServerError';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: 'calc(100vh - 96px)',
-    marginBottom: 32
-  },
-  field: {
-    marginBottom: 16
-  },
-  btn: {
-    marginTop: 16,
-  },
-  btnGrp: {
-    marginTop: 16,
-  },
-  formSize: {
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '60%',
-    },
-  },
-  formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '90%',
-    margin: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      width: '50%',
-      margin: 'auto',
-    },
-  },
-  workout: {
-    marginTop: 32
-  },
-}));
 
 
 // eslint-disable-next-line prefer-arrow-callback
@@ -62,7 +26,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 export function Workout() {
-  const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
 
@@ -173,15 +136,15 @@ export function Workout() {
       container
       direction='column'
       alignItems='center'
-      className={classes.root}
+      sx={style.root}
     >
       <Typography variant='h4' gutterBottom>
         Workout
       </Typography>
       {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
-      {!error && !isLoading && <Grid className={classes.formSize}>
-        <form noValidate onSubmit={handleSubmit} className={classes.formContainer}>
+      {!error && !isLoading && <Grid sx={style.formSize}>
+        <Box component='form' noValidate onSubmit={handleSubmit} sx={style.formContainer}>
           <TextField
             onChange={(e) => setSelectedDate(e.target.value)}
             margin='normal'
@@ -196,12 +159,12 @@ export function Workout() {
             label='Time'
             value={selectedTime}
           />
-          <Typography variant="caption" className={classes.workout}>
+          <Typography variant="caption" sx={style.workout}>
             Workout
           </Typography>
           <TextField
             onChange={(e) => setWorkoutBody(e.target.value)}
-            className={classes.field}
+            sx={style.field}
             id='workout-body'
             multiline
             rows={10}
@@ -211,7 +174,7 @@ export function Workout() {
           <Button
             fullWidth
             type={'submit'}
-            className={classes.btn}
+            sx={style.btn}
             color='primary'
             variant='contained'
             key={`${!workoutBody ? true : false}`}
@@ -222,14 +185,14 @@ export function Workout() {
           {
             newOrEdit === 1
               ?
-              <Button onClick={handleCancel} className={classes.btn} variant='outlined'>Cancel</Button>
+              <Button onClick={handleCancel} sx={style.btn} variant='outlined'>Cancel</Button>
               :
-              <ButtonGroup fullWidth className={classes.btnGrp}>
+              <ButtonGroup fullWidth sx={style.btnGrp}>
                 <Button onClick={handleCancel}>Go Back</Button>
                 <Button onClick={handleDelete}>Delete</Button>
               </ButtonGroup>
           }
-        </form>
+        </Box>
       </Grid>}
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
@@ -237,3 +200,30 @@ export function Workout() {
     </Grid>
   );
 }
+
+const style = {
+  root: {
+    minHeight: 'calc(100vh - 96px)',
+    marginBottom: '32px',
+  },
+  field: {
+    marginBottom: '16px',
+  },
+  btn: {
+    marginTop: '16px',
+  },
+  btnGrp: {
+    marginTop: '16px',
+  },
+  formSize: {
+    width: { sm: '65%', xs: '90%' },
+  },
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 'auto',
+  },
+  workout: {
+    marginTop: '32px',
+  },
+};
