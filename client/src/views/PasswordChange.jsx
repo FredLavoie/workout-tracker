@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
+  Box,
   Button,
   Container,
   FormControl,
@@ -15,30 +16,16 @@ import {
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import makeStyles from '@mui/styles/makeStyles';
 
 import { changePassword } from '../services/authentication';
 import { validatePasswordChange } from '../utils';
 
-const useStyles = makeStyles({
-  root: {
-    minHeight: 'calc(100vh - 64px)'
-  },
-  btn: {
-    marginTop: 20
-  },
-  textField: {
-    width: '100%',
-    margin: '8px 0px',
-  },
+// eslint-disable-next-line prefer-arrow-callback
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-function Alert(props) {
-  return <MuiAlert elevation={4} variant='filled' {...props} />;
-}
-
 export function Password() {
-  const classes = useStyles();
   const history = useHistory();
   const [newPassword1, changeNewPassword1] = useState('');
   const [newPassword2, changeNewPassword2] = useState('');
@@ -59,7 +46,6 @@ export function Password() {
       setAlertMessage({ severity: 'success', message: 'Successfully changed password.' });
       setOpen(true);
       setTimeout(() => history.push('/dashboard'), 1500);
-      return; // TODO: is this needed?
     } catch (error) {
       setAlertMessage({ severity: 'error', message: error.message });
       return setOpen(true);
@@ -85,7 +71,7 @@ export function Password() {
         direction='column'
         alignItems='center'
         justifyContent='center'
-        className={classes.root}
+        sx={style.root}
       >
         <Typography variant='h4' gutterBottom>
           Password Reset
@@ -94,8 +80,8 @@ export function Password() {
           Your password must contain at least 8 characters and cannot be entirely numeric.
         </Typography>
         <Grid item xs={12} md={3}>
-          <form noValidate onSubmit={handleSubmit}>
-            <FormControl className={classes.textField} variant="outlined">
+          <Box component='form' noValidate onSubmit={handleSubmit}>
+            <FormControl sx={style.textField} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
                 onChange={(e) => changeNewPassword1(e.target.value)}
@@ -117,7 +103,7 @@ export function Password() {
                 labelWidth={70}
               />
             </FormControl>
-            <FormControl className={classes.textField} variant="outlined">
+            <FormControl sx={style.textField} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
                 onChange={(e) => changeNewPassword2(e.target.value)}
@@ -130,7 +116,7 @@ export function Password() {
             <Button
               fullWidth
               type={'submit'}
-              className={classes.btn}
+              sx={style.btn}
               color='primary'
               variant='contained'
               key={`${!newPassword1 || !newPassword2 ? true : false}`}
@@ -138,12 +124,25 @@ export function Password() {
             >
               Change Password
             </Button>
-          </form>
+          </Box>
         </Grid>
       </Grid>
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Container>
   );
 }
+
+const style = {
+  root: {
+    minHeight: 'calc(100vh - 64px)'
+  },
+  btn: {
+    marginTop: '20px',
+  },
+  textField: {
+    width: '100%',
+    margin: '8px 0px',
+  },
+};
