@@ -205,6 +205,7 @@ const style = {
   root: {
     minHeight: 'calc(100vh - 96px)',
     marginBottom: '32px',
+    marginTop: '16px',
   },
   field: {
     marginBottom: '16px',

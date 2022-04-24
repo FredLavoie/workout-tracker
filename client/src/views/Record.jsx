@@ -240,6 +240,7 @@ const style = {
   root: {
     minHeight: 'calc(100vh - 96px)',
     marginBottom: '32px',
+    marginTop: '16px',
   },
   formSize: {
     width: { sm: '65%', xs: '90%' },
