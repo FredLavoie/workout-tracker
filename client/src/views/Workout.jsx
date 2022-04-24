@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
-import Snackbar from '@mui/material/Snackbar';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+import {
+  Button,
+  ButtonGroup,
+  CircularProgress,
+  Grid,
+  Snackbar,
+  Typography,
+  TextField,
+} from '@mui/material';
+
 import makeStyles from '@mui/styles/makeStyles';
 
 import MuiAlert from '@mui/material/Alert';
@@ -58,7 +61,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 
-function Workout() {
+export function Workout() {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
@@ -234,5 +237,3 @@ function Workout() {
     </Grid>
   );
 }
-
-export default Workout;

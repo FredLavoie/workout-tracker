@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import {
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormGroup,
+  FormControlLabel,
+  Grid,
+  TextField,
+  Typography
+} from '@mui/material';
+
 import makeStyles from '@mui/styles/makeStyles';
 
-import SearchResultCard from '../components/SearchResultCard';
+import { SearchResultCard } from '../components/SearchResultCard';
 import { ServerError } from '../components/ServerError';
 import { fetchSearchResults } from '../services/fetchData';
 
@@ -57,7 +60,7 @@ const useStyles = makeStyles({
 });
 
 
-function Search() {
+export function Search() {
   const classes = useStyles();
   const [checkedWorkout, setCheckedWorkout] = useState(true);
   const [checkedRecord, setCheckedRecord] = useState(false);
@@ -160,5 +163,3 @@ function Search() {
     </Grid>
   );
 }
-
-export default Search;

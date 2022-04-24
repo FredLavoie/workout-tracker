@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CircularProgress,
+  Grid,
+  Typography
+} from '@mui/material';
+
 import makeStyles from '@mui/styles/makeStyles';
 
 import { fetchEventRecords } from '../services/fetchData';
@@ -58,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function DetailRecord() {
+export function DetailRecord() {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -122,5 +125,3 @@ function DetailRecord() {
     </Grid>
   );
 }
-
-export default DetailRecord;

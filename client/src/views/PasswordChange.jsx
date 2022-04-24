@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import FormControl from '@mui/material/FormControl';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
+import {
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Snackbar,
+  Typography
+} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Snackbar from '@mui/material/Snackbar';
-import Typography from '@mui/material/Typography';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 
 import { changePassword } from '../services/authentication';
@@ -36,7 +37,7 @@ function Alert(props) {
   return <MuiAlert elevation={4} variant='filled' {...props} />;
 }
 
-function Password() {
+export function Password() {
   const classes = useStyles();
   const history = useHistory();
   const [newPassword1, changeNewPassword1] = useState('');
@@ -146,5 +147,3 @@ function Password() {
     </Container>
   );
 }
-
-export default Password;

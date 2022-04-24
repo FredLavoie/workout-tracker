@@ -1,11 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Grid,
+  Typography
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function SearchResultCard({ content }) {
+export function SearchResultCard({ content }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -93,5 +95,3 @@ function SearchResultCard({ content }) {
     </Grid >
   );
 }
-
-export default SearchResultCard;

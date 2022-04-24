@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import Snackbar from '@mui/material/Snackbar';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import {
+  Button,
+  ButtonGroup,
+  CircularProgress,
+  FormControlLabel,
+  Grid,
+  MenuItem,
+  Select,
+  Snackbar,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography
+} from '@mui/material';
+
 import makeStyles from '@mui/styles/makeStyles';
 
 import MuiAlert from '@mui/material/Alert';
@@ -55,7 +58,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 
-function Record() {
+export function Record() {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
@@ -259,5 +262,3 @@ function Record() {
     </Grid>
   );
 }
-
-export default Record;

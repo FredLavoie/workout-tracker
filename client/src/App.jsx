@@ -1,19 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material';
-import Layout from './components/Layout';
+import { Layout } from './components/Layout';
 import { PrivateRoute } from './components/PrivateRoute';
-import Home from './views/Home';
-import Login from './views/Login';
-import Dashboard from './views/Dashboard';
-import Workout from './views/Workout';
-import Record from './views/Record';
-import DetailRecord from './views/DetailRecord';
-import Calendar from './views/Calendar';
-import Search from './views/Search';
-import Week from './views/Week';
-import Password from './views/PasswordChange';
-import NotFound from './views/NotFound';
+import { Home } from './views/Home';
+import { Login } from './views/Login';
+import { Dashboard } from './views/Dashboard';
+import { Workout } from './views/Workout';
+import { Record } from './views/Record';
+import { DetailRecord } from './views/DetailRecord';
+import { Calendar } from './views/Calendar';
+import { Search } from './views/Search';
+import { Week } from './views/Week';
+import { Password } from './views/PasswordChange';
+import { NotFound } from './views/NotFound';
 import './App.css';
 
 import { deepPurple, teal } from '@mui/material/colors';
@@ -31,7 +31,7 @@ const myTheme = createTheme({
   },
 });
 
-function App() {
+export function App() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={myTheme}>
@@ -59,5 +59,3 @@ function App() {
     </StyledEngineProvider>
   );
 }
-
-export default App;

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
+import {
+  Button,
+  CircularProgress,
+  Typography
+} from '@mui/material';
+
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
-
 import { CalendarGrid } from '../components/CalendarGrid';
 import { ServerError } from '../components/ServerError';
 import { fetchMonthData } from '../services/fetchData';
@@ -66,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Calendar() {
+export function Calendar() {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -145,5 +147,3 @@ function Calendar() {
     </div>
   );
 }
-
-export default Calendar;

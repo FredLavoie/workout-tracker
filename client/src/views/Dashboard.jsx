@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CircularProgress,
+  Grid,
+  Typography
+} from '@mui/material';
+
 import makeStyles from '@mui/styles/makeStyles';
 
 import { fetchYearData, fetchRecords } from '../services/fetchData';
 import { months } from '../lib/months';
-import RecordTable from '../components/RecordTable';
+import { RecordTable } from '../components/RecordTable';
 import { ServerError } from '../components/ServerError';
 
 
@@ -79,7 +82,7 @@ const currentDate = new Date().toISOString().split('T')[0].split('-');
 const currentYear = currentDate[0];
 const monthNumbersArr = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
-function Dashboard() {
+export function Dashboard() {
   const classes = useStyles();
   const [yearWorkouts, setYearWorkouts] = useState([]);
   const [records, setRecords] = useState([]);
@@ -173,5 +176,3 @@ function Dashboard() {
     </Grid>
   );
 }
-
-export default Dashboard;

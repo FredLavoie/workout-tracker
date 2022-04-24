@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import FormControl from '@mui/material/FormControl';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import MuiAlert from '@mui/material/Alert';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Snackbar from '@mui/material/Snackbar';
-import TextField from '@mui/material/TextField';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import {
+  AppBar,
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Snackbar,
+  TextField,
+  Toolbar,
+  Typography
+} from '@mui/material';
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import makeStyles from '@mui/styles/makeStyles';
+import MuiAlert from '@mui/material/Alert';
 
 import { ServerError } from '../components/ServerError';
 import { isAuthenticated, login } from '../services/authentication';
@@ -40,7 +43,7 @@ function Alert(props) {
   return <MuiAlert elevation={4} variant='filled' {...props} />;
 }
 
-function Login() {
+export function Login() {
   const classes = useStyles();
   const history = useHistory();
   const [username, changeUsername] = useState('');
@@ -158,5 +161,3 @@ function Login() {
     </Container>
   );
 }
-
-export default Login;

@@ -1,34 +1,36 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
-import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import Hidden from '@mui/material/Hidden';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MuiAlert from '@mui/material/Alert';
-import Toolbar from '@mui/material/Toolbar';
-import Snackbar from '@mui/material/Snackbar';
-import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material';
-
-import makeStyles from '@mui/styles/makeStyles';
+import {
+  AppBar,
+  Avatar,
+  Button,
+  Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Snackbar,
+  Typography
+} from '@mui/material';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import StarIcon from '@mui/icons-material/Star';
 import TodayIcon from '@mui/icons-material/Today';
 import ViewDayIcon from '@mui/icons-material/ViewDay';
+
+import { useTheme } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
+import makeStyles from '@mui/styles/makeStyles';
 
 import { logout, isAuthenticated } from '../services/authentication';
 
@@ -89,7 +91,7 @@ function Alert(props) {
   return <MuiAlert elevation={4} variant='filled' {...props} />;
 }
 
-function Layout({ children }) {
+export function Layout({ children }) {
   if (isAuthenticated() === false) {
     return <Redirect to='/login' />;
   }
@@ -287,5 +289,3 @@ function Layout({ children }) {
     </div>
   );
 }
-
-export default Layout;
