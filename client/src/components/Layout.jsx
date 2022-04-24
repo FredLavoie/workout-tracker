@@ -4,6 +4,7 @@ import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import {
   AppBar,
   Avatar,
+  Box,
   Button,
   Divider,
   Drawer,
@@ -30,7 +31,6 @@ import ViewDayIcon from '@mui/icons-material/ViewDay';
 
 import { useTheme } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import makeStyles from '@mui/styles/makeStyles';
 
 import { logout, isAuthenticated } from '../services/authentication';
 
@@ -38,65 +38,17 @@ import { logout, isAuthenticated } from '../services/authentication';
 const dateArray = new Date().toISOString().split('T')[0].split('-');
 const calPath = `/cal/${dateArray[0]}-${dateArray[1]}`;
 
-const drawerWidth = 200;
 
-const useStyles = makeStyles((theme) => ({
-  page: {
-    background: '#f9f9f9',
-    width: '100%',
-    minHeight: '100vh',
-    height: '100%',
-  },
-  root1: {
-    display: 'flex',
-  },
-  root2: {
-    flexGrow: 1,
-    zIndex: 2,
-  },
-  drawer: {
-    width: drawerWidth,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    zIndex: 1,
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: 56,
-    },
-  },
-  active: {
-    background: '#f4f4f4'
-  },
-  toolbar: theme.mixins.toolbar,
-  logoutButton: {
-    color: theme.palette.secondary.main,
-  },
-  avatar: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.text.secondary,
-  },
-  menuButton: {
-    color: theme.palette.secondary.main,
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
-function Alert(props) {
-  return <MuiAlert elevation={4} variant='filled' {...props} />;
-}
+// eslint-disable-next-line prefer-arrow-callback
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={4} ref={ref} {...props} />;
+});
 
 export function Layout({ children }) {
   if (isAuthenticated() === false) {
     return <Redirect to='/login' />;
   }
 
-  const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
   const theme = useTheme();
@@ -148,7 +100,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/dashboard')}
-        className={location.pathname === '/dashboard' ? classes.active : null}
+        sx={(location.pathname === '/dashboard' && style.active)}
       >
         <ListItemIcon><DashboardIcon /></ListItemIcon>
         <ListItemText primary='Dashboard' />
@@ -156,7 +108,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick(calPath)}
-        className={location.pathname.includes('/cal/') ? classes.active : null}
+        sx={(location.pathname.includes('/cal/') && style.active)}
       >
         <ListItemIcon><TodayIcon /></ListItemIcon>
         <ListItemText primary='Calendar' />
@@ -164,7 +116,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/week')}
-        className={location.pathname.includes('/week/') ? classes.active : null}
+        sx={(location.pathname.includes('/week/') && style.active)}
       >
         <ListItemIcon><ViewDayIcon /></ListItemIcon>
         <ListItemText primary='Week' />
@@ -172,7 +124,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/search')}
-        className={location.pathname === '/search' ? classes.active : null}
+        sx={(location.pathname === '/search' && style.active)}
       >
         <ListItemIcon><SearchIcon /></ListItemIcon>
         <ListItemText primary='Search' />
@@ -181,7 +133,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/workouts/new')}
-        className={location.pathname === '/workouts/new' ? classes.active : null}
+        sx={(location.pathname === '/workouts/new' && style.active)}
       >
         <ListItemIcon><FitnessCenterIcon /></ListItemIcon>
         <ListItemText primary='New Workout' />
@@ -189,7 +141,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/records/new')}
-        className={location.pathname === '/records/new' ? classes.active : null}
+        sx={(location.pathname === '/records/new' && style.active)}
       >
         <ListItemIcon><StarIcon /></ListItemIcon>
         <ListItemText primary='New PR' />
@@ -200,34 +152,34 @@ export function Layout({ children }) {
 
 
   return (
-    <div className={classes.root1}>
+    <Box sx={style.root1}>
 
       {/*********************************** Navbar ************************************/}
       <AppBar
         position='fixed'
         color='primary'
         elevation={1}
-        className={classes.root2}
+        sx={style.root2}
       >
-        <Toolbar>
+        <Toolbar sx={style.toolbar}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            className={classes.menuButton}
+            sx={style.menuButton}
             size="large"
           >
             <MenuIcon />
           </IconButton>
-          <Typography edge='start' variant='h5' className={classes.title}>
+          <Typography edge='start' variant='h5' sx={style.title}>
             Workout Tracker
           </Typography>
 
           <Button>
             <Avatar
               button="true"
-              className={classes.avatar}
+              sx={style.avatar}
               onClick={handleClickAvatar}
               aria-controls="simple-menu"
               aria-haspopup="true"
@@ -255,7 +207,7 @@ export function Layout({ children }) {
           anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          classes={{ paper: classes.drawerPaper }}
+          sx={style.mobileDrawer}
           ModalProps={{
             keepMounted: true,
           }}
@@ -267,9 +219,8 @@ export function Layout({ children }) {
       {/******************** Desktop drawer - permanent left **************************/}
       <Hidden smDown implementation="css">
         <Drawer
-          className={classes.drawer}
+          sx={style.desktopDrawer}
           variant="permanent"
-          classes={{ paper: classes.drawerPaper }}
           anchor="left"
         >
           {drawer}
@@ -278,14 +229,65 @@ export function Layout({ children }) {
 
 
       {/*********************************** Content ***********************************/}
-      <div className={classes.page}>
+      <Box sx={style.page}>
         {/* adds padding to push content below appbar */}
-        <div className={classes.toolbar}></div>
+        <Box sx={style.toolbar}></Box>
         {children}
-      </div>
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleCloseError}>
+      </Box>
+      <Snackbar
+        open={open} autoHideDuration={4000}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
         <Alert severity='error'>Server error</Alert>
       </Snackbar>
-    </div>
+    </Box>
   );
 }
+
+const drawerWidth = '200px';
+const style = {
+  page: {
+    background: '#f9f9f9',
+    width: '100%',
+    minHeight: '100vh',
+    height: '100%',
+  },
+  root1: {
+    display: 'flex',
+  },
+  root2: {
+    flexGrow: '1',
+    zIndex: '1250',
+  },
+  mobileDrawer: {
+    width: drawerWidth,
+    zIndex: '1300',
+  },
+  desktopDrawer: {
+    width: drawerWidth,
+    [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '64px' }
+  },
+  active: {
+    background: '#f4f4f4'
+  },
+  toolbar: {
+    minHeight: '56px',
+    height: '56px',
+  },
+  logoutButton: {
+    color: 'secondary.main',
+  },
+  avatar: {
+    backgroundColor: 'secondary.main',
+    color: 'text.secondary',
+  },
+  menuButton: {
+    color: 'secondary.main',
+    marginRight: '16px',
+    display: { sm: 'none' },
+  },
+  title: {
+    flexGrow: '1',
+  },
+};
