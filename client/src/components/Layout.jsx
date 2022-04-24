@@ -258,6 +258,7 @@ const style = {
     flexGrow: '1',
     height: '56px',
     zIndex: '1250',
+    [`& .MuiToolbar-root`]: { minHeight: '56px' },
   },
   mobileDrawer: {
     width: drawerWidth,
@@ -265,7 +266,7 @@ const style = {
   },
   desktopDrawer: {
     width: drawerWidth,
-    [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '56px' }
+    [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '56px' },
   },
   active: {
     background: '#f4f4f4'
