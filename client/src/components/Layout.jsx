@@ -34,10 +34,8 @@ import MuiAlert from '@mui/material/Alert';
 
 import { logout, isAuthenticated } from '../services/authentication';
 
-
-const dateArray = new Date().toISOString().split('T')[0].split('-');
-const calPath = `/cal/${dateArray[0]}-${dateArray[1]}`;
-
+const dateArray = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/');
+const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, '0')}`;
 
 // eslint-disable-next-line prefer-arrow-callback
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -161,7 +159,7 @@ export function Layout({ children }) {
         elevation={1}
         sx={style.root2}
       >
-        <Toolbar sx={style.toolbar}>
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -230,8 +228,8 @@ export function Layout({ children }) {
 
       {/*********************************** Content ***********************************/}
       <Box sx={style.page}>
-        {/* adds padding to push content below appbar */}
-        <Box sx={style.toolbar}></Box>
+        {/* this element adds margin to push content below the appbar */}
+        <Box sx={style.toolbarMargin}></Box>
         {children}
       </Box>
       <Snackbar
@@ -258,6 +256,7 @@ const style = {
   },
   root2: {
     flexGrow: '1',
+    height: '56px',
     zIndex: '1250',
   },
   mobileDrawer: {
@@ -266,13 +265,12 @@ const style = {
   },
   desktopDrawer: {
     width: drawerWidth,
-    [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '64px' }
+    [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '56px' }
   },
   active: {
     background: '#f4f4f4'
   },
-  toolbar: {
-    minHeight: '56px',
+  toolbarMargin: {
     height: '56px',
   },
   logoutButton: {
