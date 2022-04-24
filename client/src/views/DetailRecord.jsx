@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -11,58 +12,11 @@ import {
   Typography
 } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
 import { fetchEventRecords } from '../services/fetchData';
 import { ServerError } from '../components/ServerError';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: 32,
-    marginTop: 16,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '90%',
-    },
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap'
-  },
-  title: {
-    marginBottom: 16,
-    [theme.breakpoints.up('sm')]: {
-      marginBottom: 52,
-    },
-  },
-  loading: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '10%',
-  },
-  cardStyle: {
-    width: 360,
-    margin: '0px auto 16px auto',
-    [theme.breakpoints.up('sm')]: {
-      margin: '0px 0px 16px 0px',
-    },
-  },
-  individualContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    cursor: 'pointer',
-    margin: '8px 0',
-  },
-  content: {
-    padding: '0 32px 32px 32px',
-  },
-  button: {
-    width: 360,
-    marginTop: 16,
-  }
-}));
 
 export function DetailRecord() {
-  const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
   const [records, setRecrods] = useState(null);
@@ -100,28 +54,62 @@ export function DetailRecord() {
       container
       direction='column'
       alignItems='center'
-      className={classes.root}
+      sx={style.root}
     >
-      <Typography variant='h4' className={classes.title}>
+      <Typography variant='h4' sx={style.title}>
         Record Details
       </Typography>
       {error && <ServerError errorMessage={error} />}
-      {isLoading && <div className={classes.loading}><CircularProgress /></div>}
-      {records && !isLoading && <Card elevation={2} className={classes.cardStyle}>
-        <CardHeader
-          title={records[0].event}
-          className={classes.header}
-        />
-        <CardContent className={classes.content}>
-          {records.map((ea, index) => (
-            <div key={index} id={ea.id} className={classes.individualContainer} onClick={(e) => handleClickActive(e.target)}>
-              <Typography variant={'body2'} className={classes.date}>{ea.date}</Typography>
-              <Typography variant={'body2'} className={classes.score}>{ea.score}</Typography>
-            </div>
-          ))}
-        </CardContent>
-      </Card>}
-      <Button className={classes.button} variant='outlined' onClick={handleCancel}>Go Back</Button>
+      {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
+      {records && !isLoading &&
+        <Card elevation={2} sx={style.cardStyle}>
+          <CardHeader title={records[0].event} />
+          <CardContent sx={style.content}>
+            {records.map((ea, index) => (
+              <Box key={index} id={ea.id} sx={style.individualContainer} onClick={(e) => handleClickActive(e.target)}>
+                <Typography variant={'body2'}>{ea.date}</Typography>
+                <Typography variant={'body2'}>{ea.score}</Typography>
+              </Box>
+            ))}
+          </CardContent>
+        </Card>}
+      <Button sx={style.button} variant='outlined' onClick={handleCancel}>Go Back</Button>
     </Grid>
   );
 }
+
+const style = {
+  root: {
+    marginBottom: '32px',
+    marginTop: '16px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
+  },
+  title: {
+    marginBottom: '16px',
+  },
+  loading: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '10%',
+  },
+  cardStyle: {
+    width: '360px',
+    margin: '0px 0px 16px 0px',
+  },
+  individualContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    cursor: 'pointer',
+    margin: '8px 0',
+  },
+  content: {
+    padding: '0 32px 32px 32px',
+  },
+  button: {
+    width: '360px',
+    marginTop: '16px',
+  }
+};
