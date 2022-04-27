@@ -8,6 +8,7 @@ import {
   Button,
   Divider,
   Drawer,
+  FormControlLabel,
   Hidden,
   IconButton,
   List,
@@ -16,8 +17,10 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Paper,
   Toolbar,
   Snackbar,
+  Switch,
   Typography
 } from '@mui/material';
 
@@ -42,7 +45,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-export function Layout({ children }) {
+export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
   if (isAuthenticated() === false) {
     return <Redirect to='/login' />;
   }
@@ -93,12 +96,23 @@ export function Layout({ children }) {
     history.push('/password-change');
   }
 
+  function handleThemeToggle(e) {
+    if (e.target.checked) {
+      localStorage.setItem('userTheme', 'dark');
+      setUserTheme('dark');
+    }
+    else {
+      localStorage.setItem('userTheme', 'light');
+      setUserTheme('light');
+    }
+  }
+
   const drawer = (
     <List>
       <ListItem
         button
         onClick={() => handleMenuItemClick('/dashboard')}
-        sx={(location.pathname === '/dashboard' && style.active)}
+        sx={(location.pathname === '/dashboard' ? style.active : null)}
       >
         <ListItemIcon><DashboardIcon /></ListItemIcon>
         <ListItemText primary='Dashboard' />
@@ -106,7 +120,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick(calPath)}
-        sx={(location.pathname.includes('/cal/') && style.active)}
+        sx={(location.pathname.includes('/cal/') ? style.active : null)}
       >
         <ListItemIcon><TodayIcon /></ListItemIcon>
         <ListItemText primary='Calendar' />
@@ -114,7 +128,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/week')}
-        sx={(location.pathname.includes('/week/') && style.active)}
+        sx={(location.pathname.includes('/week') ? style.active : null)}
       >
         <ListItemIcon><ViewDayIcon /></ListItemIcon>
         <ListItemText primary='Week' />
@@ -122,7 +136,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/search')}
-        sx={(location.pathname === '/search' && style.active)}
+        sx={(location.pathname === '/search' ? style.active : null)}
       >
         <ListItemIcon><SearchIcon /></ListItemIcon>
         <ListItemText primary='Search' />
@@ -131,7 +145,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/workouts/new')}
-        sx={(location.pathname === '/workouts/new' && style.active)}
+        sx={(location.pathname === '/workouts/new' ? style.active : null)}
       >
         <ListItemIcon><FitnessCenterIcon /></ListItemIcon>
         <ListItemText primary='New Workout' />
@@ -139,7 +153,7 @@ export function Layout({ children }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/records/new')}
-        sx={(location.pathname === '/records/new' && style.active)}
+        sx={(location.pathname === '/records/new' ? style.active : null)}
       >
         <ListItemIcon><StarIcon /></ListItemIcon>
         <ListItemText primary='New PR' />
@@ -150,12 +164,12 @@ export function Layout({ children }) {
 
 
   return (
-    <Box sx={style.root1}>
+    <Paper sx={style.root1}>
 
       {/*********************************** Navbar ************************************/}
       <AppBar
         position='fixed'
-        color='primary'
+        color={primaryColor}
         elevation={1}
         sx={style.root2}
       >
@@ -194,6 +208,14 @@ export function Layout({ children }) {
           >
             <MenuItem onClick={handleChangePasswordClick}>Change Password</MenuItem>
             <MenuItem onClick={handleSubmit}>Logout</MenuItem>
+            <MenuItem onChange={handleThemeToggle}>
+              <FormControlLabel
+                sx={style.modeToggle}
+                labelPlacement="start"
+                control={<Switch checked={userTheme === 'dark' ? true : false} />}
+                label='Dark Mode'
+              />
+            </MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
@@ -239,14 +261,13 @@ export function Layout({ children }) {
       >
         <Alert severity='error'>Server error</Alert>
       </Snackbar>
-    </Box>
+    </Paper>
   );
 }
 
 const drawerWidth = '200px';
 const style = {
   page: {
-    background: '#f9f9f9',
     width: '100%',
     minHeight: '100vh',
     height: '100%',
@@ -268,8 +289,11 @@ const style = {
     width: drawerWidth,
     [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '56px' },
   },
+  // need to do something to highlight chosen route that works for both themes
   active: {
-    background: '#f4f4f4'
+    opacity: '70%',
+    // background: '#f4f4f4',
+    // color: '#757575',
   },
   toolbarMargin: {
     height: '56px',
@@ -279,7 +303,7 @@ const style = {
   },
   avatar: {
     backgroundColor: 'secondary.main',
-    color: 'text.secondary',
+    color: '#212121',
   },
   menuButton: {
     color: 'secondary.main',
@@ -289,4 +313,7 @@ const style = {
   title: {
     flexGrow: '1',
   },
+  modeToggle: {
+    marginLeft: '0',
+  }
 };

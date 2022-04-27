@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Paper,
   Typography
 } from '@mui/material';
 
@@ -69,7 +70,7 @@ export function Calendar() {
   }, [monthToFetch]);
 
   return (
-    <Box>
+    <Paper>
       {error && <ServerError errorMessage={error} />}
       {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
       {workouts && !isLoading && <Box sx={style.calendarContainer}>
@@ -93,7 +94,7 @@ export function Calendar() {
           <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
         </Box>
       </Box>}
-    </Box>
+    </Paper>
   );
 }
 
