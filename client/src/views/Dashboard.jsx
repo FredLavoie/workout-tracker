@@ -132,12 +132,12 @@ const style = {
   },
   cardStyle: {
     width: '360px',
-    margin: { md: '0px 16px 16px 8px', sm: '0px auto 16px auto' },
+    margin: { sm: '0px 16px 16px 8px', xs: '0px auto 16px auto' },
   },
   summaryCardStyle: {
     width: '360px',
     height: '600px',
-    margin: { md: '0px 16px 16px 8px', sm: '0px auto 16px auto' },
+    margin: { sm: '0px 16px 16px 8px', xs: '0px auto 16px auto' },
   },
   header: {
     padding: '32px',
