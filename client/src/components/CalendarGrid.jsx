@@ -56,6 +56,8 @@ export function CalendarGrid(props) {
   const activeStyle = mode === 'light' ? style.activeLight : style.activeDark;
   style.container.border = mode === 'light' ? '1.5px solid #d9d9d9' : '1.5px solid divider';
   style.daySquare.border = mode === 'light' ? '1.5px solid #d9d9d9' : '1.5px solid rgba(255, 255, 255, 0.12)';
+  style.today.backgroundColor = mode === 'light' ? 'primary.main' : 'secondary.main';
+  style.today.color = mode === 'light' ? '#fff' : '#212121';
 
   return (
     <Box sx={style.container}>
@@ -126,9 +128,7 @@ const style = {
     color: '#212121',
   },
   today: {
-    backgroundColor: 'primary.main',
     borderRadius: '4px',
     padding: '4px 6px',
-    color: '#fff'
   }
 };
