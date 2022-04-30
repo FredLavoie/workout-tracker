@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material';
 import { Layout } from './components/Layout';
@@ -16,22 +16,22 @@ import { Password } from './views/PasswordChange';
 import { NotFound } from './views/NotFound';
 import './App.css';
 
-import { deepPurple, teal } from '@mui/material/colors';
-
-const myTheme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: deepPurple,
-    secondary: teal
-  },
-  MuiButton: {
-    root: {
-      transition: 'color .01s',
-    },
-  },
-});
 
 export function App() {
+  const [userTheme, setUserTheme] = useState(localStorage.getItem('userTheme') ?? 'light');
+
+  const myTheme = createTheme({
+    palette: {
+      mode: userTheme,
+      primary: {
+        main: '#673ab7',
+      },
+      secondary: {
+        main: '#1de9b6',
+      },
+    },
+  });
+
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={myTheme}>
@@ -39,7 +39,7 @@ export function App() {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/login' component={Login} />
-            <Layout>
+            <Layout userTheme={userTheme} setUserTheme={setUserTheme}>
               <Switch>
                 <PrivateRoute exact path='/dashboard' component={Dashboard} />
                 <PrivateRoute path='/workouts' component={Workout} />

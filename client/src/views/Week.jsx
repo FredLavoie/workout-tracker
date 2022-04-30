@@ -94,7 +94,7 @@ export function Week() {
           </Box>
           <Box sx={style.weekContainer}>
             {weekArr.map((day, index) => (
-              <Card className="***TEST***" elevation={2} sx={style.cardStyle} key={index}>
+              <Card elevation={2} sx={style.cardStyle} key={index}>
                 <Typography variant='body1' color='textSecondary' sx={style.header}>
                   {`${weekdayNames[index]}, ${months[day.split('-')[1]]} ${day.split('-')[2]}`}
                 </Typography>
@@ -136,18 +136,17 @@ const style = {
   },
   monthTitle: {
     width: '30%',
-    minWidth: '200px',
+    minWidth: '240px',
     textAlign: 'center',
   },
   navLink: {
-    minWidth: '80px',
+    minWidth: '70px',
   },
   weekNav: {
     width: { sm: '65vw', sx: '100%' },
     margin: '16px auto',
     display: 'flex',
     justifyContent: 'space-around',
-    marginTop: '16px'
   },
   weekContainer: {
     display: 'flex',
@@ -156,8 +155,8 @@ const style = {
     alignItems: 'center',
   },
   cardStyle: {
-    width: { md: '100%', xs: '256px' },
+    width: { sm: '100%', xs: '95%' },
     flexGrow: '1',
-    margin: { md: '0px auto 16px auto', xs: '8px 0px 4px 8px' },
+    margin: { md: '0px auto 16px auto', xs: '8px 0 4px 0' },
   },
 };
