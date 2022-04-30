@@ -51,6 +51,7 @@ export function Workout() {
     if (workoutId === 'new') {
       setSelectedDate(newWorkoutDate !== null ? newWorkoutDate : currentDate);
       setSelectedTime(currentTime);
+      setWorkoutBody('');
       changeNewOrEdit(1);
       setIsLoading(false);
     } else {
@@ -70,7 +71,7 @@ export function Workout() {
       }
     }
     return () => abortCont.abort();
-  }, []);
+  }, [location]);
 
 
   async function handleSubmit(event) {
@@ -162,15 +163,27 @@ export function Workout() {
           <Typography variant="caption" sx={style.workout}>
             Workout
           </Typography>
-          <TextField
-            onChange={(e) => setWorkoutBody(e.target.value)}
-            sx={style.field}
-            id='workout-body'
-            multiline
-            rows={10}
-            defaultValue={workoutBody}
-            variant='outlined'
-          />
+          {workoutBody === '' ?
+            <TextField
+              onChange={(e) => setWorkoutBody(e.target.value)}
+              sx={style.field}
+              id='workout-body'
+              multiline
+              rows={10}
+              value=''
+              variant='outlined'
+            />
+            :
+            <TextField
+              onChange={(e) => setWorkoutBody(e.target.value)}
+              sx={style.field}
+              id='workout-body'
+              multiline
+              rows={10}
+              defaultValue={workoutBody}
+              variant='outlined'
+            />
+          }
           <Button
             fullWidth
             type={'submit'}
