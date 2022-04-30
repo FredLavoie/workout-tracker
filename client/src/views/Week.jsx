@@ -94,7 +94,7 @@ export function Week() {
           </Box>
           <Box sx={style.weekContainer}>
             {weekArr.map((day, index) => (
-              <Card className="***TEST***" elevation={2} sx={style.cardStyle} key={index}>
+              <Card elevation={2} sx={style.cardStyle} key={index}>
                 <Typography variant='body1' color='textSecondary' sx={style.header}>
                   {`${weekdayNames[index]}, ${months[day.split('-')[1]]} ${day.split('-')[2]}`}
                 </Typography>
