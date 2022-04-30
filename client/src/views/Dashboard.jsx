@@ -64,7 +64,7 @@ export function Dashboard() {
       {isLoading && <CircularProgress />}
       {!error && !isLoading && <Box sx={style.dashboardContainer}>
         {/******************************************* SUMMARY *******************************************/}
-        <Card elevation={2} sx={style.summaryCardStyle}>
+        <Card elevation={3} sx={style.summaryCardStyle}>
           <CardHeader
             title='Summary'
             sx={style.header}
@@ -85,7 +85,7 @@ export function Dashboard() {
           </CardContent>
         </Card>
         {/**************************************** STRENGTH PRs ***************************************/}
-        <Card elevation={2} sx={style.cardStyle}>
+        <Card elevation={3} sx={style.cardStyle}>
           <CardHeader
             title='Strength PRs'
             sx={style.header}
@@ -93,7 +93,7 @@ export function Dashboard() {
           <RecordTable type={'strength'} records={records.filter((ea) => ea.type === 'strength')} />
         </Card>
         {/**************************************** ENDURANCE PRs **************************************/}
-        <Card elevation={2} sx={style.cardStyle}>
+        <Card elevation={3} sx={style.cardStyle}>
           <CardHeader
             title='Endurance PRs'
             sx={style.header}
@@ -101,7 +101,7 @@ export function Dashboard() {
           <RecordTable type={'endurance'} records={records.filter((ea) => ea.type === 'endurance')} />
         </Card>
         {/******************************************* WOD PRs *****************************************/}
-        <Card elevation={2} sx={style.cardStyle}>
+        <Card elevation={3} sx={style.cardStyle}>
           <CardHeader
             title='WOD PRs'
             sx={style.header}
@@ -155,6 +155,7 @@ const style = {
     padding: '2px 4px',
     borderRadius: '6px',
     textAlign: 'center',
+    color: '#212121',
   },
   centerText: {
     paddingTop: '2px',

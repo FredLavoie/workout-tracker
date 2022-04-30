@@ -16,8 +16,6 @@ import { Password } from './views/PasswordChange';
 import { NotFound } from './views/NotFound';
 import './App.css';
 
-import { deepPurple, teal } from '@mui/material/colors';
-
 
 export function App() {
   const [userTheme, setUserTheme] = useState(localStorage.getItem('userTheme') ?? 'light');
@@ -25,8 +23,12 @@ export function App() {
   const myTheme = createTheme({
     palette: {
       mode: userTheme,
-      primary: deepPurple,
-      secondary: teal,
+      primary: {
+        main: '#673ab7',
+      },
+      secondary: {
+        main: '#1de9b6',
+      },
     },
   });
 
