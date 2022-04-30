@@ -135,19 +135,18 @@ const style = {
     margin: '0px',
   },
   monthTitle: {
-    width: '50%',
-    minWidth: '250px',
+    width: '30%',
+    minWidth: '240px',
     textAlign: 'center',
   },
   navLink: {
-    minWidth: '80px',
+    minWidth: '70px',
   },
   weekNav: {
     width: { sm: '65vw', sx: '100%' },
     margin: '16px auto',
     display: 'flex',
     justifyContent: 'space-around',
-    marginTop: '16px'
   },
   weekContainer: {
     display: 'flex',
@@ -156,8 +155,8 @@ const style = {
     alignItems: 'center',
   },
   cardStyle: {
-    width: { md: '100%', xs: '256px' },
+    width: { sm: '100%', xs: '95%' },
     flexGrow: '1',
-    margin: { md: '0px auto 16px auto', xs: '8px 0px 4px 8px' },
+    margin: { md: '0px auto 16px auto', xs: '8px 0 4px 0' },
   },
 };
