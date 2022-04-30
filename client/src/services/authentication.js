@@ -33,6 +33,7 @@ export async function logout() {
   localStorage.removeItem('token');
   localStorage.removeItem('accountId');
   localStorage.removeItem('username');
+  localStorage.removeItem('userTheme');
   return;
 }
 

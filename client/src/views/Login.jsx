@@ -5,13 +5,13 @@ import {
   AppBar,
   Box,
   Button,
-  Container,
   FormControl,
   Grid,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Paper,
   Snackbar,
   TextField,
   Toolbar,
@@ -78,8 +78,8 @@ export function Login() {
   }
 
   return (
-    <Container>
-      <AppBar position='fixed' elevation={1} color='primary'>
+    <Paper elevation={0}>
+      <AppBar sx={style.appBar} position='fixed' elevation={1}>
         <Toolbar>
           <Typography variant='h5' display='block'>
             Workout Tracker
@@ -103,7 +103,7 @@ export function Login() {
               value={username}
               type={'input'}
               name={'username'}
-              color='secondary'
+              color='primary'
             />
             <FormControl sx={style.textField} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
@@ -112,7 +112,8 @@ export function Login() {
                 value={password}
                 type={showPassword ? 'input' : 'password'}
                 name={'password'}
-                color='secondary'
+                label='password'
+                labelWidth={70}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -124,7 +125,6 @@ export function Login() {
                     </IconButton>
                   </InputAdornment>
                 }
-                labelWidth={70}
               />
             </FormControl>
             <Button
@@ -148,15 +148,18 @@ export function Login() {
           Wrong username or password! Please try again.
         </Alert>
       </Snackbar>
-    </Container>
+    </Paper>
   );
 }
 
 
 const style = {
+  appBar: {
+    backgroundColor: '#673ab7', // prevent appBar color from changing with mode
+    [`& .MuiToolbar-root`]: { minHeight: '56px' },
+  },
   btn: {
     marginTop: '20px',
-    color: '#fff',
   },
   textField: {
     width: '100%',
