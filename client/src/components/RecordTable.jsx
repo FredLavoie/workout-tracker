@@ -62,5 +62,6 @@ const style = {
     padding: '2px 4px',
     borderRadius: '6px',
     margin: '2px 0',
+    color: '#212121',
   },
 };

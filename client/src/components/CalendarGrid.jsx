@@ -51,6 +51,14 @@ export function CalendarGrid(props) {
     }
   }
 
+  const mode = localStorage.getItem('userTheme') ?? 'light';
+  const dayOfMonthStyle = mode === 'light' ? style.dayOfMonthLight : style.dayOfMonthDark;
+  const activeStyle = mode === 'light' ? style.activeLight : style.activeDark;
+  style.container.border = mode === 'light' ? '1.5px solid #d9d9d9' : '1.5px solid divider';
+  style.daySquare.border = mode === 'light' ? '1.5px solid #d9d9d9' : '1.5px solid rgba(255, 255, 255, 0.12)';
+  style.today.backgroundColor = mode === 'light' ? 'primary.main' : 'secondary.main';
+  style.today.color = mode === 'light' ? '#fff' : '#212121';
+
   return (
     <Box sx={style.container}>
       {contentArray.map((ea, index) => (
@@ -58,7 +66,7 @@ export function CalendarGrid(props) {
           onClick={(e) => handleClickActive(e.currentTarget.id, ea.dayNumber)}
           key={index}
           id={ea.workoutId ? ea.workoutId : ''}
-          sx={{ ...style.daySquare, ...(ea.active ? style.active : ea.dayNumber > 0 ? style.dayOfMonth : style.notDayOfMonth) }}
+          sx={{ ...style.daySquare, ...(ea.active ? activeStyle : ea.dayNumber > 0 ? dayOfMonthStyle : style.notDayOfMonth) }}
         >
           {ea.dayNumber !== 0
             ?
@@ -88,34 +96,39 @@ const style = {
     justifyContent: 'center',
     flexWrap: 'wrap',
     flexBasis: '10%',
-    border: '1.5px solid #d9d9d9',
   },
   daySquare: {
     width: '13%',
     paddingBottom: '8%',
-    border: '1.5px solid #d9d9d9',
     display: 'flex',
     flexGrow: '1',
     justifyContent: 'right',  // check this on Safari
   },
-  active: {
+  activeLight: {
     backgroundColor: 'secondary.main',
     cursor: 'pointer',
   },
-  dayOfMonth: {
+  activeDark: {
+    backgroundColor: 'primary.main',
+    cursor: 'pointer',
+  },
+  dayOfMonthLight: {
     backgroundColor: '#ede7f6',
     cursor: 'pointer',
   },
+  dayOfMonthDark: {
+    backgroundColor: '#b0bec5',
+    cursor: 'pointer',
+  },
   notDayOfMonth: {
-    backgroundColor: '#fff',
+    backgroundColor: 'primary',
   },
   innerText: {
-    padding: '4px'
+    padding: '4px',
+    color: '#212121',
   },
   today: {
-    backgroundColor: 'primary.main',
     borderRadius: '4px',
     padding: '4px 6px',
-    color: '#fff'
   }
 };

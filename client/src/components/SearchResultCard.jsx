@@ -68,12 +68,12 @@ const style = {
     marginTop: '16px',
     width: { md: '100%', sm: '90%' },
     display: 'flex',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
     flexWrap: 'wrap'
   },
   cardStyle: {
     width: '256px',
-    margin: '0px auto 16px auto',
+    margin: '0px 8px 16px 8px',
     cursor: 'pointer',
   },
   header: {
