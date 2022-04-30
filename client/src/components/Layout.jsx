@@ -45,7 +45,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
+export function Layout({ children, userTheme, setUserTheme }) {
   if (isAuthenticated() === false) {
     return <Redirect to='/login' />;
   }
@@ -112,7 +112,7 @@ export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/dashboard')}
-        sx={(location.pathname === '/dashboard' ? style.active : null)}
+        sx={(location.pathname === '/dashboard' ? (userTheme === 'light' ? style.activeLight : style.activeDark) : null)}
       >
         <ListItemIcon><DashboardIcon /></ListItemIcon>
         <ListItemText primary='Dashboard' />
@@ -120,7 +120,7 @@ export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick(calPath)}
-        sx={(location.pathname.includes('/cal/') ? style.active : null)}
+        sx={(location.pathname.includes('/cal/') ? (userTheme === 'light' ? style.activeLight : style.activeDark) : null)}
       >
         <ListItemIcon><TodayIcon /></ListItemIcon>
         <ListItemText primary='Calendar' />
@@ -128,7 +128,7 @@ export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/week')}
-        sx={(location.pathname.includes('/week') ? style.active : null)}
+        sx={(location.pathname.includes('/week') ? (userTheme === 'light' ? style.activeLight : style.activeDark) : null)}
       >
         <ListItemIcon><ViewDayIcon /></ListItemIcon>
         <ListItemText primary='Week' />
@@ -136,7 +136,7 @@ export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/search')}
-        sx={(location.pathname === '/search' ? style.active : null)}
+        sx={(location.pathname === '/search' ? (userTheme === 'light' ? style.activeLight : style.activeDark) : null)}
       >
         <ListItemIcon><SearchIcon /></ListItemIcon>
         <ListItemText primary='Search' />
@@ -145,7 +145,7 @@ export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/workouts/new')}
-        sx={(location.pathname === '/workouts/new' ? style.active : null)}
+        sx={(location.pathname === '/workouts/new' ? (userTheme === 'light' ? style.activeLight : style.activeDark) : null)}
       >
         <ListItemIcon><FitnessCenterIcon /></ListItemIcon>
         <ListItemText primary='New Workout' />
@@ -153,7 +153,7 @@ export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
       <ListItem
         button
         onClick={() => handleMenuItemClick('/records/new')}
-        sx={(location.pathname === '/records/new' ? style.active : null)}
+        sx={(location.pathname === '/records/new' ? (userTheme === 'light' ? style.activeLight : style.activeDark) : null)}
       >
         <ListItemIcon><StarIcon /></ListItemIcon>
         <ListItemText primary='New PR' />
@@ -169,7 +169,6 @@ export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
       {/*********************************** Navbar ************************************/}
       <AppBar
         position='fixed'
-        color={primaryColor}
         elevation={1}
         sx={style.root2}
       >
@@ -279,6 +278,7 @@ const style = {
     flexGrow: '1',
     height: '56px',
     zIndex: '1250',
+    backgroundColor: '#673ab7', // prevent appBar color from changing with mode
     [`& .MuiToolbar-root`]: { minHeight: '56px' },
   },
   mobileDrawer: {
@@ -289,11 +289,11 @@ const style = {
     width: drawerWidth,
     [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '56px' },
   },
-  // need to do something to highlight chosen route that works for both themes
-  active: {
-    opacity: '70%',
-    // background: '#f4f4f4',
-    // color: '#757575',
+  activeDark: {
+    background: '#252525',
+  },
+  activeLight: {
+    background: '#f4f4f4',
   },
   toolbarMargin: {
     height: '56px',
