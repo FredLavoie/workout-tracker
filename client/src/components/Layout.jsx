@@ -164,7 +164,7 @@ export function Layout({ children, userTheme, setUserTheme, primaryColor }) {
 
 
   return (
-    <Paper sx={style.root1}>
+    <Paper elevation={0} sx={style.root1}>
 
       {/*********************************** Navbar ************************************/}
       <AppBar

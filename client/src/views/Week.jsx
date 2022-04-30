@@ -135,8 +135,8 @@ const style = {
     margin: '0px',
   },
   monthTitle: {
-    width: '30%',
-    minWidth: '200px',
+    width: '50%',
+    minWidth: '250px',
     textAlign: 'center',
   },
   navLink: {

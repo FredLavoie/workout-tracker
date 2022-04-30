@@ -70,30 +70,31 @@ export function Calendar() {
   }, [monthToFetch]);
 
   return (
-    <Paper>
+    <Paper elevation={0}>
       {error && <ServerError errorMessage={error} />}
       {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
-      {workouts && !isLoading && <Box sx={style.calendarContainer}>
-        <Box sx={style.monthNav}>
-          <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
-          <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom sx={style.monthTitle}>
-            {`${currentMonthString} ${currentYear}`}
-          </Typography>
-          <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
-        </Box>
-        <Box sx={style.outline}>
-          <Box sx={style.weekNames}>
-            <Typography>SUN</Typography>
-            <Typography>MON</Typography>
-            <Typography>TUE</Typography>
-            <Typography>WED</Typography>
-            <Typography>THU</Typography>
-            <Typography>FRI</Typography>
-            <Typography>SAT</Typography>
+      {workouts && !isLoading &&
+        <Box sx={style.calendarContainer}>
+          <Box sx={style.monthNav}>
+            <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
+            <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom sx={style.monthTitle}>
+              {`${currentMonthString} ${currentYear}`}
+            </Typography>
+            <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
           </Box>
-          <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
-        </Box>
-      </Box>}
+          <Box sx={style.outline}>
+            <Box sx={style.weekNames}>
+              <Typography>SUN</Typography>
+              <Typography>MON</Typography>
+              <Typography>TUE</Typography>
+              <Typography>WED</Typography>
+              <Typography>THU</Typography>
+              <Typography>FRI</Typography>
+              <Typography>SAT</Typography>
+            </Box>
+            <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
+          </Box>
+        </Box>}
     </Paper>
   );
 }
