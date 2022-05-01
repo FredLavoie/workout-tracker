@@ -186,12 +186,8 @@ REST_FRAMEWORK = {
     ],
 }
 
-if os.getenv('DJANGO_DEVELOPMENT') == 'True':
-    CORS_ORIGIN_WHITELIST = (
-        'http://localhost:3000',  # React frontend
-        'http://localhost:8000',  # Django API
-    )
-else:
-    CORS_ORIGIN_WHITELIST = (
-    'https://workout-tracker.xyz',
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',  # React frontend
+    'http://localhost:8000',  # Django API
+    'http://workout-tracker.xyz',
 )
