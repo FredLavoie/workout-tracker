@@ -164,7 +164,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
 
 
   return (
-    <Paper elevation={0} sx={style.root1}>
+    <Paper elevation={0} sx={style.root1} className="-----TEST-----">
 
       {/*********************************** Navbar ************************************/}
       <AppBar
@@ -273,6 +273,7 @@ const style = {
   },
   root1: {
     display: 'flex',
+    borderRadius: '0',
   },
   root2: {
     flexGrow: '1',
