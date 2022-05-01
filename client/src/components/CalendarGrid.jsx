@@ -117,7 +117,7 @@ const style = {
     cursor: 'pointer',
   },
   dayOfMonthDark: {
-    backgroundColor: '#b0bec5',
+    backgroundColor: '#353535',
     cursor: 'pointer',
   },
   notDayOfMonth: {
@@ -125,7 +125,6 @@ const style = {
   },
   innerText: {
     padding: '4px',
-    color: '#212121',
   },
   today: {
     borderRadius: '4px',
