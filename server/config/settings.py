@@ -30,9 +30,9 @@ SECRET_KEY = os.getenv('DJANGO_SECRETE_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-if os.getenv('DJANGO_DEVELOPMENT') == True:
+if os.getenv('DJANGO_DEVELOPMENT') == 'True':
     DEBUG = False
-    ALLOWED_HOSTS = ['workout-tracker.xyz', '127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
     SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT')
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -41,7 +41,7 @@ if os.getenv('DJANGO_DEVELOPMENT') == True:
     SECURE_HSTS_PRELOAD = True
 else:
     DEBUG = True
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['workout-tracker.xyz']
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
@@ -186,8 +186,12 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ORIGIN_WHITELIST = (
-    'http://workout-tracker.xyz',
-    'http://localhost:3000',  # React frontend
-    'http://localhost:8000',  # Django API
+if os.getenv('DJANGO_DEVELOPMENT') == 'True':
+    CORS_ORIGIN_WHITELIST = (
+        'http://localhost:3000',  # React frontend
+        'http://localhost:8000',  # Django API
+    )
+else:
+    CORS_ORIGIN_WHITELIST = (
+    'https://workout-tracker.xyz',
 )
