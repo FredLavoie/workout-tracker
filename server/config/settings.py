@@ -41,7 +41,7 @@ if os.getenv('DJANGO_DEVELOPMENT') == 'True':
     SECURE_HSTS_PRELOAD = True
 else:
     DEBUG = True
-    ALLOWED_HOSTS = ['workout-tracker.xyz']
+    ALLOWED_HOSTS = []
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
@@ -186,8 +186,13 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',  # React frontend
-    'http://localhost:8000',  # Django API
-    'http://workout-tracker.xyz',
-)
+if os.getenv('DJANGO_DEVELOPMENT') == 'True':
+    CORS_ORIGIN_WHITELIST = (
+        'http://localhost:3000',  # React frontend
+        'http://localhost:8000',  # Django API
+    )
+else:
+    CORS_ORIGIN_WHITELIST = (
+        'http://workout-tracker.xyz',
+    )
+
