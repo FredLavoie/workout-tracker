@@ -146,21 +146,25 @@ export function Workout() {
       {isLoading && <CircularProgress />}
       {!error && !isLoading && <Grid sx={style.formSize}>
         <Box component='form' noValidate onSubmit={handleSubmit} sx={style.formContainer}>
+          <Typography sx={style.labelStyle}>
+            Date
+          </Typography>
           <TextField
             onChange={(e) => setSelectedDate(e.target.value)}
             margin='normal'
             id='date-picker'
-            label='Date'
             value={selectedDate}
           />
+          <Typography sx={style.labelStyle}>
+            Time
+          </Typography>
           <TextField
             onChange={(e) => setSelectedTime(e.target.value)}
             margin='normal'
             id='time-picker'
-            label='Time'
             value={selectedTime}
           />
-          <Typography variant="caption" sx={style.workout}>
+          <Typography sx={style.labelStyle}>
             Workout
           </Typography>
           {workoutBody === '' ?
@@ -221,7 +225,7 @@ const style = {
     marginTop: '16px',
   },
   field: {
-    marginBottom: '16px',
+    margin: '16px 0 16px 0',
   },
   btn: {
     marginTop: '16px',
@@ -237,7 +241,7 @@ const style = {
     flexDirection: 'column',
     margin: 'auto',
   },
-  workout: {
-    marginTop: '32px',
+  labelStyle: {
+    marginTop: '16px',
   },
 };
