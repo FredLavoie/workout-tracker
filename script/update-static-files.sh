@@ -9,7 +9,7 @@ wait
 
 if [[ ! -d "~/workout-tracker/client/build" ]]; then
   echo "build process failed. ending script.";
-	return;
+	exit 1;
 fi
 
 echo "Copying index.html file into nginx static folder"
