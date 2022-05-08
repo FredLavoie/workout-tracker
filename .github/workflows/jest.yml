@@ -7,9 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Use node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: "14.17.0"
     - name: Navigate to frontend code
       run: cd client
     - name: Install modules
       run: yarn
+      working-directory: client
     - name: Run Jest tests
       run: yarn test
+      working-directory: client
