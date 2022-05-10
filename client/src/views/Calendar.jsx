@@ -48,10 +48,13 @@ export function Calendar() {
   }
 
   function handleReturnToCurrent() {
-    setWorkouts(null);
     const currentDate = new Date().toISOString().split('T')[0].split('-');
-    const dateString = `${currentDate[0]}-${currentDate[1]}`;
-    history.push(`/cal/${dateString}`);
+    const currentDateString = `${currentDate[0]}-${currentDate[1]}`;
+    const pathDateString = location.pathname.split('/')[2];
+    if (currentDateString !== pathDateString) {
+      setWorkouts(null);
+      history.push(`/cal/${currentDateString}`);
+    }
   }
 
   useEffect(async () => {
