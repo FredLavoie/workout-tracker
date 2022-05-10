@@ -1,0 +1,15 @@
+name: Jest
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: yarn
+      working-directory: client
+    - name: Run Jest tests
+      run: yarn test
+      working-directory: client

@@ -1,16 +1,5 @@
-# this script updates the React static files after updates are pulled to the server
-
-CWD=$PWD
-
-echo "Creating static files"
-cd ~/workout-tracker/client;
-yarn build;
-wait
-
-if [[ ! -d "~/workout-tracker/client/build" ]]; then
-  echo "build process failed. ending script.";
-	exit 1;
-fi
+# This script updates the front end static files to be served by nginx.
+# The static files are to be generated locally and pushed to github.
 
 echo "Copying index.html file into nginx static folder"
 sudo cp ~/workout-tracker/client/build/index.html /var/www/workout/index.html;
@@ -22,12 +11,9 @@ echo "Copy static admin files back into nginx static folder"
 sudo cp -r /var/www/workout/static-old/admin /var/www/workout/static/admin;
 echo "Removing old static files"
 sudo rm -r /var/www/workout/static-old;
-echo "Removing build directory from repo"
-sudo rm -r ~/workout-tracker/client/build;
 
 echo "Restarting nginx"
-cd $CWD;
 sudo systemctl restart nginx;
 systemctl status nginx;
 
-echo "Updating static files complete"
+echo "Static files update complete"

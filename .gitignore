@@ -13,3 +13,5 @@ client/node_modules/
 # server side
 __pycache__/
 server/db.sqlite3
+server/static/
+server/staticfiles/
