@@ -9,10 +9,6 @@ echo "Copying static build files into nginx folder"
 sudo cp -r ~/workout-tracker/client/build/static /var/www/workout/static;
 echo "Copy static admin files back into nginx static folder"
 sudo cp -r /var/www/workout/static-old/admin /var/www/workout/static/admin;
-echo "Removing old static files"
-sudo rm -r /var/www/workout/static-old;
-echo "Removing build directory from repo"
-sudo rm -r ~/workout-tracker/client/build;
 
 echo "Restarting nginx"
 sudo systemctl restart nginx;
