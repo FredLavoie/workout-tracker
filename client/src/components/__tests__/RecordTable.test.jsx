@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, screen } from '@testing-library/react';
 import { RecordTable } from '../RecordTable';
 
 afterEach(cleanup);
@@ -16,5 +16,11 @@ describe('RecordTable', () => {
 
   it('renders RecordTable without crashing', () => {
     render(<RecordTable type={type} records={records} />);
+  });
+
+  it('renders RecordTable without crashing', () => {
+    render(<RecordTable type={type} records={records} />);
+    const numberOfRows = screen.getByText('Back Squat');
+    expect(numberOfRows).toBeInTheDocument();
   });
 });
