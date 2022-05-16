@@ -18,7 +18,7 @@ describe('RecordTable', () => {
     render(<RecordTable type={type} records={records} />);
   });
 
-  it('renders RecordTable without crashing', () => {
+  it('renders the correct event name', () => {
     render(<RecordTable type={type} records={records} />);
     const numberOfRows = screen.getByText('Back Squat');
     expect(numberOfRows).toBeInTheDocument();
