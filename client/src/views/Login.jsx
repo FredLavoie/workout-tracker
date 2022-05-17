@@ -112,8 +112,8 @@ export function Login() {
                 value={password}
                 type={showPassword ? 'input' : 'password'}
                 name={'password'}
-                label='password'
-                labelWidth={70}
+                label='Password'
+                id="outlined-adornment-password"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
