@@ -8,9 +8,9 @@ describe('RecordTable', () => {
   const type = 'strength';
   const records =
     [
-      { id: 456789, date: '2020-12-22', type: 'strength', event: 'Back Squat', score: 250 },
-      { id: 456756, date: '2021-02-30', type: 'strength', event: 'Back Squat', score: 275 },
-      { id: 190229, date: '2022-08-14', type: 'strength', event: 'Back Squat', score: 300 },
+      { id: 456789, date: '2020-12-22', type: 'strength', event: 'Back Squat', score: 300 },
+      { id: 456756, date: '2021-02-30', type: 'strength', event: 'Bench Press', score: 200 },
+      { id: 190229, date: '2022-08-14', type: 'strength', event: 'Deadlift', score: 400 },
     ];
 
 
@@ -18,9 +18,9 @@ describe('RecordTable', () => {
     render(<RecordTable type={type} records={records} />);
   });
 
-  it('renders the correct event name', () => {
+  it('renders the correct number of records', () => {
     render(<RecordTable type={type} records={records} />);
-    const numberOfRows = screen.getByText('Back Squat');
-    expect(numberOfRows).toBeInTheDocument();
+    const numberOfRows = screen.getAllByTestId('recordItem');
+    expect(numberOfRows.length).toBe(3);
   });
 });
