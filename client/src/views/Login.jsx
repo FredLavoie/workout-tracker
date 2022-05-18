@@ -61,6 +61,7 @@ export function Login() {
     }
   }
 
+  // redirect to dashboard if already authenticated
   if (isAuthenticated() === true) {
     return <Redirect to='/dashboard' />;
   }
