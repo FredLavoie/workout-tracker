@@ -75,8 +75,7 @@ export async function fetchMonthData(monthToFetch, abortCont) {
       'authorization': `Token ${token}`
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -94,8 +93,7 @@ export async function fetchYearData(yearToFetch, abortCont) {
       'authorization': `Token ${token}`
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -113,8 +111,7 @@ export async function fetchWorkout(workout_id, abortCont) {
       'authorization': `Token ${token}`
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -131,8 +128,7 @@ export async function updateWorkout(workout_id, date, time, workout_body) {
     },
     body: JSON.stringify({ date, time, workout_body })
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -149,10 +145,8 @@ export async function postWorkout(date, time, workout_body) {
     },
     body: JSON.stringify({ author: accountId, date, time, workout_body })
   });
-  if (!res.ok && res.status === 400)
-    throw new Error(`A workout already exists for this day`);
-  else if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok && res.status === 400) throw new Error(`A workout already exists for this day`);
+  else if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -168,8 +162,7 @@ export async function deleteWorkout(workout_id) {
       'authorization': `Token ${token}`
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return;
 }
 
@@ -190,8 +183,7 @@ export async function fetchRecord(record_id, abortCont) {
       'authorization': `Token ${token}`
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -209,8 +201,7 @@ export async function fetchRecords(abortCont) {
       'authorization': `Token ${token}`
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -227,8 +218,7 @@ export async function updateRecord(record_id, date, type, event, score) {
     },
     body: JSON.stringify({ date, type, event, score })
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -245,8 +235,7 @@ export async function postRecord(date, type, event, score) {
     },
     body: JSON.stringify({ author: accountId, date, type, event, score })
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 
@@ -262,8 +251,7 @@ export async function deleteRecord(record_id) {
       'authorization': `Token ${token}`
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return;
 }
 
@@ -281,7 +269,6 @@ export async function fetchEventRecords(event, abortCont) {
       'authorization': `Token ${token}`
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
