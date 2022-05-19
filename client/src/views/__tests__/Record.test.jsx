@@ -86,7 +86,7 @@ describe('Record view - new', () => {
     // find and click the submit button
     const submitButton = screen.getByText('Save');
     fireEvent.click(submitButton);
-    // submitting the workout with invalid data should render the failure toast message
+    // submitting the record with invalid data should render the failure toast message
     const failedToastMessage = await screen.findByText('One or more inputted values is invalid.');
     expect(failedToastMessage).toBeInTheDocument();
     // clean up local storage
@@ -103,13 +103,13 @@ describe('Record view - existing', () => {
       </MemoryRouter>
     );
   };
-  // existing workout data
+  // existing record data
   const recordDate = '2022-02-25';
   const recordType = 'wod';
   const recordEvent = 'Fran';
   const recordScore = '3:22';
 
-  it('renders existing Workout view without crashing', async () => {
+  it('renders existing Record view without crashing', async () => {
     localStorage.setItem('token', 'asdf');
     localStorage.setItem('accountId', '1');
 
@@ -173,7 +173,7 @@ describe('Record view - existing', () => {
     // find and click the delete button
     const submitButton = screen.getByText('Delete');
     fireEvent.click(submitButton);
-    // the successful delete the workout should render the success toast message
+    // the successful delete the record should render the success toast message
     const successToastMessage = await screen.findByText('Successfully deleted PR.');
     expect(successToastMessage).toBeInTheDocument();
     // clean up local storage
