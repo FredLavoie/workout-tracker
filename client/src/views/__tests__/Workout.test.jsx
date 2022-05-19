@@ -50,6 +50,8 @@ describe('Workout view - new', () => {
     // the successful submitting of the workout should render the success toast message
     const successToastMessage = await screen.findByText('Successfully saved new workout.');
     expect(successToastMessage).toBeInTheDocument();
+    // clean up local storage
+    localStorage.clear();
   });
 
 
@@ -76,6 +78,8 @@ describe('Workout view - new', () => {
     // submitting the workout with invalid data should render the failure toast message
     const failedToastMessage = await screen.findByText('One or more inputted values is invalid.');
     expect(failedToastMessage).toBeInTheDocument();
+    // clean up local storage
+    localStorage.clear();
   });
 });
 
@@ -117,7 +121,7 @@ describe('Workout view - existing', () => {
     localStorage.clear();
   });
 
-  it('deletes existing Workout', async () => {
+  it('deletes existing workout', async () => {
     localStorage.setItem('token', 'asdf');
     localStorage.setItem('accountId', '1');
 
@@ -149,7 +153,7 @@ describe('Workout view - existing', () => {
     localStorage.clear();
   });
 
-  it('updates existing Workout', async () => {
+  it('updates existing workout', async () => {
     localStorage.setItem('token', 'asdf');
     localStorage.setItem('accountId', '1');
 
@@ -173,5 +177,7 @@ describe('Workout view - existing', () => {
     // the successful updating of the workout should render the success toast message
     const successToastMessage = await screen.findByText('Successfully updated workout.');
     expect(successToastMessage).toBeInTheDocument();
+    // clean up local storage
+    localStorage.clear();
   });
 });
