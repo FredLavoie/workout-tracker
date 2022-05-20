@@ -3,34 +3,11 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import { server, rest } from '../../mockServer';
 import { months } from '../../lib/months';
+import { getNextPrevMonth } from '../../utils/testUtils';
 import { Calendar } from '../Calendar';
 
 
 afterEach(cleanup);
-
-/**
- * This helper function builds the next or previous month's title.
- * Example: "June 2022"
- * @param {string} month current month
- * @param {string} option paramter to determine which month to get
- * @param {string} year current year
- * @returns returns the month title as a string
- */
-function getNextPrevMonth(month, option, year) {
-  if (option === 'prev') {
-    if (month === '1') {
-      return `December ${Number(year) - 1}`;
-    } else {
-      return `${months[String(Number(month) - 1).padStart(2, '0')]} ${year}`;
-    }
-  } else {
-    if (month === '12') {
-      return `January ${Number(year) + 1}`;
-    } else {
-      return `${months[String(Number(month) + 1).padStart(2, '0')]} ${year}`;
-    }
-  }
-}
 
 const dateArray = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/');
 const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, '0')}`;
