@@ -152,6 +152,7 @@ export function Workout() {
           <TextField
             onChange={(e) => setSelectedDate(e.target.value)}
             margin='normal'
+            placeholder='Date'
             id='date-picker'
             value={selectedDate}
           />
@@ -161,6 +162,7 @@ export function Workout() {
           <TextField
             onChange={(e) => setSelectedTime(e.target.value)}
             margin='normal'
+            placeholder='Time'
             id='time-picker'
             value={selectedTime}
           />
@@ -172,6 +174,7 @@ export function Workout() {
               onChange={(e) => setWorkoutBody(e.target.value)}
               sx={style.field}
               id='workout-body'
+              placeholder='Workout body'
               multiline
               rows={10}
               value=''

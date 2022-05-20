@@ -66,7 +66,7 @@ export function Search() {
           onChange={(e) => setSearchQuery(e.target.value)}
           sx={style.searchBox}
           id='record-score'
-          placeholder='Search workouts...'
+          placeholder='Search workouts/records...'
           value={searchQuery}
         />
         <FormGroup row sx={style.checkboxes}>
@@ -87,6 +87,7 @@ export function Search() {
                 onChange={(e) => setCheckedRecord(e.target.checked)}
                 name='checkedRecord'
                 color='primary'
+                data-testid='checkedRecord'
               />}
             label='PRs'
           />
@@ -97,6 +98,7 @@ export function Search() {
             sx={style.elementMargin}
             color='primary'
             variant='contained'
+            data-testid='submit-search'
             key={`${searchQuery === '' ? true : false}`}
             disabled={searchQuery === '' ? true : false}
           >
@@ -107,6 +109,7 @@ export function Search() {
             sx={style.elementMargin}
             color='primary'
             variant='outlined'
+            data-testid='clear-search'
           >
             Clear
           </Button>

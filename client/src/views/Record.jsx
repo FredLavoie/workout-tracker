@@ -155,6 +155,7 @@ export function Record() {
             <TextField
               onChange={(e) => setSelectedDate(e.target.value)}
               margin='normal'
+              placeholder='Date'
               id='date-picker'
               value={selectedDate}
             />
@@ -163,25 +164,25 @@ export function Record() {
             </Typography>
             <RadioGroup
               row
-              name="recordType"
+              name='recordType'
               value={recordType}
               sx={style.elementMargin}
               onChange={(e) => setRecordType(e.target.value)}
             >
               <FormControlLabel
-                value="strength"
-                control={<Radio color="primary" />}
-                label="Strength"
+                value='strength'
+                control={<Radio color='primary' />}
+                label='Strength'
               />
               <FormControlLabel
-                value="endurance"
-                control={<Radio color="primary" />}
-                label="Endurance"
+                value='endurance'
+                control={<Radio color='primary' />}
+                label='Endurance'
               />
               <FormControlLabel
-                value="wod"
-                control={<Radio color="primary" />}
-                label="WOD"
+                value='wod'
+                control={<Radio color='primary' />}
+                label='WOD'
               />
             </RadioGroup>
             <Typography sx={style.elementMargin}>
@@ -194,7 +195,7 @@ export function Record() {
               value={recordEvent}
             >
               {recordList[recordType].map((ea, index) => (
-                <MenuItem key={index} value={ea}>{ea}</MenuItem>
+                <MenuItem data-testid='event-option' key={index} value={ea}>{ea}</MenuItem>
               ))}
             </Select>
             <Typography sx={style.elementMargin}>
@@ -203,6 +204,7 @@ export function Record() {
             <TextField
               onChange={(e) => setRecordScore(e.target.value)}
               sx={style.elementMargin}
+              placeholder='Score'
               id='record-score'
               value={recordScore}
             />

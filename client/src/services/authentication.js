@@ -10,13 +10,15 @@ export async function login(username, password) {
     },
     body: JSON.stringify({ username, password })
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
   const data = await res.json();
-  if (data.key) {
-    localStorage.setItem('username', username);
-    localStorage.setItem('token', data.key);
-  }
+  // login failed with provided credentials
+  if (data.non_field_errors) return data;
+  // throw error if there is a server error
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+
+  // if all goes well, save credentials to localStorage and return data
+  localStorage.setItem('username', username);
+  localStorage.setItem('token', data.key);
   return data;
 }
 
@@ -28,8 +30,7 @@ export async function logout() {
       'Accept': 'application/json',
     },
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   localStorage.removeItem('token');
   localStorage.removeItem('accountId');
   localStorage.removeItem('username');
@@ -48,8 +49,7 @@ export async function changePassword(newPassword1, newPassword2) {
     },
     body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 })
   });
-  if (!res.ok)
-    throw new Error(`Server error - status ${res.status}`);
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }
 

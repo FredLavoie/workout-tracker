@@ -9,7 +9,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
   OutlinedInput,
   Snackbar,
   Typography
@@ -82,13 +81,15 @@ export function Password() {
         <Grid item xs={12} md={3}>
           <Box component='form' noValidate onSubmit={handleSubmit}>
             <FormControl sx={style.textField} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
                 onChange={(e) => changeNewPassword1(e.target.value)}
                 value={newPassword1}
                 type={showPassword ? 'input' : 'password'}
-                name={'newPassword1'}
+                name='newPassword1'
                 color='secondary'
+                id="outlined-adornment-password"
+                data-testid='password'
+                placeholder='New password'
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -100,17 +101,18 @@ export function Password() {
                     </IconButton>
                   </InputAdornment>
                 }
-                labelWidth={70}
               />
             </FormControl>
             <FormControl sx={style.textField} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
                 onChange={(e) => changeNewPassword2(e.target.value)}
                 value={newPassword2}
                 type={showPassword ? 'input' : 'password'}
-                name={'newPassword2'}
+                name='newPassword2'
                 color='secondary'
+                id="outlined-adornment-password2"
+                data-testid='password'
+                placeholder='New password (again)'
               />
             </FormControl>
             <Button
