@@ -29,7 +29,7 @@ describe('Week view', () => {
 
   const MockedWeek = () => {
     return (
-      <MemoryRouter initialEntries={[{ pathname: '/Week' }]}>
+      <MemoryRouter initialEntries={[{ pathname: '/week' }]}>
         <Week />
       </MemoryRouter>
     );
