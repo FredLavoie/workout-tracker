@@ -17,7 +17,7 @@ describe('Search view', () => {
     );
   };
 
-  it('renders the Search view without crashing', async () => {
+  it('renders the Search view without crashing', () => {
     render(<MockedSearch />);
     // find the record date, type, event and score
     const searchBox = screen.getByPlaceholderText('Search workouts/records...');
