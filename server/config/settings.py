@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRETE_KEY')
 if os.getenv('DJANGO_DEVELOPMENT') == 'True':
     DEBUG = True
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT')
+    SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 2592000
@@ -40,7 +40,7 @@ if os.getenv('DJANGO_DEVELOPMENT') == 'True':
 else:
     DEBUG = False
     ALLOWED_HOSTS = []
-    SECURE_SSL_REDIRECT = False
+    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT')
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
     SECURE_HSTS_SECONDS = 0
@@ -161,8 +161,8 @@ TIME_INPUT_FORMATS = [
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
