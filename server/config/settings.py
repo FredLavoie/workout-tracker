@@ -36,6 +36,8 @@ if os.getenv('DJANGO_DEVELOPMENT') == 'True':
     SECURE_HSTS_SECONDS = 2592000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 else:
     DEBUG = False
     SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT')
@@ -44,8 +46,7 @@ else:
     SECURE_HSTS_SECONDS = 0
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
     SECURE_HSTS_PRELOAD = False
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'workout-tracker.xyz']
+    ALLOWED_HOSTS = ['workout-tracker.xyz']
 
 # Application definition
 
