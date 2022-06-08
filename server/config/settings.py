@@ -30,7 +30,6 @@ SECRET_KEY = os.getenv('DJANGO_SECRETE_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.getenv('DJANGO_DEVELOPMENT') == 'True':
     DEBUG = True
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -39,7 +38,6 @@ if os.getenv('DJANGO_DEVELOPMENT') == 'True':
     SECURE_HSTS_PRELOAD = True
 else:
     DEBUG = False
-    ALLOWED_HOSTS = []
     SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT')
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
@@ -47,6 +45,7 @@ else:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
     SECURE_HSTS_PRELOAD = False
 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'workout-tracker.xyz']
 
 # Application definition
 
@@ -192,5 +191,6 @@ if os.getenv('DJANGO_DEVELOPMENT') == 'True':
 else:
     CORS_ORIGIN_WHITELIST = (
         'http://workout-tracker.xyz',
+        'https://workout-tracker.xyz',
     )
 
