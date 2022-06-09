@@ -11,7 +11,7 @@ import {
 export function NotFound() {
   return (
     <Container>
-      <AppBar position='fixed' elevation={1} color='primary'>
+      <AppBar sx={style.appBar} position='fixed' elevation={1}>
         <Toolbar>
           <Typography variant='h5' display='block'>
             Workout Tracker
@@ -25,3 +25,10 @@ export function NotFound() {
     </Container>
   );
 }
+
+const style = {
+  appBar: {
+    backgroundColor: '#673ab7', // prevent appBar color from changing with mode
+    [`& .MuiToolbar-root`]: { minHeight: '56px' },
+  },
+};
