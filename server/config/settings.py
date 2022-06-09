@@ -28,26 +28,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRETE_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DJANGO_DEVELOPMENT', 'False') == 'True'
 
-if os.getenv('DJANGO_DEVELOPMENT') == 'True':
-    DEBUG = False
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT')
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 2592000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-else:
-    DEBUG = True
-    ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'workout-tracker.xyz', 'www.workout-tracker.xyz']
+
+if DEBUG == True:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
-    SECURE_HSTS_SECONDS = 0
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
     SECURE_HSTS_PRELOAD = False
+    SECURE_HSTS_SECONDS = 0
+else:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_SECONDS = 2592000
 
 
 # Application definition
@@ -166,8 +164,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
 STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
 # Default primary key field type
@@ -186,7 +184,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-if os.getenv('DJANGO_DEVELOPMENT') == 'True':
+if DEBUG:
     CORS_ORIGIN_WHITELIST = (
         'http://localhost:3000',  # React frontend
         'http://localhost:8000',  # Django API
