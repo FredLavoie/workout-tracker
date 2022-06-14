@@ -5,21 +5,6 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    # services:
-    #   postgres:
-    #     image: postgres:10
-    #     env:
-    #       POSTGRES_HOST_AUTH_METHOD: trust
-    #       POSTGRES_DB: workout
-    #       POSTGRES_USER: flavoie
-    #       POSTGRES_PASSWORD: testing
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
-    #     ports:
-    #       - 5432:5432
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
@@ -34,6 +19,8 @@ jobs:
         pip install docker-compose
     - name: Run server
       env:
+        DJANGO_DEVELOPMENT: 'True'
+        DJANGO_SECRETE_KEY: 'django-insecure-fdrao0y^p+6eq5+hk^$e8nlsnf*a9zyl6%z#!u+fsak)=uh#be'
         SERVER_RUN_COMMAND: 'sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"'
       run: docker-compose up -d --build web
       working-directory: server
