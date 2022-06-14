@@ -19,23 +19,23 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Set Up Python 3.9
-        uses: actions/setup-python@v3
-       with:
-          python-version: '3.9'
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8 pytest
-          pip install -r requirements.txt
-          pip install docker-compose
-      - name: Run server
-        env:
-          SERVER_RUN_COMMAND: 'sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"'
-        run: docker-compose up -d --build web
-      - name: Run tests
-        run: python manage.py test
+    - name: Checkout repo
+      uses: actions/checkout@v3
+    - name: Set Up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install -r requirements.txt
+        pip install docker-compose
+    - name: Run server
+      env:
+        SERVER_RUN_COMMAND: 'sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"'
+      run: docker-compose up -d --build web
+    - name: Run tests
+      run: python manage.py test
