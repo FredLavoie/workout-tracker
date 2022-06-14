@@ -37,5 +37,6 @@ jobs:
       env:
         SERVER_RUN_COMMAND: 'sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"'
       run: docker-compose up -d --build web
+      working-directory: server
     - name: Run tests
       run: python manage.py test
