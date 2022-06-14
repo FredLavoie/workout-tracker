@@ -56,22 +56,51 @@ class RecordAPITests(TestCase):
         """
         Test retrieving a list of records
         """
+        # make API call
         res = self.client.get(self.RECORDS_URL)
-
+        # assert that the request was successful
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # gather the records
         records = Record.objects.all().filter(author=self.user)
         serializer = RecordSerializer(records, many=True)
-
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # assert that the API response match the Record query object
         self.assertEqual(res.data, serializer.data)
 
     def test_retrieve_records_limited_to_user(self):
         """
-        Test retrieving a list of records that belong to 1 user
+        Test retrieving a list of records that belong to user 1
         """
+        # make API call
         res = self.client.get(self.RECORDS_URL)
-
-        records = Record.objects.all() # find a way to use the records to confirm the test suceeded
-
+        # assert that the request was successful
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # gather records
+        records = Record.objects.all().filter(author=self.user)
+        serializer = RecordSerializer(records, many=True)
+        # assert that the filtered records contains 2 records
         self.assertEqual(len(res.data), 2)
+        # assert that the API response match the filtered Record query object
+        self.assertEqual(res.data, serializer.data)
+        # assert that the API response is contains data for the specified user
         self.assertEqual(res.data[0]['author'], self.user.id)
+
+    def test_retrieve_records_limited_to_user2(self):
+        """
+        Test retrieving a list of records that belong to user 2
+        """
+        # URL for user 2
+        self.client.force_authenticate(self.user2)
+        RECORDS_URL_2 = reverse('records', args=[self.user2.id])
+        # make API call
+        res = self.client.get(RECORDS_URL_2)
+        # assert that the request was successful
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # gather records
+        records = Record.objects.all().filter(author=self.user2)
+        serializer = RecordSerializer(records, many=True)
+        # assert that the filtered records contains 1 record
+        self.assertEqual(len(res.data), 1)
+        # assert that the API response match the filtered Record query object
+        self.assertEqual(res.data, serializer.data)
+        # assert that the API response is contains data for the specified user
+        self.assertEqual(res.data[0]['author'], self.user2.id)
