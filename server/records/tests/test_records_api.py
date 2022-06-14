@@ -74,11 +74,11 @@ class RecordAPITests(TestCase):
         res = self.client.get(self.RECORDS_URL)
         # assert that the request was successful
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # assert that the filtered records contains 2 records
+        self.assertEqual(len(res.data), 2)
         # gather records
         records = Record.objects.all().filter(author=self.user)
         serializer = RecordSerializer(records, many=True)
-        # assert that the filtered records contains 2 records
-        self.assertEqual(len(res.data), 2)
         # assert that the API response match the filtered Record query object
         self.assertEqual(res.data, serializer.data)
         # assert that the API response is contains data for the specified user
@@ -95,11 +95,11 @@ class RecordAPITests(TestCase):
         res = self.client.get(RECORDS_URL_2)
         # assert that the request was successful
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+        # assert that the filtered records contains 1 record
+        self.assertEqual(len(res.data), 1)
         # gather records
         records = Record.objects.all().filter(author=self.user2)
         serializer = RecordSerializer(records, many=True)
-        # assert that the filtered records contains 1 record
-        self.assertEqual(len(res.data), 1)
         # assert that the API response match the filtered Record query object
         self.assertEqual(res.data, serializer.data)
         # assert that the API response is contains data for the specified user
