@@ -26,13 +26,12 @@ jobs:
       with:
         python-version: '3.9'
     - name: Install dependencies
-      env:
-        DJANGO_TEST: 'True'
-        DJANGO_DEVELOPMENT: 'True'
-        SERVER_RUN_COMMAND: 'sh -c "python manage.py runserver 0.0.0.0:8000"'
       run: |
         python -m pip install --upgrade pip
         pip install -r server/requirements.txt
     - name: Run tests
+      env:
+        DJANGO_TEST: 'True'
+        DJANGO_DEVELOPMENT: 'True'
       run: python3 manage.py test --no-input
       working-directory: server
