@@ -24,4 +24,4 @@ jobs:
       run: docker-compose up -d --build web
       working-directory: server
     - name: Run tests
-      run: docker-compose exec web python manage.py test
+      run: python manage.py test
