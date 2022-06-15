@@ -116,7 +116,7 @@ if DJANGO_TEST == True:
             'NAME': 'workout',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
-            'HOST': 'db',
+            'HOST': '127.0.0.1',
             'PORT': '5432'
         }
     }
