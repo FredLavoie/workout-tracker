@@ -107,17 +107,30 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DATABASE_NAME'),
-        'USER': os.getenv('POSTGRES_DATABASE_USER'),
-        'PASSWORD': os.getenv('POSTGRES_DATABASE_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_DATABASE_HOST'),
-        'PORT': os.getenv('POSTGRES_DATABASE_PORT')
+DJANGO_TEST = os.getenv('DJANGO_TEST', 'False') == 'True'
+print('**** DJANGO_TEST: ', DJANGO_TEST)
+if DJANGO_TEST == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'workout',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'db',
+            'PORT': '5432'
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DATABASE_NAME'),
+            'USER': os.getenv('POSTGRES_DATABASE_USER'),
+            'PASSWORD': os.getenv('POSTGRES_DATABASE_PASSWORD'),
+            'HOST': os.getenv('POSTGRES_DATABASE_HOST'),
+            'PORT': os.getenv('POSTGRES_DATABASE_PORT')
+        }
+    }
 
 
 # Password validation
