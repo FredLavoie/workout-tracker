@@ -17,11 +17,11 @@ class RecordModelTests(TestCase):
         )
 
         cls.record = Record.objects.create(
-            author = cls.user,
-            date = '2022-06-08',
-            type = 'Strength',
-            event = 'Clean',
-            score = '250',
+            author=cls.user,
+            date='2022-06-08',
+            type='Strength',
+            event='Clean',
+            score='250',
         )
 
     def test_model_content(self):

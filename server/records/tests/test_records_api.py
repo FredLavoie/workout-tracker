@@ -25,17 +25,17 @@ class RecordAPITests(TestCase):
 
         Record.objects.create(
             author=self.user,
-            date = '2022-06-08',
-            type = 'Strength',
-            event = 'Clean',
-            score = '250',
+            date='2022-06-08',
+            type='Strength',
+            event='Clean',
+            score='250',
             )
         Record.objects.create(
             author=self.user,
-            date = '2022-12-14',
-            type = 'Endurance',
-            event = 'Run 5km',
-            score = '20:04',
+            date='2022-12-14',
+            type='Endurance',
+            event='Run 5km',
+            score='20:04',
             )
 
         self.user2 = get_user_model().objects.create_user(
@@ -46,10 +46,10 @@ class RecordAPITests(TestCase):
 
         Record.objects.create(
             author=self.user2,
-            date = '2022-12-14',
-            type = 'Endurance',
-            event = 'Run 5km',
-            score = '20:04',
+            date='2022-12-14',
+            type='Endurance',
+            event='Run 5km',
+            score='20:04',
             )
 
     def test_retrieve_records_list(self):

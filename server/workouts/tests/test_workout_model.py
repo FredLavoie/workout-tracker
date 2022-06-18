@@ -16,10 +16,10 @@ class WorkoutModelTests(TestCase):
         )
 
         cls.workout = Workout.objects.create(
-            author = cls.user,
-            date = '2022-06-08',
-            time = '13:44',
-            workout_body = 'test workout'
+            author=cls.user,
+            date='2022-06-08',
+            time='13:44',
+            workout_body='test workout'
         )
 
     def test_model_content(self):

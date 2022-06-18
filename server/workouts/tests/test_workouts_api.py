@@ -25,15 +25,15 @@ class WorkoutAPITests(TestCase):
 
         Workout.objects.create(
             author=self.user,
-            date = '2022-06-08',
-            time = '08:34',
-            workout_body = '(A) Endurance 60 min bike erg',
+            date='2022-06-08',
+            time='08:34',
+            workout_body='(A) Endurance 60 min bike erg',
             )
         Workout.objects.create(
             author=self.user,
-            date = '2022-12-14',
-            time = '14:15',
-            workout_body = '(A) Endurance Run 5km',
+            date='2022-12-14',
+            time='14:15',
+            workout_body='(A) Endurance Run 5km',
             )
 
         self.user2 = get_user_model().objects.create_user(
@@ -44,9 +44,9 @@ class WorkoutAPITests(TestCase):
 
         Workout.objects.create(
             author=self.user2,
-            date = '2022-12-14',
-            time = '22:00',
-            workout_body = '(A) Back Squat 5x5',
+            date='2022-12-14',
+            time='22:00',
+            workout_body='(A) Back Squat 5x5',
             )
 
     def test_retrieve_workouts_list(self):
