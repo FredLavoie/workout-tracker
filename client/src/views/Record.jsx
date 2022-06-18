@@ -86,7 +86,7 @@ export function Record() {
           await postRecord(selectedDate, recordType, recordEvent, recordScore);
           setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
           setOpen(true);
-          setTimeout(() => history.push('/dashboard'), 1100);
+          setTimeout(() => history.push('/dashboard'), 1000);
         } catch (error) {
           setAlertMessage({ severity: 'error', message: error.message });
           setOpen(true);
@@ -102,7 +102,7 @@ export function Record() {
           await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
           setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
           setOpen(true);
-          setTimeout(() => history.push('/dashboard'), 1100);
+          setTimeout(() => history.push('/dashboard'), 1000);
         } catch (error) {
           setAlertMessage({ severity: 'error', message: error.message });
           setOpen(true);
