@@ -3,8 +3,8 @@ name: ESLint
 on: 
   push:
     paths:
-    - client
-    - script
+    - 'client/**'
+    - .script/**'
 
 jobs:
   build:

@@ -3,8 +3,8 @@ name: Jest
 on: 
   push:
     paths:
-    - client
-    - script
+    - 'client/**'
+    - .script/**'
 
 jobs:
   build:

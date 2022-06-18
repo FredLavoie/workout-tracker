@@ -3,7 +3,7 @@ name: Python Tests
 on: 
   push:
     paths:
-    - server
+    - 'server/**'
 
 jobs:
   build:
