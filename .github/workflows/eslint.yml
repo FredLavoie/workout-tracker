@@ -1,6 +1,10 @@
 name: ESLint
 
-on: push
+on: 
+  push:
+    paths:
+    - client
+    - script
 
 jobs:
   build:
