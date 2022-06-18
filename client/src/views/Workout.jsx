@@ -84,7 +84,7 @@ export function Workout() {
           await postWorkout(selectedDate, selectedTime, workoutBody);
           setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
           setOpen(true);
-          setTimeout(() => history.push(`/cal/${navDate}`), 1500);
+          setTimeout(() => history.push(`/cal/${navDate}`), 1000);
         } catch (error) {
           setAlertMessage({ severity: 'error', message: error.message });
           setOpen(true);
@@ -100,7 +100,7 @@ export function Workout() {
           await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
           setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
           setOpen(true);
-          setTimeout(() => history.push(`/cal/${navDate}`), 1500);
+          setTimeout(() => history.push(`/cal/${navDate}`), 1000);
         } catch (error) {
           setAlertMessage({ severity: 'error', message: error.message });
           setOpen(true);
