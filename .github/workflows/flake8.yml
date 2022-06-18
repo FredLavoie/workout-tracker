@@ -14,5 +14,3 @@ jobs:
         python-version: '3.9'
     - name: Run Flake8
       uses: py-actions/flake8@v2
-      working-directory: server
-
