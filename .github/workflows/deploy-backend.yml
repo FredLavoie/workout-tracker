@@ -1,0 +1,25 @@
+name: Deploy Back End Code
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - server
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: ssh into droplet & deploy server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd workout-tracker/server
+          git pull origin main
+          docker-compose stop
+          docker-compose up -d --build web
+          docker-compose exec web python manage.py migrate

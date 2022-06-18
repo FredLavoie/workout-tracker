@@ -1,0 +1,24 @@
+name: Deploy Front End Code
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - client/build
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: ssh into droplet & deploy static files
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd workout-tracker
+          git pull origin main
+          bash script/update-static-files.sh
+      
