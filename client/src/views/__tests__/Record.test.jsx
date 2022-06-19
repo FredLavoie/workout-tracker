@@ -30,7 +30,7 @@ describe('Record view - new', () => {
     localStorage.setItem('token', 'asdf');
     localStorage.setItem('accountId', '1');
     server.use(
-      rest.post("*/1/records", (req, res, context) => {
+      rest.post('*/1/records', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true }));
       })
     );
@@ -62,7 +62,7 @@ describe('Record view - new', () => {
     localStorage.setItem('token', 'asdf');
     localStorage.setItem('accountId', '1');
     server.use(
-      rest.post("*/1/records", (req, res, context) => {
+      rest.post('*/1/records', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true }));
       })
     );
@@ -114,7 +114,7 @@ describe('Record view - existing', () => {
     localStorage.setItem('accountId', '1');
 
     server.use(
-      rest.get("*/1/records/qwerty123456", (req, res, context) => {
+      rest.get('*/1/records/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({
           ok: true,
           date: recordDate,
@@ -145,7 +145,7 @@ describe('Record view - existing', () => {
     localStorage.setItem('accountId', '1');
 
     server.use(
-      rest.get("*/1/records/qwerty123456", (req, res, context) => {
+      rest.get('*/1/records/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({
           ok: true,
           date: recordDate,
@@ -154,7 +154,7 @@ describe('Record view - existing', () => {
           score: recordScore
         }));
       }),
-      rest.delete("*/1/records/qwerty123456", (req, res, context) => {
+      rest.delete('*/1/records/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true }));
       })
     );
@@ -187,7 +187,7 @@ describe('Record view - existing', () => {
     const updatedScore = '3:00';
 
     server.use(
-      rest.get("*/1/records/qwerty123456", (req, res, context) => {
+      rest.get('*/1/records/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({
           ok: true,
           date: recordDate,
@@ -196,7 +196,7 @@ describe('Record view - existing', () => {
           score: recordScore
         }));
       }),
-      rest.put("*/1/records/qwerty123456", (req, res, context) => {
+      rest.put('*/1/records/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({
           ok: true,
           date: recordDate,

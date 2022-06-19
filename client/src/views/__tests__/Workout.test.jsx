@@ -36,7 +36,7 @@ describe('Workout view - new', () => {
     localStorage.setItem('token', 'asdf');
     localStorage.setItem('accountId', '1');
     server.use(
-      rest.post("*/1/workouts", (req, res, context) => {
+      rest.post('*/1/workouts', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true }));
       })
     );
@@ -59,7 +59,7 @@ describe('Workout view - new', () => {
     localStorage.setItem('token', 'asdf');
     localStorage.setItem('accountId', '1');
     server.use(
-      rest.post("*/1/workouts", (req, res, context) => {
+      rest.post('*/1/workouts', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true }));
       })
     );
@@ -103,7 +103,7 @@ describe('Workout view - existing', () => {
     localStorage.setItem('accountId', '1');
 
     server.use(
-      rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
+      rest.get('*/1/workouts/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }));
       })
     );
@@ -126,10 +126,10 @@ describe('Workout view - existing', () => {
     localStorage.setItem('accountId', '1');
 
     server.use(
-      rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
+      rest.get('*/1/workouts/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }));
       }),
-      rest.delete("*/1/workouts/qwerty123456", (req, res, context) => {
+      rest.delete('*/1/workouts/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true }));
       })
     );
@@ -160,10 +160,10 @@ describe('Workout view - existing', () => {
     const updatedWorkoutBody = 'updated workout body';
 
     server.use(
-      rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
+      rest.get('*/1/workouts/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }));
       }),
-      rest.patch("*/1/workouts/qwerty123456", (req, res, context) => {
+      rest.patch('*/1/workouts/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: updatedWorkoutBody }));
       })
     );

@@ -145,7 +145,7 @@ export async function postWorkout(date, time, workout_body) {
     },
     body: JSON.stringify({ author: accountId, date, time, workout_body })
   });
-  if (!res.ok && res.status === 400) throw new Error(`A workout already exists for this day`);
+  if (!res.ok && res.status === 400) throw new Error('A workout already exists for this day');
   else if (!res.ok) throw new Error(`Server error - status ${res.status}`);
   return await res.json();
 }

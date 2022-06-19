@@ -8,6 +8,9 @@ venv/
 
 # client side
 client/node_modules/
+client/coverage/
+client/.env.development
+client/.env.production
 
 # server side
 __pycache__/

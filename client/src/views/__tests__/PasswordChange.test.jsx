@@ -25,7 +25,7 @@ describe('passwordChange', () => {
 
   it('renders password change view and successfully saves the updated password', async () => {
     server.use(
-      rest.post("*/dj-rest-auth/password/change", (req, res, context) => {
+      rest.post('*/dj-rest-auth/password/change', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true }));
       })
     );
@@ -46,7 +46,7 @@ describe('passwordChange', () => {
 
   it('renders password change view and fails to update due to mismatched password', async () => {
     server.use(
-      rest.post("*/dj-rest-auth/password/change", (req, res, context) => {
+      rest.post('*/dj-rest-auth/password/change', (req, res, context) => {
         return res(context.status(200), context.json({ ok: true }));
       })
     );
@@ -68,7 +68,7 @@ describe('passwordChange', () => {
 
   it('renders password change view and fails to updated due to server error', async () => {
     server.use(
-      rest.post("*/dj-rest-auth/password/change", (req, res, context) => {
+      rest.post('*/dj-rest-auth/password/change', (req, res, context) => {
         return res(context.status(500), context.json({ ok: false }));
       })
     );

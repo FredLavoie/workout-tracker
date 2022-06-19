@@ -1,9 +1,15 @@
 {
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "env": {
     "browser": true,
     "es6": true,
     "commonjs": true,
-    "jest": true
+    "jest": true,
+    "node": true
   },
   "extends": [
     "eslint:recommended",
@@ -55,6 +61,11 @@
     "arrow-parens": [
       "error",
       "always"
+    ],
+    "quotes": [
+      2,
+      "single",
+      "avoid-escape"
     ]
   }
 }

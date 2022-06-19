@@ -280,7 +280,7 @@ const style = {
     height: '56px',
     zIndex: '1250',
     backgroundColor: '#673ab7', // prevent appBar color from changing with mode
-    [`& .MuiToolbar-root`]: { minHeight: '56px' },
+    ['& .MuiToolbar-root']: { minHeight: '56px' },
   },
   mobileDrawer: {
     width: drawerWidth,
@@ -288,7 +288,7 @@ const style = {
   },
   desktopDrawer: {
     width: drawerWidth,
-    [`& .MuiDrawer-paper`]: { width: drawerWidth, paddingTop: '56px' },
+    ['& .MuiDrawer-paper']: { width: drawerWidth, paddingTop: '56px' },
   },
   activeDark: {
     background: '#252525',

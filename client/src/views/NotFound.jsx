@@ -29,6 +29,6 @@ export function NotFound() {
 const style = {
   appBar: {
     backgroundColor: '#673ab7', // prevent appBar color from changing with mode
-    [`& .MuiToolbar-root`]: { minHeight: '56px' },
+    ['& .MuiToolbar-root']: { minHeight: '56px' },
   },
 };
