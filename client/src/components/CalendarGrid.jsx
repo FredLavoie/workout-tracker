@@ -72,7 +72,7 @@ export function CalendarGrid(props) {
             ?
             <Typography
               variant='body2'
-              data-testid="calendar-day"
+              data-testid='calendar-day'
               id={ea.workoutId ? ea.workoutId : ''}
               sx={{ ...style.innerText, ...(ea.today && style.today) }}
             >

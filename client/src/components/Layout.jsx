@@ -164,7 +164,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
 
 
   return (
-    <Paper elevation={0} sx={style.root1} className="-----TEST-----">
+    <Paper elevation={0} sx={style.root1} className='-----TEST-----'>
 
       {/*********************************** Navbar ************************************/}
       <AppBar
@@ -174,12 +174,12 @@ export function Layout({ children, userTheme, setUserTheme }) {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
+            color='inherit'
+            aria-label='open drawer'
+            edge='start'
             onClick={handleDrawerToggle}
             sx={style.menuButton}
-            size="large"
+            size='large'
           >
             <MenuIcon />
           </IconButton>
@@ -189,17 +189,17 @@ export function Layout({ children, userTheme, setUserTheme }) {
 
           <Button>
             <Avatar
-              button="true"
+              button='true'
               sx={style.avatar}
               onClick={handleClickAvatar}
-              aria-controls="simple-menu"
-              aria-haspopup="true"
+              aria-controls='simple-menu'
+              aria-haspopup='true'
             >
               {firstTwoLetter}
             </Avatar>
           </Button>
           <Menu
-            id="simple-menu"
+            id='simple-menu'
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
@@ -210,7 +210,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
             <MenuItem onChange={handleThemeToggle}>
               <FormControlLabel
                 sx={style.modeToggle}
-                labelPlacement="start"
+                labelPlacement='start'
                 control={<Switch checked={userTheme === 'dark' ? true : false} />}
                 label='Dark Mode'
               />
@@ -220,9 +220,9 @@ export function Layout({ children, userTheme, setUserTheme }) {
       </AppBar>
 
       {/*********************** Mobile drawer - toggle left ***************************/}
-      <Hidden smUp implementation="css">
+      <Hidden smUp implementation='css'>
         <Drawer
-          variant="temporary"
+          variant='temporary'
           anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -236,11 +236,11 @@ export function Layout({ children, userTheme, setUserTheme }) {
       </Hidden>
 
       {/******************** Desktop drawer - permanent left **************************/}
-      <Hidden smDown implementation="css">
+      <Hidden smDown implementation='css'>
         <Drawer
           sx={style.desktopDrawer}
-          variant="permanent"
-          anchor="left"
+          variant='permanent'
+          anchor='left'
         >
           {drawer}
         </Drawer>

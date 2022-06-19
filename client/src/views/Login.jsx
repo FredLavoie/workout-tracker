@@ -106,21 +106,21 @@ export function Login() {
               name={'username'}
               color='primary'
             />
-            <FormControl sx={style.textField} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <FormControl sx={style.textField} variant='outlined'>
+              <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
               <OutlinedInput
                 onChange={(e) => changePassword(e.target.value)}
                 value={password}
                 type={showPassword ? 'input' : 'password'}
                 name={'password'}
                 label='Password'
-                id="outlined-adornment-password"
+                id='outlined-adornment-password'
                 endAdornment={
-                  <InputAdornment position="end">
+                  <InputAdornment position='end'>
                     <IconButton
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
-                      size="large"
+                      size='large'
                     >
                       {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>

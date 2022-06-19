@@ -86,11 +86,11 @@ export function Week() {
       {workouts && !isLoading &&
         <Box>
           <Box sx={style.weekNav}>
-            <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
+            <Button onClick={handleClickPrevious} sx={style.navLink} color='primary' size='small' startIcon={<NavigateBeforeIcon />}>Prev</Button>
             <Typography variant='h5' gutterBottom sx={style.monthTitle}>
               {`Week of ${months[weekArr[0].split('-')[1]]} ${weekArr[0].split('-')[2]}`}
             </Typography>
-            <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
+            <Button onClick={handleClickNext} sx={style.navLink} color='primary' size='small' endIcon={<NavigateNextIcon />}>Next</Button>
           </Box>
           <Box sx={style.weekContainer}>
             {weekArr.map((day, index) => (

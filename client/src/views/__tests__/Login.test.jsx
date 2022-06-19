@@ -73,7 +73,7 @@ describe('Login view', () => {
     render(
       <MemoryRouter initialEntries={[{ pathname: '/login' }]}>
         <Login />
-        <Route path="/dashboard">Dashboard</Route>
+        <Route path='/dashboard'>Dashboard</Route>
       </MemoryRouter>
     );
     // enter in credentials

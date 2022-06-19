@@ -80,22 +80,22 @@ export function Password() {
         </Typography>
         <Grid item xs={12} md={3}>
           <Box component='form' noValidate onSubmit={handleSubmit}>
-            <FormControl sx={style.textField} variant="outlined">
+            <FormControl sx={style.textField} variant='outlined'>
               <OutlinedInput
                 onChange={(e) => changeNewPassword1(e.target.value)}
                 value={newPassword1}
                 type={showPassword ? 'input' : 'password'}
                 name='newPassword1'
                 color='secondary'
-                id="outlined-adornment-password"
+                id='outlined-adornment-password'
                 data-testid='password'
                 placeholder='New password'
                 endAdornment={
-                  <InputAdornment position="end">
+                  <InputAdornment position='end'>
                     <IconButton
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
-                      size="large"
+                      size='large'
                     >
                       {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
@@ -103,14 +103,14 @@ export function Password() {
                 }
               />
             </FormControl>
-            <FormControl sx={style.textField} variant="outlined">
+            <FormControl sx={style.textField} variant='outlined'>
               <OutlinedInput
                 onChange={(e) => changeNewPassword2(e.target.value)}
                 value={newPassword2}
                 type={showPassword ? 'input' : 'password'}
                 name='newPassword2'
                 color='secondary'
-                id="outlined-adornment-password2"
+                id='outlined-adornment-password2'
                 data-testid='password'
                 placeholder='New password (again)'
               />

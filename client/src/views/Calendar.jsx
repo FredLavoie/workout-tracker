@@ -79,11 +79,11 @@ export function Calendar() {
       {workouts && !isLoading &&
         <Box sx={style.calendarContainer}>
           <Box sx={style.monthNav}>
-            <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
+            <Button onClick={handleClickPrevious} sx={style.navLink} color='primary' size='small' startIcon={<NavigateBeforeIcon />}>Prev</Button>
             <Typography onClick={handleReturnToCurrent} variant='h5' gutterBottom sx={style.monthTitle}>
               {`${currentMonthString} ${currentYear}`}
             </Typography>
-            <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
+            <Button onClick={handleClickNext} sx={style.navLink} color='primary' size='small' endIcon={<NavigateNextIcon />}>Next</Button>
           </Box>
           <Box sx={style.outline}>
             <Box sx={style.weekNames}>

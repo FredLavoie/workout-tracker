@@ -66,6 +66,10 @@
       2,
       "single",
       "avoid-escape"
+    ],
+    "jsx-quotes": [
+      2,
+      "prefer-single"
     ]
   }
 }
