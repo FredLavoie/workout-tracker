@@ -1,7 +1,6 @@
 .env
 .DS_Store
 .vscode
-script/workout_migrations/*
 node_modules/
 NOTES.md
 BACKUP/
