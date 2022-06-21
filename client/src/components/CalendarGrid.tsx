@@ -13,7 +13,7 @@ export function CalendarGrid(props) {
   const contentArray = [];
   let dayOfTheMonth = 0;
   for (let i = 0; i < 42; i++) {
-    const obj = { dayNumber: 0 };
+    const obj = { dayNumber: 0, today: false };
     if (i === weekDayFirstMonthDay) {
       dayOfTheMonth += 1;
     }
@@ -97,6 +97,7 @@ const style = {
     justifyContent: 'center',
     flexWrap: 'wrap',
     flexBasis: '10%',
+    border: 'none',
   },
   daySquare: {
     width: '13%',
@@ -104,6 +105,7 @@ const style = {
     display: 'flex',
     flexGrow: '1',
     justifyContent: 'right',  // check this on Safari
+    border: 'none',
   },
   activeLight: {
     backgroundColor: 'secondary.main',
@@ -130,5 +132,7 @@ const style = {
   today: {
     borderRadius: '4px',
     padding: '4px 6px',
+    backgroundColor: 'none',
+    color: 'none',
   }
 };
