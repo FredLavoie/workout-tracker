@@ -8,10 +8,10 @@
  * 
  * Example:  ["12", "26", "2021"] => ["2022","01"]
  * 
- * @param {string[]} dataArr a simple date array containing a month, day and year respectively
- * @return {string[]} a valid date array
+ * @param dataArr a simple date array containing a month, day and year respectively
+ * @return a valid date array
  */
-export function determineNextMonth(dateArr) {
+export function determineNextMonth(dateArr: string[]): string[] {
   const year = Number(dateArr[2]);
   const month = Number(dateArr[0]);
   const day = Number(dateArr[1]);

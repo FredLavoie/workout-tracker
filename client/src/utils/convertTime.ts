@@ -3,9 +3,9 @@
  * 
  * Example: ["13", "43"] => "13:00"
  * 
- * @param {string} timeArr array of current time
- * @return {string} time in 24h format
+ * @param timeArr array of current time
+ * @return time in 24h format
  */
-export function convertTime(timeArr) {
+export function convertTime(timeArr: string): string {
   return `${timeArr[0]}:00`;
 }
