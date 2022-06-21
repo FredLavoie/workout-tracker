@@ -1,4 +1,6 @@
-export const recordList = {
+import { recordListTypes } from '../types';
+
+export const recordList: recordListTypes = {
   strength: [
     'Back Squat',
     'Bench Press',
