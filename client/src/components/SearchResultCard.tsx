@@ -9,12 +9,14 @@ import {
   Typography
 } from '@mui/material';
 
+import { workoutType, recordType } from '../types'
+
 
 export function SearchResultCard({ content }) {
   const history = useHistory();
 
-  function handleClickActive(id, workout) {
-    if (workout === true) {
+  function handleClickActive(id: string, isWorkoutContent: boolean) {
+    if (isWorkoutContent === true) {
       history.push(`/workouts/${id}`);
     } else {
       history.push(`/records/${id}`);
@@ -22,14 +24,11 @@ export function SearchResultCard({ content }) {
   }
 
   return (
-    <Grid
-      sx={style.root}
-    >
-      {content.map((ea, index) => (
+    <Grid sx={style.root1}>
+      {content.map((ea: (workoutType & recordType)) => (
         <Card
           elevation={2}
-          key={index}
-          id={ea.id}
+          key={ea.id}
           sx={style.cardStyle}
           onClick={(e) => handleClickActive(e.currentTarget.id, !!ea.workout_body)}
         >
@@ -63,7 +62,7 @@ export function SearchResultCard({ content }) {
 }
 
 const style = {
-  root: {
+  root1: {
     marginBottom: '32px',
     marginTop: '16px',
     width: { md: '100%', sm: '90%' },
@@ -86,4 +85,4 @@ const style = {
     font: 'inherit',
     margin: '0px',
   }
-};
+} as const;
