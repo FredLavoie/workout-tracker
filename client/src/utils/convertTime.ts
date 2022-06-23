@@ -6,6 +6,6 @@
  * @param timeArr array of current time
  * @return time in 24h format
  */
-export function convertTime(timeArr: string): string {
+export function convertTime(timeArr: string[]): string {
   return `${timeArr[0]}:00`;
 }

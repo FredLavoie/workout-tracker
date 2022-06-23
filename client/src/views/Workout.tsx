@@ -12,7 +12,7 @@ import {
   TextField,
 } from '@mui/material';
 
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import { fetchWorkout, postWorkout, updateWorkout, deleteWorkout } from '../services/fetchData';
 import { convertTime, validateWorkout } from '../utils';
@@ -20,7 +20,7 @@ import { ServerError } from '../components/ServerError';
 
 
 // eslint-disable-next-line prefer-arrow-callback
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
@@ -46,30 +46,33 @@ export function Workout() {
   const [error, setError] = useState(null);
 
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortCont = new AbortController();
-    if (workoutId === 'new') {
-      setSelectedDate(newWorkoutDate !== null ? newWorkoutDate : currentDate);
-      setSelectedTime(currentTime);
-      setWorkoutBody('');
-      changeNewOrEdit(1);
-      setIsLoading(false);
-    } else {
-      try {
-        const data = await fetchWorkout(workoutId, abortCont);
-        setSelectedDate(data.date);
-        setSelectedTime(data.time.split(':').slice(0, 2).join(':'));
-        setWorkoutBody(data.workout_body);
-        changeNewOrEdit(0);
+    const setupPage = async () => {
+      if (workoutId === 'new') {
+        setSelectedDate(newWorkoutDate !== null ? newWorkoutDate : currentDate);
+        setSelectedTime(currentTime);
+        setWorkoutBody('');
+        changeNewOrEdit(1);
         setIsLoading(false);
-      } catch (error) {
-        if (error.name === 'AbortError') return;
-        else {
+      } else {
+        try {
+          const data = await fetchWorkout(workoutId, abortCont);
+          setSelectedDate(data.date);
+          setSelectedTime(data.time.split(':').slice(0, 2).join(':'));
+          setWorkoutBody(data.workout_body);
+          changeNewOrEdit(0);
           setIsLoading(false);
-          setError(error.message);
+        } catch (error) {
+          if (error.name === 'AbortError') return;
+          else {
+            setIsLoading(false);
+            setError(error.message);
+          }
         }
       }
     }
+    setupPage();
     return () => abortCont.abort();
   }, [location]);
 
