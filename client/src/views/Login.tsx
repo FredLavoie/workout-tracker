@@ -22,7 +22,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import { ServerError } from '../components/ServerError';
 import { isAuthenticated, login } from '../services/authentication';
@@ -30,7 +30,7 @@ import { fetchAccountId } from '../services/fetchData';
 
 
 // eslint-disable-next-line prefer-arrow-callback
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
