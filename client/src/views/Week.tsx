@@ -57,20 +57,23 @@ export function Week() {
     setDateArr(correctedDate);
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(true);
     const abortCont = new AbortController();
-    try {
-      const data1 = await fetchMonthData(currentMonthToFetch, abortCont);
-      const data2 = await fetchMonthData(nextMonthToFetch, abortCont);
-      const newWorkouts = [...data1, ...data2];
-      setWorkouts(newWorkouts);
-      setIsLoading(false);
-    } catch (error) {
-      if (error.name === 'AbortError') return;
-      setIsLoading(false);
-      setError(error.message);
+    const setupPage = async () => {
+      try {
+        const data1 = await fetchMonthData(currentMonthToFetch, abortCont);
+        const data2 = await fetchMonthData(nextMonthToFetch, abortCont);
+        const newWorkouts = [...data1, ...data2];
+        setWorkouts(newWorkouts);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        setIsLoading(false);
+        setError(error.message);
+      }
     }
+    setupPage();
     return () => abortCont.abort();
   }, [dateArr]);
 

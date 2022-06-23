@@ -13,14 +13,14 @@ import {
   Snackbar,
   Typography
 } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { changePassword } from '../services/authentication';
 import { validatePasswordChange } from '../utils';
 
 // eslint-disable-next-line prefer-arrow-callback
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
