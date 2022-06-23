@@ -25,18 +25,21 @@ export function DetailRecord() {
 
   const eventToFetch = location.pathname.split('/')[3];
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortCont = new AbortController();
-    try {
-      const data = await fetchEventRecords(eventToFetch, abortCont);
-      const sortedRecords = data.sort((a, b) => b.date > a.date);
-      setRecrods(sortedRecords);
-      setIsLoading(false);
-    } catch (error) {
-      if (error.name === 'AbortError') return;
-      setIsLoading(false);
-      setError(error.message);
+    const setupPage = async () => {
+      try {
+        const data = await fetchEventRecords(eventToFetch, abortCont);
+        const sortedRecords = data.sort((a, b) => b.date > a.date);
+        setRecrods(sortedRecords);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        setIsLoading(false);
+        setError(error.message);
+      }
     }
+    setupPage();
     return () => abortCont.abort();
   }, []);
 
