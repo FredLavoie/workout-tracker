@@ -215,5 +215,6 @@ if DEBUG:
     )
 else:
     CORS_ORIGIN_WHITELIST = (
+        'https://workout-tracker.xyz',
         'http://workout-tracker.xyz',
     )
