@@ -210,7 +210,7 @@ export async function updateRecord(record_id, date, type, event, score) {
   const accountId = localStorage.getItem('accountId');
 
   const res = await fetch(`${URL}/${accountId}/records/${record_id}/`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
