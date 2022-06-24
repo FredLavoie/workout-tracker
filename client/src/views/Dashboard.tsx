@@ -14,7 +14,7 @@ import { fetchYearData, fetchRecords } from '../services/fetchData';
 import { months } from '../lib/months';
 import { RecordTable } from '../components/RecordTable';
 import { ServerError } from '../components/ServerError';
-import { workoutType } from '../types';
+import { tWorkout } from '../types';
 
 const currentDate = new Date().toISOString().split('T')[0].split('-');
 const currentYear = currentDate[0];
@@ -46,7 +46,7 @@ export function Dashboard() {
   }, []);
 
   // return the number of workouts for each month
-  function filterWorkoutsForMonth(workouts: workoutType[], monthNumber: string) {
+  function filterWorkoutsForMonth(workouts: tWorkout[], monthNumber: string) {
     const numberOfWorkouts = workouts.filter((ea) => {
       return ea.date.split('-')[1] === monthNumber;
     });

@@ -9,28 +9,29 @@ import {
   Typography
 } from '@mui/material';
 
-import { workoutType, recordType } from '../types'
+import { tCombinedEntry } from '../types'
 
 
 export function SearchResultCard({ content }) {
   const history = useHistory();
 
-  function handleClickActive(id: string, isWorkoutContent: boolean) {
-    if (isWorkoutContent === true) {
-      history.push(`/workouts/${id}`);
+  function handleClickActive(target: Element, isWorkoutContent: boolean) {
+    if (isWorkoutContent) {
+      history.push(`/workouts/${target.id}`);
     } else {
-      history.push(`/records/${id}`);
+      history.push(`/records/${target.id}`);
     }
   }
 
   return (
     <Grid sx={style.root1}>
-      {content.map((ea: (workoutType & recordType)) => (
+      {content.map((ea: tCombinedEntry) => (
         <Card
           elevation={2}
           key={ea.id}
+          id={`${ea.id}`}
           sx={style.cardStyle}
-          onClick={(e) => handleClickActive(e.currentTarget.id, !!ea.workout_body)}
+          onClick={(e) => handleClickActive(e.currentTarget, !!ea.workout_body)}
         >
           <CardHeader
             title={ea.workout_body ? 'Workout' : 'Personal Record'}

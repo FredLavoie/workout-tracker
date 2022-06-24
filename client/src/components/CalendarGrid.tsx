@@ -3,11 +3,19 @@ import { useHistory } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-export function CalendarGrid(props) {
+import { tWorkout } from '../types'
+
+type propTypes = {
+  year: string
+  month: string
+  workouts: tWorkout[]
+}
+
+export function CalendarGrid(props: propTypes) {
   const history = useHistory();
 
   const weekDayFirstMonthDay = new Date(`${props.year}/${props.month}/01`).getDay();
-  const numberOfDaysInMonth = new Date(props.year, props.month, 0).getDate();
+  const numberOfDaysInMonth = new Date(Number(props.year), Number(props.month), 0).getDate();
   const currentDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0];
 
   const contentArray = [];
@@ -42,7 +50,7 @@ export function CalendarGrid(props) {
     }
   }
 
-  function handleClickActive(id, dayNum) {
+  function handleClickActive(id: string, dayNum: number) {
     if (dayNum === 0) return;
     if (!id) {
       history.push(`/workouts/new/${props.year}-${props.month}-${String(dayNum).padStart(2, '0')}`);
@@ -61,11 +69,11 @@ export function CalendarGrid(props) {
 
   return (
     <Box sx={style.container}>
-      {contentArray.map((ea, index) => (
+      {contentArray.map((ea: any, index: number) => (
         <Box
-          onClick={(e) => handleClickActive(e.currentTarget.id, ea.dayNumber)}
           key={index}
           id={ea.workoutId ? ea.workoutId : ''}
+          onClick={(e) => handleClickActive(e.currentTarget.id, ea.dayNumber)}
           sx={{ ...style.daySquare, ...(ea.active ? activeStyle : ea.dayNumber > 0 ? dayOfMonthStyle : style.notDayOfMonth) }}
         >
           {ea.dayNumber !== 0

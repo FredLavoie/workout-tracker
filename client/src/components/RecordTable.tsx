@@ -8,14 +8,14 @@ import {
 } from '@mui/material';
 
 import { recordList } from '../lib/recordList';
-import { recordType } from '../types';
+import { tRecord } from '../types';
 
 
 export function RecordTable({ type, records }) {
   const history = useHistory();
 
-  const sortedRecords = records.sort((a: recordType, b: recordType) => b.date > a.date);
-  const filteredEventList = recordList[type].filter((ea: any) => records.find((rec: recordType) => rec.event === ea));
+  const sortedRecords = records.sort((a: tRecord, b: tRecord) => b.date > a.date);
+  const filteredEventList = recordList[type].filter((ea: string) => records.find((rec: tRecord) => rec.event === ea));
 
   function handleClickActive(target: Element) {
     const encodedString = target.id.toLowerCase().replace(/ /g, '-');

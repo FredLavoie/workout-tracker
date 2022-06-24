@@ -256,7 +256,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
         onClose={handleCloseError}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert variant="outlined" severity='error'>Server error</Alert>
+        <Alert severity='error'>Server error</Alert>
       </Snackbar>
     </Paper>
   );

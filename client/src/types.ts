@@ -5,8 +5,7 @@
  * be store here in the root src directory
  */
 
-// used in CalendarGrid
-export type workoutType = {
+export type tWorkout = {
   id: number
   author: string
   date: string
@@ -14,7 +13,7 @@ export type workoutType = {
   workout_body: string
 }
 
-export type recordType = {
+export type tRecord = {
   id: number
   author: string
   date: string
@@ -22,6 +21,10 @@ export type recordType = {
   event: string
   score: string
 }
+
+export type tConditionalEntry = tWorkout | tRecord
+
+export type tCombinedEntry = tWorkout & tRecord
 
 export type recordListTypes = {
   strength: string[]

@@ -15,7 +15,7 @@ import {
 import { SearchResultCard } from '../components/SearchResultCard';
 import { ServerError } from '../components/ServerError';
 import { fetchSearchResults } from '../services/fetchData';
-import { recordType, workoutType } from '../types';
+import { tConditionalEntry } from '../types';
 
 
 export function Search() {
@@ -37,7 +37,7 @@ export function Search() {
     setIsLoading(true);
     try {
       const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
-      const sortedResults = results.sort((a: (recordType & workoutType), b: (recordType & workoutType)) => {
+      const sortedResults = results.sort((a: tConditionalEntry, b: tConditionalEntry) => {
         const aSeconds = new Date(a.date).getTime();
         const bSeconds = new Date(b.date).getTime();
         if (bSeconds > aSeconds) return 1;
