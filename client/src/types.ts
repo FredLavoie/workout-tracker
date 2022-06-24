@@ -6,7 +6,7 @@
  */
 
 export type tWorkout = {
-  id: number
+  id: string
   author: string
   date: string
   time: string
@@ -14,7 +14,7 @@ export type tWorkout = {
 }
 
 export type tRecord = {
-  id: number
+  id: string
   author: string
   date: string
   type: string

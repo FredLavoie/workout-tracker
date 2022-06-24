@@ -29,7 +29,7 @@ export function SearchResultCard({ content }) {
         <Card
           elevation={2}
           key={ea.id}
-          id={`${ea.id}`}
+          id={ea.id}
           sx={style.cardStyle}
           onClick={(e) => handleClickActive(e.currentTarget, !!ea.workout_body)}
         >

@@ -24,8 +24,8 @@ export function RecordTable({ type, records }) {
 
   return (
     <CardContent sx={style.content}>
-      {filteredEventList.map((event: tRecord, index: number) => (
-        <Box key={index} id={`${event.id}`} sx={style.eventContainer} onClick={(e) => handleClickActive(e.currentTarget)}>
+      {filteredEventList.map((event: string, index: number) => (
+        <Box key={index} id={event} sx={style.eventContainer} onClick={(e) => handleClickActive(e.currentTarget)}>
           <Typography variant={'subtitle1'} >
             {event}
           </Typography>
