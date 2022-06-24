@@ -73,13 +73,13 @@ export function Record() {
           setError(error.message);
         }
       }
-    }
+    };
     setupPage();
     return () => abortCont.abort();
   }, []);
 
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
 
     if (recordId === 'new') {

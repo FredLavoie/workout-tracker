@@ -60,7 +60,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
   const username = localStorage.getItem('username');
   const firstTwoLetter = `${username[0].toUpperCase()}${username[1].toUpperCase()}`;
 
-  async function handleSubmit(event: { preventDefault: () => void; }) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     try {
       await logout();
@@ -74,7 +74,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
     setOpen(false);
   }
 
-  function handleClickAvatar(event) {
+  function handleClickAvatar(event: { currentTarget: any }) {
     setAnchorEl(event.currentTarget);
   }
 
@@ -86,7 +86,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
     setMobileOpen(!mobileOpen);
   }
 
-  function handleMenuItemClick(path) {
+  function handleMenuItemClick(path: string) {
     if (mobileOpen) handleDrawerToggle();
     history.push(path);
   }
@@ -96,8 +96,8 @@ export function Layout({ children, userTheme, setUserTheme }) {
     history.push('/password-change');
   }
 
-  function handleThemeToggle(e) {
-    if (e.target.checked) {
+  function handleThemeToggle(event) {
+    if (event.target.checked) {
       localStorage.setItem('userTheme', 'dark');
       setUserTheme('dark');
     }
@@ -205,7 +205,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
           >
             <MenuItem onClick={handleChangePasswordClick}>Change Password</MenuItem>
             <MenuItem onClick={handleSubmit}>Logout</MenuItem>
-            <MenuItem onChange={handleThemeToggle}>
+            <MenuItem onChange={(event) => handleThemeToggle(event)}>
               <FormControlLabel
                 sx={style.modeToggle}
                 labelPlacement='start'

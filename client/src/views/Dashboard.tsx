@@ -40,7 +40,7 @@ export function Dashboard() {
         setIsLoading(false);
         setError(error.message);
       }
-    }
+    };
     setupPage();
     return () => abortCont.abort();
   }, []);

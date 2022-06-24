@@ -14,6 +14,7 @@ import {
 
 import { fetchEventRecords } from '../services/fetchData';
 import { ServerError } from '../components/ServerError';
+import { tRecord } from '../types';
 
 
 export function DetailRecord() {
@@ -30,7 +31,7 @@ export function DetailRecord() {
     const setupPage = async () => {
       try {
         const data = await fetchEventRecords(eventToFetch, abortCont);
-        const sortedRecords = data.sort((a, b) => b.date > a.date);
+        const sortedRecords = data.sort((a: tRecord, b: tRecord) => b.date > a.date);
         setRecrods(sortedRecords);
         setIsLoading(false);
       } catch (error) {
@@ -38,7 +39,7 @@ export function DetailRecord() {
         setIsLoading(false);
         setError(error.message);
       }
-    }
+    };
     setupPage();
     return () => abortCont.abort();
   }, []);

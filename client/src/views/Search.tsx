@@ -32,7 +32,7 @@ export function Search() {
     setError(null);
   }
 
-  async function handleSubmit(event: { preventDefault: () => void; }) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     setIsLoading(true);
     try {

@@ -42,7 +42,7 @@ export function Login() {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     try {
       const data = await login(username, password);

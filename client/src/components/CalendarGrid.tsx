@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import { tWorkout } from '../types'
+import { tWorkout } from '../types';
 
 type propTypes = {
   year: string

@@ -70,7 +70,7 @@ export function Calendar() {
         setIsLoading(false);
         setError(error.message);
       }
-    }
+    };
     setupPage();
     return () => abortCont.abort();
   }, [monthToFetch]);

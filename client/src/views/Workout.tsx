@@ -71,13 +71,13 @@ export function Workout() {
           }
         }
       }
-    }
+    };
     setupPage();
     return () => abortCont.abort();
   }, [location]);
 
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
 
     if (workoutId === 'new') {

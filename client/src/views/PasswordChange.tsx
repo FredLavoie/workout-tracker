@@ -32,7 +32,7 @@ export function Password() {
   const [alertMessage, setAlertMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     const validatedInput = validatePasswordChange(newPassword1, newPassword2);
     if (!validatedInput) {

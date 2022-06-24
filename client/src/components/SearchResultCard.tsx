@@ -9,7 +9,7 @@ import {
   Typography
 } from '@mui/material';
 
-import { tCombinedEntry } from '../types'
+import { tCombinedEntry } from '../types';
 
 
 export function SearchResultCard({ content }) {

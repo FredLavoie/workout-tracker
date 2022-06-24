@@ -72,7 +72,7 @@ export function Week() {
         setIsLoading(false);
         setError(error.message);
       }
-    }
+    };
     setupPage();
     return () => abortCont.abort();
   }, [dateArr]);
