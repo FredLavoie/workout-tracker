@@ -6,7 +6,7 @@ import { isAuthenticated } from '../services/authentication';
 
 export function PrivateRoute({ component: Component, ...rest }) {
   return (
-    <Route {...rest} render={(props: JSX.IntrinsicAttributes) => {
+    <Route {...rest} render={(props) => {
       if (isAuthenticated() === true) {
         return <Component {...props} />;
       }
