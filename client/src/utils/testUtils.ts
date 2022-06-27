@@ -3,12 +3,12 @@ import { months } from '../lib/months';
 /**
  * This helper function builds the next or previous month's title.
  * Example: "June 2022"
- * @param {string} month current month
- * @param {string} option paramter to determine which month to get
- * @param {string} year current year
+ * @param month current month
+ * @param option paramter to determine which month to get
+ * @param year current year
  * @returns returns the month title as a string
  */
-export function getNextPrevMonth(month, option, year) {
+export function getNextPrevMonth(month: string, option: string, year: string): string {
   if (option === 'prev') {
     if (month === '1') {
       return `December ${Number(year) - 1}`;

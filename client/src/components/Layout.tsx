@@ -33,7 +33,7 @@ import TodayIcon from '@mui/icons-material/Today';
 import ViewDayIcon from '@mui/icons-material/ViewDay';
 
 import { useTheme } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import { logout, isAuthenticated } from '../services/authentication';
 
@@ -41,7 +41,7 @@ const dateArray = new Date().toLocaleString('en-US', { timeZone: 'America/New_Yo
 const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, '0')}`;
 
 // eslint-disable-next-line prefer-arrow-callback
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
@@ -60,7 +60,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
   const username = localStorage.getItem('username');
   const firstTwoLetter = `${username[0].toUpperCase()}${username[1].toUpperCase()}`;
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     try {
       await logout();
@@ -74,7 +74,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
     setOpen(false);
   }
 
-  function handleClickAvatar(event) {
+  function handleClickAvatar(event: { currentTarget: any }) {
     setAnchorEl(event.currentTarget);
   }
 
@@ -86,7 +86,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
     setMobileOpen(!mobileOpen);
   }
 
-  function handleMenuItemClick(path) {
+  function handleMenuItemClick(path: string) {
     if (mobileOpen) handleDrawerToggle();
     history.push(path);
   }
@@ -96,8 +96,8 @@ export function Layout({ children, userTheme, setUserTheme }) {
     history.push('/password-change');
   }
 
-  function handleThemeToggle(e) {
-    if (e.target.checked) {
+  function handleThemeToggle(event) {
+    if (event.target.checked) {
       localStorage.setItem('userTheme', 'dark');
       setUserTheme('dark');
     }
@@ -183,15 +183,13 @@ export function Layout({ children, userTheme, setUserTheme }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography edge='start' variant='h5' sx={style.title}>
+          <Typography variant='h5' sx={style.title}>
             Workout Tracker
           </Typography>
 
-          <Button>
+          <Button onClick={handleClickAvatar}>
             <Avatar
-              button='true'
               sx={style.avatar}
-              onClick={handleClickAvatar}
               aria-controls='simple-menu'
               aria-haspopup='true'
             >
@@ -207,7 +205,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
           >
             <MenuItem onClick={handleChangePasswordClick}>Change Password</MenuItem>
             <MenuItem onClick={handleSubmit}>Logout</MenuItem>
-            <MenuItem onChange={handleThemeToggle}>
+            <MenuItem onChange={(event) => handleThemeToggle(event)}>
               <FormControlLabel
                 sx={style.modeToggle}
                 labelPlacement='start'

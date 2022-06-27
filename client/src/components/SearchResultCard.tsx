@@ -9,29 +9,29 @@ import {
   Typography
 } from '@mui/material';
 
+import { tCombinedEntry } from '../types';
+
 
 export function SearchResultCard({ content }) {
   const history = useHistory();
 
-  function handleClickActive(id, workout) {
-    if (workout === true) {
-      history.push(`/workouts/${id}`);
+  function handleClickActive(target: Element, isWorkoutContent: boolean) {
+    if (isWorkoutContent) {
+      history.push(`/workouts/${target.id}`);
     } else {
-      history.push(`/records/${id}`);
+      history.push(`/records/${target.id}`);
     }
   }
 
   return (
-    <Grid
-      sx={style.root}
-    >
-      {content.map((ea, index) => (
+    <Grid sx={style.root1}>
+      {content.map((ea: tCombinedEntry) => (
         <Card
           elevation={2}
-          key={index}
+          key={ea.id}
           id={ea.id}
           sx={style.cardStyle}
-          onClick={(e) => handleClickActive(e.currentTarget.id, !!ea.workout_body)}
+          onClick={(e) => handleClickActive(e.currentTarget, !!ea.workout_body)}
         >
           <CardHeader
             title={ea.workout_body ? 'Workout' : 'Personal Record'}
@@ -63,7 +63,7 @@ export function SearchResultCard({ content }) {
 }
 
 const style = {
-  root: {
+  root1: {
     marginBottom: '32px',
     marginTop: '16px',
     width: { md: '100%', sm: '90%' },
@@ -86,4 +86,4 @@ const style = {
     font: 'inherit',
     margin: '0px',
   }
-};
+} as const;

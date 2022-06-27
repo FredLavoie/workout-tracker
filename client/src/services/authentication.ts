@@ -1,6 +1,6 @@
 const URL = process.env.REACT_APP_BASE_URL || 'https://workout-tracker.xyz/api';
 
-export async function login(username, password) {
+export async function login(username: string, password: string) {
   const res = await fetch(`${URL}/dj-rest-auth/login/`, {
     method: 'POST',
     credentials: 'omit',
@@ -38,7 +38,7 @@ export async function logout() {
   return;
 }
 
-export async function changePassword(newPassword1, newPassword2) {
+export async function changePassword(newPassword1: string, newPassword2: string) {
   const token = localStorage.getItem('token');
   const res = await fetch(`${URL}/dj-rest-auth/password/change/`, {
     method: 'POST',

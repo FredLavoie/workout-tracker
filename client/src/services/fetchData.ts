@@ -19,7 +19,7 @@ export async function fetchAccountId() {
 /****************************************** SEARCH ******************************************/
 /********************************************************************************************/
 
-export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
+export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord: boolean, query: string) {
   if (!checkedWorkout && !checkedRecord) return [];
 
   const token = localStorage.getItem('token');
@@ -61,7 +61,7 @@ export async function fetchSearchResults(checkedWorkout, checkedRecord, query) {
 /***************************************** WORKOUTS *****************************************/
 /********************************************************************************************/
 
-export async function fetchMonthData(monthToFetch, abortCont) {
+export async function fetchMonthData(monthToFetch: string, abortCont: { signal: any }) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
   const signal = abortCont === null ? null : abortCont.signal;
@@ -79,7 +79,7 @@ export async function fetchMonthData(monthToFetch, abortCont) {
   return await res.json();
 }
 
-export async function fetchYearData(yearToFetch, abortCont) {
+export async function fetchYearData(yearToFetch: string, abortCont: { signal: any }) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
   const signal = abortCont === null ? null : abortCont.signal;
@@ -97,7 +97,7 @@ export async function fetchYearData(yearToFetch, abortCont) {
   return await res.json();
 }
 
-export async function fetchWorkout(workout_id, abortCont) {
+export async function fetchWorkout(workout_id: string, abortCont: { signal: any }) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
   const signal = abortCont === null ? null : abortCont.signal;
@@ -115,7 +115,7 @@ export async function fetchWorkout(workout_id, abortCont) {
   return await res.json();
 }
 
-export async function updateWorkout(workout_id, date, time, workout_body) {
+export async function updateWorkout(workout_id: string, date: string, time: string, workout_body: string) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -132,7 +132,7 @@ export async function updateWorkout(workout_id, date, time, workout_body) {
   return await res.json();
 }
 
-export async function postWorkout(date, time, workout_body) {
+export async function postWorkout(date: string, time: string, workout_body: string) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -150,7 +150,7 @@ export async function postWorkout(date, time, workout_body) {
   return await res.json();
 }
 
-export async function deleteWorkout(workout_id) {
+export async function deleteWorkout(workout_id: string) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -169,7 +169,7 @@ export async function deleteWorkout(workout_id) {
 /****************************************** RECORDS *****************************************/
 /********************************************************************************************/
 
-export async function fetchRecord(record_id, abortCont) {
+export async function fetchRecord(record_id: string, abortCont: { signal: any }) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
   const signal = abortCont === null ? null : abortCont.signal;
@@ -187,7 +187,7 @@ export async function fetchRecord(record_id, abortCont) {
   return await res.json();
 }
 
-export async function fetchRecords(abortCont) {
+export async function fetchRecords(abortCont: { signal: any }) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
   const signal = abortCont === null ? null : abortCont.signal;
@@ -205,7 +205,7 @@ export async function fetchRecords(abortCont) {
   return await res.json();
 }
 
-export async function updateRecord(record_id, date, type, event, score) {
+export async function updateRecord(record_id: string, date: string, type: string, event: string, score: string) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -222,7 +222,7 @@ export async function updateRecord(record_id, date, type, event, score) {
   return await res.json();
 }
 
-export async function postRecord(date, type, event, score) {
+export async function postRecord(date: string, type: string, event: string, score: string) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -239,7 +239,7 @@ export async function postRecord(date, type, event, score) {
   return await res.json();
 }
 
-export async function deleteRecord(record_id) {
+export async function deleteRecord(record_id: string) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
 
@@ -255,7 +255,7 @@ export async function deleteRecord(record_id) {
   return;
 }
 
-export async function fetchEventRecords(event, abortCont) {
+export async function fetchEventRecords(event: string, abortCont: { signal: any }) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');
   const signal = abortCont === null ? null : abortCont.signal;

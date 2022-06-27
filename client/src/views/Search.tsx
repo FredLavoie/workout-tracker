@@ -15,6 +15,7 @@ import {
 import { SearchResultCard } from '../components/SearchResultCard';
 import { ServerError } from '../components/ServerError';
 import { fetchSearchResults } from '../services/fetchData';
+import { tConditionalEntry } from '../types';
 
 
 export function Search() {
@@ -31,15 +32,17 @@ export function Search() {
     setError(null);
   }
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     setIsLoading(true);
     try {
       const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
-      const sortedResults = results.sort((a, b) => {
+      const sortedResults = results.sort((a: tConditionalEntry, b: tConditionalEntry) => {
         const aSeconds = new Date(a.date).getTime();
         const bSeconds = new Date(b.date).getTime();
-        return bSeconds > aSeconds;
+        if (bSeconds > aSeconds) return 1;
+        if (bSeconds < aSeconds) return -1;
+        return 0;
       });
       setSearchResults(sortedResults);
       setIsLoading(false);

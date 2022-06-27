@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material';
+import { createTheme, ThemeProvider, StyledEngineProvider, PaletteMode } from '@mui/material';
 import { Layout } from './components/Layout';
 import { PrivateRoute } from './components/PrivateRoute';
 import { Home } from './views/Home';
@@ -22,7 +22,7 @@ export function App() {
 
   const myTheme = createTheme({
     palette: {
-      mode: userTheme,
+      mode: userTheme as PaletteMode,
       primary: {
         main: '#673ab7',
       },

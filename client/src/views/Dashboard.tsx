@@ -14,6 +14,7 @@ import { fetchYearData, fetchRecords } from '../services/fetchData';
 import { months } from '../lib/months';
 import { RecordTable } from '../components/RecordTable';
 import { ServerError } from '../components/ServerError';
+import { tWorkout } from '../types';
 
 const currentDate = new Date().toISOString().split('T')[0].split('-');
 const currentYear = currentDate[0];
@@ -25,25 +26,27 @@ export function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortCont = new AbortController();
-    try {
-      const recordData = await fetchRecords(abortCont);
-      const yearData = await fetchYearData(currentYear, abortCont);
-      setRecords(recordData);
-      setYearWorkouts(yearData);
-      setIsLoading(false);
-    } catch (error) {
-      if (error.name === 'AbortError') return;
-      setIsLoading(false);
-      setError(error.message);
-    }
-
+    const setupPage = async () => {
+      try {
+        const recordData = await fetchRecords(abortCont);
+        const yearData = await fetchYearData(currentYear, abortCont);
+        setRecords(recordData);
+        setYearWorkouts(yearData);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        setIsLoading(false);
+        setError(error.message);
+      }
+    };
+    setupPage();
     return () => abortCont.abort();
   }, []);
 
   // return the number of workouts for each month
-  function filterWorkoutsForMonth(workouts, monthNumber) {
+  function filterWorkoutsForMonth(workouts: tWorkout[], monthNumber: string) {
     const numberOfWorkouts = workouts.filter((ea) => {
       return ea.date.split('-')[1] === monthNumber;
     });

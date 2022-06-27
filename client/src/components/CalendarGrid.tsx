@@ -3,17 +3,25 @@ import { useHistory } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-export function CalendarGrid(props) {
+import { tWorkout } from '../types';
+
+type propTypes = {
+  year: string
+  month: string
+  workouts: tWorkout[]
+}
+
+export function CalendarGrid(props: propTypes) {
   const history = useHistory();
 
   const weekDayFirstMonthDay = new Date(`${props.year}/${props.month}/01`).getDay();
-  const numberOfDaysInMonth = new Date(props.year, props.month, 0).getDate();
+  const numberOfDaysInMonth = new Date(Number(props.year), Number(props.month), 0).getDate();
   const currentDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0];
 
   const contentArray = [];
   let dayOfTheMonth = 0;
   for (let i = 0; i < 42; i++) {
-    const obj = { dayNumber: 0 };
+    const obj = { dayNumber: 0, today: false };
     if (i === weekDayFirstMonthDay) {
       dayOfTheMonth += 1;
     }
@@ -42,7 +50,7 @@ export function CalendarGrid(props) {
     }
   }
 
-  function handleClickActive(id, dayNum) {
+  function handleClickActive(id: string, dayNum: number) {
     if (dayNum === 0) return;
     if (!id) {
       history.push(`/workouts/new/${props.year}-${props.month}-${String(dayNum).padStart(2, '0')}`);
@@ -61,11 +69,11 @@ export function CalendarGrid(props) {
 
   return (
     <Box sx={style.container}>
-      {contentArray.map((ea, index) => (
+      {contentArray.map((ea: any, index: number) => (
         <Box
-          onClick={(e) => handleClickActive(e.currentTarget.id, ea.dayNumber)}
           key={index}
           id={ea.workoutId ? ea.workoutId : ''}
+          onClick={(e) => handleClickActive(e.currentTarget.id, ea.dayNumber)}
           sx={{ ...style.daySquare, ...(ea.active ? activeStyle : ea.dayNumber > 0 ? dayOfMonthStyle : style.notDayOfMonth) }}
         >
           {ea.dayNumber !== 0
@@ -97,6 +105,7 @@ const style = {
     justifyContent: 'center',
     flexWrap: 'wrap',
     flexBasis: '10%',
+    border: 'none',
   },
   daySquare: {
     width: '13%',
@@ -104,6 +113,7 @@ const style = {
     display: 'flex',
     flexGrow: '1',
     justifyContent: 'right',  // check this on Safari
+    border: 'none',
   },
   activeLight: {
     backgroundColor: 'secondary.main',
@@ -130,5 +140,7 @@ const style = {
   today: {
     borderRadius: '4px',
     padding: '4px 6px',
+    backgroundColor: 'none',
+    color: 'none',
   }
 };

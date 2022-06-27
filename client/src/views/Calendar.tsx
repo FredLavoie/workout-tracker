@@ -57,18 +57,21 @@ export function Calendar() {
     }
   }
 
-  useEffect(async () => {
-    setIsLoading(true);
+  useEffect(() => {
     const abortCont = new AbortController();
-    try {
-      const data = await fetchMonthData(monthToFetch, abortCont);
-      setWorkouts(data);
-      setIsLoading(false);
-    } catch (error) {
-      if (error.name === 'AbortError') return;
-      setIsLoading(false);
-      setError(error.message);
-    }
+    const setupPage = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchMonthData(monthToFetch, abortCont);
+        setWorkouts(data);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        setIsLoading(false);
+        setError(error.message);
+      }
+    };
+    setupPage();
     return () => abortCont.abort();
   }, [monthToFetch]);
 
@@ -140,4 +143,4 @@ const style = {
   navLink: {
     minWidth: '80px',
   }
-};
+} as const;

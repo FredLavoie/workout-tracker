@@ -17,7 +17,7 @@ import {
   Typography
 } from '@mui/material';
 
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import { fetchRecord, updateRecord, postRecord, deleteRecord } from '../services/fetchData';
 import { validateRecord } from '../utils';
@@ -26,7 +26,7 @@ import { recordList } from '../lib/recordList';
 
 
 // eslint-disable-next-line prefer-arrow-callback
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
@@ -51,32 +51,35 @@ export function Record() {
   const [error, setError] = useState(null);
 
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortCont = new AbortController();
-    if (recordId === 'new') {
-      setSelectedDate(currentDate);
-      changeNewOrEdit(1);
-      setIsLoading(false);
-    } else {
-      try {
-        const data = await fetchRecord(recordId, abortCont);
-        setSelectedDate(data.date);
-        setRecordType(data.type);
-        setRecordEvent(data.event);
-        setRecordScore(data.score);
-        changeNewOrEdit(0);
+    const setupPage = async () => {
+      if (recordId === 'new') {
+        setSelectedDate(currentDate);
+        changeNewOrEdit(1);
         setIsLoading(false);
-      } catch (error) {
-        if (error.name === 'AbortError') return;
-        setIsLoading(false);
-        setError(error.message);
+      } else {
+        try {
+          const data = await fetchRecord(recordId, abortCont);
+          setSelectedDate(data.date);
+          setRecordType(data.type);
+          setRecordEvent(data.event);
+          setRecordScore(data.score);
+          changeNewOrEdit(0);
+          setIsLoading(false);
+        } catch (error) {
+          if (error.name === 'AbortError') return;
+          setIsLoading(false);
+          setError(error.message);
+        }
       }
-    }
+    };
+    setupPage();
     return () => abortCont.abort();
   }, []);
 
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
 
     if (recordId === 'new') {

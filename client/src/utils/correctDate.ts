@@ -6,11 +6,11 @@
  * 
  * Example:  ["1", "-5", "2022"] => ["12", "26", "2021"]
  * 
- * @param {string[]} dataArr a simple date array containing a month, day and year respectively
- * @return {string[]} a valid date array
+ * @param dateArr a simple date array containing a month, day and year respectively
+ * @return  a valid date array
  */
-export function correctDate(dateArr) {
-  const numDaysInMonth = new Date(dateArr[2], dateArr[0], 0).getDate();
+export function correctDate(dateArr: string[]): string[] {
+  const numDaysInMonth = new Date(Number(dateArr[2]), Number(dateArr[0]), 0).getDate();
   let numDaysPrevMonth = null;
   if (dateArr[0] === '1') {
     // Current month is Jan, therefore the previous month is Dec and it has 31 days
@@ -19,8 +19,9 @@ export function correctDate(dateArr) {
     // setting the day = 0 and calling the .getDate() method returns the number of days
     // in the previous month. The month in the dateArr is the actual month number, therefore
     // we need to subtract 1 to get the index of the current month
-    numDaysPrevMonth = new Date(dateArr[2], Number(dateArr[0]) - 1, 0).getDate();
+    numDaysPrevMonth = new Date(Number(dateArr[2]), Number(dateArr[0]) - 1, 0).getDate();
   }
+  // @ts-ignore
   let dayOfTheWeek = Number(new Date().getDay().toLocaleString('en-US', { timeZone: 'America/New_York' }));
   if (dayOfTheWeek === 7) dayOfTheWeek = 0;
 

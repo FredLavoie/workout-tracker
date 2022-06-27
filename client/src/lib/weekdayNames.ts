@@ -1,4 +1,4 @@
-export const weekdayNames = [
+export const weekdayNames: object = [
   'Sunday',
   'Monday',
   'Tuesday',
