@@ -196,7 +196,7 @@ describe('Record view - existing', () => {
           score: recordScore
         }));
       }),
-      rest.put('*/1/records/qwerty123456', (req, res, context) => {
+      rest.patch('*/1/records/qwerty123456', (req, res, context) => {
         return res(context.status(200), context.json({
           ok: true,
           date: recordDate,
