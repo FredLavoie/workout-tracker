@@ -15,6 +15,3 @@ class Workout(models.Model):
 
     class Meta:
         unique_together = ["author", "date", ]
-
-    def __str__(self):
-        return (f"{self.author} ({self.date})")

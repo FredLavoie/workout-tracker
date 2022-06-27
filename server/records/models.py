@@ -16,6 +16,3 @@ class Record(models.Model):
 
     class Meta:
         unique_together = ["author", "date", "event", ]
-
-    def __str__(self):
-        return (f"{self.author} ({self.date}) - {self.event}")
