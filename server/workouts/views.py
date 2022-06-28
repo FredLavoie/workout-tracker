@@ -1,9 +1,11 @@
 from django.contrib.postgres.search import SearchVector, SearchQuery
+from django.db.models import Count, F
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+
 from .models import Workout
 from .permissions import IsAuthor
-from .serializers import WorkoutSerializer
+from .serializers import WorkoutSerializer, WorkoutCountSerializer
 
 
 class WorkoutList(generics.ListCreateAPIView):
@@ -22,8 +24,8 @@ class WorkoutDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         id = self.kwargs['author_id']
-        workout = Workout.objects.filter(author_id=id)
-        return workout
+        workout_details = Workout.objects.filter(author_id=id)
+        return workout_details
 
 
 class WorkoutListMonth(generics.ListCreateAPIView):
@@ -33,8 +35,8 @@ class WorkoutListMonth(generics.ListCreateAPIView):
     def get_queryset(self):
         id = self.kwargs['author_id']
         dt = self.kwargs['year_month']
-        workout = Workout.objects.filter(author_id=id, date__contains=dt)
-        return workout
+        workouts = Workout.objects.filter(author_id=id, date__contains=dt)
+        return workouts
 
 
 class WorkoutListYear(generics.ListCreateAPIView):
@@ -44,8 +46,8 @@ class WorkoutListYear(generics.ListCreateAPIView):
     def get_queryset(self):
         id = self.kwargs['author_id']
         dt = self.kwargs['year']
-        workout = Workout.objects.filter(author_id=id, date__contains=dt)
-        return workout
+        workouts = Workout.objects.filter(author_id=id, date__contains=dt)
+        return workouts
 
 
 class WorkoutSearch(generics.ListAPIView):
@@ -65,3 +67,24 @@ class WorkoutSearch(generics.ListAPIView):
         )
 
         return object_list
+
+
+class WorkoutTotalPerYear(generics.ListAPIView):
+    """
+    Get the total number of workouts per year
+    for each year that has workouts
+    """
+    permission_classes = (IsAuthenticated, IsAuthor,)
+    serializer_class = WorkoutCountSerializer
+
+    def get_queryset(self):
+        id = self.kwargs['author_id']
+        queryset = Workout.objects.filter(
+            author_id=id
+        ).values(
+            year=F('date__year')
+        ).annotate(
+            count=Count('date__year')
+        ).order_by('date__year')
+
+        return queryset
