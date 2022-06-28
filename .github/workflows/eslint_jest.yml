@@ -1,4 +1,4 @@
-name: ESLint
+name: ESLint + Jest
 
 on: 
   push:
@@ -15,4 +15,7 @@ jobs:
       working-directory: client
     - name: Run ESLint
       run: yarn lint
+      working-directory: client
+    - name: Run Jest tests
+      run: yarn test
       working-directory: client
