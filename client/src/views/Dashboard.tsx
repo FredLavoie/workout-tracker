@@ -10,7 +10,7 @@ import {
   Typography
 } from '@mui/material';
 
-import { fetchYearData, fetchRecords, yearlyCount } from '../services/fetchData';
+import { fetchYearData, fetchRecords, fetchYearlyCount } from '../services/fetchData';
 import { months } from '../lib/months';
 import { RecordTable } from '../components/RecordTable';
 import { ServerError } from '../components/ServerError';
@@ -33,7 +33,7 @@ export function Dashboard() {
       try {
         const recordData = await fetchRecords(abortCont);
         const yearData = await fetchYearData(currentYear, abortCont);
-        const yearlyCountData = await yearlyCount(abortCont);
+        const yearlyCountData = await fetchYearlyCount(abortCont);
         setRecords(recordData);
         setYearWorkouts(yearData);
         setYearCounts(yearlyCountData);

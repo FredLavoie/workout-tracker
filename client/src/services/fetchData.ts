@@ -97,7 +97,7 @@ export async function fetchYearData(yearToFetch: string, abortCont: { signal: an
   return await res.json();
 }
 
-export async function yearlyCount(abortCont: { signal: any }) {
+export async function fetchYearlyCount(abortCont: { signal: any }) {
   const token = localStorage.getItem('token');
   const id = localStorage.getItem('accountId');
   const signal = abortCont === null ? null : abortCont.signal;
