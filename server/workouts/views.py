@@ -14,8 +14,8 @@ class WorkoutList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         id = self.kwargs['author_id']
-        workouts = Workout.objects.filter(author_id=id)
-        return workouts
+        queryset = Workout.objects.filter(author_id=id)
+        return queryset
 
 
 class WorkoutDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -24,8 +24,8 @@ class WorkoutDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         id = self.kwargs['author_id']
-        workout_details = Workout.objects.filter(author_id=id)
-        return workout_details
+        queryset = Workout.objects.filter(author_id=id)
+        return queryset
 
 
 class WorkoutListMonth(generics.ListCreateAPIView):
@@ -35,8 +35,8 @@ class WorkoutListMonth(generics.ListCreateAPIView):
     def get_queryset(self):
         id = self.kwargs['author_id']
         dt = self.kwargs['year_month']
-        workouts = Workout.objects.filter(author_id=id, date__contains=dt)
-        return workouts
+        queryset = Workout.objects.filter(author_id=id, date__contains=dt)
+        return queryset
 
 
 class WorkoutListYear(generics.ListCreateAPIView):
@@ -46,8 +46,8 @@ class WorkoutListYear(generics.ListCreateAPIView):
     def get_queryset(self):
         id = self.kwargs['author_id']
         dt = self.kwargs['year']
-        workouts = Workout.objects.filter(author_id=id, date__contains=dt)
-        return workouts
+        queryset = Workout.objects.filter(author_id=id, date__contains=dt)
+        return queryset
 
 
 class WorkoutSearch(generics.ListAPIView):
@@ -58,7 +58,7 @@ class WorkoutSearch(generics.ListAPIView):
         query = self.request.GET.get('q', '')
         id = self.kwargs['author_id']
 
-        object_list = Workout.objects.annotate(
+        queryset = Workout.objects.annotate(
             search=SearchVector('workout_body')
         ).filter(
             search=SearchQuery(query)
@@ -66,7 +66,7 @@ class WorkoutSearch(generics.ListAPIView):
             author_id=id
         )
 
-        return object_list
+        return queryset
 
 
 class WorkoutTotalPerYear(generics.ListAPIView):

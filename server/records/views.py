@@ -12,8 +12,8 @@ class RecordList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         id = self.kwargs['author_id']
-        records = Record.objects.filter(author_id=id)
-        return records
+        queryset = Record.objects.filter(author_id=id)
+        return queryset
 
 
 class RecordDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -22,8 +22,8 @@ class RecordDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         id = self.kwargs['author_id']
-        record = Record.objects.filter(author_id=id)
-        return record
+        queryset = Record.objects.filter(author_id=id)
+        return queryset
 
 
 class RecordSearch(generics.ListAPIView):
@@ -34,7 +34,7 @@ class RecordSearch(generics.ListAPIView):
         query = self.request.GET.get('q', '')
         id = self.kwargs['author_id']
 
-        object_list = Record.objects.annotate(
+        queryset = Record.objects.annotate(
             search=SearchVector('type')+SearchVector('event')
         ).filter(
             search=SearchQuery(query)
@@ -42,7 +42,7 @@ class RecordSearch(generics.ListAPIView):
             author_id=id
         )
 
-        return object_list
+        return queryset
 
 
 class EventRecordList(generics.ListAPIView):
@@ -55,5 +55,5 @@ class EventRecordList(generics.ListAPIView):
         eventFixedKm = event.replace('Km', 'km')
         eventFixedM = eventFixedKm.replace('0M', '0m')
         eventFixedMin = eventFixedM.replace(' Min', ' min')
-        records = Record.objects.filter(author_id=id, event=eventFixedMin)
-        return records
+        queryset = Record.objects.filter(author_id=id, event=eventFixedMin)
+        return queryset
