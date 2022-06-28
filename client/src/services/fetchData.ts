@@ -97,6 +97,24 @@ export async function fetchYearData(yearToFetch: string, abortCont: { signal: an
   return await res.json();
 }
 
+export async function yearlyCount(abortCont: { signal: any }) {
+  const token = localStorage.getItem('token');
+  const id = localStorage.getItem('accountId');
+  const signal = abortCont === null ? null : abortCont.signal;
+
+  const res = await fetch(`${URL}/${id}/workouts/total-per-year/`, {
+    method: 'GET',
+    signal: signal,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'authorization': `Token ${token}`
+    },
+  });
+  if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+  return await res.json();
+}
+
 export async function fetchWorkout(workout_id: string, abortCont: { signal: any }) {
   const token = localStorage.getItem('token');
   const accountId = localStorage.getItem('accountId');

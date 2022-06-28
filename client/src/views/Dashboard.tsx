@@ -10,7 +10,7 @@ import {
   Typography
 } from '@mui/material';
 
-import { fetchYearData, fetchRecords } from '../services/fetchData';
+import { fetchYearData, fetchRecords, yearlyCount } from '../services/fetchData';
 import { months } from '../lib/months';
 import { RecordTable } from '../components/RecordTable';
 import { ServerError } from '../components/ServerError';
@@ -23,6 +23,7 @@ const monthNumbersArr = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '
 export function Dashboard() {
   const [yearWorkouts, setYearWorkouts] = useState([]);
   const [records, setRecords] = useState([]);
+  const [yearCounts, setYearCounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -32,8 +33,10 @@ export function Dashboard() {
       try {
         const recordData = await fetchRecords(abortCont);
         const yearData = await fetchYearData(currentYear, abortCont);
+        const yearlyCountData = await yearlyCount(abortCont);
         setRecords(recordData);
         setYearWorkouts(yearData);
+        setYearCounts(yearlyCountData);
         setIsLoading(false);
       } catch (error) {
         if (error.name === 'AbortError') return;
@@ -69,7 +72,7 @@ export function Dashboard() {
         {/******************************************* SUMMARY *******************************************/}
         <Card elevation={3} sx={style.summaryCardStyle}>
           <CardHeader
-            title='Summary'
+            title='Monthly Summary'
             sx={style.header}
           />
           <CardContent sx={style.content}>
@@ -81,10 +84,21 @@ export function Dashboard() {
                 }</Box>
               </Typography>
             ))}
-            <Typography sx={{ ...style.textCol, ...style.horzLine }}>
-              <Box component='span' sx={style.centerText}>Year-to-date</Box>
-              <Box component='span' sx={style.dataBackground}>{yearWorkouts.length}</Box>
-            </Typography>
+          </CardContent>
+        </Card>
+        {/**************************************** YEAR SUMMARY ***************************************/}
+        <Card elevation={3} sx={style.cardStyle}>
+          <CardHeader
+            title='Yearly Summary'
+            sx={style.header}
+          />
+          <CardContent sx={style.content}>
+            {yearCounts.map((ea, index) => (
+              <Typography key={index} sx={style.textCol}>
+                <Box component='span' sx={style.centerText}>{ea.year}</Box>
+                <Box component='span' sx={style.dataBackground}>{ea.count}</Box>
+              </Typography>
+            ))}
           </CardContent>
         </Card>
         {/**************************************** STRENGTH PRs ***************************************/}
@@ -162,9 +176,5 @@ const style = {
   },
   centerText: {
     paddingTop: '2px',
-  },
-  horzLine: {
-    borderTop: '1px solid #f0f0f5',
-    paddingTop: '8px',
   },
 };
