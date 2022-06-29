@@ -28,7 +28,7 @@ export function Password() {
   const history = useHistory();
   const [newPassword1, changeNewPassword1] = useState('');
   const [newPassword2, changeNewPassword2] = useState('');
-  const [open, setOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alertMessage, setAlertMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -37,22 +37,20 @@ export function Password() {
     const validatedInput = validatePasswordChange(newPassword1, newPassword2);
     if (!validatedInput) {
       setAlertMessage({ severity: 'error', message: 'The two passwords do not match or don\'t meet the requirements.' });
-      setOpen(true);
+      setOpenSnackbar(true);
       return;
     }
     try {
       await changePassword(newPassword1, newPassword2);
-      setAlertMessage({ severity: 'success', message: 'Successfully changed password.' });
-      setOpen(true);
-      setTimeout(() => history.push('/dashboard'), 1500);
+      history.push('/dashboard');
     } catch (error) {
       setAlertMessage({ severity: 'error', message: error.message });
-      return setOpen(true);
+      return setOpenSnackbar(true);
     }
   }
 
   function handleClose() {
-    setOpen(false);
+    setOpenSnackbar(false);
   }
 
   function handleClickShowPassword() {
@@ -129,7 +127,7 @@ export function Password() {
           </Box>
         </Grid>
       </Grid>
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Container>

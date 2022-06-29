@@ -37,7 +37,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import { logout, isAuthenticated } from '../services/authentication';
 
-const dateArray = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/');
+const dateArray: string[] = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/');
 const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, '0')}`;
 
 // eslint-disable-next-line prefer-arrow-callback
@@ -55,7 +55,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [open, setOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const username = localStorage.getItem('username');
   const firstTwoLetter = `${username[0].toUpperCase()}${username[1].toUpperCase()}`;
@@ -66,12 +66,12 @@ export function Layout({ children, userTheme, setUserTheme }) {
       await logout();
       history.push('/login');
     } catch (error) {
-      return setOpen(true);
+      return setOpenSnackbar(true);
     }
   }
 
   function handleCloseError() {
-    setOpen(false);
+    setOpenSnackbar(false);
   }
 
   function handleClickAvatar(event: { currentTarget: any }) {
@@ -252,7 +252,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
         {children}
       </Box>
       <Snackbar
-        open={open} autoHideDuration={4000}
+        open={openSnackbar} autoHideDuration={4000}
         onClose={handleCloseError}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >

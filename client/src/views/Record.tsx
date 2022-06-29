@@ -46,7 +46,7 @@ export function Record() {
   const [recordScore, setRecordScore] = useState('');
   const [newOrEdit, changeNewOrEdit] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alertMessage, setAlertMessage] = useState(null);
   const [error, setError] = useState(null);
 
@@ -87,32 +87,28 @@ export function Record() {
       if (valid) {
         try {
           await postRecord(selectedDate, recordType, recordEvent, recordScore);
-          setAlertMessage({ severity: 'success', message: 'Successfully saved new PR.' });
-          setOpen(true);
-          setTimeout(() => history.push('/dashboard'), 1000);
+          history.push('/dashboard');
         } catch (error) {
           setAlertMessage({ severity: 'error', message: error.message });
-          setOpen(true);
+          setOpenSnackbar(true);
         }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
-        setOpen(true);
+        setOpenSnackbar(true);
       }
     } else {
       const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
       if (valid) {
         try {
           await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
-          setAlertMessage({ severity: 'success', message: 'Successfully updated PR.' });
-          setOpen(true);
-          setTimeout(() => history.push('/dashboard'), 1000);
+          history.push('/dashboard');
         } catch (error) {
           setAlertMessage({ severity: 'error', message: error.message });
-          setOpen(true);
+          setOpenSnackbar(true);
         }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
-        setOpen(true);
+        setOpenSnackbar(true);
       }
     }
   }
@@ -124,17 +120,15 @@ export function Record() {
   async function handleDelete() {
     try {
       await deleteRecord(recordId);
-      setAlertMessage({ severity: 'success', message: 'Successfully deleted PR.' });
-      setOpen(true);
-      setTimeout(() => history.push('/dashboard'), 1500);
+      history.push('/dashboard');
     } catch (error) {
       setAlertMessage({ severity: 'error', message: error.message });
-      setOpen(true);
+      setOpenSnackbar(true);
     }
   }
 
   function handleClose() {
-    setOpen(false);
+    setOpenSnackbar(false);
   }
 
   return (
@@ -234,7 +228,7 @@ export function Record() {
             }
           </Box>
         </Grid>}
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Grid>

@@ -41,7 +41,7 @@ export function Workout() {
   const [workoutBody, setWorkoutBody] = useState('');
   const [newOrEdit, changeNewOrEdit] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alertMessage, setAlertMessage] = useState(null);
   const [error, setError] = useState(null);
 
@@ -85,32 +85,28 @@ export function Workout() {
       if (valid) {
         try {
           await postWorkout(selectedDate, selectedTime, workoutBody);
-          setAlertMessage({ severity: 'success', message: 'Successfully saved new workout.' });
-          setOpen(true);
-          setTimeout(() => history.push(`/cal/${navDate}`), 1000);
+          history.push(`/cal/${navDate}`);
         } catch (error) {
           setAlertMessage({ severity: 'error', message: error.message });
-          setOpen(true);
+          setOpenSnackbar(true);
         }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
-        setOpen(true);
+        setOpenSnackbar(true);
       }
     } else {
       const valid = validateWorkout(selectedDate, selectedTime, workoutBody);
       if (valid) {
         try {
           await updateWorkout(workoutId, selectedDate, selectedTime, workoutBody);
-          setAlertMessage({ severity: 'success', message: 'Successfully updated workout.' });
-          setOpen(true);
-          setTimeout(() => history.push(`/cal/${navDate}`), 1000);
+          history.push(`/cal/${navDate}`);
         } catch (error) {
           setAlertMessage({ severity: 'error', message: error.message });
-          setOpen(true);
+          setOpenSnackbar(true);
         }
       } else {
         setAlertMessage({ severity: 'error', message: 'One or more inputted values is invalid.' });
-        setOpen(true);
+        setOpenSnackbar(true);
       }
     }
   }
@@ -122,17 +118,15 @@ export function Workout() {
   async function handleDelete() {
     try {
       await deleteWorkout(workoutId);
-      setAlertMessage({ severity: 'success', message: 'Successfully deleted workout.' });
-      setOpen(true);
-      setTimeout(() => history.push(`/cal/${navDate}`), 1500);
+      history.push(`/cal/${navDate}`);
     } catch (error) {
       setAlertMessage({ severity: 'error', message: error.message });
-      setOpen(true);
+      setOpenSnackbar(true);
     }
   }
 
   function handleClose() {
-    setOpen(false);
+    setOpenSnackbar(false);
   }
 
   return (
@@ -217,7 +211,7 @@ export function Workout() {
           }
         </Box>
       </Grid>}
-      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
       </Snackbar>
     </Grid>
