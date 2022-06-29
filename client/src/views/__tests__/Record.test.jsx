@@ -50,9 +50,6 @@ describe('Record view - new', () => {
     // find and click the submit button
     const submitButton = screen.getByText('Save');
     fireEvent.click(submitButton);
-    // the successful submitting of the record should render the success toast message
-    const successToastMessage = await screen.findByText('Successfully saved new PR.');
-    expect(successToastMessage).toBeInTheDocument();
     // clean up local storage
     localStorage.clear();
   });
@@ -173,9 +170,6 @@ describe('Record view - existing', () => {
     // find and click the delete button
     const submitButton = screen.getByText('Delete');
     fireEvent.click(submitButton);
-    // the successful delete the record should render the success toast message
-    const successToastMessage = await screen.findByText('Successfully deleted PR.');
-    expect(successToastMessage).toBeInTheDocument();
     // clean up local storage
     localStorage.clear();
   });
@@ -213,9 +207,6 @@ describe('Record view - existing', () => {
     // find and click the submit button
     const submitButton = screen.getByText('Save');
     fireEvent.click(submitButton);
-    // the successful updating of the record should render the success toast message
-    const successToastMessage = await screen.findByText('Successfully updated PR.');
-    expect(successToastMessage).toBeInTheDocument();
     // clean up local storage
     localStorage.clear();
   });

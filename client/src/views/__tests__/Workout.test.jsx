@@ -47,9 +47,6 @@ describe('Workout view - new', () => {
     // find and click the submit button
     const submitButton = screen.getByText('Save');
     fireEvent.click(submitButton);
-    // the successful submitting of the workout should render the success toast message
-    const successToastMessage = await screen.findByText('Successfully saved new workout.');
-    expect(successToastMessage).toBeInTheDocument();
     // clean up local storage
     localStorage.clear();
   });
@@ -146,9 +143,6 @@ describe('Workout view - existing', () => {
     // find and click the delete button
     const submitButton = screen.getByText('Delete');
     fireEvent.click(submitButton);
-    // the successful delete the workout should render the success toast message
-    const successToastMessage = await screen.findByText('Successfully deleted workout.');
-    expect(successToastMessage).toBeInTheDocument();
     // clean up local storage
     localStorage.clear();
   });
@@ -174,9 +168,6 @@ describe('Workout view - existing', () => {
     // find and click the submit button
     const submitButton = screen.getByText('Save');
     fireEvent.click(submitButton);
-    // the successful updating of the workout should render the success toast message
-    const successToastMessage = await screen.findByText('Successfully updated workout.');
-    expect(successToastMessage).toBeInTheDocument();
     // clean up local storage
     localStorage.clear();
   });
