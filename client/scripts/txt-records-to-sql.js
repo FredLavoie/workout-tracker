@@ -1,19 +1,21 @@
 /**
- * This script will take all my workouts writen in txt files and convert them to insert statement in an sql file
- * that will be saved in the "workout_migrations" directory
+ * This script will take all the workouts written in txt files and convert them to insert
+ * statement in an sql file that will be saved in the "workout_migrations" directory
  *
  * To execute the script, run:
- * node script/txt-records-to-sql.js <path/to/file.txt>
+ * node scripts/txt-records-to-sql.js <path/to/file.txt>
+ * 
+ * Example path: ~/OneDrive/health/workout_logs/2020/01-jan.txt
  *
  * The file can be be executed by running:
  * 	psql -U <user_name> -h <host_name> -d <database_name> < <path_to_file.sql>
  */
 
-const fs = require('fs');
-const uuid = require('uuid');
+import { readFile, writeFileSync } from 'fs';
+import { v4 } from 'uuid';
 const inputFile = process.argv[2];
 
-fs.readFile(inputFile, 'utf-8', (error, data) => {
+readFile(inputFile, 'utf-8', (error, data) => {
   if (error) {
     console.log(error);
     return;
@@ -50,9 +52,9 @@ fs.readFile(inputFile, 'utf-8', (error, data) => {
     const day = resultArray[i].split(' ')[1];
     const body = resultArray[i + 1].join('\n');
     resultString += 'INSERT INTO workouts_workout(id, author_id, date, time, workout_body, created_at, updated_at)\n';
-    resultString += `VALUES ('${uuid.v4()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`;
+    resultString += `VALUES ('${v4()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`;
   }
 
-  fs.writeFileSync(`../../BACKUP/workout_migrations/${year}-${month}_migration.sql`, resultString);
+  writeFileSync(`../BACKUP/workout_migrations/${year}-${month}_migration.sql`, resultString);
   console.log(`Completed creating migration for ${year}-${month}`);
 });
