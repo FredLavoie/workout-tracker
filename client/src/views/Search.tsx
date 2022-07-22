@@ -121,7 +121,7 @@ export function Search() {
       {error && <ServerError errorMessage={error} />}
       {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
       {searchResults && searchResults.length > 0 ? <Typography color='primary'>( Number of results found: {searchResults.length} )</Typography> : ''}
-      {searchResults && searchResults.length > 0 ? <SearchResultCard content={searchResults} /> : <></>}
+      {searchResults && searchResults.length > 0 ? <SearchResultCard content={searchResults} searchQuery={searchQuery} /> : <></>}
     </Grid>
   );
 }

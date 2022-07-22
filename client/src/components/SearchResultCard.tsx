@@ -12,7 +12,7 @@ import {
 import { tCombinedEntry } from '../types';
 
 
-export function SearchResultCard({ content }) {
+export function SearchResultCard({ content, searchQuery }) {
   const history = useHistory();
 
   function handleClickActive(target: Element, isWorkoutContent: boolean) {
@@ -21,6 +21,35 @@ export function SearchResultCard({ content }) {
     } else {
       history.push(`/records/${target.id}`);
     }
+  }
+
+  /**
+   * Process the workout body and highlight the search term in the returned
+   * JSX element
+   * 
+   * @param text workout body text for a single search result
+   * @returns JSX.Element
+   */
+  function processBodyText(text: string) {
+    const textArr = text.split('\n');
+    return (<Typography component='pre' sx={style.bodyText}>
+      {textArr.map((subString: string) => {
+        return subString.includes(searchQuery) ?
+          (<>
+            <span>
+              {subString.split(' ').map((subSubString: string) => {
+                return subSubString.includes(searchQuery) ?
+                  (<span><mark>{subSubString}</mark> </span>)
+                  :
+                  (<span>{subSubString} </span>);
+              })}
+            </span>
+            <br />
+          </>)
+          :
+          (<><span>{subString}</span><br /></>);
+      })}
+    </Typography>);
   }
 
   return (
@@ -42,7 +71,7 @@ export function SearchResultCard({ content }) {
             ?
             <CardContent>
               <Typography component='div' variant='body2' color='textSecondary'>
-                <Typography component='pre' sx={style.bodyText}>{ea.workout_body}</Typography>
+                {processBodyText(ea.workout_body)}
               </Typography>
             </CardContent>
             :
