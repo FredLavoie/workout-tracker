@@ -32,13 +32,16 @@ export function SearchResultCard({ content, searchQuery }) {
    */
   function processBodyText(text: string) {
     const textArr = text.split('\n');
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
     return (<Typography component='pre' sx={style.bodyText}>
       {textArr.map((subString: string) => {
-        return subString.includes(searchQuery) ?
+        const lowerCaseSubString = subString.toLowerCase();
+        return lowerCaseSubString.includes(lowerCaseSearchQuery) ?
           (<>
             <span>
               {subString.split(' ').map((subSubString: string) => {
-                return subSubString.includes(searchQuery) ?
+                const lowerCaseSubSubString = subSubString.toLowerCase();
+                return lowerCaseSubSubString.includes(lowerCaseSearchQuery) ?
                   (<span><mark>{subSubString}</mark> </span>)
                   :
                   (<span>{subSubString} </span>);
