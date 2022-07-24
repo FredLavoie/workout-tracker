@@ -11,17 +11,15 @@ describe('SearchResultCard', () => {
   ];
 
   it('renders a record card and a workout card without crashing', () => {
-    render(<SearchResultCard content={props} />);
+    render(<SearchResultCard content={props} searchQuery='body' />);
   });
 
   it('renders 2 cards with the correct text found', () => {
-    render(<SearchResultCard content={props} />);
+    render(<SearchResultCard content={props} searchQuery='body' />);
     const card1 = screen.getByText('Workout');
-    const workoutBody = screen.getByText('Sample workout body');
     const workoutDate = screen.getByText('2022-04-04');
     const card2 = screen.getByText('Personal Record');
     expect(card1).toBeInTheDocument();
-    expect(workoutBody).toBeInTheDocument();
     expect(workoutDate).toBeInTheDocument();
     expect(card2).toBeInTheDocument();
   });
