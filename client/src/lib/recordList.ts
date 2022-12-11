@@ -14,6 +14,7 @@ export const recordList: recordListTypes = {
     'Push Jerk',
     'Snatch',
     'Thruster',
+    'Dead hang',
   ],
   endurance: [
     '10 min Air Bike',
