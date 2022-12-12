@@ -1,4 +1,4 @@
-name: Deploy Front End Code
+name: ESLint + Jest + Deploy Frontend
 
 on:
   push:
@@ -8,7 +8,21 @@ on:
     - 'client/build/**'
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: yarn
+      working-directory: client
+    - name: Run ESLint
+      run: yarn lint
+      working-directory: client
+    - name: Run Jest tests
+      run: yarn test
+      working-directory: client
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     steps:
     - name: ssh into droplet & deploy static files
