@@ -7,6 +7,7 @@ export const recordList: recordListTypes = {
     'Clean',
     'Clean & Jerk',
     'Deadlift',
+    'Dead Hang',
     'Front Squat',
     'Press',
     'Push Press',
@@ -14,7 +15,6 @@ export const recordList: recordListTypes = {
     'Push Jerk',
     'Snatch',
     'Thruster',
-    'Dead hang',
   ],
   endurance: [
     '10 min Air Bike',
