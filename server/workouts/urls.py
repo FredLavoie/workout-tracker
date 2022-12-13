@@ -9,5 +9,4 @@ urlpatterns = [
     path('<int:author_id>/workouts/<int:year>/', WorkoutListYear.as_view()),
     path('<int:author_id>/workouts/search/', WorkoutSearch.as_view()),
     path('<int:author_id>/workouts/total-per-year/', WorkoutTotalPerYear.as_view()),
-    path('<int:author_id>/workouts/diferent-path-testing/', WorkoutTotalPerYear.as_view()),
 ]

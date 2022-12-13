@@ -3,9 +3,9 @@ name: ESLint + Jest
 on:
   push:
     branches-ignore:
-      - main
+    - main
     paths:
-      - 'client/**'
+    - 'client/**'
 
 jobs:
   test:

@@ -3,9 +3,9 @@ name: Flake8 + Python Tests
 on:
   push:
     branches-ignore:
-      - main
+    - main
     paths:
-      - 'server/**'
+    - 'server/**'
 
 jobs:
   test:
