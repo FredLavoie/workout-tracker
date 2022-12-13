@@ -9,7 +9,6 @@ import {
   Divider,
   Drawer,
   FormControlLabel,
-  Hidden,
   IconButton,
   List,
   ListItem,
@@ -218,31 +217,29 @@ export function Layout({ children, userTheme, setUserTheme }) {
       </AppBar>
 
       {/*********************** Mobile drawer - toggle left ***************************/}
-      <Hidden smUp implementation='css'>
-        <Drawer
-          variant='temporary'
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          sx={style.mobileDrawer}
-          ModalProps={{
-            keepMounted: true,
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Hidden>
+      <Drawer
+        variant='temporary'
+        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        sx={style.mobileDrawer}
+        ModalProps={{
+          keepMounted: true,
+        }}
+      >
+        {drawer}
+      </Drawer>
+
 
       {/******************** Desktop drawer - permanent left **************************/}
-      <Hidden smDown implementation='css'>
-        <Drawer
-          sx={style.desktopDrawer}
-          variant='permanent'
-          anchor='left'
-        >
-          {drawer}
-        </Drawer>
-      </Hidden>
+      <Drawer
+        sx={style.desktopDrawer}
+        variant='permanent'
+        anchor='left'
+      >
+        {drawer}
+      </Drawer>
+
 
 
       {/*********************************** Content ***********************************/}
@@ -283,10 +280,12 @@ const style = {
   mobileDrawer: {
     width: drawerWidth,
     zIndex: '1300',
+    display: { sm: 'none', xs: 'block' },
   },
   desktopDrawer: {
     width: drawerWidth,
     ['& .MuiDrawer-paper']: { width: drawerWidth, paddingTop: '56px' },
+    display: { sm: 'block', xs: 'none' },
   },
   activeDark: {
     background: '#252525',
