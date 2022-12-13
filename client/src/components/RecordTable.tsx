@@ -20,6 +20,7 @@ export function RecordTable({ type, records }) {
   function handleClickActive(target: Element) {
     const encodedString = target.id.toLowerCase().replace(/ /g, '-');
     history.push(`/records/event/${encodedString}`);
+    console.log('*** testing github actions');
   }
 
   return (
