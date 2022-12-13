@@ -10,7 +10,7 @@ import { Calendar } from '../Calendar';
 afterEach(cleanup);
 
 const dateArray = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/');
-const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, '0')}-fail`;
+const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, '0')}`;
 const currentMonthTitle = `${months[dateArray[0].padStart(2, '0')]} ${dateArray[2]}`;
 const prevMonthTitle = getNextPrevMonth(dateArray[0], 'prev', dateArray[2]);
 const NextMonthTitle = getNextPrevMonth(dateArray[0], 'next', dateArray[2]);
@@ -36,7 +36,7 @@ describe('Calendar view', () => {
     render(<MockedCalendar />);
     // assert that the title is the current month and year
     const title = await screen.findByText(currentMonthTitle);
-    expect(title).toBeInTheDocument();
+    expect(title).toNotBeInTheDocument();
   });
 
   it('renders the Calendar view and navigate to previous month', async () => {
