@@ -64,7 +64,7 @@ export function Dashboard() {
       sx={style.root}
     >
       <Typography variant='h4' sx={style.title}>
-        Dashboard
+        Dashboard TEST
       </Typography>
       {error && <ServerError errorMessage={error} />}
       {isLoading && <CircularProgress />}
