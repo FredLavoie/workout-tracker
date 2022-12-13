@@ -45,7 +45,6 @@ export function RecordTable({ type, records }) {
           })}
         </Box>
       ))}
-      <div>TESTING</div>
     </CardContent>
   );
 }

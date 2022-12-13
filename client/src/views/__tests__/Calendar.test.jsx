@@ -36,7 +36,7 @@ describe('Calendar view', () => {
     render(<MockedCalendar />);
     // assert that the title is the current month and year
     const title = await screen.findByText(currentMonthTitle);
-    expect(title).toNotBeInTheDocument();
+    expect(title).toBeInTheDocument();
   });
 
   it('renders the Calendar view and navigate to previous month', async () => {

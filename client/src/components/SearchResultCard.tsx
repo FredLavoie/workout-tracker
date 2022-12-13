@@ -34,21 +34,21 @@ export function SearchResultCard({ content, searchQuery }) {
     const textArr = text.split('\n');
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
     return (<Typography component='pre' sx={style.bodyText}>
-      {textArr.map((subString: string) => {
+      {textArr.map((subString: string, index: number) => {
         const lowerCaseSubString = subString.toLowerCase();
         return lowerCaseSubString.includes(lowerCaseSearchQuery) ?
-          (<>
+          (<div key={`${subString}-${index}`}>
             <span>
-              {subString.split(' ').map((subSubString: string) => {
+              {subString.split(' ').map((subSubString: string, index2: number) => {
                 const lowerCaseSubSubString = subSubString.toLowerCase();
                 return lowerCaseSubSubString.includes(lowerCaseSearchQuery) ?
-                  (<span><mark>{subSubString}</mark> </span>)
+                  (<span key={`${lowerCaseSubSubString}-${index2}`}><mark>{subSubString}</mark> </span>)
                   :
-                  (<span>{subSubString} </span>);
+                  (<span key={`${lowerCaseSubSubString}-${index2}`}>{subSubString} </span>);
               })}
             </span>
             <br />
-          </>)
+          </div>)
           :
           (<><span>{subString}</span><br /></>);
       })}
@@ -57,10 +57,10 @@ export function SearchResultCard({ content, searchQuery }) {
 
   return (
     <Grid sx={style.root1}>
-      {content.map((ea: tCombinedEntry) => (
+      {content.map((ea: tCombinedEntry, index: number) => (
         <Card
           elevation={2}
-          key={ea.id}
+          key={`${ea.id}-${index}`}
           id={ea.id}
           sx={style.cardStyle}
           onClick={(e) => handleClickActive(e.currentTarget, !!ea.workout_body)}
