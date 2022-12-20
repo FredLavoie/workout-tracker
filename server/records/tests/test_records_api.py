@@ -16,40 +16,40 @@ class RecordAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = get_user_model().objects.create_user(
-            username='testuser',
-            email='test@email.com',
-            password='secret11%',
+            username="testuser",
+            email="test@email.com",
+            password="secret11%",
         )
         self.client.force_authenticate(self.user)
-        self.RECORDS_URL = reverse('records', args=[self.user.id])
+        self.RECORDS_URL = reverse("records", args=[self.user.id])
 
         Record.objects.create(
             author=self.user,
-            date='2022-06-08',
-            type='Strength',
-            event='Clean',
-            score='250',
+            date="2022-06-08",
+            type="Strength",
+            event="Clean",
+            score="250",
             )
         Record.objects.create(
             author=self.user,
-            date='2022-12-14',
-            type='Endurance',
-            event='Run 5km',
-            score='20:04',
+            date="2022-12-14",
+            type="Endurance",
+            event="Run 5km",
+            score="20:04",
             )
 
         self.user2 = get_user_model().objects.create_user(
-            username='testuser2',
-            email='test2@email.com',
-            password='ssdfs11%',
+            username="testuser2",
+            email="test2@email.com",
+            password="ssdfs11%",
         )
 
         Record.objects.create(
             author=self.user2,
-            date='2022-12-14',
-            type='Endurance',
-            event='Run 5km',
-            score='20:04',
+            date="2022-12-14",
+            type="Endurance",
+            event="Run 5km",
+            score="20:04",
             )
 
     def test_retrieve_records_list(self):
@@ -82,7 +82,7 @@ class RecordAPITests(TestCase):
         # assert that the API response match the filtered Record query object
         self.assertEqual(res.data, serializer.data)
         # assert that the API response is contains data for the specified user
-        self.assertEqual(res.data[0]['author'], self.user.id)
+        self.assertEqual(res.data[0]["author"], self.user.id)
 
     def test_retrieve_records_limited_to_user2(self):
         """
@@ -90,7 +90,7 @@ class RecordAPITests(TestCase):
         """
         # URL for user 2
         self.client.force_authenticate(self.user2)
-        RECORDS_URL_2 = reverse('records', args=[self.user2.id])
+        RECORDS_URL_2 = reverse("records", args=[self.user2.id])
         # make API call
         res = self.client.get(RECORDS_URL_2)
         # assert that the request was successful
@@ -103,4 +103,4 @@ class RecordAPITests(TestCase):
         # assert that the API response match the filtered Record query object
         self.assertEqual(res.data, serializer.data)
         # assert that the API response is contains data for the specified user
-        self.assertEqual(res.data[0]['author'], self.user2.id)
+        self.assertEqual(res.data[0]["author"], self.user2.id)

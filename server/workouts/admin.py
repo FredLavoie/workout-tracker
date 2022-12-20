@@ -4,8 +4,8 @@ from .models import Workout
 
 class WorkoutAdmin(admin.ModelAdmin):
     list_display = (
-                    'id', 'author', 'date', 'time', 'workout_body',
-                    'created_at', 'updated_at',
+                    "id", "author", "date", "time", "workout_body",
+                    "created_at", "updated_at",
                     )
 
 

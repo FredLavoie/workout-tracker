@@ -9,6 +9,6 @@ class AuthorDetail(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        username = self.kwargs['username']
+        username = self.kwargs["username"]
         userInfo = CustomUser.objects.filter(username=username)
         return userInfo

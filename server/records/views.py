@@ -11,7 +11,7 @@ class RecordList(generics.ListCreateAPIView):
     serializer_class = RecordSerializer
 
     def get_queryset(self):
-        id = self.kwargs['author_id']
+        id = self.kwargs["author_id"]
         queryset = Record.objects.filter(author_id=id)
         return queryset
 
@@ -21,7 +21,7 @@ class RecordDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RecordSerializer
 
     def get_queryset(self):
-        id = self.kwargs['author_id']
+        id = self.kwargs["author_id"]
         queryset = Record.objects.filter(author_id=id)
         return queryset
 
@@ -31,11 +31,11 @@ class RecordSearch(generics.ListAPIView):
     serializer_class = RecordSerializer
 
     def get_queryset(self):
-        query = self.request.GET.get('q', '')
-        id = self.kwargs['author_id']
+        query = self.request.GET.get("q", "")
+        id = self.kwargs["author_id"]
 
         queryset = Record.objects.annotate(
-            search=SearchVector('type')+SearchVector('event')
+            search=SearchVector("type")+SearchVector("event")
         ).filter(
             search=SearchQuery(query)
         ).filter(
@@ -50,10 +50,10 @@ class EventRecordList(generics.ListAPIView):
     serializer_class = RecordSerializer
 
     def get_queryset(self):
-        id = self.kwargs['author_id']
-        event = self.kwargs['event'].replace('-', ' ').title()
-        eventFixedKm = event.replace('Km', 'km')
-        eventFixedM = eventFixedKm.replace('0M', '0m')
-        eventFixedMin = eventFixedM.replace(' Min', ' min')
+        id = self.kwargs["author_id"]
+        event = self.kwargs["event"].replace("-", " ").title()
+        eventFixedKm = event.replace("Km", "km")
+        eventFixedM = eventFixedKm.replace("0M", "0m")
+        eventFixedMin = eventFixedM.replace(" Min", " min")
         queryset = Record.objects.filter(author_id=id, event=eventFixedMin)
         return queryset

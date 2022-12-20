@@ -16,37 +16,37 @@ class WorkoutAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = get_user_model().objects.create_user(
-            username='testuser',
-            email='test@email.com',
-            password='secret11%',
+            username="testuser",
+            email="test@email.com",
+            password="secret11%",
         )
         self.client.force_authenticate(self.user)
-        self.WORKOUT_URL = reverse('workouts', args=[self.user.id])
+        self.WORKOUT_URL = reverse("workouts", args=[self.user.id])
 
         Workout.objects.create(
             author=self.user,
-            date='2022-06-08',
-            time='08:34',
-            workout_body='(A) Endurance 60 min bike erg',
+            date="2022-06-08",
+            time="08:34",
+            workout_body="(A) Endurance 60 min bike erg",
             )
         Workout.objects.create(
             author=self.user,
-            date='2022-12-14',
-            time='14:15',
-            workout_body='(A) Endurance Run 5km',
+            date="2022-12-14",
+            time="14:15",
+            workout_body="(A) Endurance Run 5km",
             )
 
         self.user2 = get_user_model().objects.create_user(
-            username='testuser2',
-            email='test2@email.com',
-            password='ssdfs11%',
+            username="testuser2",
+            email="test2@email.com",
+            password="ssdfs11%",
         )
 
         Workout.objects.create(
             author=self.user2,
-            date='2022-12-14',
-            time='22:00',
-            workout_body='(A) Back Squat 5x5',
+            date="2022-12-14",
+            time="22:00",
+            workout_body="(A) Back Squat 5x5",
             )
 
     def test_retrieve_workouts_list(self):
@@ -81,7 +81,7 @@ class WorkoutAPITests(TestCase):
         # assert that the API response match the filtered Workout query object
         self.assertEqual(res.data, serializer.data)
         # assert that the API response is contains data for the specified user
-        self.assertEqual(res.data[0]['author'], self.user.id)
+        self.assertEqual(res.data[0]["author"], self.user.id)
 
     def test_retrieve_workouts_limited_to_user2(self):
         """
@@ -89,7 +89,7 @@ class WorkoutAPITests(TestCase):
         """
         # URL for user 2
         self.client.force_authenticate(self.user2)
-        WORKOUT_URL_2 = reverse('workouts', args=[self.user2.id])
+        WORKOUT_URL_2 = reverse("workouts", args=[self.user2.id])
         # make API call
         res = self.client.get(WORKOUT_URL_2)
         # assert that the request was successful
@@ -102,4 +102,4 @@ class WorkoutAPITests(TestCase):
         # assert that the API response match the filtered Workout query object
         self.assertEqual(res.data, serializer.data)
         # assert that the API response is contains data for the specified user
-        self.assertEqual(res.data[0]['author'], self.user2.id)
+        self.assertEqual(res.data[0]["author"], self.user2.id)
