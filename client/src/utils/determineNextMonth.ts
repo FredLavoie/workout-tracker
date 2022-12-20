@@ -12,28 +12,28 @@
  * @return a valid date array
  */
 export function determineNextMonth(dateArr: string[]): string[] {
-  const year = Number(dateArr[2]);
-  const month = Number(dateArr[0]);
-  const day = Number(dateArr[1]);
-  let nextMonth = -1;
-  let nextYear = -1;
+    const year = Number(dateArr[2]);
+    const month = Number(dateArr[0]);
+    const day = Number(dateArr[1]);
+    let nextMonth = -1;
+    let nextYear = -1;
 
-  if (day <= 15) {
-    if (month - 1 === 0) {
-      nextMonth = 12;
-      nextYear = year - 1;
+    if (day <= 15) {
+        if (month - 1 === 0) {
+            nextMonth = 12;
+            nextYear = year - 1;
+        } else {
+            nextMonth = month - 1;
+            nextYear = year;
+        }
     } else {
-      nextMonth = month - 1;
-      nextYear = year;
+        if (month + 1 === 13) {
+            nextMonth = 1;
+            nextYear = year + 1;
+        } else {
+            nextMonth = month + 1;
+            nextYear = year;
+        }
     }
-  } else {
-    if (month + 1 === 13) {
-      nextMonth = 1;
-      nextYear = year + 1;
-    } else {
-      nextMonth = month + 1;
-      nextYear = year;
-    }
-  }
-  return [String(nextYear), String(nextMonth)];
+    return [String(nextYear), String(nextMonth)];
 }

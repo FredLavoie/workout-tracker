@@ -1,34 +1,34 @@
-import React from 'react';
+import React from "react";
 
 import {
-  AppBar,
-  Container,
-  Toolbar,
-  Typography
-} from '@mui/material';
+    AppBar,
+    Container,
+    Toolbar,
+    Typography
+} from "@mui/material";
 
 
 export function NotFound() {
-  return (
-    <Container>
-      <AppBar sx={style.appBar} position='fixed' elevation={1}>
-        <Toolbar>
-          <Typography variant='h5' display='block'>
+    return (
+        <Container>
+            <AppBar sx={style.appBar} position='fixed' elevation={1}>
+                <Toolbar>
+                    <Typography variant='h5' display='block'>
             Workout Tracker
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Typography variant='h4' align='center'>
-        <br />
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Typography variant='h4' align='center'>
+                <br />
         404 - Resource not found
-      </Typography>
-    </Container>
-  );
+            </Typography>
+        </Container>
+    );
 }
 
 const style = {
-  appBar: {
-    backgroundColor: '#673ab7', // prevent appBar color from changing with mode
-    ['& .MuiToolbar-root']: { minHeight: '56px' },
-  },
+    appBar: {
+        backgroundColor: "#673ab7", // prevent appBar color from changing with mode
+        ["& .MuiToolbar-root"]: { minHeight: "56px" },
+    },
 };

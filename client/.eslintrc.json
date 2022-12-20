@@ -36,7 +36,7 @@
     ],
     "indent": [
       "error",
-      2
+      4
     ],
     "no-trailing-spaces": [
       "error",
@@ -63,7 +63,7 @@
     ],
     "quotes": [
       2,
-      "single",
+      "double",
       "avoid-escape"
     ],
     "jsx-quotes": [

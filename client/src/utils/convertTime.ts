@@ -7,5 +7,5 @@
  * @return time in 24h format
  */
 export function convertTime(timeArr: string[]): string {
-  return `${timeArr[0]}:00`;
+    return `${timeArr[0]}:00`;
 }
