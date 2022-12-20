@@ -134,26 +134,26 @@ export function Record() {
     return (
         <Grid
             container
-            direction='column'
-            alignItems='center'
+            direction="column"
+            alignItems="center"
             sx={style.root}
         >
-            <Typography variant='h4' gutterBottom>
+            <Typography variant="h4" gutterBottom>
         Personal Record
             </Typography>
             {error && <ServerError errorMessage={error} />}
             {isLoading && <CircularProgress />}
             {!error && !isLoading &&
         <Grid sx={style.formSize}>
-            <Box component='form' noValidate onSubmit={handleSubmit} sx={style.formContainer}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={style.formContainer}>
                 <Typography sx={style.elementMargin}>
               Date
                 </Typography>
                 <TextField
                     onChange={(e) => setSelectedDate(e.target.value)}
-                    margin='normal'
-                    placeholder='Date'
-                    id='date-picker'
+                    margin="normal"
+                    placeholder="Date"
+                    id="date-picker"
                     value={selectedDate}
                 />
                 <Typography sx={style.elementMargin}>
@@ -161,25 +161,25 @@ export function Record() {
                 </Typography>
                 <RadioGroup
                     row
-                    name='recordType'
+                    name="recordType"
                     value={recordType}
                     sx={style.elementMargin}
                     onChange={(e) => setRecordType(e.target.value)}
                 >
                     <FormControlLabel
-                        value='strength'
-                        control={<Radio color='primary' />}
-                        label='Strength'
+                        value="strength"
+                        control={<Radio color="primary" />}
+                        label="Strength"
                     />
                     <FormControlLabel
-                        value='endurance'
-                        control={<Radio color='primary' />}
-                        label='Endurance'
+                        value="endurance"
+                        control={<Radio color="primary" />}
+                        label="Endurance"
                     />
                     <FormControlLabel
-                        value='wod'
-                        control={<Radio color='primary' />}
-                        label='WOD'
+                        value="wod"
+                        control={<Radio color="primary" />}
+                        label="WOD"
                     />
                 </RadioGroup>
                 <Typography sx={style.elementMargin}>
@@ -188,11 +188,11 @@ export function Record() {
                 <Select
                     onChange={(e) => setRecordEvent(e.target.value)}
                     sx={style.elementMargin}
-                    id='record-event'
+                    id="record-event"
                     value={recordEvent}
                 >
                     {recordList[recordType].map((ea, index) => (
-                        <MenuItem data-testid='event-option' key={index} value={ea}>{ea}</MenuItem>
+                        <MenuItem data-testid="event-option" key={index} value={ea}>{ea}</MenuItem>
                     ))}
                 </Select>
                 <Typography sx={style.elementMargin}>
@@ -201,16 +201,16 @@ export function Record() {
                 <TextField
                     onChange={(e) => setRecordScore(e.target.value)}
                     sx={style.elementMargin}
-                    placeholder='Score'
-                    id='record-score'
+                    placeholder="Score"
+                    id="record-score"
                     value={recordScore}
                 />
                 <Button
                     fullWidth
                     type={"submit"}
                     sx={style.elementMargin}
-                    color='primary'
-                    variant='contained'
+                    color="primary"
+                    variant="contained"
                     key={`${!selectedDate || !recordEvent || !recordScore ? true : false}`}
                     disabled={!selectedDate || !recordEvent || !recordScore ? true : false}
                 >
@@ -219,7 +219,7 @@ export function Record() {
                 {
                     newOrEdit === 1
                         ?
-                        <Button onClick={handleCancel} sx={style.elementMargin} variant='outlined'>Cancel</Button>
+                        <Button onClick={handleCancel} sx={style.elementMargin} variant="outlined">Cancel</Button>
                         :
                         <ButtonGroup fullWidth sx={style.elementMargin}>
                             <Button onClick={handleCancel}>Go Back</Button>

@@ -33,7 +33,7 @@ export function SearchResultCard({ content, searchQuery }) {
     function processBodyText(text: string) {
         const textArr = text.split("\n");
         const lowerCaseSearchQuery = searchQuery.toLowerCase();
-        return (<Typography component='pre' sx={style.bodyText}>
+        return (<Typography component="pre" sx={style.bodyText}>
             {textArr.map((subString: string, index: number) => {
                 const lowerCaseSubString = subString.toLowerCase();
                 return lowerCaseSubString.includes(lowerCaseSearchQuery) ?
@@ -73,16 +73,16 @@ export function SearchResultCard({ content, searchQuery }) {
                     {ea.workout_body
                         ?
                         <CardContent>
-                            <Typography component='div' variant='body2' color='textSecondary'>
+                            <Typography component="div" variant="body2" color="textSecondary">
                                 {processBodyText(ea.workout_body)}
                             </Typography>
                         </CardContent>
                         :
                         <CardContent>
-                            <Typography variant='body2' color='textSecondary'>
+                            <Typography variant="body2" color="textSecondary">
                                 {`${ea.type} - ${ea.event}`}
                             </Typography>
-                            <Typography variant='body2' color='textSecondary'>
+                            <Typography variant="body2" color="textSecondary">
                                 {ea.score}
                             </Typography>
                         </CardContent>

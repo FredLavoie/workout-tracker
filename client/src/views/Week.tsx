@@ -80,8 +80,8 @@ export function Week() {
     return (
         <Grid
             container
-            direction='column'
-            alignItems='center'
+            direction="column"
+            alignItems="center"
             sx={style.root}
         >
             {error && <ServerError errorMessage={error} />}
@@ -89,22 +89,22 @@ export function Week() {
             {workouts && !isLoading &&
         <Box>
             <Box sx={style.weekNav}>
-                <Button onClick={handleClickPrevious} sx={style.navLink} color='primary' size='small' startIcon={<NavigateBeforeIcon />}>Prev</Button>
-                <Typography variant='h5' gutterBottom sx={style.monthTitle}>
+                <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
+                <Typography variant="h5" gutterBottom sx={style.monthTitle}>
                     {`Week of ${months[weekArr[0].split("-")[1]]} ${weekArr[0].split("-")[2]}`}
                 </Typography>
-                <Button onClick={handleClickNext} sx={style.navLink} color='primary' size='small' endIcon={<NavigateNextIcon />}>Next</Button>
+                <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
             </Box>
             <Box sx={style.weekContainer}>
                 {weekArr.map((day, index) => (
                     <Card elevation={2} sx={style.cardStyle} key={index}>
-                        <Typography variant='body1' color='textSecondary' sx={style.header}>
+                        <Typography variant="body1" color="textSecondary" sx={style.header}>
                             {`${weekdayNames[index]}, ${months[day.split("-")[1]]} ${day.split("-")[2]}`}
                         </Typography>
                         <CardContent sx={style.content}>
-                            <Typography component='div'>
+                            <Typography component="div">
                                 <Typography
-                                    component='pre'
+                                    component="pre"
                                     sx={style.bodyText}
                                 >
                                     {workouts.find((ea) => ea.date === day)?.workout_body || "Rest"}

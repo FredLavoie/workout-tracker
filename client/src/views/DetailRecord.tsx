@@ -56,11 +56,11 @@ export function DetailRecord() {
     return (
         <Grid
             container
-            direction='column'
-            alignItems='center'
+            direction="column"
+            alignItems="center"
             sx={style.root}
         >
-            <Typography variant='h4' sx={style.title}>
+            <Typography variant="h4" sx={style.title}>
         Record Details
             </Typography>
             {error && <ServerError errorMessage={error} />}
@@ -77,7 +77,7 @@ export function DetailRecord() {
                 ))}
             </CardContent>
         </Card>}
-            <Button sx={style.button} variant='outlined' onClick={handleCancel}>Go Back</Button>
+            <Button sx={style.button} variant="outlined" onClick={handleCancel}>Go Back</Button>
         </Grid>
     );
 }

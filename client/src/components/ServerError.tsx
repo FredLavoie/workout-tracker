@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 export function ServerError({ errorMessage }) {
     return (
         <Container>
-            <Typography variant='h4' align='center'>
+            <Typography variant="h4" align="center">
                 <br />
                 {errorMessage}
             </Typography>

@@ -46,7 +46,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 
 export function Layout({ children, userTheme, setUserTheme }) {
     if (isAuthenticated() === false) {
-        return <Redirect to='/login' />;
+        return <Redirect to="/login" />;
     }
 
     const history = useHistory();
@@ -114,7 +114,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
                 sx={(location.pathname === "/dashboard" ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
             >
                 <ListItemIcon><DashboardIcon /></ListItemIcon>
-                <ListItemText primary='Dashboard' />
+                <ListItemText primary="Dashboard" />
             </ListItem>
             <ListItem
                 button
@@ -122,7 +122,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
                 sx={(location.pathname.includes("/cal/") ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
             >
                 <ListItemIcon><TodayIcon /></ListItemIcon>
-                <ListItemText primary='Calendar' />
+                <ListItemText primary="Calendar" />
             </ListItem>
             <ListItem
                 button
@@ -130,7 +130,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
                 sx={(location.pathname.includes("/week") ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
             >
                 <ListItemIcon><ViewDayIcon /></ListItemIcon>
-                <ListItemText primary='Week' />
+                <ListItemText primary="Week" />
             </ListItem>
             <ListItem
                 button
@@ -138,7 +138,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
                 sx={(location.pathname === "/search" ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
             >
                 <ListItemIcon><SearchIcon /></ListItemIcon>
-                <ListItemText primary='Search' />
+                <ListItemText primary="Search" />
             </ListItem>
             <Divider />
             <ListItem
@@ -147,7 +147,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
                 sx={(location.pathname === "/workouts/new" ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
             >
                 <ListItemIcon><FitnessCenterIcon /></ListItemIcon>
-                <ListItemText primary='New Workout' />
+                <ListItemText primary="New Workout" />
             </ListItem>
             <ListItem
                 button
@@ -155,7 +155,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
                 sx={(location.pathname === "/records/new" ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
             >
                 <ListItemIcon><StarIcon /></ListItemIcon>
-                <ListItemText primary='New PR' />
+                <ListItemText primary="New PR" />
             </ListItem>
         </List>
     );
@@ -167,36 +167,36 @@ export function Layout({ children, userTheme, setUserTheme }) {
 
             {/*********************************** Navbar ************************************/}
             <AppBar
-                position='fixed'
+                position="fixed"
                 elevation={1}
                 sx={style.root2}
             >
                 <Toolbar>
                     <IconButton
-                        color='inherit'
-                        aria-label='open drawer'
-                        edge='start'
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
                         onClick={handleDrawerToggle}
                         sx={style.menuButton}
-                        size='large'
+                        size="large"
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant='h5' sx={style.title}>
+                    <Typography variant="h5" sx={style.title}>
             Workout Tracker
                     </Typography>
 
                     <Button onClick={handleClickAvatar}>
                         <Avatar
                             sx={style.avatar}
-                            aria-controls='simple-menu'
-                            aria-haspopup='true'
+                            aria-controls="simple-menu"
+                            aria-haspopup="true"
                         >
                             {firstTwoLetter}
                         </Avatar>
                     </Button>
                     <Menu
-                        id='simple-menu'
+                        id="simple-menu"
                         anchorEl={anchorEl}
                         keepMounted
                         open={Boolean(anchorEl)}
@@ -207,9 +207,9 @@ export function Layout({ children, userTheme, setUserTheme }) {
                         <MenuItem onChange={(event) => handleThemeToggle(event)}>
                             <FormControlLabel
                                 sx={style.modeToggle}
-                                labelPlacement='start'
+                                labelPlacement="start"
                                 control={<Switch checked={userTheme === "dark" ? true : false} />}
-                                label='Dark Mode'
+                                label="Dark Mode"
                             />
                         </MenuItem>
                     </Menu>
@@ -218,7 +218,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
 
             {/*********************** Mobile drawer - toggle left ***************************/}
             <Drawer
-                variant='temporary'
+                variant="temporary"
                 anchor={theme.direction === "rtl" ? "right" : "left"}
                 open={mobileOpen}
                 onClose={handleDrawerToggle}
@@ -234,8 +234,8 @@ export function Layout({ children, userTheme, setUserTheme }) {
             {/******************** Desktop drawer - permanent left **************************/}
             <Drawer
                 sx={style.desktopDrawer}
-                variant='permanent'
-                anchor='left'
+                variant="permanent"
+                anchor="left"
             >
                 {drawer}
             </Drawer>
@@ -253,7 +253,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
                 onClose={handleCloseError}
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-                <Alert severity='error'>Server error</Alert>
+                <Alert severity="error">Server error</Alert>
             </Snackbar>
         </Paper>
     );

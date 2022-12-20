@@ -65,35 +65,35 @@ export function Password() {
         <Container>
             <Grid
                 container
-                direction='column'
-                alignItems='center'
-                justifyContent='center'
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
                 sx={style.root}
             >
-                <Typography variant='h4' gutterBottom>
+                <Typography variant="h4" gutterBottom>
           Password Reset
                 </Typography>
-                <Typography variant='subtitle1' gutterBottom>
+                <Typography variant="subtitle1" gutterBottom>
           Your password must contain at least 8 characters and cannot be entirely numeric.
                 </Typography>
                 <Grid item xs={12} md={3}>
-                    <Box component='form' noValidate onSubmit={handleSubmit}>
-                        <FormControl sx={style.textField} variant='outlined'>
+                    <Box component="form" noValidate onSubmit={handleSubmit}>
+                        <FormControl sx={style.textField} variant="outlined">
                             <OutlinedInput
                                 onChange={(e) => changeNewPassword1(e.target.value)}
                                 value={newPassword1}
                                 type={showPassword ? "input" : "password"}
-                                name='newPassword1'
-                                color='secondary'
-                                id='outlined-adornment-password'
-                                data-testid='password'
-                                placeholder='New password'
+                                name="newPassword1"
+                                color="secondary"
+                                id="outlined-adornment-password"
+                                data-testid="password"
+                                placeholder="New password"
                                 endAdornment={
-                                    <InputAdornment position='end'>
+                                    <InputAdornment position="end">
                                         <IconButton
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
-                                            size='large'
+                                            size="large"
                                         >
                                             {showPassword ? <Visibility /> : <VisibilityOff />}
                                         </IconButton>
@@ -101,24 +101,24 @@ export function Password() {
                                 }
                             />
                         </FormControl>
-                        <FormControl sx={style.textField} variant='outlined'>
+                        <FormControl sx={style.textField} variant="outlined">
                             <OutlinedInput
                                 onChange={(e) => changeNewPassword2(e.target.value)}
                                 value={newPassword2}
                                 type={showPassword ? "input" : "password"}
-                                name='newPassword2'
-                                color='secondary'
-                                id='outlined-adornment-password2'
-                                data-testid='password'
-                                placeholder='New password (again)'
+                                name="newPassword2"
+                                color="secondary"
+                                id="outlined-adornment-password2"
+                                data-testid="password"
+                                placeholder="New password (again)"
                             />
                         </FormControl>
                         <Button
                             fullWidth
                             type={"submit"}
                             sx={style.btn}
-                            color='primary'
-                            variant='contained'
+                            color="primary"
+                            variant="contained"
                             key={`${!newPassword1 || !newPassword2 ? true : false}`}
                             disabled={!newPassword1 || !newPassword2 ? true : false}
                         >

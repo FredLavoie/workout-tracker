@@ -4,7 +4,7 @@ import { isAuthenticated } from "../services/authentication";
 
 export function Home() {
     if (isAuthenticated() === true) {
-        return <Redirect to='/dashboard' />;
+        return <Redirect to="/dashboard" />;
     }
-    return <Redirect to='/login' />;
+    return <Redirect to="/login" />;
 }

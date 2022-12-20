@@ -37,19 +37,19 @@ export function App() {
             <ThemeProvider theme={myTheme}>
                 <Router>
                     <Switch>
-                        <Route exact path='/' component={Home} />
-                        <Route exact path='/login' component={Login} />
+                        <Route exact path="/" component={Home} />
+                        <Route exact path="/login" component={Login} />
                         <Layout userTheme={userTheme} setUserTheme={setUserTheme}>
                             <Switch>
-                                <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                                <PrivateRoute path='/workouts' component={Workout} />
-                                <PrivateRoute exact path='/records/event/:event' component={DetailRecord} />
-                                <PrivateRoute exact path='/records/:id' component={Record} />
-                                <PrivateRoute exact path='/cal/:date' component={Calendar} />
-                                <PrivateRoute exact path='/search' component={Search} />
-                                <PrivateRoute exact path='/password-change' component={Password} />
-                                <PrivateRoute path='/week' component={Week} />
-                                <Route exact path='/404' component={NotFound} />
+                                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                                <PrivateRoute path="/workouts" component={Workout} />
+                                <PrivateRoute exact path="/records/event/:event" component={DetailRecord} />
+                                <PrivateRoute exact path="/records/:id" component={Record} />
+                                <PrivateRoute exact path="/cal/:date" component={Calendar} />
+                                <PrivateRoute exact path="/search" component={Search} />
+                                <PrivateRoute exact path="/password-change" component={Password} />
+                                <PrivateRoute path="/week" component={Week} />
+                                <Route exact path="/404" component={NotFound} />
                                 <Route component={NotFound} />
                             </Switch>
                         </Layout>

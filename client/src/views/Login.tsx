@@ -63,7 +63,7 @@ export function Login() {
 
     // redirect to dashboard if already authenticated
     if (isAuthenticated() === true) {
-        return <Redirect to='/dashboard' />;
+        return <Redirect to="/dashboard" />;
     }
 
     function handleClose() {
@@ -80,47 +80,47 @@ export function Login() {
 
     return (
         <Paper elevation={0}>
-            <AppBar sx={style.appBar} position='fixed' elevation={1}>
+            <AppBar sx={style.appBar} position="fixed" elevation={1}>
                 <Toolbar>
-                    <Typography variant='h5' display='block'>
+                    <Typography variant="h5" display="block">
             Workout Tracker
                     </Typography>
                 </Toolbar>
             </AppBar>
             <Grid
                 container
-                direction='column'
-                alignItems='center'
-                justifyContent='center'
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
                 style={{ minHeight: "100vh" }}
             >
                 <Grid item xs={12} md={3}>
-                    <Box component='form' noValidate onSubmit={handleSubmit}>
+                    <Box component="form" noValidate onSubmit={handleSubmit}>
                         <TextField
                             onChange={(e) => changeUsername(e.target.value)}
                             sx={style.textField}
-                            label='Username'
-                            variant='outlined'
+                            label="Username"
+                            variant="outlined"
                             value={username}
                             type={"input"}
                             name={"username"}
-                            color='primary'
+                            color="primary"
                         />
-                        <FormControl sx={style.textField} variant='outlined'>
-                            <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
+                        <FormControl sx={style.textField} variant="outlined">
+                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                             <OutlinedInput
                                 onChange={(e) => changePassword(e.target.value)}
                                 value={password}
                                 type={showPassword ? "input" : "password"}
                                 name={"password"}
-                                label='Password'
-                                id='outlined-adornment-password'
+                                label="Password"
+                                id="outlined-adornment-password"
                                 endAdornment={
-                                    <InputAdornment position='end'>
+                                    <InputAdornment position="end">
                                         <IconButton
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
-                                            size='large'
+                                            size="large"
                                         >
                                             {showPassword ? <Visibility /> : <VisibilityOff />}
                                         </IconButton>
@@ -132,8 +132,8 @@ export function Login() {
                             fullWidth
                             type={"submit"}
                             sx={style.btn}
-                            color='primary'
-                            variant='contained'
+                            color="primary"
+                            variant="contained"
                             key={`${!username || !password ? true : false}`}
                             endIcon={<KeyboardArrowRightIcon />}
                             disabled={!username || !password ? true : false}
@@ -145,7 +145,7 @@ export function Login() {
                 {error && <ServerError errorMessage={error} />}
             </Grid>
             <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-                <Alert severity='error'>
+                <Alert severity="error">
           Wrong username or password! Please try again.
                 </Alert>
             </Snackbar>

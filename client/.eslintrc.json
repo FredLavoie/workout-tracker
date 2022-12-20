@@ -68,7 +68,7 @@
     ],
     "jsx-quotes": [
       2,
-      "prefer-single"
+      "prefer-double"
     ],
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/camelcase": 0,

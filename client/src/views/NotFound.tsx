@@ -11,14 +11,14 @@ import {
 export function NotFound() {
     return (
         <Container>
-            <AppBar sx={style.appBar} position='fixed' elevation={1}>
+            <AppBar sx={style.appBar} position="fixed" elevation={1}>
                 <Toolbar>
-                    <Typography variant='h5' display='block'>
+                    <Typography variant="h5" display="block">
             Workout Tracker
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Typography variant='h4' align='center'>
+            <Typography variant="h4" align="center">
                 <br />
         404 - Resource not found
             </Typography>

@@ -132,25 +132,25 @@ export function Workout() {
     return (
         <Grid
             container
-            direction='column'
-            alignItems='center'
+            direction="column"
+            alignItems="center"
             sx={style.root}
         >
-            <Typography variant='h4' gutterBottom>
+            <Typography variant="h4" gutterBottom>
         Workout
             </Typography>
             {error && <ServerError errorMessage={error} />}
             {isLoading && <CircularProgress />}
             {!error && !isLoading && <Grid sx={style.formSize}>
-                <Box component='form' noValidate onSubmit={handleSubmit} sx={style.formContainer}>
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={style.formContainer}>
                     <Typography sx={style.labelStyle}>
             Date
                     </Typography>
                     <TextField
                         onChange={(e) => setSelectedDate(e.target.value)}
-                        margin='normal'
-                        placeholder='Date'
-                        id='date-picker'
+                        margin="normal"
+                        placeholder="Date"
+                        id="date-picker"
                         value={selectedDate}
                     />
                     <Typography sx={style.labelStyle}>
@@ -158,9 +158,9 @@ export function Workout() {
                     </Typography>
                     <TextField
                         onChange={(e) => setSelectedTime(e.target.value)}
-                        margin='normal'
-                        placeholder='Time'
-                        id='time-picker'
+                        margin="normal"
+                        placeholder="Time"
+                        id="time-picker"
                         value={selectedTime}
                     />
                     <Typography sx={style.labelStyle}>
@@ -170,30 +170,30 @@ export function Workout() {
                         <TextField
                             onChange={(e) => setWorkoutBody(e.target.value)}
                             sx={style.field}
-                            id='workout-body'
-                            placeholder='Workout body'
+                            id="workout-body"
+                            placeholder="Workout body"
                             multiline
                             rows={10}
-                            value=''
-                            variant='outlined'
+                            value=""
+                            variant="outlined"
                         />
                         :
                         <TextField
                             onChange={(e) => setWorkoutBody(e.target.value)}
                             sx={style.field}
-                            id='workout-body'
+                            id="workout-body"
                             multiline
                             rows={10}
                             defaultValue={workoutBody}
-                            variant='outlined'
+                            variant="outlined"
                         />
                     }
                     <Button
                         fullWidth
                         type={"submit"}
                         sx={style.btn}
-                        color='primary'
-                        variant='contained'
+                        color="primary"
+                        variant="contained"
                         key={`${!workoutBody ? true : false}`}
                         disabled={!workoutBody ? true : false}
                     >
@@ -202,7 +202,7 @@ export function Workout() {
                     {
                         newOrEdit === 1
                             ?
-                            <Button onClick={handleCancel} sx={style.btn} variant='outlined'>Cancel</Button>
+                            <Button onClick={handleCancel} sx={style.btn} variant="outlined">Cancel</Button>
                             :
                             <ButtonGroup fullWidth sx={style.btnGrp}>
                                 <Button onClick={handleCancel}>Go Back</Button>

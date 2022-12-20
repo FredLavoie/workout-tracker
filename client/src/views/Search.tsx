@@ -57,19 +57,19 @@ export function Search() {
     return (
         <Grid
             container
-            direction='column'
-            alignItems='center'
+            direction="column"
+            alignItems="center"
             sx={style.root}
         >
-            <Typography variant='h4' sx={style.title}>
+            <Typography variant="h4" sx={style.title}>
         Search
             </Typography>
-            <Box component='form' noValidate onSubmit={handleSubmit} sx={style.formElement}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={style.formElement}>
                 <TextField
                     onChange={(e) => setSearchQuery(e.target.value)}
                     sx={style.searchBox}
-                    id='record-score'
-                    placeholder='Search workouts/records...'
+                    id="record-score"
+                    placeholder="Search workouts/records..."
                     value={searchQuery}
                 />
                 <FormGroup row sx={style.checkboxes}>
@@ -78,30 +78,30 @@ export function Search() {
                             <Checkbox
                                 checked={checkedWorkout}
                                 onChange={(e) => setCheckedWorkout(e.target.checked)}
-                                name='checkedWorkout'
-                                color='primary'
+                                name="checkedWorkout"
+                                color="primary"
                             />}
-                        label='Workouts'
+                        label="Workouts"
                     />
                     <FormControlLabel
                         control={
                             <Checkbox
                                 checked={checkedRecord}
                                 onChange={(e) => setCheckedRecord(e.target.checked)}
-                                name='checkedRecord'
-                                color='primary'
-                                data-testid='checkedRecord'
+                                name="checkedRecord"
+                                color="primary"
+                                data-testid="checkedRecord"
                             />}
-                        label='PRs'
+                        label="PRs"
                     />
                 </FormGroup>
                 <Box sx={style.buttonContainer}>
                     <Button
                         type={"submit"}
                         sx={style.elementMargin}
-                        color='primary'
-                        variant='contained'
-                        data-testid='submit-search'
+                        color="primary"
+                        variant="contained"
+                        data-testid="submit-search"
                         key={`${searchQuery === "" ? true : false}`}
                         disabled={searchQuery === "" ? true : false}
                     >
@@ -110,9 +110,9 @@ export function Search() {
                     <Button
                         onClick={handleClear}
                         sx={style.elementMargin}
-                        color='primary'
-                        variant='outlined'
-                        data-testid='clear-search'
+                        color="primary"
+                        variant="outlined"
+                        data-testid="clear-search"
                     >
             Clear
                     </Button>
@@ -120,7 +120,7 @@ export function Search() {
             </Box>
             {error && <ServerError errorMessage={error} />}
             {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
-            {searchResults && searchResults.length > 0 ? <Typography color='primary'>( Number of results found: {searchResults.length} )</Typography> : ""}
+            {searchResults && searchResults.length > 0 ? <Typography color="primary">( Number of results found: {searchResults.length} )</Typography> : ""}
             {searchResults && searchResults.length > 0 ? <SearchResultCard content={searchResults} searchQuery={searchQuery} /> : <></>}
         </Grid>
     );

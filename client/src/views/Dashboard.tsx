@@ -59,11 +59,11 @@ export function Dashboard() {
     return (
         <Grid
             container
-            direction='column'
-            alignItems='center'
+            direction="column"
+            alignItems="center"
             sx={style.root}
         >
-            <Typography variant='h4' sx={style.title}>
+            <Typography variant="h4" sx={style.title}>
         Dashboard
             </Typography>
             {error && <ServerError errorMessage={error} />}
@@ -72,14 +72,14 @@ export function Dashboard() {
                 {/**************************************** MONTH SUMMARY **************************************/}
                 <Card elevation={3} sx={style.cardStyle}>
                     <CardHeader
-                        title='Monthly Summary'
+                        title="Monthly Summary"
                         sx={style.header}
                     />
                     <CardContent sx={style.content}>
                         {monthNumbersArr.map((ea, index) => (
                             <Typography key={index} sx={style.textCol}>
-                                <Box component='span' sx={style.centerText}>{months[ea]}</Box>
-                                <Box component='span' sx={style.dataBackground}>{
+                                <Box component="span" sx={style.centerText}>{months[ea]}</Box>
+                                <Box component="span" sx={style.dataBackground}>{
                                     filterWorkoutsForMonth(yearWorkouts, ea)
                                 }</Box>
                             </Typography>
@@ -89,14 +89,14 @@ export function Dashboard() {
                 {/**************************************** YEAR SUMMARY ***************************************/}
                 <Card elevation={3} sx={style.cardStyle}>
                     <CardHeader
-                        title='Yearly Summary'
+                        title="Yearly Summary"
                         sx={style.header}
                     />
                     <CardContent sx={style.content}>
                         {yearCounts.map((ea, index) => (
                             <Typography key={index} sx={style.textCol}>
-                                <Box component='span' sx={style.centerText}>{ea.year}</Box>
-                                <Box component='span' sx={style.dataBackground}>{ea.count}</Box>
+                                <Box component="span" sx={style.centerText}>{ea.year}</Box>
+                                <Box component="span" sx={style.dataBackground}>{ea.count}</Box>
                             </Typography>
                         ))}
                     </CardContent>
@@ -104,7 +104,7 @@ export function Dashboard() {
                 {/**************************************** STRENGTH PRs ***************************************/}
                 <Card elevation={3} sx={style.cardStyle}>
                     <CardHeader
-                        title='Strength PRs'
+                        title="Strength PRs"
                         sx={style.header}
                     />
                     <RecordTable type={"strength"} records={records.filter((ea) => ea.type === "strength")} />
@@ -112,7 +112,7 @@ export function Dashboard() {
                 {/**************************************** ENDURANCE PRs **************************************/}
                 <Card elevation={3} sx={style.cardStyle}>
                     <CardHeader
-                        title='Endurance PRs'
+                        title="Endurance PRs"
                         sx={style.header}
                     />
                     <RecordTable type={"endurance"} records={records.filter((ea) => ea.type === "endurance")} />
@@ -120,7 +120,7 @@ export function Dashboard() {
                 {/******************************************* WOD PRs *****************************************/}
                 <Card elevation={3} sx={style.cardStyle}>
                     <CardHeader
-                        title='WOD PRs'
+                        title="WOD PRs"
                         sx={style.header}
                     />
                     <RecordTable type={"wod"} records={records.filter((ea) => ea.type === "wod")} />

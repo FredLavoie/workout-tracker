@@ -35,7 +35,7 @@ export function RecordTable({ type, records }) {
                             <Box
                                 key={ea.id}
                                 id={ea.event}
-                                data-testid='recordItem'
+                                data-testid="recordItem"
                             >
                                 <Typography variant={"body2"} sx={style.score}>
                                     {ea.score}
