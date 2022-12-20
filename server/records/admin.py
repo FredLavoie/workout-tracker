@@ -4,8 +4,8 @@ from .models import Record
 
 class RecordAdmin(admin.ModelAdmin):
     list_display = (
-                    'id', 'author', 'date', 'type', 'event',
-                    'score', 'created_at', 'updated_at',
+                    "id", "author", "date", "type", "event",
+                    "score", "created_at", "updated_at",
                     )
 
 

@@ -7,10 +7,10 @@
  * @return if the data is valid, return true, else return false
  */
 export function validatePasswordChange(pass1: string, pass2: string): boolean {
-  if (pass1 === pass2) {
-    if (pass1.length < 8) return false;
-    if (Number(pass1) % 1 === 0) return false;
-    return true;
-  }
-  return false;
+    if (pass1 === pass2) {
+        if (pass1.length < 8) return false;
+        if (Number(pass1) % 1 === 0) return false;
+        return true;
+    }
+    return false;
 }

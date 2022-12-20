@@ -8,8 +8,8 @@
  * @return date in string format of the month to fetch the data for. Ex: "2022-03"
  */
 export function calculateMonth(month: string, year: string, req: string): string {
-  if (month === '01' && req === 'prev') return `${Number(year) - 1}-12`;
-  if (month === '12' && req === 'next') return `${Number(year) + 1}-01`;
-  if (req === 'prev') return `${year}-${String(Number(month) - 1).padStart(2, '0')}`;
-  if (req === 'next') return `${year}-${String(Number(month) + 1).padStart(2, '0')}`;
+    if (month === "01" && req === "prev") return `${Number(year) - 1}-12`;
+    if (month === "12" && req === "next") return `${Number(year) + 1}-01`;
+    if (req === "prev") return `${year}-${String(Number(month) - 1).padStart(2, "0")}`;
+    if (req === "next") return `${year}-${String(Number(month) + 1).padStart(2, "0")}`;
 }

@@ -11,50 +11,50 @@
  * 	psql -U <user_name> -h <host_name> -d <database_name> < <path_to_file.sql>
  */
 
-import { readFile, writeFileSync } from 'fs';
-import { v4 } from 'uuid';
+import { readFile, writeFileSync } from "fs";
+import { v4 } from "uuid";
 const inputFile = process.argv[2];
 
-readFile(inputFile, 'utf-8', (error, data) => {
-  if (error) {
-    console.log(error);
-    return;
-  }
-
-  // first step in processing txt file to separate content into array
-  const arrayData = data.split('=============================').map((ea) => ea.split('\n'));
-
-  const tempArray = [];
-  for (const subArray of arrayData) {
-    const temp = subArray.filter((ea) => ea !== '');
-    tempArray.push(temp);
-  }
-
-  // reassemble content into array of individual days
-  const resultArray = tempArray[0];
-  for (let i = 1; i < tempArray.length; i++) {
-    let date = '';
-    if (i !== tempArray.length - 1) {
-      date = tempArray[i].pop();
-      resultArray.push(tempArray[i]);
-      resultArray.push(date);
-    } else {
-      resultArray.push(tempArray[i]);
+readFile(inputFile, "utf-8", (error, data) => {
+    if (error) {
+        console.log(error);
+        return;
     }
-  }
 
-  // create results string of all the sql statements
-  let resultString = '';
-  const year = inputFile.split('workout_logs/')[1].split('/')[0];
-  const month = inputFile.split('workout_logs/')[1].split('/')[1].split('-')[0];
+    // first step in processing txt file to separate content into array
+    const arrayData = data.split("=============================").map((ea) => ea.split("\n"));
 
-  for (let i = 0; i < resultArray.length; i += 2) {
-    const day = resultArray[i].split(' ')[1];
-    const body = resultArray[i + 1].join('\n');
-    resultString += 'INSERT INTO workouts_workout(id, author_id, date, time, workout_body, created_at, updated_at)\n';
-    resultString += `VALUES ('${v4()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`;
-  }
+    const tempArray = [];
+    for (const subArray of arrayData) {
+        const temp = subArray.filter((ea) => ea !== "");
+        tempArray.push(temp);
+    }
 
-  writeFileSync(`../BACKUP/workout_migrations/${year}-${month}_migration.sql`, resultString);
-  console.log(`Completed creating migration for ${year}-${month}`);
+    // reassemble content into array of individual days
+    const resultArray = tempArray[0];
+    for (let i = 1; i < tempArray.length; i++) {
+        let date = "";
+        if (i !== tempArray.length - 1) {
+            date = tempArray[i].pop();
+            resultArray.push(tempArray[i]);
+            resultArray.push(date);
+        } else {
+            resultArray.push(tempArray[i]);
+        }
+    }
+
+    // create results string of all the sql statements
+    let resultString = "";
+    const year = inputFile.split("workout_logs/")[1].split("/")[0];
+    const month = inputFile.split("workout_logs/")[1].split("/")[1].split("-")[0];
+
+    for (let i = 0; i < resultArray.length; i += 2) {
+        const day = resultArray[i].split(" ")[1];
+        const body = resultArray[i + 1].join("\n");
+        resultString += "INSERT INTO workouts_workout(id, author_id, date, time, workout_body, created_at, updated_at)\n";
+        resultString += `VALUES ('${v4()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`;
+    }
+
+    writeFileSync(`../BACKUP/workout_migrations/${year}-${month}_migration.sql`, resultString);
+    console.log(`Completed creating migration for ${year}-${month}`);
 });

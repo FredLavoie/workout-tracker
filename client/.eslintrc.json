@@ -36,7 +36,7 @@
     ],
     "indent": [
       "error",
-      2
+      4
     ],
     "no-trailing-spaces": [
       "error",
@@ -63,12 +63,12 @@
     ],
     "quotes": [
       2,
-      "single",
+      "double",
       "avoid-escape"
     ],
     "jsx-quotes": [
       2,
-      "prefer-single"
+      "prefer-double"
     ],
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/camelcase": 0,

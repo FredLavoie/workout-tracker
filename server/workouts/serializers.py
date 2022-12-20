@@ -4,7 +4,7 @@ from .models import Workout
 
 class WorkoutSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('id', 'author', 'date', 'time', 'workout_body', 'created_at', 'updated_at')
+        fields = ("id", "author", "date", "time", "workout_body", "created_at", "updated_at")
         model = Workout
 
 
@@ -13,5 +13,5 @@ class WorkoutCountSerializer(serializers.ModelSerializer):
     count = serializers.IntegerField()
 
     class Meta:
-        fields = ('year', 'count')
+        fields = ("year", "count")
         model = Workout
