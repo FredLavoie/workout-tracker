@@ -4,15 +4,24 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Record
 from .permissions import IsAuthor
 from .serializers import RecordSerializer
+from .utils import latest_record_for_event
 
 
 class RecordList(generics.ListCreateAPIView):
+    """
+    Get latest record for each event type
+
+    Example: if there are 3 records for "Back Squat", the
+    get_queryset function will return only the latest one
+    based on the record date.
+    """
     permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = RecordSerializer
 
     def get_queryset(self):
         id = self.kwargs["author_id"]
-        queryset = Record.objects.filter(author_id=id)
+        queryset = Record.objects.filter(author_id=id).order_by("event")
+        queryset = latest_record_for_event(queryset)
         return queryset
 
 
@@ -46,6 +55,11 @@ class RecordSearch(generics.ListAPIView):
 
 
 class EventRecordList(generics.ListAPIView):
+    """
+    Get the list of records for a specific event
+
+    Return results sorted
+    """
     permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = RecordSerializer
 
@@ -55,5 +69,5 @@ class EventRecordList(generics.ListAPIView):
         eventFixedKm = event.replace("Km", "km")
         eventFixedM = eventFixedKm.replace("0M", "0m")
         eventFixedMin = eventFixedM.replace(" Min", " min")
-        queryset = Record.objects.filter(author_id=id, event=eventFixedMin)
+        queryset = Record.objects.filter(author_id=id, event=eventFixedMin).order_by("date").reverse()
         return queryset
