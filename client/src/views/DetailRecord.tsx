@@ -14,7 +14,6 @@ import {
 
 import { fetchEventRecords } from "../services/fetchData";
 import { ServerError } from "../components/ServerError";
-import { tRecord } from "../types";
 
 
 export function DetailRecord() {
@@ -31,8 +30,7 @@ export function DetailRecord() {
         const setupPage = async () => {
             try {
                 const data = await fetchEventRecords(eventToFetch, abortCont);
-                const sortedRecords = data.sort((a: tRecord, b: tRecord) => b.date > a.date);
-                setRecrods(sortedRecords);
+                setRecrods(data);
                 setIsLoading(false);
             } catch (error) {
                 if (error.name === "AbortError") return;
@@ -61,22 +59,22 @@ export function DetailRecord() {
             sx={style.root}
         >
             <Typography variant="h4" sx={style.title}>
-        Record Details
+                Record Details
             </Typography>
             {error && <ServerError errorMessage={error} />}
             {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
             {records && !isLoading &&
-        <Card elevation={2} sx={style.cardStyle}>
-            <CardHeader title={records[0].event} />
-            <CardContent sx={style.content}>
-                {records.map((ea, index) => (
-                    <Box key={index} id={ea.id} sx={style.individualContainer} onClick={(e) => handleClickActive(e.target)}>
-                        <Typography variant={"body2"}>{ea.date}</Typography>
-                        <Typography variant={"body2"}>{ea.score}</Typography>
-                    </Box>
-                ))}
-            </CardContent>
-        </Card>}
+            <Card elevation={2} sx={style.cardStyle}>
+                <CardHeader title={records[0].event} />
+                <CardContent sx={style.content}>
+                    {records.map((ea, index) => (
+                        <Box key={index} id={ea.id} sx={style.individualContainer} onClick={(e) => handleClickActive(e.target)}>
+                            <Typography variant={"body2"}>{ea.date}</Typography>
+                            <Typography variant={"body2"}>{ea.score}</Typography>
+                        </Box>
+                    ))}
+                </CardContent>
+            </Card>}
             <Button sx={style.button} variant="outlined" onClick={handleCancel}>Go Back</Button>
         </Grid>
     );

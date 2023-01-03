@@ -21,8 +21,8 @@ export function correctDate(dateArr: string[]): string[] {
     // we need to subtract 1 to get the index of the current month
         numDaysPrevMonth = new Date(Number(dateArr[2]), Number(dateArr[0]) - 1, 0).getDate();
     }
-    // @ts-ignore
-    let dayOfTheWeek = Number(new Date().getDay().toLocaleString("en-US", { timeZone: "America/New_York" }));
+
+    let dayOfTheWeek = Number(new Date().getDay().toLocaleString());
     if (dayOfTheWeek === 7) dayOfTheWeek = 0;
 
     let day = Number(dateArr[1]);

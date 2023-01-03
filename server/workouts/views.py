@@ -70,14 +70,16 @@ class WorkoutSearch(generics.ListAPIView):
 
 
 class WorkoutTotalPerYear(generics.ListAPIView):
-    """
-    Get the total number of workouts per year
-    for each year that has workouts
-    """
     permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = WorkoutCountSerializer
 
     def get_queryset(self):
+        """
+        Get the total number of workouts per year
+        for each year that has workouts.
+
+        Return results in reverse chronological order
+        """
         id = self.kwargs["author_id"]
         queryset = Workout.objects.filter(
             author_id=id
@@ -85,6 +87,6 @@ class WorkoutTotalPerYear(generics.ListAPIView):
             year=F("date__year")
         ).annotate(
             count=Count("date__year")
-        ).order_by("date__year")
+        ).order_by("date__year").reverse()
 
         return queryset

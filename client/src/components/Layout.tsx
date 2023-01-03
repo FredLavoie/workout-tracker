@@ -36,9 +36,6 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import { logout, isAuthenticated } from "../services/authentication";
 
-const dateArray: string[] = new Date().toLocaleString("en-US", { timeZone: "America/New_York" }).split(",")[0].split("/");
-const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, "0")}`;
-
 // eslint-disable-next-line prefer-arrow-callback
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
     return <MuiAlert elevation={4} ref={ref} {...props} />;
@@ -48,6 +45,10 @@ export function Layout({ children, userTheme, setUserTheme }) {
     if (isAuthenticated() === false) {
         return <Redirect to="/login" />;
     }
+
+    // dateArray example: Jan 31, 2020 -> ["1", "31", "2020"]
+    const dateArray: string[] = new Date().toLocaleString("en-US", { timeZone: "America/New_York" }).split(",")[0].split("/");
+    const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, "0")}`;
 
     const history = useHistory();
     const location = useLocation();

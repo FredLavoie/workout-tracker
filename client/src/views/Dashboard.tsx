@@ -16,8 +16,8 @@ import { RecordTable } from "../components/RecordTable";
 import { ServerError } from "../components/ServerError";
 import { tWorkout } from "../types";
 
-const currentDate = new Date().toISOString().split("T")[0].split("-");
-const currentYear = currentDate[0];
+const currentDate = new Date().toLocaleDateString().split("/");
+const currentYear = currentDate[2];
 const monthNumbersArr = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 export function Dashboard() {
@@ -53,7 +53,7 @@ export function Dashboard() {
         const numberOfWorkouts = workouts.filter((ea) => {
             return ea.date.split("-")[1] === monthNumber;
         });
-        return numberOfWorkouts.length;
+        return String(numberOfWorkouts.length).padStart(2, "0");
     }
 
     return (
@@ -96,7 +96,7 @@ export function Dashboard() {
                         {yearCounts.map((ea, index) => (
                             <Typography key={index} sx={style.textCol}>
                                 <Box component="span" sx={style.centerText}>{ea.year}</Box>
-                                <Box component="span" sx={style.dataBackground}>{ea.count}</Box>
+                                <Box component="span" sx={style.dataBackground}>{String(ea.count).padStart(3, "0")}</Box>
                             </Typography>
                         ))}
                     </CardContent>

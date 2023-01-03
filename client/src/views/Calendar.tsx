@@ -48,8 +48,8 @@ export function Calendar() {
     }
 
     function handleReturnToCurrent() {
-        const currentDate = new Date().toISOString().split("T")[0].split("-");
-        const currentDateString = `${currentDate[0]}-${currentDate[1]}`;
+        const currentDate = new Date().toLocaleDateString().split("/");
+        const currentDateString = `${currentDate[2]}-${currentDate[0].padStart(2, "0")}`;
         const pathDateString = location.pathname.split("/")[2];
         if (currentDateString !== pathDateString) {
             setWorkouts(null);

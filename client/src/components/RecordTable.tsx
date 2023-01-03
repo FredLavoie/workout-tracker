@@ -13,8 +13,6 @@ import { tRecord } from "../types";
 
 export function RecordTable({ type, records }) {
     const history = useHistory();
-
-    const sortedRecords = records.sort((a: tRecord, b: tRecord) => b.date > a.date);
     const filteredEventList = recordList[type].filter((ea: string) => records.find((rec: tRecord) => rec.event === ea));
 
     function handleClickActive(target: Element) {
@@ -30,7 +28,7 @@ export function RecordTable({ type, records }) {
                         {event}
                     </Typography>
 
-                    {[sortedRecords.find((ea) => ea.event === event)].map((ea) => {
+                    {[records.find((ea: { event: string }) => ea.event === event)].map((ea) => {
                         return (
                             <Box
                                 key={ea.id}

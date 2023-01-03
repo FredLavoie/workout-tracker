@@ -21,7 +21,7 @@ export const recordList: recordListTypes = {
         "30 min Air Bike",
         "Bike Erg 30 min",
         "Bike Erg 60 min",
-        "Bike Erg marathon",
+        "Bike Erg Marathon",
         "Row 500m",
         "Row 1,000m",
         "Row 2,000m",
