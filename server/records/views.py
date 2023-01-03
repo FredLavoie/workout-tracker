@@ -8,17 +8,17 @@ from .utils import latest_record_for_event
 
 
 class RecordList(generics.ListCreateAPIView):
-    """
-    Get latest record for each event type
-
-    Example: if there are 3 records for "Back Squat", the
-    get_queryset function will return only the latest one
-    based on the record date.
-    """
     permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = RecordSerializer
 
     def get_queryset(self):
+        """
+        Get latest record for each event type
+
+        Example: if there are 3 records for "Back Squat", the
+        get_queryset function will return only the latest one
+        based on the record date.
+        """
         id = self.kwargs["author_id"]
         queryset = Record.objects.filter(author_id=id).order_by("event")
         queryset = latest_record_for_event(queryset)
@@ -55,15 +55,15 @@ class RecordSearch(generics.ListAPIView):
 
 
 class EventRecordList(generics.ListAPIView):
-    """
-    Get the list of records for a specific event
-
-    Return results sorted
-    """
     permission_classes = (IsAuthenticated, IsAuthor,)
     serializer_class = RecordSerializer
 
     def get_queryset(self):
+        """
+        Get the list of records for a specific event
+
+        Return results sorted
+        """
         id = self.kwargs["author_id"]
         event = self.kwargs["event"].replace("-", " ").title()
         eventFixedKm = event.replace("Km", "km")
