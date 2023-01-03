@@ -20,12 +20,13 @@ describe("Workout view - new", () => {
     const workoutBody = "new workout body";
 
     it("renders new Workout view without crashing", () => {
-        const today = new Date().toISOString().split("T")[0];
+        const today = new Date().toLocaleDateString().split("/");
+        const todayFormatted = `${today[2]}-${today[0]?.padStart(2, "0")}-${today[1]?.padStart(2, "0")}`;
         const currentTime = convertTime(new Date().toTimeString().split(":").splice(0, 2));
 
         render(<MockedNewWorkout />);
         // check that todays date is automatically set in the date input
-        const dateValue = screen.getByDisplayValue(today);
+        const dateValue = screen.getByDisplayValue(todayFormatted);
         expect(dateValue).toBeInTheDocument();
         // check that the current time (hour) is automatically set in the time input
         const workoutTextArea = screen.getByDisplayValue(currentTime);

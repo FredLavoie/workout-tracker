@@ -9,7 +9,7 @@ import { Week } from "../Week";
 
 afterEach(cleanup);
 
-const currentWeekArr = new Date().toLocaleString("en-US", { timeZone: "America/New_York" }).split(",")[0].split("/");
+const currentWeekArr = new Date().toLocaleDateString("en-US", { timeZone: "America/New_York" }).split("/");
 const prevWeekArr = correctDate(currentWeekArr.map((ea, index) => {
     if (index === 1) return String(Number(ea) - 7);
     else return ea;

@@ -18,11 +18,12 @@ describe("Record view - new", () => {
     };
 
     it("renders new Record view without crashing", async () => {
-        const today = new Date().toISOString().split("T")[0];
+        const today = new Date().toLocaleDateString().split("/");
+        const todayFormatted = `${today[2]}-${today[0]?.padStart(2, "0")}-${today[1]?.padStart(2, "0")}`;
 
         render(<MockedNewRecord />);
         // check that todays date is automatically set in the date input
-        const dateValue = await screen.findByDisplayValue(today);
+        const dateValue = await screen.findByDisplayValue(todayFormatted);
         expect(dateValue).toBeInTheDocument();
     });
 

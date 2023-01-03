@@ -36,8 +36,8 @@ export function Record() {
     const history = useHistory();
 
     const recordId = location.pathname.split("/")[2];
-    const newDate = new Date().toISOString().split("T");
-    const currentDate = newDate[0];
+    const newDate = new Date().toLocaleDateString().split("/");
+    const currentDate = `${newDate[2]}-${newDate[0]?.padStart(2, "0")}-${newDate[1]?.padStart(2, "0")}`;
 
 
     const [selectedDate, setSelectedDate] = useState(currentDate);

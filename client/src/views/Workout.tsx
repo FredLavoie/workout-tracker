@@ -31,10 +31,10 @@ export function Workout() {
 
     const workoutId = location.pathname.split("/")[2];
     const newWorkoutDate = location.pathname.split("/")[3] || null;
-    const newDate = new Date().toISOString().split("T");
-    const currentDate = newDate[0];
+    const newDate = new Date().toLocaleDateString().split("/");
+    const currentDate = `${newDate[2]}-${newDate[0]?.padStart(2, "0")}-${newDate[1]?.padStart(2, "0")}`;
     const currentTime = convertTime(new Date().toTimeString().split(":").splice(0, 2));
-    const navDate = currentDate.split("-").splice(0, 2).join("-");
+    const navDate = `${newDate[2]}-${newDate[0].padStart(2, "0")}`;
 
     const [selectedDate, setSelectedDate] = useState(currentDate);
     const [selectedTime, setSelectedTime] = useState(currentTime);
