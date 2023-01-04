@@ -11,3 +11,9 @@ The stack for the app is made up of [Django](https://www.djangoproject.com/) + [
 
 ### Mobile Screenshots
 <img src="./docs/mobile_views2.png" width="800">
+
+### Dark/Light Theme
+<p float="left">
+    <img src="./docs/light.png" width="500">
+    <img src="./docs/dark.png" width="500">
+</p>
