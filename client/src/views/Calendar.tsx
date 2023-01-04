@@ -48,7 +48,7 @@ export function Calendar() {
     }
 
     function handleReturnToCurrent() {
-        const currentDate = new Date().toLocaleDateString().split("/");
+        const currentDate = new Date().toLocaleDateString("en-US").split("/");
         const currentDateString = `${currentDate[2]}-${currentDate[0].padStart(2, "0")}`;
         const pathDateString = location.pathname.split("/")[2];
         if (currentDateString !== pathDateString) {

@@ -36,7 +36,7 @@ export function Record() {
     const history = useHistory();
 
     const recordId = location.pathname.split("/")[2];
-    const newDate = new Date().toLocaleDateString().split("/");
+    const newDate = new Date().toLocaleDateString("en-US").split("/");
     const currentDate = `${newDate[2]}-${newDate[0]?.padStart(2, "0")}-${newDate[1]?.padStart(2, "0")}`;
 
 

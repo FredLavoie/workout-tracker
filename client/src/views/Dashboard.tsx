@@ -16,8 +16,11 @@ import { RecordTable } from "../components/RecordTable";
 import { ServerError } from "../components/ServerError";
 import { tWorkout } from "../types";
 
-const currentDate = new Date().toLocaleDateString().split("/");
+const currentDate = new Date().toLocaleDateString("en-US").split("/");
+console.log("*** currentDate: ", currentDate);
+
 const currentYear = currentDate[2];
+console.log("*** currentYear: ", currentYear);
 const monthNumbersArr = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 export function Dashboard() {

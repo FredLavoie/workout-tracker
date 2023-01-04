@@ -27,7 +27,7 @@ export function Week() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     // newDate example: Jan 31, 2020 -> ["1", "31", "2020"]
-    const newDate = new Date().toLocaleDateString("en-US", { timeZone: "America/New_York" }).split("/");
+    const newDate = new Date().toLocaleDateString("en-US").split("/");
     const [dateArr, setDateArr] = useState(newDate);
     const [currentMonthToFetch, setCurrentMonthToFetch] = useState(`${dateArr[2]}-${dateArr[0].padStart(2, "0")}`);
     const [nextMonthToFetch, setNextMonthToFetch] = useState(`${dateArr[2]}-${String(Number(dateArr[0]) - 1).padStart(2, "0")}`);

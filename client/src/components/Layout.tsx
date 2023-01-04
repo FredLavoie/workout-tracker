@@ -47,7 +47,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
     }
 
     // dateArray example: Jan 31, 2020 -> ["1", "31", "2020"]
-    const dateArray: string[] = new Date().toLocaleString("en-US", { timeZone: "America/New_York" }).split(",")[0].split("/");
+    const dateArray: string[] = new Date().toLocaleDateString("en-US").split("/");
     const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, "0")}`;
 
     const history = useHistory();

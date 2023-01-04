@@ -31,7 +31,7 @@ export function Workout() {
 
     const workoutId = location.pathname.split("/")[2];
     const newWorkoutDate = location.pathname.split("/")[3] || null;
-    const newDate = new Date().toLocaleDateString().split("/");
+    const newDate = new Date().toLocaleDateString("en-US").split("/");
     const currentDate = `${newDate[2]}-${newDate[0]?.padStart(2, "0")}-${newDate[1]?.padStart(2, "0")}`;
     const currentTime = convertTime(new Date().toTimeString().split(":").splice(0, 2));
     const navDate = `${newDate[2]}-${newDate[0].padStart(2, "0")}`;

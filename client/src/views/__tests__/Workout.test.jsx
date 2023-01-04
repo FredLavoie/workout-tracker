@@ -20,7 +20,7 @@ describe("Workout view - new", () => {
     const workoutBody = "new workout body";
 
     it("renders new Workout view without crashing", () => {
-        const today = new Date().toLocaleDateString().split("/");
+        const today = new Date().toLocaleDateString("en-US").split("/");
         const todayFormatted = `${today[2]}-${today[0]?.padStart(2, "0")}-${today[1]?.padStart(2, "0")}`;
         const currentTime = convertTime(new Date().toTimeString().split(":").splice(0, 2));
 

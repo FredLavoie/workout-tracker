@@ -18,7 +18,7 @@ describe("Record view - new", () => {
     };
 
     it("renders new Record view without crashing", async () => {
-        const today = new Date().toLocaleDateString().split("/");
+        const today = new Date().toLocaleDateString("en-US").split("/");
         const todayFormatted = `${today[2]}-${today[0]?.padStart(2, "0")}-${today[1]?.padStart(2, "0")}`;
 
         render(<MockedNewRecord />);
