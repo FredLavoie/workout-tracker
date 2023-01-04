@@ -137,7 +137,7 @@ const style = {
     bodyText: {
         font: "inherit",
         margin: "0px",
-        whiteSpace: "unset",
+        whiteSpace: "pre-wrap",
         wordBreak: "break-all"
     },
     monthTitle: {
