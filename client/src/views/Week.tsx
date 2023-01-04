@@ -108,7 +108,7 @@ export function Week() {
                                     component="pre"
                                     sx={style.bodyText}
                                 >
-                                    {workouts.find((ea) => ea.date === day)?.workout_body || "Rest"}
+                                    {workouts.find((ea: { date: string }) => ea.date === day)?.workout_body || "Rest"}
                                 </Typography>
                             </Typography>
                         </CardContent>
@@ -137,6 +137,8 @@ const style = {
     bodyText: {
         font: "inherit",
         margin: "0px",
+        whiteSpace: "unset",
+        wordBreak: "break-all"
     },
     monthTitle: {
         width: "30%",
@@ -153,6 +155,8 @@ const style = {
         justifyContent: "space-around",
     },
     weekContainer: {
+        width: { sm: "65vw", sx: "100%" },
+        margin: "16px auto",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -160,7 +164,6 @@ const style = {
     },
     cardStyle: {
         width: { sm: "100%", xs: "95%" },
-        flexGrow: "1",
         margin: { md: "0px auto 16px auto", xs: "8px 0 4px 0" },
     },
 };

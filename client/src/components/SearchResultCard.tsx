@@ -33,26 +33,28 @@ export function SearchResultCard({ content, searchQuery }) {
     function processBodyText(text: string) {
         const textArr = text.split("\n");
         const lowerCaseSearchQuery = searchQuery.toLowerCase();
-        return (<Typography component="pre" sx={style.bodyText}>
-            {textArr.map((subString: string, index: number) => {
-                const lowerCaseSubString = subString.toLowerCase();
-                return lowerCaseSubString.includes(lowerCaseSearchQuery) ?
-                    (<div key={`${subString}-${index}`}>
-                        <span>
-                            {subString.split(" ").map((subSubString: string, index2: number) => {
-                                const lowerCaseSubSubString = subSubString.toLowerCase();
-                                return lowerCaseSubSubString.includes(lowerCaseSearchQuery) ?
-                                    (<span key={`${lowerCaseSubSubString}-${index2}`}><mark>{subSubString}</mark> </span>)
-                                    :
-                                    (<span key={`${lowerCaseSubSubString}-${index2}`}>{subSubString} </span>);
-                            })}
-                        </span>
-                        <br />
-                    </div>)
-                    :
-                    (<><span>{subString}</span><br /></>);
-            })}
-        </Typography>);
+        return (
+            <Typography component="pre" sx={style.bodyText}>
+                {textArr.map((subString: string, index: number) => {
+                    const lowerCaseSubString = subString.toLowerCase();
+                    return lowerCaseSubString.includes(lowerCaseSearchQuery) ?
+                        (<div key={`${subString}-${index}`}>
+                            <span>
+                                {subString.split(" ").map((subSubString: string, index2: number) => {
+                                    const lowerCaseSubSubString = subSubString.toLowerCase();
+                                    return lowerCaseSubSubString.includes(lowerCaseSearchQuery) ?
+                                        (<span key={`${lowerCaseSubSubString}-${index2}`}><mark>{subSubString}</mark> </span>)
+                                        :
+                                        (<span key={`${lowerCaseSubSubString}-${index2}`}>{subSubString} </span>);
+                                })}
+                            </span>
+                            <br />
+                        </div>)
+                        :
+                        (<><span>{subString}</span><br /></>);
+                })}
+            </Typography>
+        );
     }
 
     return (
