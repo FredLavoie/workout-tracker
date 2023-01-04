@@ -14,6 +14,6 @@ The stack for the app is made up of [Django](https://www.djangoproject.com/) + [
 
 ### Dark/Light Theme
 <p float="left">
-    <img src="./docs/light.png" width="400">
-    <img src="./docs/dark.png" width="400">
+    <img src="./docs/light.png" width="350">
+    <img src="./docs/dark.png" width="350">
 </p>
