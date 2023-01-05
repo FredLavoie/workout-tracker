@@ -91,9 +91,14 @@ export function Week() {
         <Box>
             <Box sx={style.weekNav}>
                 <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
-                <Typography variant="h5" gutterBottom sx={style.monthTitle}>
-                    {`Week of ${months[weekArr[0].split("-")[1]]} ${weekArr[0].split("-")[2]}`}
-                </Typography>
+                <Box sx={style.titleContainer}>
+                    <Typography variant="h5" gutterBottom>
+                        Week of
+                    </Typography>
+                    <Typography variant="h5" gutterBottom>
+                        {`${months[weekArr[0].split("-")[1]].substring(0, 3)} ${weekArr[0].split("-")[2]}, ${weekArr[0].split("-")[0]}`}
+                    </Typography>
+                </Box>
                 <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
             </Box>
             <Box sx={style.weekContainer}>
@@ -140,13 +145,17 @@ const style = {
         whiteSpace: "pre-wrap",
         wordBreak: "break-all"
     },
-    monthTitle: {
+    titleContainer: {
+        display: "flex",
+        flexDirection: "Column",
         width: "30%",
         minWidth: "240px",
         textAlign: "center",
     },
     navLink: {
         minWidth: "70px",
+        height: "50px",
+        margin: "auto",
     },
     weekNav: {
         width: { sm: "65vw", sx: "100%" },
