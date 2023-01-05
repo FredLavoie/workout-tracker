@@ -46,7 +46,8 @@ describe("Week view", () => {
         const searchBox = await screen.findAllByText("Rest");
         expect(searchBox.length).toBe(7);
         // find current week title and assert it exists
-        const weekTitle = `Week of ${months[currentWeekArrDays[0].split("-")[1]]} ${currentWeekArrDays[0].split("-")[2]}`;
+        const weekTitle = `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} `
+        + `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(weekTitle)).toBeInTheDocument();
     });
 
@@ -58,13 +59,15 @@ describe("Week view", () => {
         );
         render(<MockedWeek />);
         // find current week title and assert it exists
-        const weekTitle = `Week of ${months[currentWeekArrDays[0].split("-")[1]]} ${currentWeekArrDays[0].split("-")[2]}`;
+        const weekTitle = `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} `
+        + `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(weekTitle)).toBeInTheDocument();
         // find and click the PREV button
         const prevButton = await screen.findByText("Prev");
         fireEvent.click(prevButton);
         // assert that it shows the previous week
-        const prevWeekTitle = `Week of ${months[prevWeekArrDays[0].split("-")[1]]} ${prevWeekArrDays[0].split("-")[2]}`;
+        const prevWeekTitle = `${months[prevWeekArrDays[0].split("-")[1]].substring(0, 3)} `
+        + `${prevWeekArrDays[0].split("-")[2]}, ${prevWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(prevWeekTitle)).toBeInTheDocument();
     });
 
@@ -76,13 +79,15 @@ describe("Week view", () => {
         );
         render(<MockedWeek />);
         // find current week title and assert it exists
-        const weekTitle = `Week of ${months[currentWeekArrDays[0].split("-")[1]]} ${currentWeekArrDays[0].split("-")[2]}`;
+        const weekTitle = `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} `
+        + `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(weekTitle)).toBeInTheDocument();
         // find and click the NEXT button
         const nextButton = await screen.findByText("Next");
         fireEvent.click(nextButton);
         // assert that it shows the next week
-        const nextWeekTitle = `Week of ${months[nextWeekArrDays[0].split("-")[1]]} ${nextWeekArrDays[0].split("-")[2]}`;
+        const nextWeekTitle = `${months[nextWeekArrDays[0].split("-")[1]].substring(0, 3)} `
+        + `${nextWeekArrDays[0].split("-")[2]}, ${nextWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(nextWeekTitle)).toBeInTheDocument();
     });
 
