@@ -6,9 +6,9 @@ The stack for the app is made up of [Django](https://www.djangoproject.com/) + [
 
 ### Desktop Screenshot
 
+<img src="./docs/dashboard_view2.png" width="800">
 <img src="./docs/calendar_view3.png" width="800">
 <img src="./docs/search_view2.png" width="800">
-<img src="./docs/dashboard_view2.png" width="800">
 
 ### Mobile Screenshots
 
