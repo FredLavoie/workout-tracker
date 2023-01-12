@@ -30,6 +30,7 @@
   },
   "rules": {
     "react/prop-types": 0,
+    "no-console": "warn",
     "semi": [
       "error",
       "always"

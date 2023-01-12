@@ -49,7 +49,6 @@ export function SearchResultCard({ content, searchQuery }) {
         const textArr = text.split("\n");
         const lowerCaseSearchQuery = searchQuery.toLowerCase();
         const lowerCaseSearchQueryArr = searchQuery.toLowerCase().split(" ");
-        console.log("*** lowerCaseSearchQueryArr: ", lowerCaseSearchQueryArr);
 
         return (
             <Typography component="pre" sx={style.bodyText}>
