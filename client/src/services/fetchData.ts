@@ -1,11 +1,11 @@
-const URL = process.env.REACT_APP_BASE_URL || "https://workout-tracker.xyz/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://workout-tracker.xyz/api";
 
 export async function fetchAccountId() {
     if (localStorage.getItem("accountId")) return;
 
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
-    const res = await fetch(`${URL}/accounts/${username}/`, {
+    const res = await fetch(`${BASE_URL}/accounts/${username}/`, {
         method: "GET",
         headers: {
             "authorization": `Token ${token}`
@@ -24,11 +24,13 @@ export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord:
 
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("accountId");
-    const trimmedQuery = query.trim().split(" ").join("+");
     const results = [];
 
     if (checkedWorkout) {
-        const resWorkout = await fetch(`${URL}/${id}/workouts/search/?q=${trimmedQuery}/`, {
+        const workoutURL = new URL(`${BASE_URL}/${id}/workouts/search/`);
+        workoutURL.searchParams.set("q", query);
+
+        const resWorkout = await fetch(workoutURL.toString(), {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -42,7 +44,10 @@ export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord:
     }
 
     if (checkedRecord) {
-        const resRecord = await fetch(`${URL}/${id}/records/search/?q=${trimmedQuery}/`, {
+        const recordURL = new URL(`${BASE_URL}/${id}/records/search/`);
+        recordURL.searchParams.set("q", query);
+
+        const resRecord = await fetch(recordURL.toString(), {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -66,7 +71,7 @@ export async function fetchMonthData(monthToFetch: string, abortCont: { signal: 
     const id = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
 
-    const res = await fetch(`${URL}/${id}/cal/${monthToFetch}/`, {
+    const res = await fetch(`${BASE_URL}/${id}/cal/${monthToFetch}/`, {
         method: "GET",
         signal: signal,
         headers: {
@@ -84,7 +89,7 @@ export async function fetchYearData(yearToFetch: string, abortCont: { signal: an
     const id = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
 
-    const res = await fetch(`${URL}/${id}/workouts/${yearToFetch}/`, {
+    const res = await fetch(`${BASE_URL}/${id}/workouts/${yearToFetch}/`, {
         method: "GET",
         signal: signal,
         headers: {
@@ -102,7 +107,7 @@ export async function fetchYearlyCount(abortCont: { signal: any }) {
     const id = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
 
-    const res = await fetch(`${URL}/${id}/workouts/total-per-year/`, {
+    const res = await fetch(`${BASE_URL}/${id}/workouts/total-per-year/`, {
         method: "GET",
         signal: signal,
         headers: {
@@ -120,7 +125,7 @@ export async function fetchWorkout(workout_id: string, abortCont: { signal: any 
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
 
-    const res = await fetch(`${URL}/${accountId}/workouts/${workout_id}/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/workouts/${workout_id}/`, {
         method: "GET",
         signal: signal,
         headers: {
@@ -137,7 +142,7 @@ export async function updateWorkout(workout_id: string, date: string, time: stri
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
-    const res = await fetch(`${URL}/${accountId}/workouts/${workout_id}/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/workouts/${workout_id}/`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -154,7 +159,7 @@ export async function postWorkout(date: string, time: string, workout_body: stri
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
-    const res = await fetch(`${URL}/${accountId}/workouts/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/workouts/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -172,7 +177,7 @@ export async function deleteWorkout(workout_id: string) {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
-    const res = await fetch(`${URL}/${accountId}/workouts/${workout_id}/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/workouts/${workout_id}/`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -192,7 +197,7 @@ export async function fetchRecord(record_id: string, abortCont: { signal: any })
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
 
-    const res = await fetch(`${URL}/${accountId}/records/${record_id}/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/records/${record_id}/`, {
         method: "GET",
         signal: signal,
         headers: {
@@ -210,7 +215,7 @@ export async function fetchRecords(abortCont: { signal: any }) {
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
 
-    const res = await fetch(`${URL}/${accountId}/records/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/records/`, {
         method: "GET",
         signal: signal,
         headers: {
@@ -227,7 +232,7 @@ export async function updateRecord(record_id: string, date: string, type: string
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
-    const res = await fetch(`${URL}/${accountId}/records/${record_id}/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/records/${record_id}/`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -244,7 +249,7 @@ export async function postRecord(date: string, type: string, event: string, scor
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
-    const res = await fetch(`${URL}/${accountId}/records/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/records/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -261,7 +266,7 @@ export async function deleteRecord(record_id: string) {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
-    const res = await fetch(`${URL}/${accountId}/records/${record_id}/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/records/${record_id}/`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -278,7 +283,7 @@ export async function fetchEventRecords(event: string, abortCont: { signal: any 
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
 
-    const res = await fetch(`${URL}/${accountId}/records/event/${event}/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/records/event/${event}/`, {
         method: "GET",
         signal: signal,
         headers: {
