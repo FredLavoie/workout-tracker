@@ -4,7 +4,7 @@
  *
  * To execute the script, run:
  * node scripts/txt-records-to-sql.js <path/to/file.txt>
- * 
+ *
  * Example path: ~/OneDrive/health/workout_logs/2020/01-jan.txt
  *
  * The file can be be executed by running:
@@ -12,7 +12,6 @@
  */
 
 import { readFile, writeFileSync } from "fs";
-import { v4 } from "uuid";
 const inputFile = process.argv[2];
 
 readFile(inputFile, "utf-8", (error, data) => {
@@ -22,7 +21,9 @@ readFile(inputFile, "utf-8", (error, data) => {
     }
 
     // first step in processing txt file to separate content into array
-    const arrayData = data.split("=============================").map((ea) => ea.split("\n"));
+    const arrayData = data
+        .split("=============================")
+        .map((ea) => ea.split("\n"));
 
     const tempArray = [];
     for (const subArray of arrayData) {
@@ -46,15 +47,22 @@ readFile(inputFile, "utf-8", (error, data) => {
     // create results string of all the sql statements
     let resultString = "";
     const year = inputFile.split("workout_logs/")[1].split("/")[0];
-    const month = inputFile.split("workout_logs/")[1].split("/")[1].split("-")[0];
+    const month = inputFile
+        .split("workout_logs/")[1]
+        .split("/")[1]
+        .split("-")[0];
 
     for (let i = 0; i < resultArray.length; i += 2) {
         const day = resultArray[i].split(" ")[1];
         const body = resultArray[i + 1].join("\n");
-        resultString += "INSERT INTO workouts_workout(id, author_id, date, time, workout_body, created_at, updated_at)\n";
-        resultString += `VALUES ('${v4()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`;
+        resultString +=
+            "INSERT INTO workouts_workout(id, author_id, date, time, workout_body, created_at, updated_at)\n";
+        resultString += `VALUES ('${crypto.randomUUID()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`;
     }
 
-    writeFileSync(`../BACKUP/workout_migrations/${year}-${month}_migration.sql`, resultString);
+    writeFileSync(
+        `../BACKUP/workout_migrations/${year}-${month}_migration.sql`,
+        resultString
+    );
     console.log(`Completed creating migration for ${year}-${month}`);
 });
