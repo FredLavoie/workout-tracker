@@ -21,9 +21,7 @@ readFile(inputFile, "utf-8", (error, data) => {
     }
 
     // first step in processing txt file to separate content into array
-    const arrayData = data
-        .split("=============================")
-        .map((ea) => ea.split("\n"));
+    const arrayData = data.split("=============================").map((ea) => ea.split("\n"));
 
     const tempArray = [];
     for (const subArray of arrayData) {
@@ -47,10 +45,7 @@ readFile(inputFile, "utf-8", (error, data) => {
     // create results string of all the sql statements
     let resultString = "";
     const year = inputFile.split("workout_logs/")[1].split("/")[0];
-    const month = inputFile
-        .split("workout_logs/")[1]
-        .split("/")[1]
-        .split("-")[0];
+    const month = inputFile.split("workout_logs/")[1].split("/")[1].split("-")[0];
 
     for (let i = 0; i < resultArray.length; i += 2) {
         const day = resultArray[i].split(" ")[1];
@@ -60,9 +55,6 @@ readFile(inputFile, "utf-8", (error, data) => {
         resultString += `VALUES ('${crypto.randomUUID()}', 1, '${year}-${month}-${day}', '12:00:00', '${body}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);\n`;
     }
 
-    writeFileSync(
-        `../BACKUP/workout_migrations/${year}-${month}_migration.sql`,
-        resultString
-    );
+    writeFileSync(`../BACKUP/workout_migrations/${year}-${month}_migration.sql`, resultString);
     console.log(`Completed creating migration for ${year}-${month}`);
 });
