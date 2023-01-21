@@ -59,7 +59,7 @@ export function Record() {
             setRecordScore(data.score);
             changeNewOrEdit(0);
         }
-    }, [data, isLoading, error]);
+    }, [data]);
 
     async function handleSubmit(event: { preventDefault: () => void }) {
         event.preventDefault();

@@ -10,16 +10,18 @@ export function useFetch(fetchFunction: tFetchFunction, params: Record<string, a
 
     useEffect(() => {
         const abortCont = new AbortController();
-        try {
-            setIsLoading(true);
-            fetchFunction(params, abortCont).then((responseData) => {
+
+        setIsLoading(true);
+        fetchFunction(params, abortCont)
+            .then((responseData) => {
                 setData(responseData);
                 setIsLoading(false);
+            })
+            .catch((error) => {
+                setError(error.message);
+                setIsLoading(false);
             });
-        } catch (error) {
-            setError(error.message);
-            setIsLoading(false);
-        }
+
         return () => abortCont.abort();
     }, []);
 
