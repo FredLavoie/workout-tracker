@@ -8,7 +8,7 @@ export async function fetchAccountId() {
     const res = await fetch(`${BASE_URL}/accounts/${username}/`, {
         method: "GET",
         headers: {
-            "authorization": `Token ${token}`
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -16,8 +16,8 @@ export async function fetchAccountId() {
     return localStorage.setItem("accountId", data[0].id);
 }
 
-/****************************************** SEARCH ******************************************/
-/********************************************************************************************/
+/**************************************************** SEARCH ****************************************************/
+/****************************************************************************************************************/
 
 export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord: boolean, query: string) {
     if (!checkedWorkout && !checkedRecord) return [];
@@ -34,8 +34,8 @@ export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord:
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json",
-                "authorization": `Token ${token}`
+                Accept: "application/json",
+                authorization: `Token ${token}`,
             },
         });
         if (!resWorkout.ok) throw new Error(`Server error - status ${resWorkout.status}`);
@@ -51,8 +51,8 @@ export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord:
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json",
-                "authorization": `Token ${token}`
+                Accept: "application/json",
+                authorization: `Token ${token}`,
             },
         });
         if (!resRecord.ok) throw new Error(`Server error - status ${resRecord.status}`);
@@ -62,9 +62,8 @@ export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord:
     return results;
 }
 
-
-/***************************************** WORKOUTS *****************************************/
-/********************************************************************************************/
+/*************************************************** WORKOUTS ***************************************************/
+/****************************************************************************************************************/
 
 export async function fetchMonthData(monthToFetch: string, abortCont: { signal: any }) {
     const token = localStorage.getItem("token");
@@ -76,8 +75,8 @@ export async function fetchMonthData(monthToFetch: string, abortCont: { signal: 
         signal: signal,
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -94,8 +93,8 @@ export async function fetchYearData(yearToFetch: string, abortCont: { signal: an
         signal: signal,
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -112,15 +111,16 @@ export async function fetchYearlyCount(abortCont: { signal: any }) {
         signal: signal,
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
     return await res.json();
 }
 
-export async function fetchWorkout(workout_id: string, abortCont: { signal: any }) {
+export async function fetchWorkout(params: Record<string, any>, abortCont: { signal: any }) {
+    const workout_id = params.workoutId;
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
@@ -130,8 +130,8 @@ export async function fetchWorkout(workout_id: string, abortCont: { signal: any 
         signal: signal,
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -146,10 +146,10 @@ export async function updateWorkout(workout_id: string, date: string, time: stri
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
-        body: JSON.stringify({ date, time, workout_body })
+        body: JSON.stringify({ date, time, workout_body }),
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
     return await res.json();
@@ -163,10 +163,10 @@ export async function postWorkout(date: string, time: string, workout_body: stri
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
-        body: JSON.stringify({ author: accountId, date, time, workout_body })
+        body: JSON.stringify({ author: accountId, date, time, workout_body }),
     });
     if (!res.ok && res.status === 400) throw new Error("A workout already exists for this day");
     else if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -181,18 +181,19 @@ export async function deleteWorkout(workout_id: string) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
     return;
 }
 
-/****************************************** RECORDS *****************************************/
-/********************************************************************************************/
+/**************************************************** RECORDS ***************************************************/
+/****************************************************************************************************************/
 
-export async function fetchRecord(record_id: string, abortCont: { signal: any }) {
+export async function fetchRecord(params: Record<string, any>, abortCont: { signal: any }) {
+    const record_id = params.recordId;
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
@@ -202,8 +203,8 @@ export async function fetchRecord(record_id: string, abortCont: { signal: any })
         signal: signal,
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -220,8 +221,8 @@ export async function fetchRecords(abortCont: { signal: any }) {
         signal: signal,
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -236,10 +237,10 @@ export async function updateRecord(record_id: string, date: string, type: string
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
-        body: JSON.stringify({ date, type, event, score })
+        body: JSON.stringify({ date, type, event, score }),
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
     return await res.json();
@@ -253,10 +254,10 @@ export async function postRecord(date: string, type: string, event: string, scor
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
-        body: JSON.stringify({ author: accountId, date, type, event, score })
+        body: JSON.stringify({ author: accountId, date, type, event, score }),
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
     return await res.json();
@@ -270,8 +271,8 @@ export async function deleteRecord(record_id: string) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -288,8 +289,8 @@ export async function fetchEventRecords(event: string, abortCont: { signal: any 
         signal: signal,
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
