@@ -20,7 +20,7 @@ import {
     Toolbar,
     Snackbar,
     Switch,
-    Typography
+    Typography,
 } from "@mui/material";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -100,8 +100,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
         if (event.target.checked) {
             localStorage.setItem("userTheme", "dark");
             setUserTheme("dark");
-        }
-        else {
+        } else {
             localStorage.setItem("userTheme", "light");
             setUserTheme("light");
         }
@@ -110,68 +109,103 @@ export function Layout({ children, userTheme, setUserTheme }) {
     const drawer = (
         <List>
             <ListItem
-                button
                 onClick={() => handleMenuItemClick("/dashboard")}
-                sx={(location.pathname === "/dashboard" ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
+                sx={
+                    location.pathname === "/dashboard"
+                        ? userTheme === "light"
+                            ? style.activeLight
+                            : style.activeDark
+                        : style.listItem
+                }
             >
-                <ListItemIcon><DashboardIcon /></ListItemIcon>
+                <ListItemIcon>
+                    <DashboardIcon />
+                </ListItemIcon>
                 <ListItemText primary="Dashboard" />
             </ListItem>
             <ListItem
-                button
                 onClick={() => handleMenuItemClick(calPath)}
-                sx={(location.pathname.includes("/cal/") ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
+                sx={
+                    location.pathname.includes("/cal/")
+                        ? userTheme === "light"
+                            ? style.activeLight
+                            : style.activeDark
+                        : style.listItem
+                }
             >
-                <ListItemIcon><TodayIcon /></ListItemIcon>
+                <ListItemIcon>
+                    <TodayIcon />
+                </ListItemIcon>
                 <ListItemText primary="Calendar" />
             </ListItem>
             <ListItem
-                button
                 onClick={() => handleMenuItemClick("/week")}
-                sx={(location.pathname.includes("/week") ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
+                sx={
+                    location.pathname.includes("/week")
+                        ? userTheme === "light"
+                            ? style.activeLight
+                            : style.activeDark
+                        : style.listItem
+                }
             >
-                <ListItemIcon><ViewDayIcon /></ListItemIcon>
+                <ListItemIcon>
+                    <ViewDayIcon />
+                </ListItemIcon>
                 <ListItemText primary="Week" />
             </ListItem>
             <ListItem
-                button
                 onClick={() => handleMenuItemClick("/search")}
-                sx={(location.pathname === "/search" ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
+                sx={
+                    location.pathname === "/search"
+                        ? userTheme === "light"
+                            ? style.activeLight
+                            : style.activeDark
+                        : style.listItem
+                }
             >
-                <ListItemIcon><SearchIcon /></ListItemIcon>
+                <ListItemIcon>
+                    <SearchIcon />
+                </ListItemIcon>
                 <ListItemText primary="Search" />
             </ListItem>
             <Divider />
             <ListItem
-                button
                 onClick={() => handleMenuItemClick("/workouts/new")}
-                sx={(location.pathname === "/workouts/new" ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
+                sx={
+                    location.pathname === "/workouts/new"
+                        ? userTheme === "light"
+                            ? style.activeLight
+                            : style.activeDark
+                        : style.listItem
+                }
             >
-                <ListItemIcon><FitnessCenterIcon /></ListItemIcon>
+                <ListItemIcon>
+                    <FitnessCenterIcon />
+                </ListItemIcon>
                 <ListItemText primary="New Workout" />
             </ListItem>
             <ListItem
-                button
                 onClick={() => handleMenuItemClick("/records/new")}
-                sx={(location.pathname === "/records/new" ? (userTheme === "light" ? style.activeLight : style.activeDark) : null)}
+                sx={
+                    location.pathname === "/records/new"
+                        ? userTheme === "light"
+                            ? style.activeLight
+                            : style.activeDark
+                        : style.listItem
+                }
             >
-                <ListItemIcon><StarIcon /></ListItemIcon>
+                <ListItemIcon>
+                    <StarIcon />
+                </ListItemIcon>
                 <ListItemText primary="New PR" />
             </ListItem>
         </List>
     );
 
-
-
     return (
         <Paper elevation={0} sx={style.root1}>
-
             {/*********************************** Navbar ************************************/}
-            <AppBar
-                position="fixed"
-                elevation={1}
-                sx={style.root2}
-            >
+            <AppBar position="fixed" elevation={1} sx={style.root2}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -184,15 +218,11 @@ export function Layout({ children, userTheme, setUserTheme }) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h5" sx={style.title}>
-            Workout Tracker
+                        Workout Tracker
                     </Typography>
 
                     <Button onClick={handleClickAvatar}>
-                        <Avatar
-                            sx={style.avatar}
-                            aria-controls="simple-menu"
-                            aria-haspopup="true"
-                        >
+                        <Avatar sx={style.avatar} aria-controls="simple-menu" aria-haspopup="true">
                             {firstTwoLetter}
                         </Avatar>
                     </Button>
@@ -205,7 +235,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
                     >
                         <MenuItem onClick={handleChangePasswordClick}>Change Password</MenuItem>
                         <MenuItem onClick={handleSubmit}>Logout</MenuItem>
-                        <MenuItem onChange={(event) => handleThemeToggle(event)}>
+                        <MenuItem onChange={handleThemeToggle}>
                             <FormControlLabel
                                 sx={style.modeToggle}
                                 labelPlacement="start"
@@ -224,33 +254,25 @@ export function Layout({ children, userTheme, setUserTheme }) {
                 open={mobileOpen}
                 onClose={handleDrawerToggle}
                 sx={style.mobileDrawer}
-                ModalProps={{
-                    keepMounted: true,
-                }}
+                ModalProps={{ keepMounted: true }}
             >
                 {drawer}
             </Drawer>
-
 
             {/******************** Desktop drawer - permanent left **************************/}
-            <Drawer
-                sx={style.desktopDrawer}
-                variant="permanent"
-                anchor="left"
-            >
+            <Drawer sx={style.desktopDrawer} variant="permanent" anchor="left">
                 {drawer}
             </Drawer>
-
-
 
             {/*********************************** Content ***********************************/}
             <Box sx={style.page}>
                 {/* this element adds margin to push content below the appbar */}
-                <Box sx={style.toolbarMargin}></Box>
+                <Box sx={style.toolbarMargin} />
                 {children}
             </Box>
             <Snackbar
-                open={openSnackbar} autoHideDuration={4000}
+                open={openSnackbar}
+                autoHideDuration={4000}
                 onClose={handleCloseError}
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
@@ -289,10 +311,19 @@ const style = {
         display: { sm: "block", xs: "none" },
     },
     activeDark: {
+        cursor: "pointer",
         background: "#252525",
     },
     activeLight: {
+        cursor: "pointer",
         background: "#f4f4f4",
+    },
+    listItem: {
+        cursor: "pointer",
+        "&:hover": {
+            opacity: "0.75",
+            background: "#673ab7",
+        },
     },
     toolbarMargin: {
         height: "56px",
@@ -314,5 +345,5 @@ const style = {
     },
     modeToggle: {
         marginLeft: "0",
-    }
+    },
 };

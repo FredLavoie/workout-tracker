@@ -15,7 +15,7 @@ import {
     Snackbar,
     TextField,
     Toolbar,
-    Typography
+    Typography,
 } from "@mui/material";
 
 import Visibility from "@mui/icons-material/Visibility";
@@ -27,7 +27,6 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { ServerError } from "../components/ServerError";
 import { isAuthenticated, login } from "../services/authentication";
 import { fetchAccountId } from "../services/fetchData";
-
 
 // eslint-disable-next-line prefer-arrow-callback
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
@@ -52,7 +51,6 @@ export function Login() {
             try {
                 await fetchAccountId();
                 history.push("/dashboard");
-
             } catch (error) {
                 return setError(error.message);
             }
@@ -83,7 +81,7 @@ export function Login() {
             <AppBar sx={style.appBar} position="fixed" elevation={1}>
                 <Toolbar>
                     <Typography variant="h5" display="block">
-            Workout Tracker
+                        Workout Tracker
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -138,21 +136,23 @@ export function Login() {
                             endIcon={<KeyboardArrowRightIcon />}
                             disabled={!username || !password ? true : false}
                         >
-              Login
+                            Login
                         </Button>
                     </Box>
                 </Grid>
                 {error && <ServerError errorMessage={error} />}
             </Grid>
-            <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-                <Alert severity="error">
-          Wrong username or password! Please try again.
-                </Alert>
+            <Snackbar
+                open={open}
+                autoHideDuration={4000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
+                <Alert severity="error">Wrong username or password! Please try again.</Alert>
             </Snackbar>
         </Paper>
     );
 }
-
 
 const style = {
     appBar: {
