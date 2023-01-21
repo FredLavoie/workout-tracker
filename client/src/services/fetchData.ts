@@ -279,7 +279,8 @@ export async function deleteRecord(record_id: string) {
     return;
 }
 
-export async function fetchEventRecords(event: string, abortCont: { signal: any }) {
+export async function fetchEventRecords(params: Record<string, any>, abortCont: { signal: any }) {
+    const event = params.eventToFetch;
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;

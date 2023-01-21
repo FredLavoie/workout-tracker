@@ -1,46 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
-import {
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    CircularProgress,
-    Grid,
-    Typography
-} from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Grid, Typography } from "@mui/material";
 
 import { fetchEventRecords } from "../services/fetchData";
 import { ServerError } from "../components/ServerError";
-
+import { useFetch } from "../hooks/useFetch";
 
 export function DetailRecord() {
     const history = useHistory();
     const location = useLocation();
     const [records, setRecrods] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     const eventToFetch = location.pathname.split("/")[3];
 
+    const { data, isLoading, error } = useFetch(fetchEventRecords, { eventToFetch }, false);
+
     useEffect(() => {
-        const abortCont = new AbortController();
-        const setupPage = async () => {
-            try {
-                const data = await fetchEventRecords(eventToFetch, abortCont);
-                setRecrods(data);
-                setIsLoading(false);
-            } catch (error) {
-                if (error.name === "AbortError") return;
-                setIsLoading(false);
-                setError(error.message);
-            }
-        };
-        setupPage();
-        return () => abortCont.abort();
-    }, []);
+        if (data) setRecrods(data);
+    }, [data]);
 
     function handleClickActive(target) {
         if (target.id) history.push(`/records/${target.id}`);
@@ -52,30 +30,37 @@ export function DetailRecord() {
     }
 
     return (
-        <Grid
-            container
-            direction="column"
-            alignItems="center"
-            sx={style.root}
-        >
+        <Grid container direction="column" alignItems="center" sx={style.root}>
             <Typography variant="h4" sx={style.title}>
                 Record Details
             </Typography>
             {error && <ServerError errorMessage={error} />}
-            {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
-            {records && !isLoading &&
-            <Card elevation={2} sx={style.cardStyle}>
-                <CardHeader title={records[0].event} />
-                <CardContent sx={style.content}>
-                    {records.map((ea, index) => (
-                        <Box key={index} id={ea.id} sx={style.individualContainer} onClick={(e) => handleClickActive(e.target)}>
-                            <Typography variant={"body2"}>{ea.date}</Typography>
-                            <Typography variant={"body2"}>{ea.score}</Typography>
-                        </Box>
-                    ))}
-                </CardContent>
-            </Card>}
-            <Button sx={style.button} variant="outlined" onClick={handleCancel}>Go Back</Button>
+            {isLoading && (
+                <Box sx={style.loading}>
+                    <CircularProgress />
+                </Box>
+            )}
+            {records && !isLoading && (
+                <Card elevation={2} sx={style.cardStyle}>
+                    <CardHeader title={records[0].event} />
+                    <CardContent sx={style.content}>
+                        {records.map((ea, index) => (
+                            <Box
+                                key={index}
+                                id={ea.id}
+                                sx={style.individualContainer}
+                                onClick={(e) => handleClickActive(e.target)}
+                            >
+                                <Typography variant={"body2"}>{ea.date}</Typography>
+                                <Typography variant={"body2"}>{ea.score}</Typography>
+                            </Box>
+                        ))}
+                    </CardContent>
+                </Card>
+            )}
+            <Button sx={style.button} variant="outlined" onClick={handleCancel}>
+                Go Back
+            </Button>
         </Grid>
     );
 }
@@ -87,7 +72,7 @@ const style = {
         width: "100%",
         display: "flex",
         justifyContent: "flex-start",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
     },
     title: {
         marginBottom: "16px",
@@ -113,5 +98,5 @@ const style = {
     button: {
         width: "360px",
         marginTop: "16px",
-    }
+    },
 };
