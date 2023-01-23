@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import {
-    Box,
-    Card,
-    CardHeader,
-    CardContent,
-    CircularProgress,
-    Grid,
-    Typography
-} from "@mui/material";
+import { Box, Card, CardHeader, CardContent, CircularProgress, Grid, Typography } from "@mui/material";
 
 import { fetchYearData, fetchRecords, fetchYearlyCount } from "../services/fetchData";
 import { months } from "../lib/months";
@@ -24,19 +16,111 @@ export function Dashboard() {
     const [yearWorkouts, setYearWorkouts] = useState([]);
     const [records, setRecords] = useState([]);
     const [yearCounts, setYearCounts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+
+    // fetch data to be displayed on the Dashboard page
+    const { data, isLoading, error } = useFetchDashboardData(currentYear);
+
+    useEffect(() => {
+        if (data) {
+            setRecords(data.recordData);
+            setYearWorkouts(data.yearData);
+            setYearCounts(data.yearlyCountData);
+        }
+    }, [data]);
+
+    // return the number of workouts for each month
+    function filterWorkoutsForMonth(workouts: tWorkout[], monthNumber: string) {
+        const numberOfWorkouts = workouts.filter((ea) => {
+            return ea.date.split("-")[1] === monthNumber;
+        });
+        return String(numberOfWorkouts.length).padStart(2, "0");
+    }
+
+    return (
+        <Grid container direction="column" alignItems="center" sx={style.root}>
+            <Typography variant="h4" sx={style.title}>
+                Dashboard
+            </Typography>
+            {error && <ServerError errorMessage={error} />}
+            {isLoading && <CircularProgress />}
+            {!error && !isLoading && (
+                <Box sx={style.dashboardContainer}>
+                    {/**************************************** MONTH SUMMARY **************************************/}
+                    <Card elevation={3} sx={style.cardStyle}>
+                        <CardHeader title="Monthly Summary" sx={style.header} />
+                        <CardContent sx={style.content}>
+                            {monthNumbersArr.map((ea, index) => (
+                                <Typography key={index} sx={style.textCol}>
+                                    <Box component="span" sx={style.centerText}>
+                                        {months[ea]}
+                                    </Box>
+                                    <Box component="span" sx={style.dataBackground}>
+                                        {filterWorkoutsForMonth(yearWorkouts, ea)}
+                                    </Box>
+                                </Typography>
+                            ))}
+                        </CardContent>
+                    </Card>
+                    {/**************************************** YEAR SUMMARY ***************************************/}
+                    <Card elevation={3} sx={style.cardStyle}>
+                        <CardHeader title="Yearly Summary" sx={style.header} />
+                        <CardContent sx={style.content}>
+                            {yearCounts.map((ea, index) => (
+                                <Typography key={index} sx={style.textCol}>
+                                    <Box component="span" sx={style.centerText}>
+                                        {ea.year}
+                                    </Box>
+                                    <Box component="span" sx={style.dataBackground}>
+                                        {String(ea.count).padStart(3, "0")}
+                                    </Box>
+                                </Typography>
+                            ))}
+                        </CardContent>
+                    </Card>
+                    {/**************************************** STRENGTH PRs ***************************************/}
+                    <Card elevation={3} sx={style.cardStyle}>
+                        <CardHeader title="Strength PRs" sx={style.header} />
+                        <RecordTable type={"strength"} records={records.filter((ea) => ea.type === "strength")} />
+                    </Card>
+                    {/**************************************** ENDURANCE PRs **************************************/}
+                    <Card elevation={3} sx={style.cardStyle}>
+                        <CardHeader title="Endurance PRs" sx={style.header} />
+                        <RecordTable type={"endurance"} records={records.filter((ea) => ea.type === "endurance")} />
+                    </Card>
+                    {/******************************************* WOD PRs *****************************************/}
+                    <Card elevation={3} sx={style.cardStyle}>
+                        <CardHeader title="WOD PRs" sx={style.header} />
+                        <RecordTable type={"wod"} records={records.filter((ea) => ea.type === "wod")} />
+                    </Card>
+                </Box>
+            )}
+        </Grid>
+    );
+}
+
+/**
+ * Custom hook to abstract the data fetching for the Dashboard view
+ *
+ * @param {string} currentYear a date string to fetch all workouts for the current year
+ * @returns {object}
+ */
+function useFetchDashboardData(currentYear: string): Record<string, any> {
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const abortCont = new AbortController();
         const setupPage = async () => {
             try {
+                setIsLoading(true);
+
+                // TODO change this into a promiseAll...
                 const recordData = await fetchRecords(abortCont);
                 const yearData = await fetchYearData(currentYear, abortCont);
                 const yearlyCountData = await fetchYearlyCount(abortCont);
-                setRecords(recordData);
-                setYearWorkouts(yearData);
-                setYearCounts(yearlyCountData);
+
+                setData({ recordData, yearData, yearlyCountData });
                 setIsLoading(false);
             } catch (error) {
                 if (error.name === "AbortError") return;
@@ -48,86 +132,7 @@ export function Dashboard() {
         return () => abortCont.abort();
     }, []);
 
-    // return the number of workouts for each month
-    function filterWorkoutsForMonth(workouts: tWorkout[], monthNumber: string) {
-        const numberOfWorkouts = workouts.filter((ea) => {
-            return ea.date.split("-")[1] === monthNumber;
-        });
-        return String(numberOfWorkouts.length).padStart(2, "0");
-    }
-
-    return (
-        <Grid
-            container
-            direction="column"
-            alignItems="center"
-            sx={style.root}
-        >
-            <Typography variant="h4" sx={style.title}>
-        Dashboard
-            </Typography>
-            {error && <ServerError errorMessage={error} />}
-            {isLoading && <CircularProgress />}
-            {!error && !isLoading && <Box sx={style.dashboardContainer}>
-                {/**************************************** MONTH SUMMARY **************************************/}
-                <Card elevation={3} sx={style.cardStyle}>
-                    <CardHeader
-                        title="Monthly Summary"
-                        sx={style.header}
-                    />
-                    <CardContent sx={style.content}>
-                        {monthNumbersArr.map((ea, index) => (
-                            <Typography key={index} sx={style.textCol}>
-                                <Box component="span" sx={style.centerText}>{months[ea]}</Box>
-                                <Box component="span" sx={style.dataBackground}>{
-                                    filterWorkoutsForMonth(yearWorkouts, ea)
-                                }</Box>
-                            </Typography>
-                        ))}
-                    </CardContent>
-                </Card>
-                {/**************************************** YEAR SUMMARY ***************************************/}
-                <Card elevation={3} sx={style.cardStyle}>
-                    <CardHeader
-                        title="Yearly Summary"
-                        sx={style.header}
-                    />
-                    <CardContent sx={style.content}>
-                        {yearCounts.map((ea, index) => (
-                            <Typography key={index} sx={style.textCol}>
-                                <Box component="span" sx={style.centerText}>{ea.year}</Box>
-                                <Box component="span" sx={style.dataBackground}>{String(ea.count).padStart(3, "0")}</Box>
-                            </Typography>
-                        ))}
-                    </CardContent>
-                </Card>
-                {/**************************************** STRENGTH PRs ***************************************/}
-                <Card elevation={3} sx={style.cardStyle}>
-                    <CardHeader
-                        title="Strength PRs"
-                        sx={style.header}
-                    />
-                    <RecordTable type={"strength"} records={records.filter((ea) => ea.type === "strength")} />
-                </Card>
-                {/**************************************** ENDURANCE PRs **************************************/}
-                <Card elevation={3} sx={style.cardStyle}>
-                    <CardHeader
-                        title="Endurance PRs"
-                        sx={style.header}
-                    />
-                    <RecordTable type={"endurance"} records={records.filter((ea) => ea.type === "endurance")} />
-                </Card>
-                {/******************************************* WOD PRs *****************************************/}
-                <Card elevation={3} sx={style.cardStyle}>
-                    <CardHeader
-                        title="WOD PRs"
-                        sx={style.header}
-                    />
-                    <RecordTable type={"wod"} records={records.filter((ea) => ea.type === "wod")} />
-                </Card>
-            </Box>}
-        </Grid >
-    );
+    return { data, isLoading, error };
 }
 
 const style = {
@@ -137,7 +142,7 @@ const style = {
         width: "100%",
         display: "flex",
         justifyContent: "flex-start",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
     },
     title: {
         marginBottom: "16px",
@@ -145,7 +150,7 @@ const style = {
     dashboardContainer: {
         display: "flex",
         justifyContent: "center",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
     },
     cardStyle: {
         width: "360px",

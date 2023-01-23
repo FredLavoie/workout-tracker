@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { tFetchFunction } from "../types";
 
-export function useFetch(fetchFunction: tFetchFunction, params: Record<string, any>, skip: boolean) {
+export function useFetch(fetchFunction: tFetchFunction, params: Record<string, any> | null, skip: boolean) {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
