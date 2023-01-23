@@ -13,20 +13,12 @@ const currentYear = currentDate[2];
 const monthNumbersArr = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 export function Dashboard() {
-    const [yearWorkouts, setYearWorkouts] = useState([]);
-    const [records, setRecords] = useState([]);
-    const [yearCounts, setYearCounts] = useState([]);
-
     // fetch data to be displayed on the Dashboard page
     const { data, isLoading, error } = useFetchDashboardData(currentYear);
 
-    useEffect(() => {
-        if (data) {
-            setRecords(data.recordData);
-            setYearWorkouts(data.yearData);
-            setYearCounts(data.yearlyCountData);
-        }
-    }, [data]);
+    const records = data?.recordData ?? [];
+    const yearWorkouts = data?.yearData ?? [];
+    const yearCounts = data?.yearlyCountData ?? [];
 
     // return the number of workouts for each month
     function filterWorkoutsForMonth(workouts: tWorkout[], monthNumber: string) {
@@ -115,7 +107,6 @@ function useFetchDashboardData(currentYear: string): Record<string, any> {
             try {
                 setIsLoading(true);
 
-                // TODO change this into a promiseAll...
                 const recordData = await fetchRecords(abortCont);
                 const yearData = await fetchYearData(currentYear, abortCont);
                 const yearlyCountData = await fetchYearlyCount(abortCont);
