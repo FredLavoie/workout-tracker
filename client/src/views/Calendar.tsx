@@ -11,7 +11,6 @@ import { ServerError } from "../components/ServerError";
 import { fetchMonthData } from "../services/fetchData";
 import { calculateMonth } from "../utils";
 import { months } from "../lib/months";
-import { useFetchWithDep } from "../hooks/useFetchWithDep";
 
 export function Calendar() {
     const history = useHistory();
@@ -29,7 +28,7 @@ export function Calendar() {
     const prevMonth = calculateMonth(currentMonth, currentYear, "prev");
     const nextMonth = calculateMonth(currentMonth, currentYear, "next");
 
-    const { data, isLoading, error } = useFetchWithDep(fetchMonthData, { monthToFetch }, [monthToFetch]);
+    const { data, isLoading, error } = useFetchCalendarData(monthToFetch);
 
     useEffect(() => {
         if (data) {
@@ -106,6 +105,37 @@ export function Calendar() {
             )}
         </Paper>
     );
+}
+
+/**
+ * Custom hook to abstract the data fetching for the Calendar view
+ *
+ * @param {string} monthToFetch the month to fetch the data for
+ * @returns {object}
+ */
+function useFetchCalendarData(monthToFetch: string): Record<string, any> {
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const abortCont = new AbortController();
+
+        setIsLoading(true);
+        fetchMonthData(monthToFetch, abortCont)
+            .then((responseData) => {
+                setData(responseData);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                setError(error.message);
+                setIsLoading(false);
+            });
+
+        return () => abortCont.abort();
+    }, [monthToFetch]);
+
+    return { data, isLoading, error };
 }
 
 const style = {

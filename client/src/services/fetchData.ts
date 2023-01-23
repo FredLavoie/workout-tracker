@@ -65,8 +65,7 @@ export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord:
 /*************************************************** WORKOUTS ***************************************************/
 /****************************************************************************************************************/
 
-export async function fetchMonthData(params: Record<string, any>, abortCont: { signal: any }) {
-    const monthToFetch = params.monthToFetch;
+export async function fetchMonthData(monthToFetch: string, abortCont: { signal: any }) {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
