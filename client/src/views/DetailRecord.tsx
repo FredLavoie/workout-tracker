@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Grid, Typography } from "@mui/material";
@@ -10,15 +10,11 @@ import { useFetch } from "../hooks/useFetch";
 export function DetailRecord() {
     const history = useHistory();
     const location = useLocation();
-    const [records, setRecrods] = useState(null);
 
     const eventToFetch = location.pathname.split("/")[3];
 
     const { data, isLoading, error } = useFetch(fetchEventRecords, { eventToFetch }, false);
-
-    useEffect(() => {
-        if (data) setRecrods(data);
-    }, [data]);
+    const records = data ?? null;
 
     function handleClickActive(target) {
         if (target.id) history.push(`/records/${target.id}`);
