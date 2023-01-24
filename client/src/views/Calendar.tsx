@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Paper,
-    Typography
-} from "@mui/material";
+import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
 
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -18,13 +12,10 @@ import { fetchMonthData } from "../services/fetchData";
 import { calculateMonth } from "../utils";
 import { months } from "../lib/months";
 
-
 export function Calendar() {
     const history = useHistory();
     const location = useLocation();
     const [workouts, setWorkouts] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     const monthToFetch = location.pathname.split("/")[2]; // ex: 2021-05
     const currentMonthString = months[monthToFetch.split("-")[1]]; // May
@@ -36,6 +27,14 @@ export function Calendar() {
     }
     const prevMonth = calculateMonth(currentMonth, currentYear, "prev");
     const nextMonth = calculateMonth(currentMonth, currentYear, "next");
+
+    const { data, isLoading, error } = useFetchCalendarData(monthToFetch);
+
+    useEffect(() => {
+        if (data) {
+            setWorkouts(data);
+        }
+    }, [data]);
 
     function handleClickPrevious() {
         setWorkouts(null);
@@ -57,52 +56,86 @@ export function Calendar() {
         }
     }
 
-    useEffect(() => {
-        const abortCont = new AbortController();
-        const setupPage = async () => {
-            setIsLoading(true);
-            try {
-                const data = await fetchMonthData(monthToFetch, abortCont);
-                setWorkouts(data);
-                setIsLoading(false);
-            } catch (error) {
-                if (error.name === "AbortError") return;
-                setIsLoading(false);
-                setError(error.message);
-            }
-        };
-        setupPage();
-        return () => abortCont.abort();
-    }, [monthToFetch]);
-
     return (
         <Paper elevation={0}>
             {error && <ServerError errorMessage={error} />}
-            {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
-            {workouts && !isLoading &&
-        <Box sx={style.calendarContainer}>
-            <Box sx={style.monthNav}>
-                <Button onClick={handleClickPrevious} sx={style.navLink} color="primary" size="small" startIcon={<NavigateBeforeIcon />}>Prev</Button>
-                <Typography onClick={handleReturnToCurrent} variant="h5" gutterBottom sx={style.monthTitle}>
-                    {`${currentMonthString} ${currentYear}`}
-                </Typography>
-                <Button onClick={handleClickNext} sx={style.navLink} color="primary" size="small" endIcon={<NavigateNextIcon />}>Next</Button>
-            </Box>
-            <Box sx={style.outline}>
-                <Box sx={style.weekNames}>
-                    <Typography>SUN</Typography>
-                    <Typography>MON</Typography>
-                    <Typography>TUE</Typography>
-                    <Typography>WED</Typography>
-                    <Typography>THU</Typography>
-                    <Typography>FRI</Typography>
-                    <Typography>SAT</Typography>
+            {isLoading && (
+                <Box sx={style.loading}>
+                    <CircularProgress />
                 </Box>
-                <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
-            </Box>
-        </Box>}
+            )}
+            {workouts && !isLoading && (
+                <Box sx={style.calendarContainer}>
+                    <Box sx={style.monthNav}>
+                        <Button
+                            onClick={handleClickPrevious}
+                            sx={style.navLink}
+                            color="primary"
+                            size="small"
+                            startIcon={<NavigateBeforeIcon />}
+                        >
+                            Prev
+                        </Button>
+                        <Typography onClick={handleReturnToCurrent} variant="h5" gutterBottom sx={style.monthTitle}>
+                            {`${currentMonthString} ${currentYear}`}
+                        </Typography>
+                        <Button
+                            onClick={handleClickNext}
+                            sx={style.navLink}
+                            color="primary"
+                            size="small"
+                            endIcon={<NavigateNextIcon />}
+                        >
+                            Next
+                        </Button>
+                    </Box>
+                    <Box sx={style.outline}>
+                        <Box sx={style.weekNames}>
+                            <Typography>SUN</Typography>
+                            <Typography>MON</Typography>
+                            <Typography>TUE</Typography>
+                            <Typography>WED</Typography>
+                            <Typography>THU</Typography>
+                            <Typography>FRI</Typography>
+                            <Typography>SAT</Typography>
+                        </Box>
+                        <CalendarGrid workouts={workouts} month={currentMonth} year={currentYear} />
+                    </Box>
+                </Box>
+            )}
         </Paper>
     );
+}
+
+/**
+ * Custom hook to abstract the data fetching for the Calendar view
+ *
+ * @param {string} monthToFetch the month to fetch the data for
+ * @returns {object}
+ */
+function useFetchCalendarData(monthToFetch: string): Record<string, any> {
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const abortCont = new AbortController();
+
+        setIsLoading(true);
+        fetchMonthData(monthToFetch, abortCont)
+            .then((responseData) => {
+                setData(responseData);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                setError(error.message);
+                setIsLoading(false);
+            });
+
+        return () => abortCont.abort();
+    }, [monthToFetch]);
+
+    return { data, isLoading, error };
 }
 
 const style = {
@@ -111,7 +144,7 @@ const style = {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        margin: { sm: "16px 8px 0 16px", xs: "0 8px 0 4px" }
+        margin: { sm: "16px 8px 0 16px", xs: "0 8px 0 4px" },
     },
     outline: {
         display: "flex",
@@ -122,7 +155,7 @@ const style = {
         width: { md: "65vw", sm: "100%" },
         display: "flex",
         justifyContent: "space-around",
-        marginTop: "16px"
+        marginTop: "16px",
     },
     monthTitle: {
         width: "30%",
@@ -133,7 +166,7 @@ const style = {
     weekNames: {
         display: "flex",
         justifyContent: "space-around",
-        marginTop: "16px"
+        marginTop: "16px",
     },
     loading: {
         display: "flex",
@@ -142,5 +175,5 @@ const style = {
     },
     navLink: {
         minWidth: "80px",
-    }
+    },
 } as const;

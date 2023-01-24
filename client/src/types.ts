@@ -31,3 +31,8 @@ export type recordListTypes = {
     endurance: string[];
     wod: string[];
 };
+
+export type tFetchFunction = {
+    (params: Record<string, any>, abortCont: { signal: any }): Promise<any>;
+    (arg0: Record<string, any>, arg1: AbortController): Promise<any>;
+};
