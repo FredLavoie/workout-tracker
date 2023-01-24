@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL || "https://workout-tracker.xyz/api";
+const BASE_URL = import.meta.env.VITE_BASE_URL || "https://workout-tracker.xyz/api";
 
 export async function fetchAccountId() {
     if (localStorage.getItem("accountId")) return;

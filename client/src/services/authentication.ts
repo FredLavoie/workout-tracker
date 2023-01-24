@@ -1,4 +1,4 @@
-const URL = process.env.REACT_APP_BASE_URL || "https://workout-tracker.xyz/api";
+URL = import.meta.env.VITE_BASE_URL || "https://workout-tracker.xyz/api";
 
 export async function login(username: string, password: string) {
     const res = await fetch(`${URL}/dj-rest-auth/login/`, {
@@ -6,9 +6,9 @@ export async function login(username: string, password: string) {
         credentials: "omit",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            Accept: "application/json",
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
     });
     const data = await res.json();
     // login failed with provided credentials
@@ -27,7 +27,7 @@ export async function logout() {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            Accept: "application/json",
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -44,10 +44,10 @@ export async function changePassword(newPassword1: string, newPassword2: string)
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
-        body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 })
+        body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 }),
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
     return await res.json();
