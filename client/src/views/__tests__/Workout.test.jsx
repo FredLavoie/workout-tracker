@@ -5,7 +5,6 @@ import { server, rest } from "../../mockServer";
 import { Workout } from "../Workout";
 import { convertTime } from "../../utils";
 
-
 afterEach(cleanup);
 
 describe("Workout view - new", () => {
@@ -39,7 +38,7 @@ describe("Workout view - new", () => {
         server.use(
             rest.post("*/1/workouts", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
-            })
+            }),
         );
 
         render(<MockedNewWorkout />);
@@ -52,14 +51,13 @@ describe("Workout view - new", () => {
         localStorage.clear();
     });
 
-
     it("renders Workout view and fails form validation", async () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
         server.use(
             rest.post("*/1/workouts", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
-            })
+            }),
         );
 
         const invalidDate = "202-02-1";
@@ -81,7 +79,6 @@ describe("Workout view - new", () => {
     });
 });
 
-
 describe("Workout view - existing", () => {
     const MockedExistingWorkout = () => {
         return (
@@ -102,8 +99,11 @@ describe("Workout view - existing", () => {
 
         server.use(
             rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }));
-            })
+                return res(
+                    context.status(200),
+                    context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }),
+                );
+            }),
         );
 
         render(<MockedExistingWorkout />);
@@ -125,11 +125,14 @@ describe("Workout view - existing", () => {
 
         server.use(
             rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }));
+                return res(
+                    context.status(200),
+                    context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }),
+                );
             }),
             rest.delete("*/1/workouts/qwerty123456", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
-            })
+            }),
         );
 
         render(<MockedExistingWorkout />);
@@ -156,11 +159,17 @@ describe("Workout view - existing", () => {
 
         server.use(
             rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }));
+                return res(
+                    context.status(200),
+                    context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }),
+                );
             }),
             rest.patch("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: updatedWorkoutBody }));
-            })
+                return res(
+                    context.status(200),
+                    context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: updatedWorkoutBody }),
+                );
+            }),
         );
 
         render(<MockedExistingWorkout />);

@@ -6,7 +6,6 @@ import { months } from "../../lib/months";
 import { getNextPrevMonth } from "../../utils/testUtils";
 import { Calendar } from "../Calendar";
 
-
 afterEach(cleanup);
 
 const dateArray = new Date().toLocaleDateString("en-US").split("/");
@@ -68,5 +67,4 @@ describe("Calendar view", () => {
         const title = await screen.findByText(NextMonthTitle);
         expect(title).toBeInTheDocument();
     });
-
 });

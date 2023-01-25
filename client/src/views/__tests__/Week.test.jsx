@@ -6,18 +6,21 @@ import { calculateWeek, correctDate } from "../../utils";
 import { months } from "../../lib/months";
 import { Week } from "../Week";
 
-
 afterEach(cleanup);
 
 const currentWeekArr = new Date().toLocaleDateString("en-US").split("/");
-const prevWeekArr = correctDate(currentWeekArr.map((ea, index) => {
-    if (index === 1) return String(Number(ea) - 7);
-    else return ea;
-}));
-const nextWeekArr = correctDate(currentWeekArr.map((ea, index) => {
-    if (index === 1) return String(Number(ea) + 7);
-    else return ea;
-}));
+const prevWeekArr = correctDate(
+    currentWeekArr.map((ea, index) => {
+        if (index === 1) return String(Number(ea) - 7);
+        else return ea;
+    }),
+);
+const nextWeekArr = correctDate(
+    currentWeekArr.map((ea, index) => {
+        if (index === 1) return String(Number(ea) + 7);
+        else return ea;
+    }),
+);
 
 const currentWeekArrDays = calculateWeek(currentWeekArr);
 const prevWeekArrDays = calculateWeek(prevWeekArr);
@@ -46,8 +49,9 @@ describe("Week view", () => {
         const searchBox = await screen.findAllByText("Rest");
         expect(searchBox.length).toBe(7);
         // find current week title and assert it exists
-        const weekTitle = `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} `
-        + `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
+        const weekTitle =
+            `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} ` +
+            `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(weekTitle)).toBeInTheDocument();
     });
 
@@ -59,15 +63,17 @@ describe("Week view", () => {
         );
         render(<MockedWeek />);
         // find current week title and assert it exists
-        const weekTitle = `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} `
-        + `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
+        const weekTitle =
+            `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} ` +
+            `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(weekTitle)).toBeInTheDocument();
         // find and click the PREV button
         const prevButton = await screen.findByText("Prev");
         fireEvent.click(prevButton);
         // assert that it shows the previous week
-        const prevWeekTitle = `${months[prevWeekArrDays[0].split("-")[1]].substring(0, 3)} `
-        + `${prevWeekArrDays[0].split("-")[2]}, ${prevWeekArrDays[0].split("-")[0]}`;
+        const prevWeekTitle =
+            `${months[prevWeekArrDays[0].split("-")[1]].substring(0, 3)} ` +
+            `${prevWeekArrDays[0].split("-")[2]}, ${prevWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(prevWeekTitle)).toBeInTheDocument();
     });
 
@@ -79,16 +85,17 @@ describe("Week view", () => {
         );
         render(<MockedWeek />);
         // find current week title and assert it exists
-        const weekTitle = `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} `
-        + `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
+        const weekTitle =
+            `${months[currentWeekArrDays[0].split("-")[1]].substring(0, 3)} ` +
+            `${currentWeekArrDays[0].split("-")[2]}, ${currentWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(weekTitle)).toBeInTheDocument();
         // find and click the NEXT button
         const nextButton = await screen.findByText("Next");
         fireEvent.click(nextButton);
         // assert that it shows the next week
-        const nextWeekTitle = `${months[nextWeekArrDays[0].split("-")[1]].substring(0, 3)} `
-        + `${nextWeekArrDays[0].split("-")[2]}, ${nextWeekArrDays[0].split("-")[0]}`;
+        const nextWeekTitle =
+            `${months[nextWeekArrDays[0].split("-")[1]].substring(0, 3)} ` +
+            `${nextWeekArrDays[0].split("-")[2]}, ${nextWeekArrDays[0].split("-")[0]}`;
         expect(await screen.findByText(nextWeekTitle)).toBeInTheDocument();
     });
-
 });
