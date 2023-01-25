@@ -43,7 +43,8 @@
     "scripts": {
         "start": "vite",
         "build": "tsc && vite build",
-        "test": "vitest watch",
+        "test": "vitest --run",
+        "test-watch": "vitest watch",
         "serve": "vite preview",
         "lint": "eslint ./src"
     },
