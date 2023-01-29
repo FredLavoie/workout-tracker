@@ -31,6 +31,13 @@ export function Search() {
         setError(null);
     }
 
+    function handleTextInput(value: React.SetStateAction<string>) {
+        setSearchQuery(value);
+        if (value === "") {
+            setSearchResults(null);
+        }
+    }
+
     async function handleSubmit(event: { preventDefault: () => void }) {
         event.preventDefault();
         setIsLoading(true);
@@ -60,7 +67,7 @@ export function Search() {
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={style.formElement}>
                 <TextField
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => handleTextInput(e.target.value)}
                     sx={style.searchBox}
                     id="record-score"
                     placeholder="Search workouts/records..."
