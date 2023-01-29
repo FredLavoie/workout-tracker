@@ -4,7 +4,6 @@ import { render, cleanup, screen, fireEvent } from "@testing-library/react";
 import { server, rest } from "../../mockServer";
 import { Login } from "../Login";
 
-
 afterEach(cleanup);
 
 describe("Login view", () => {
@@ -30,9 +29,12 @@ describe("Login view", () => {
 
     it("renders an error when inputing the wrong credentials", async () => {
         server.use(
-            rest.post("*/api/dj-rest-auth/login/", (req, res, context) => {
-                return res(context.status(400), context.json({ non_field_errors: ["Unable to log in with provided credentials."] }));
-            })
+            rest.post("*/dj-rest-auth/login/", (req, res, context) => {
+                return res(
+                    context.status(400),
+                    context.json({ non_field_errors: ["Unable to log in with provided credentials."] }),
+                );
+            }),
         );
 
         render(<Login />);
@@ -66,15 +68,15 @@ describe("Login view", () => {
 
     it("redirects upon successful login", async () => {
         server.use(
-            rest.post("*/api/dj-rest-auth/login/", (req, res, context) => {
+            rest.post("*/dj-rest-auth/login/", (req, res, context) => {
                 return res(context.status(200), context.json({ key: "l236hj4hsdr0s" }));
-            })
+            }),
         );
         render(
             <MemoryRouter initialEntries={[{ pathname: "/login" }]}>
                 <Login />
                 <Route path="/dashboard">Dashboard</Route>
-            </MemoryRouter>
+            </MemoryRouter>,
         );
         // enter in credentials
         fireEvent.change(screen.getByLabelText("Username"), { target: { value: "abc" } });

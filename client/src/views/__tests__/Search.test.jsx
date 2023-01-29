@@ -4,9 +4,7 @@ import { render, cleanup, screen, fireEvent } from "@testing-library/react";
 import { server, rest } from "../../mockServer";
 import { Search } from "../Search";
 
-
 afterEach(cleanup);
-
 
 describe("Search view", () => {
     const MockedSearch = () => {
@@ -31,20 +29,30 @@ describe("Search view", () => {
         const searchTerm = "squat";
         server.use(
             rest.get("*/1/records/search/", (req, res, context) => {
-                return res(context.status(200), context.json([{
-                    date: "2021-04-25",
-                    type: "strength",
-                    event: "squat",
-                    score: "300"
-                }]));
+                return res(
+                    context.status(200),
+                    context.json([
+                        {
+                            date: "2021-04-25",
+                            type: "strength",
+                            event: "squat",
+                            score: "300",
+                        },
+                    ]),
+                );
             }),
             rest.get("*/1/workouts/search/", (req, res, context) => {
-                return res(context.status(200), context.json([{
-                    date: "2022-05-20",
-                    time: "13:30:00",
-                    workout_body: "squat 5x5 @225"
-                }]));
-            })
+                return res(
+                    context.status(200),
+                    context.json([
+                        {
+                            date: "2022-05-20",
+                            time: "13:30:00",
+                            workout_body: "squat 5x5 @225",
+                        },
+                    ]),
+                );
+            }),
         );
 
         render(<MockedSearch />);

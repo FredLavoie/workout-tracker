@@ -1,14 +1,14 @@
-const URL = process.env.REACT_APP_BASE_URL || "https://workout-tracker.xyz/api";
+const BASE_URL = import.meta.env.VITE_BASE_URL || "https://workout-tracker.xyz/api";
 
 export async function login(username: string, password: string) {
-    const res = await fetch(`${URL}/dj-rest-auth/login/`, {
+    const res = await fetch(`${BASE_URL}/dj-rest-auth/login/`, {
         method: "POST",
         credentials: "omit",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            Accept: "application/json",
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
     });
     const data = await res.json();
     // login failed with provided credentials
@@ -23,11 +23,11 @@ export async function login(username: string, password: string) {
 }
 
 export async function logout() {
-    const res = await fetch(`${URL}/dj-rest-auth/logout/`, {
+    const res = await fetch(`${BASE_URL}/dj-rest-auth/logout/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            Accept: "application/json",
         },
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
@@ -40,14 +40,14 @@ export async function logout() {
 
 export async function changePassword(newPassword1: string, newPassword2: string) {
     const token = localStorage.getItem("token");
-    const res = await fetch(`${URL}/dj-rest-auth/password/change/`, {
+    const res = await fetch(`${BASE_URL}/dj-rest-auth/password/change/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "authorization": `Token ${token}`
+            Accept: "application/json",
+            authorization: `Token ${token}`,
         },
-        body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 })
+        body: JSON.stringify({ new_password1: newPassword1, new_password2: newPassword2 }),
     });
     if (!res.ok) throw new Error(`Server error - status ${res.status}`);
     return await res.json();

@@ -5,7 +5,6 @@ import userEvent from "@testing-library/user-event";
 import { server, rest } from "../../mockServer";
 import { Record } from "../Record";
 
-
 afterEach(cleanup);
 
 describe("Record view - new", () => {
@@ -33,7 +32,7 @@ describe("Record view - new", () => {
         server.use(
             rest.post("*/1/records", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
-            })
+            }),
         );
 
         render(<MockedNewRecord />);
@@ -55,14 +54,13 @@ describe("Record view - new", () => {
         localStorage.clear();
     });
 
-
     it("renders Record view and fails form validation", async () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
         server.use(
             rest.post("*/1/records", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
-            })
+            }),
         );
 
         const invalidDate = "202-02-1";
@@ -92,7 +90,6 @@ describe("Record view - new", () => {
     });
 });
 
-
 describe("Record view - existing", () => {
     const MockedExistingRecord = () => {
         return (
@@ -113,14 +110,17 @@ describe("Record view - existing", () => {
 
         server.use(
             rest.get("*/1/records/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({
-                    ok: true,
-                    date: recordDate,
-                    type: recordType,
-                    event: recordEvent,
-                    score: recordScore
-                }));
-            })
+                return res(
+                    context.status(200),
+                    context.json({
+                        ok: true,
+                        date: recordDate,
+                        type: recordType,
+                        event: recordEvent,
+                        score: recordScore,
+                    }),
+                );
+            }),
         );
 
         render(<MockedExistingRecord />);
@@ -144,17 +144,20 @@ describe("Record view - existing", () => {
 
         server.use(
             rest.get("*/1/records/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({
-                    ok: true,
-                    date: recordDate,
-                    type: recordType,
-                    event: recordEvent,
-                    score: recordScore
-                }));
+                return res(
+                    context.status(200),
+                    context.json({
+                        ok: true,
+                        date: recordDate,
+                        type: recordType,
+                        event: recordEvent,
+                        score: recordScore,
+                    }),
+                );
             }),
             rest.delete("*/1/records/qwerty123456", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
-            })
+            }),
         );
 
         render(<MockedExistingRecord />);
@@ -183,23 +186,29 @@ describe("Record view - existing", () => {
 
         server.use(
             rest.get("*/1/records/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({
-                    ok: true,
-                    date: recordDate,
-                    type: recordType,
-                    event: recordEvent,
-                    score: recordScore
-                }));
+                return res(
+                    context.status(200),
+                    context.json({
+                        ok: true,
+                        date: recordDate,
+                        type: recordType,
+                        event: recordEvent,
+                        score: recordScore,
+                    }),
+                );
             }),
             rest.patch("*/1/records/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({
-                    ok: true,
-                    date: recordDate,
-                    type: recordType,
-                    event: recordEvent,
-                    score: updatedScore
-                }));
-            })
+                return res(
+                    context.status(200),
+                    context.json({
+                        ok: true,
+                        date: recordDate,
+                        type: recordType,
+                        event: recordEvent,
+                        score: updatedScore,
+                    }),
+                );
+            }),
         );
 
         render(<MockedExistingRecord />);

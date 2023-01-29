@@ -9,14 +9,13 @@ import {
     FormControlLabel,
     Grid,
     TextField,
-    Typography
+    Typography,
 } from "@mui/material";
 
 import { SearchResultCard } from "../components/SearchResultCard";
 import { ServerError } from "../components/ServerError";
 import { fetchSearchResults } from "../services/fetchData";
 import { tConditionalEntry } from "../types";
-
 
 export function Search() {
     const [checkedWorkout, setCheckedWorkout] = useState(true);
@@ -30,6 +29,13 @@ export function Search() {
         setSearchQuery("");
         setSearchResults(null);
         setError(null);
+    }
+
+    function handleTextInput(value: React.SetStateAction<string>) {
+        setSearchQuery(value);
+        if (value === "") {
+            setSearchResults(null);
+        }
     }
 
     async function handleSubmit(event: { preventDefault: () => void }) {
@@ -49,24 +55,19 @@ export function Search() {
         } catch (error) {
             setIsLoading(false);
             setSearchResults(null);
-            setError(error);
+            setError(error.message);
             return;
         }
     }
 
     return (
-        <Grid
-            container
-            direction="column"
-            alignItems="center"
-            sx={style.root}
-        >
+        <Grid container direction="column" alignItems="center" sx={style.root}>
             <Typography variant="h4" sx={style.title}>
-        Search
+                Search
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={style.formElement}>
                 <TextField
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => handleTextInput(e.target.value)}
                     sx={style.searchBox}
                     id="record-score"
                     placeholder="Search workouts/records..."
@@ -80,7 +81,8 @@ export function Search() {
                                 onChange={(e) => setCheckedWorkout(e.target.checked)}
                                 name="checkedWorkout"
                                 color="primary"
-                            />}
+                            />
+                        }
                         label="Workouts"
                     />
                     <FormControlLabel
@@ -91,7 +93,8 @@ export function Search() {
                                 name="checkedRecord"
                                 color="primary"
                                 data-testid="checkedRecord"
-                            />}
+                            />
+                        }
                         label="PRs"
                     />
                 </FormGroup>
@@ -105,7 +108,7 @@ export function Search() {
                         key={`${searchQuery === "" ? true : false}`}
                         disabled={searchQuery === "" ? true : false}
                     >
-            Search
+                        Search
                     </Button>
                     <Button
                         onClick={handleClear}
@@ -114,14 +117,26 @@ export function Search() {
                         variant="outlined"
                         data-testid="clear-search"
                     >
-            Clear
+                        Clear
                     </Button>
                 </Box>
             </Box>
             {error && <ServerError errorMessage={error} />}
-            {isLoading && <Box sx={style.loading}><CircularProgress /></Box>}
-            {searchResults && searchResults.length > 0 ? <Typography color="primary">( Number of results found: {searchResults.length} )</Typography> : ""}
-            {searchResults && searchResults.length > 0 ? <SearchResultCard content={searchResults} searchQuery={searchQuery} /> : <></>}
+            {isLoading && (
+                <Box sx={style.loading}>
+                    <CircularProgress />
+                </Box>
+            )}
+            {searchResults && searchResults.length > 0 ? (
+                <Typography color="primary">( Number of results found: {searchResults.length} )</Typography>
+            ) : (
+                ""
+            )}
+            {searchResults && searchResults.length > 0 ? (
+                <SearchResultCard content={searchResults} searchQuery={searchQuery} />
+            ) : (
+                <></>
+            )}
         </Grid>
     );
 }
@@ -159,7 +174,7 @@ const style = {
     buttonContainer: {
         width: "208px",
         display: "flex",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
     },
     loading: {
         display: "flex",
