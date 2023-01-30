@@ -129,6 +129,7 @@ export function Record() {
                             margin="normal"
                             placeholder="Date"
                             id="date-picker"
+                            type="date"
                             value={selectedDate}
                         />
                         <Typography sx={style.elementMargin}>Event Type</Typography>

@@ -53,41 +53,6 @@ describe("Record view - new", () => {
         // clean up local storage
         localStorage.clear();
     });
-
-    it("renders Record view and fails form validation", async () => {
-        localStorage.setItem("token", "asdf");
-        localStorage.setItem("accountId", "1");
-        server.use(
-            rest.post("*/1/records", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true }));
-            }),
-        );
-
-        const invalidDate = "202-02-1";
-
-        render(<MockedNewRecord />);
-        // enter in invalid date
-        fireEvent.change(screen.getByPlaceholderText("Date"), { target: { value: invalidDate } });
-        // select the event type
-        const enduranceEventType = await screen.findByText("Endurance");
-        fireEvent.click(enduranceEventType);
-        // select the event dropdown and click it
-        const eventDropdown = await screen.findByRole("button", { expanded: false });
-        userEvent.click(eventDropdown);
-        // select the event to choose and click it
-        const selectedEvent = screen.getByText("Row 500m");
-        userEvent.click(selectedEvent);
-        // enter in the score value
-        fireEvent.change(screen.getByPlaceholderText("Score"), { target: { value: "1:22" } });
-        // find and click the submit button
-        const submitButton = screen.getByText("Save");
-        fireEvent.click(submitButton);
-        // submitting the record with invalid data should render the failure toast message
-        const failedToastMessage = await screen.findByText("One or more inputted values is invalid.");
-        expect(failedToastMessage).toBeInTheDocument();
-        // clean up local storage
-        localStorage.clear();
-    });
 });
 
 describe("Record view - existing", () => {
