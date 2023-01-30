@@ -7,7 +7,7 @@ afterEach(cleanup);
 describe("SearchResultCard", () => {
     const props = [
         { id: 123456, date: "2022-04-04", workout_body: "Sample workout body" },
-        { id: 456789, date: "2021-02-22", type: "strength", event: "Back Squat", score: 250 }
+        { id: 456789, date: "2021-02-22", type: "strength", event: "Back Squat", score: 250 },
     ];
 
     it("renders a record card and a workout card without crashing", () => {

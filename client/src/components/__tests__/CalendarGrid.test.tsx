@@ -1,19 +1,18 @@
 import React from "react";
 import { render, cleanup, screen } from "@testing-library/react";
 import { CalendarGrid } from "../CalendarGrid";
+import { tWorkout } from "../../types";
 
 afterEach(cleanup);
 
 describe("CalendarGrid", () => {
     const year = "2022";
     const month = "05";
-    const workouts =
-    [
-        { id: 123, date: "2022-05-04", workout_body: "Workout1" },
-        { id: 456, date: "2022-05-12", workout_body: "Workout2" },
-        { id: 789, date: "2022-05-28", workout_body: "Workout3" },
+    const workouts: tWorkout[] = [
+        { id: "123", author: "1", date: "2022-05-04", time: "12:00", workout_body: "Workout1" },
+        { id: "456", author: "1", date: "2022-05-12", time: "12:00", workout_body: "Workout2" },
+        { id: "789", author: "1", date: "2022-05-28", time: "12:00", workout_body: "Workout3" },
     ];
-
 
     it("renders calendarGrid without crashing", () => {
         render(<CalendarGrid year={year} month={month} workouts={workouts} />);

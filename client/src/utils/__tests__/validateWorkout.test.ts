@@ -64,8 +64,8 @@ describe("validateWorkout", () => {
     });
 
     // test the body of the workout
-    it("[12] Should return false if body is only a number", () => {
-        const result = validateWorkout("2022-05-15", "08:05", 12345);
+    it("[12] Should return false if body is empty", () => {
+        const result = validateWorkout("2022-05-15", "08:05", "");
         expect(result).toBe(false);
     });
 });
