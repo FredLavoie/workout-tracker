@@ -117,6 +117,7 @@ export function Workout() {
                             margin="normal"
                             placeholder="Date"
                             id="date-picker"
+                            type="date"
                             value={selectedDate}
                         />
                         <Typography sx={style.labelStyle}>Time</Typography>
@@ -125,6 +126,7 @@ export function Workout() {
                             margin="normal"
                             placeholder="Time"
                             id="time-picker"
+                            type="time"
                             value={selectedTime}
                         />
                         <Typography sx={style.labelStyle}>Workout</Typography>
