@@ -3,13 +3,15 @@ import { useHistory } from "react-router-dom";
 
 import { Box, Typography } from "@mui/material";
 
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+
 import { tWorkout } from "../types";
 
 type propTypes = {
-  year: string
-  month: string
-  workouts: tWorkout[]
-}
+    year: string;
+    month: string;
+    workouts: tWorkout[];
+};
 
 export function CalendarGrid(props: propTypes) {
     const history = useHistory();
@@ -29,9 +31,11 @@ export function CalendarGrid(props: propTypes) {
             obj.dayNumber = dayOfTheMonth;
             dayOfTheMonth += 1;
         }
-        if (Number(currentDate.split("/")[1]) + 1 === dayOfTheMonth
-      && currentDate.split("/")[0].padStart(2, "0") === props.month
-      && currentDate.split("/")[2] === props.year) {
+        if (
+            Number(currentDate.split("/")[1]) + 1 === dayOfTheMonth &&
+            currentDate.split("/")[0].padStart(2, "0") === props.month &&
+            currentDate.split("/")[2] === props.year
+        ) {
             obj.today = true;
         }
         if (dayOfTheMonth > numberOfDaysInMonth && i === 34) {
@@ -74,10 +78,12 @@ export function CalendarGrid(props: propTypes) {
                     key={index}
                     id={ea.workoutId ? ea.workoutId : ""}
                     onClick={(e) => handleClickActive(e.currentTarget.id, ea.dayNumber)}
-                    sx={{ ...style.daySquare, ...(ea.active ? activeStyle : ea.dayNumber > 0 ? dayOfMonthStyle : style.notDayOfMonth) }}
+                    sx={{
+                        ...style.daySquare,
+                        ...(ea.active ? activeStyle : ea.dayNumber > 0 ? dayOfMonthStyle : style.notDayOfMonth),
+                    }}
                 >
-                    {ea.dayNumber !== 0
-                        ?
+                    {ea.dayNumber !== 0 ? (
                         <Typography
                             variant="body2"
                             data-testid="calendar-day"
@@ -86,16 +92,15 @@ export function CalendarGrid(props: propTypes) {
                         >
                             {ea.dayNumber}
                         </Typography>
-                        :
+                    ) : (
                         ""
-                    }
+                    )}
+                    {ea.workoutId && <DoneOutlineIcon sx={style.checkmark} />}
                 </Box>
-            ))
-            }
-        </Box >
+            ))}
+        </Box>
     );
 }
-
 
 const style = {
     container: {
@@ -109,25 +114,28 @@ const style = {
     },
     daySquare: {
         width: "13%",
-        paddingBottom: "8%",
         display: "flex",
+        flexDirection: "column",
         flexGrow: "1",
-        justifyContent: "right",  // check this on Safari
         border: "none",
     },
     activeLight: {
+        paddingBottom: "0",
         backgroundColor: "secondary.main",
         cursor: "pointer",
     },
     activeDark: {
+        paddingBottom: "0",
         backgroundColor: "primary.main",
         cursor: "pointer",
     },
     dayOfMonthLight: {
+        paddingBottom: "8%",
         backgroundColor: "#ede7f6",
         cursor: "pointer",
     },
     dayOfMonthDark: {
+        paddingBottom: "8%",
         backgroundColor: "#353535",
         cursor: "pointer",
     },
@@ -136,11 +144,15 @@ const style = {
     },
     innerText: {
         padding: "4px",
+        alignSelf: "flex-end",
+    },
+    checkmark: {
+        alignSelf: "center",
     },
     today: {
         borderRadius: "4px",
         padding: "4px 6px",
         backgroundColor: "none",
         color: "none",
-    }
+    },
 };
