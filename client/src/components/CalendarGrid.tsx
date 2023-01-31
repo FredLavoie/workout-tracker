@@ -153,7 +153,7 @@ const style = {
     },
     today: {
         borderRadius: "4px",
-        padding: "4px 6px",
+        padding: "2px 4px",
         backgroundColor: "none",
         color: "none",
     },
