@@ -120,22 +120,22 @@ const style = {
         border: "none",
     },
     activeLight: {
-        paddingBottom: "0",
+        paddingBottom: "6%",
         backgroundColor: "secondary.main",
         cursor: "pointer",
     },
     activeDark: {
-        paddingBottom: "0",
+        paddingBottom: "6%",
         backgroundColor: "primary.main",
         cursor: "pointer",
     },
     dayOfMonthLight: {
-        paddingBottom: "8%",
+        paddingBottom: "8.8%",
         backgroundColor: "#ede7f6",
         cursor: "pointer",
     },
     dayOfMonthDark: {
-        paddingBottom: "8%",
+        paddingBottom: "8.8%",
         backgroundColor: "#353535",
         cursor: "pointer",
     },
