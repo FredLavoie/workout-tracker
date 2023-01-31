@@ -148,6 +148,8 @@ const style = {
     },
     checkmark: {
         alignSelf: "center",
+        width: { lg: "32px", md: "24px", xs: "16px" },
+        height: { lg: "32px", md: "24px", xs: "16px" },
     },
     today: {
         borderRadius: "4px",
