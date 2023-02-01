@@ -110,7 +110,7 @@ export function Calendar() {
 /**
  * Custom hook to abstract the data fetching for the Calendar view
  *
- * @param {string} monthToFetch the month to fetch the data for
+ * @param monthToFetch the month to fetch the data for
  * @returns {object}
  */
 function useFetchCalendarData(monthToFetch: string): Record<string, any> {

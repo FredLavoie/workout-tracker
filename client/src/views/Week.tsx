@@ -102,9 +102,9 @@ export function Week() {
 
 /**
  * Custom hook to abstract the data fetching for the Week view
- * @param {string} currentMonth
- * @param {string} nextMonth
- * @param {string[]} dateArr
+ * @param currentMonth
+ * @param nextMonth
+ * @param dateArr
  * @returns {object}
  */
 function useFetchWeekData(currentMonth: string, nextMonth: string, dateArr: string[]): Record<string, any> {

@@ -6,7 +6,7 @@ import { months } from "../lib/months";
  * @param month current month
  * @param option paramter to determine which month to get
  * @param year current year
- * @returns returns the month title as a string
+ * @returns month title as a string
  */
 export function getNextPrevMonth(month: string, option: string, year: string): string {
     if (option === "prev") {

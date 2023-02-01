@@ -93,7 +93,7 @@ export function Dashboard() {
 /**
  * Custom hook to abstract the data fetching for the Dashboard view
  *
- * @param {string} currentYear a date string to fetch all workouts for the current year
+ * @param currentYear a date string to fetch all workouts for the current year
  * @returns {object}
  */
 function useFetchDashboardData(currentYear: string): Record<string, any> {

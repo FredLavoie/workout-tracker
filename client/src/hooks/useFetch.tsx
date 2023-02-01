@@ -4,11 +4,11 @@ import { tFetchFunction } from "../types";
 /**
  * Custom hook for fetching data.
  *
- * @param {tFetchFunction} fetchFunction reference to the fetch function to be called to fetch the data
- * @param {Record<string, any> | null} params parameters required to make the fetch call
- * @param {boolean} skip sometimes the function call needs to be skiped, but the hook is
+ * @param fetchFunction reference to the fetch function to be called to fetch the data
+ * @param params parameters required to make the fetch call
+ * @param skip sometimes the function call needs to be skiped, but the hook is
  * required to be called by the component
- * @returns {object}
+ * @returns object containing the fetched data, isLoading boolean and an error message
  */
 export function useFetch(fetchFunction: tFetchFunction, params: Record<string, any> | null, skip: boolean) {
     const [data, setData] = useState(null);
