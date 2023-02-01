@@ -16,34 +16,13 @@ type propTypes = {
 export function CalendarGrid(props: propTypes) {
     const history = useHistory();
 
-    const weekDayFirstMonthDay = new Date(`${props.year}/${props.month}/01`).getDay();
-    const numberOfDaysInMonth = new Date(Number(props.year), Number(props.month), 0).getDate();
+    // The day of the week that the fist day of the month lands on.
+    // 0 = Sunday, 7 = Saturday
+    const firstMonthDay = new Date(`${props.year}/${props.month}/01`).getDay();
+    const numDaysInMonth = new Date(Number(props.year), Number(props.month), 0).getDate();
     const currentDate = new Date().toLocaleDateString("en-US");
 
-    const contentArray = [];
-    let dayOfTheMonth = 0;
-    for (let i = 0; i < 42; i++) {
-        const obj = { dayNumber: 0, today: false };
-        if (i === weekDayFirstMonthDay) {
-            dayOfTheMonth += 1;
-        }
-        if (dayOfTheMonth > 0 && dayOfTheMonth <= numberOfDaysInMonth) {
-            obj.dayNumber = dayOfTheMonth;
-            dayOfTheMonth += 1;
-        }
-        if (
-            Number(currentDate.split("/")[1]) + 1 === dayOfTheMonth &&
-            currentDate.split("/")[0].padStart(2, "0") === props.month &&
-            currentDate.split("/")[2] === props.year
-        ) {
-            obj.today = true;
-        }
-        if (dayOfTheMonth > numberOfDaysInMonth && i === 34) {
-            contentArray.push(obj);
-            break;
-        }
-        contentArray.push(obj);
-    }
+    const contentArray = generateContentArray(firstMonthDay, numDaysInMonth, currentDate, props.year, props.month);
 
     for (const ea of contentArray) {
         for (const workout of props.workouts) {
@@ -100,6 +79,62 @@ export function CalendarGrid(props: propTypes) {
             ))}
         </Box>
     );
+}
+
+type tContentArray = {
+    active: boolean;
+    dayNumber: number;
+    workoutId?: string;
+};
+
+/**
+ * Generates an array of objects, one for each square in a calendar (35 or 42)
+ *
+ * Returns an array of object used in the Calendar view component
+ * dayNumber - gets assigned a value of 0 for squares that are before and after
+ * today - is a boolean that is true if this square is represents todays date
+ * active - is a boolean that is true for days that have a workout
+ * workoutId - has the id of the workout for the given day
+ *
+ * @param firstMonthDay
+ * @param numDaysInMonth
+ * @param currentDate
+ * @param year
+ * @param month
+ * @returns {tContentArray[]}
+ */
+function generateContentArray(
+    firstMonthDay: number,
+    numDaysInMonth: number,
+    currentDate: string,
+    year: string,
+    month: string,
+): tContentArray[] {
+    const contentArray = [];
+    let dayOfTheMonth = 0;
+    for (let i = 0; i < 42; i++) {
+        const obj = { dayNumber: 0, today: false };
+        if (i === firstMonthDay) {
+            dayOfTheMonth += 1;
+        }
+        if (dayOfTheMonth > 0 && dayOfTheMonth <= numDaysInMonth) {
+            obj.dayNumber = dayOfTheMonth;
+            dayOfTheMonth += 1;
+        }
+        if (
+            Number(currentDate.split("/")[1]) + 1 === dayOfTheMonth &&
+            currentDate.split("/")[0].padStart(2, "0") === month &&
+            currentDate.split("/")[2] === year
+        ) {
+            obj.today = true;
+        }
+        if (dayOfTheMonth > numDaysInMonth && i === 34) {
+            contentArray.push(obj);
+            break;
+        }
+        contentArray.push(obj);
+    }
+    return contentArray;
 }
 
 const style = {
