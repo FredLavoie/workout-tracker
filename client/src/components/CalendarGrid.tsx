@@ -21,17 +21,14 @@ export function CalendarGrid(props: propTypes) {
     const firstMonthDay = new Date(`${props.year}/${props.month}/01`).getDay();
     const numDaysInMonth = new Date(Number(props.year), Number(props.month), 0).getDate();
     const currentDate = new Date().toLocaleDateString("en-US");
-
-    const contentArray = generateContentArray(firstMonthDay, numDaysInMonth, currentDate, props.year, props.month);
-
-    for (const ea of contentArray) {
-        for (const workout of props.workouts) {
-            if (ea.dayNumber === Number(workout.date.split("-")[2])) {
-                ea.active = true;
-                ea.workoutId = workout.id;
-            }
-        }
-    }
+    const contentArray = generateContentArray(
+        firstMonthDay,
+        numDaysInMonth,
+        currentDate,
+        props.workouts,
+        props.year,
+        props.month,
+    );
 
     function handleClickActive(id: string, dayNum: number) {
         if (dayNum === 0) return;
@@ -99,6 +96,7 @@ type tContentArray = {
  * @param firstMonthDay
  * @param numDaysInMonth
  * @param currentDate
+ * @param workouts
  * @param year
  * @param month
  * @returns {tContentArray[]}
@@ -107,6 +105,7 @@ function generateContentArray(
     firstMonthDay: number,
     numDaysInMonth: number,
     currentDate: string,
+    workouts: tWorkout[],
     year: string,
     month: string,
 ): tContentArray[] {
@@ -134,6 +133,16 @@ function generateContentArray(
         }
         contentArray.push(obj);
     }
+
+    for (const ea of contentArray) {
+        for (const workout of workouts) {
+            if (ea.dayNumber === Number(workout.date.split("-")[2])) {
+                ea.active = true;
+                ea.workoutId = workout.id;
+            }
+        }
+    }
+
     return contentArray;
 }
 
