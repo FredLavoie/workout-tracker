@@ -1,20 +1,25 @@
 services:
-  web:
-    build: .
-    command: "${SERVER_RUN_COMMAND:-gunicorn config.wsgi -b 0.0.0.0:8000}"
-    volumes:
-      - .:/server_src
-    ports:
-      - 8000:8000
-    depends_on:
-      - db
+    web:
+        build: .
+        command: "${SERVER_RUN_COMMAND:-gunicorn config.wsgi -b 0.0.0.0:8000}"
+        volumes:
+            - .:/server_src
+        ports:
+            - 8000:8000
+        depends_on:
+            - db
 
-  db:
-    image: postgres:11
-    ports:
-      - "5432:5432"
-    environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
-      - "POSTGRES_DB=${POSTGRES_DATABASE_NAME}"
-      - "POSTGRES_USER=${POSTGRES_DATABASE_USER}"
-      - "POSTGRES_PASSWORD=${POSTGRES_DATABASE_PASSWORD}"
+    db:
+        image: postgres:11
+        ports:
+            - "5432:5432"
+        environment:
+            - "POSTGRES_HOST_AUTH_METHOD=trust"
+            - "POSTGRES_DB=${POSTGRES_DATABASE_NAME}"
+            - "POSTGRES_USER=${POSTGRES_DATABASE_USER}"
+            - "POSTGRES_PASSWORD=${POSTGRES_DATABASE_PASSWORD}"
+        volumes:
+            - db:/var/lib/postgresql/data
+volumes:
+    db:
+        driver: local
