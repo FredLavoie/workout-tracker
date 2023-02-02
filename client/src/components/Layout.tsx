@@ -41,7 +41,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-export function Layout({ children, userTheme, setUserTheme }) {
+export function Layout({ children, userTheme, setUserTheme }): JSX.Element {
     if (isAuthenticated() === false) {
         return <Redirect to="/login" />;
     }
@@ -60,7 +60,7 @@ export function Layout({ children, userTheme, setUserTheme }) {
     const username = localStorage.getItem("username");
     const firstTwoLetter = `${username[0].toUpperCase()}${username[1].toUpperCase()}`;
 
-    async function handleSubmit(event: { preventDefault: () => void }) {
+    async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
         try {
             await logout();
@@ -70,33 +70,33 @@ export function Layout({ children, userTheme, setUserTheme }) {
         }
     }
 
-    function handleCloseError() {
+    function handleCloseError(): void {
         setOpenSnackbar(false);
     }
 
-    function handleClickAvatar(event: { currentTarget: any }) {
+    function handleClickAvatar(event: { currentTarget: any }): void {
         setAnchorEl(event.currentTarget);
     }
 
-    function handleClose() {
+    function handleClose(): void {
         setAnchorEl(null);
     }
 
-    function handleDrawerToggle() {
+    function handleDrawerToggle(): void {
         setMobileOpen(!mobileOpen);
     }
 
-    function handleMenuItemClick(path: string) {
+    function handleMenuItemClick(path: string): void {
         if (mobileOpen) handleDrawerToggle();
         history.push(path);
     }
 
-    function handleChangePasswordClick() {
+    function handleChangePasswordClick(): void {
         handleClose();
         history.push("/password-change");
     }
 
-    function handleThemeToggle(event) {
+    function handleThemeToggle(event): void {
         if (event.target.checked) {
             localStorage.setItem("userTheme", "dark");
             setUserTheme("dark");

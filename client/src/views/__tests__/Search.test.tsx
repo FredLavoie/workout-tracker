@@ -7,7 +7,7 @@ import { Search } from "../Search";
 afterEach(cleanup);
 
 describe("Search view", () => {
-    const MockedSearch = () => {
+    const MockedSearch = (): JSX.Element => {
         return (
             <MemoryRouter initialEntries={[{ pathname: "/search" }]}>
                 <Search />

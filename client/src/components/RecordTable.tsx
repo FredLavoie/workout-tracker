@@ -1,21 +1,16 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import {
-    Box,
-    CardContent,
-    Typography,
-} from "@mui/material";
+import { Box, CardContent, Typography } from "@mui/material";
 
 import { recordList } from "../lib/recordList";
 import { tRecord } from "../types";
 
-
-export function RecordTable({ type, records }) {
+export function RecordTable({ type, records }): JSX.Element {
     const history = useHistory();
     const filteredEventList = recordList[type].filter((ea: string) => records.find((rec: tRecord) => rec.event === ea));
 
-    function handleClickActive(target: Element) {
+    function handleClickActive(target: Element): void {
         const encodedString = target.id.toLowerCase().replace(/ /g, "-");
         history.push(`/records/event/${encodedString}`);
     }
@@ -23,18 +18,17 @@ export function RecordTable({ type, records }) {
     return (
         <CardContent sx={style.content}>
             {filteredEventList.map((event: string, index: number) => (
-                <Box key={index} id={event} sx={style.eventContainer} onClick={(e) => handleClickActive(e.currentTarget)}>
-                    <Typography variant={"subtitle1"} >
-                        {event}
-                    </Typography>
+                <Box
+                    key={index}
+                    id={event}
+                    sx={style.eventContainer}
+                    onClick={(e) => handleClickActive(e.currentTarget)}
+                >
+                    <Typography variant={"subtitle1"}>{event}</Typography>
 
                     {[records.find((ea: { event: string }) => ea.event === event)].map((ea) => {
                         return (
-                            <Box
-                                key={ea.id}
-                                id={ea.event}
-                                data-testid="recordItem"
-                            >
+                            <Box key={ea.id} id={ea.event} data-testid="recordItem">
                                 <Typography variant={"body2"} sx={style.score}>
                                     {ea.score}
                                 </Typography>

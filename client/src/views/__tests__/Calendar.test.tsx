@@ -18,7 +18,7 @@ describe("Calendar view", () => {
     localStorage.setItem("token", "asdf");
     localStorage.setItem("accountId", "1");
 
-    const MockedCalendar = () => {
+    const MockedCalendar = (): JSX.Element => {
         return (
             <MemoryRouter initialEntries={[{ pathname: calPath }]}>
                 <Calendar />

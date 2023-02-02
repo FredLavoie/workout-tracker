@@ -1,7 +1,7 @@
 /**
  * Utility function that validates a workout entry ensuring that the date and time are formatted correctly, as well
  * as ensuring that the body is not empty.
- * 
+ *
  * @param date date of the workout, ex: 2022-04-06
  * @param time time of day in 24h time format 24:00
  * @param body the content of the workout
@@ -22,8 +22,10 @@ export function validateWorkout(date: string, time: string, body: string): boole
     if (time === "" || !time.includes(":")) return false;
     const timeArr = time.split(":");
     if (timeArr.length !== 2) return false;
-    if (timeArr[0].length !== 2 || Number(timeArr[0]) < 0 || Number(timeArr[0]) > 23 || Number(timeArr[0]) % 1 !== 0) return false;
-    if (timeArr[1].length !== 2 || Number(timeArr[1]) < 0 || Number(timeArr[1]) > 59 || Number(timeArr[1]) % 1 !== 0) return false;
+    if (timeArr[0].length !== 2 || Number(timeArr[0]) < 0 || Number(timeArr[0]) > 23 || Number(timeArr[0]) % 1 !== 0)
+        return false;
+    if (timeArr[1].length !== 2 || Number(timeArr[1]) < 0 || Number(timeArr[1]) > 59 || Number(timeArr[1]) % 1 !== 0)
+        return false;
 
     // validate body
     if (body === "") return false;

@@ -30,7 +30,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-export function Record() {
+export function Record(): JSX.Element {
     const location = useLocation();
     const history = useHistory();
 
@@ -61,7 +61,7 @@ export function Record() {
         }
     }, [data]);
 
-    async function handleSubmit(event: { preventDefault: () => void }) {
+    async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
 
         if (recordId === "new") {
@@ -95,11 +95,11 @@ export function Record() {
         }
     }
 
-    function handleCancel() {
+    function handleCancel(): void {
         history.goBack();
     }
 
-    async function handleDelete() {
+    async function handleDelete(): Promise<void> {
         try {
             await deleteRecord(recordId);
             history.push("/dashboard");
@@ -109,7 +109,7 @@ export function Record() {
         }
     }
 
-    function handleClose() {
+    function handleClose(): void {
         setOpenSnackbar(false);
     }
 

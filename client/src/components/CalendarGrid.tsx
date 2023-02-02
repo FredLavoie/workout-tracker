@@ -13,7 +13,7 @@ type propTypes = {
     workouts: tWorkout[];
 };
 
-export function CalendarGrid(props: propTypes) {
+export function CalendarGrid(props: propTypes): JSX.Element {
     const history = useHistory();
 
     // The day of the week that the fist day of the month lands on.
@@ -30,7 +30,7 @@ export function CalendarGrid(props: propTypes) {
         props.month,
     );
 
-    function handleClickActive(id: string, dayNum: number) {
+    function handleClickActive(id: string, dayNum: number): void {
         if (dayNum === 0) return;
         if (!id) {
             history.push(`/workouts/new/${props.year}-${props.month}-${String(dayNum).padStart(2, "0")}`);

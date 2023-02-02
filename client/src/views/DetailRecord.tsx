@@ -7,7 +7,7 @@ import { fetchEventRecords } from "../services/fetchData";
 import { ServerError } from "../components/ServerError";
 import { useFetch } from "../hooks/useFetch";
 
-export function DetailRecord() {
+export function DetailRecord(): JSX.Element {
     const history = useHistory();
     const location = useLocation();
 
@@ -16,12 +16,12 @@ export function DetailRecord() {
     const { data, isLoading, error } = useFetch(fetchEventRecords, { eventToFetch }, false);
     const records = data ?? null;
 
-    function handleClickActive(target) {
+    function handleClickActive(target): void {
         if (target.id) history.push(`/records/${target.id}`);
         else history.push(`/records/${target.parentNode.id}`);
     }
 
-    function handleCancel() {
+    function handleCancel(): void {
         history.goBack();
     }
 

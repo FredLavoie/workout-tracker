@@ -10,7 +10,7 @@ import { weekdayNames } from "../lib/weekdayNames";
 import { fetchMonthData } from "../services/fetchData";
 import { calculateWeek, correctDate, determineNextMonth } from "../utils";
 
-export function Week() {
+export function Week(): JSX.Element {
     // newDate example: Jan 31, 2020 -> ["1", "31", "2020"]
     const newDate = new Date().toLocaleDateString("en-US").split("/");
     const [dateArr, setDateArr] = useState(newDate);
@@ -24,7 +24,7 @@ export function Week() {
     const { data, isLoading, error } = useFetchWeekData(currentMonthToFetch, nextMonthToFetch, dateArr);
     const workouts = data ?? [];
 
-    function handleNavigate(direction: string) {
+    function handleNavigate(direction: string): void {
         const dateOfWeekToFetch = dateArr.map((ea, index) => {
             if (direction === "prev") {
                 if (index === 1) return String(Number(ea) - 7);
@@ -115,7 +115,7 @@ function useFetchWeekData(currentMonth: string, nextMonth: string, dateArr: stri
     useEffect(() => {
         setIsLoading(true);
         const abortCont = new AbortController();
-        const setupPage = async () => {
+        const setupPage = async (): Promise<void> => {
             try {
                 const currentMonthData = await fetchMonthData(currentMonth, abortCont);
                 const nextMonthData = await fetchMonthData(nextMonth, abortCont);

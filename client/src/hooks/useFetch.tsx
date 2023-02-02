@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { tFetchFunction } from "../types";
 
+type tUseFetch = {
+    data: Record<string, any>[];
+    isLoading?: boolean;
+    error?: Record<string, any>;
+};
+
 /**
  * Custom hook for fetching data.
  *
@@ -10,7 +16,7 @@ import { tFetchFunction } from "../types";
  * required to be called by the component
  * @returns object containing the fetched data, isLoading boolean and an error message
  */
-export function useFetch(fetchFunction: tFetchFunction, params: Record<string, any> | null, skip: boolean) {
+export function useFetch(fetchFunction: tFetchFunction, params: Record<string, any> | null, skip: boolean): tUseFetch {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);

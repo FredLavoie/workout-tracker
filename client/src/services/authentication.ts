@@ -1,6 +1,6 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL || "https://workout-tracker.xyz/api";
 
-export async function login(username: string, password: string) {
+export async function login(username: string, password: string): Promise<Record<string, any>> {
     const res = await fetch(`${BASE_URL}/dj-rest-auth/login/`, {
         method: "POST",
         credentials: "omit",
@@ -22,7 +22,7 @@ export async function login(username: string, password: string) {
     return data;
 }
 
-export async function logout() {
+export async function logout(): Promise<void> {
     const res = await fetch(`${BASE_URL}/dj-rest-auth/logout/`, {
         method: "POST",
         headers: {
@@ -38,7 +38,7 @@ export async function logout() {
     return;
 }
 
-export async function changePassword(newPassword1: string, newPassword2: string) {
+export async function changePassword(newPassword1: string, newPassword2: string): Promise<void> {
     const token = localStorage.getItem("token");
     const res = await fetch(`${BASE_URL}/dj-rest-auth/password/change/`, {
         method: "POST",
@@ -53,7 +53,7 @@ export async function changePassword(newPassword1: string, newPassword2: string)
     return await res.json();
 }
 
-export function isAuthenticated() {
+export function isAuthenticated(): boolean {
     const token = localStorage.getItem("token");
     return token !== null && token !== undefined;
 }

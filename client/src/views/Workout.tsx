@@ -15,7 +15,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-export function Workout() {
+export function Workout(): JSX.Element {
     const location = useLocation();
     const history = useHistory();
 
@@ -49,7 +49,7 @@ export function Workout() {
         }
     }, [data]);
 
-    async function handleSubmit(event: { preventDefault: () => void }) {
+    async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
 
         if (workoutId === "new") {
@@ -83,11 +83,11 @@ export function Workout() {
         }
     }
 
-    function handleCancel() {
+    function handleCancel(): void {
         history.goBack();
     }
 
-    async function handleDelete() {
+    async function handleDelete(): Promise<void> {
         try {
             await deleteWorkout(workoutId);
             history.push(`/cal/${navDate}`);
@@ -97,7 +97,7 @@ export function Workout() {
         }
     }
 
-    function handleClose() {
+    function handleClose(): void {
         setOpenSnackbar(false);
     }
 

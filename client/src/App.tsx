@@ -16,7 +16,7 @@ import { Password } from "./views/PasswordChange";
 import { NotFound } from "./views/NotFound";
 import "./App.css";
 
-export function App() {
+export function App(): JSX.Element {
     const [userTheme, setUserTheme] = useState(localStorage.getItem("userTheme") ?? "light");
 
     const myTheme = createTheme({

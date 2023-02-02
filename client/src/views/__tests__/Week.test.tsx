@@ -30,7 +30,7 @@ describe("Week view", () => {
     localStorage.setItem("token", "asdf");
     localStorage.setItem("accountId", "1");
 
-    const MockedWeek = () => {
+    const MockedWeek = (): JSX.Element => {
         return (
             <MemoryRouter initialEntries={[{ pathname: "/week" }]}>
                 <Week />

@@ -8,7 +8,7 @@ import { convertTime } from "../../utils";
 afterEach(cleanup);
 
 describe("Workout view - new", () => {
-    const MockedNewWorkout = () => {
+    const MockedNewWorkout = (): JSX.Element => {
         return (
             <MemoryRouter initialEntries={[{ pathname: "/workouts/new" }]}>
                 <Workout />
@@ -80,7 +80,7 @@ describe("Workout view - new", () => {
 });
 
 describe("Workout view - existing", () => {
-    const MockedExistingWorkout = () => {
+    const MockedExistingWorkout = (): JSX.Element => {
         return (
             <MemoryRouter initialEntries={[{ pathname: "/workouts/qwerty123456" }]}>
                 <Workout />

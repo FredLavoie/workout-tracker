@@ -7,7 +7,7 @@ type tProps = {
     searchQuery: string;
 };
 
-export function SearchResultBody(props: tProps) {
+export function SearchResultBody(props: tProps): JSX.Element {
     const { body, searchQuery } = props;
 
     const textArr = body.split("\n");

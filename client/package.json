@@ -45,6 +45,7 @@
         "build": "vite build",
         "test": "vitest --run",
         "test-watch": "vitest watch",
+        "type-check": "tsc --noEmit",
         "serve": "vite preview",
         "lint": "eslint ./src"
     },

@@ -1,6 +1,8 @@
+import { tConditionalEntry } from "../types";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL || "https://workout-tracker.xyz/api";
 
-export async function fetchAccountId() {
+export async function fetchAccountId(): Promise<void> {
     if (localStorage.getItem("accountId")) return;
 
     const token = localStorage.getItem("token");
@@ -19,7 +21,11 @@ export async function fetchAccountId() {
 /**************************************************** SEARCH ****************************************************/
 /****************************************************************************************************************/
 
-export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord: boolean, query: string) {
+export async function fetchSearchResults(
+    checkedWorkout: boolean,
+    checkedRecord: boolean,
+    query: string,
+): Promise<tConditionalEntry[]> {
     if (!checkedWorkout && !checkedRecord) return [];
 
     const token = localStorage.getItem("token");
@@ -65,7 +71,7 @@ export async function fetchSearchResults(checkedWorkout: boolean, checkedRecord:
 /*************************************************** WORKOUTS ***************************************************/
 /****************************************************************************************************************/
 
-export async function fetchMonthData(monthToFetch: string, abortCont: { signal: any }) {
+export async function fetchMonthData(monthToFetch: string, abortCont: { signal: any }): Promise<Record<string, any>[]> {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
@@ -83,7 +89,7 @@ export async function fetchMonthData(monthToFetch: string, abortCont: { signal: 
     return await res.json();
 }
 
-export async function fetchYearData(yearToFetch: string, abortCont: { signal: any }) {
+export async function fetchYearData(yearToFetch: string, abortCont: { signal: any }): Promise<void> {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
@@ -101,7 +107,7 @@ export async function fetchYearData(yearToFetch: string, abortCont: { signal: an
     return await res.json();
 }
 
-export async function fetchYearlyCount(abortCont: { signal: any }) {
+export async function fetchYearlyCount(abortCont: { signal: any }): Promise<void> {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
@@ -119,7 +125,7 @@ export async function fetchYearlyCount(abortCont: { signal: any }) {
     return await res.json();
 }
 
-export async function fetchWorkout(params: Record<string, any>, abortCont: { signal: any }) {
+export async function fetchWorkout(params: Record<string, any>, abortCont: { signal: any }): Promise<void> {
     const workout_id = params.workoutId;
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
@@ -138,7 +144,12 @@ export async function fetchWorkout(params: Record<string, any>, abortCont: { sig
     return await res.json();
 }
 
-export async function updateWorkout(workout_id: string, date: string, time: string, workout_body: string) {
+export async function updateWorkout(
+    workout_id: string,
+    date: string,
+    time: string,
+    workout_body: string,
+): Promise<void> {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
@@ -155,7 +166,7 @@ export async function updateWorkout(workout_id: string, date: string, time: stri
     return await res.json();
 }
 
-export async function postWorkout(date: string, time: string, workout_body: string) {
+export async function postWorkout(date: string, time: string, workout_body: string): Promise<void> {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
@@ -173,7 +184,7 @@ export async function postWorkout(date: string, time: string, workout_body: stri
     return await res.json();
 }
 
-export async function deleteWorkout(workout_id: string) {
+export async function deleteWorkout(workout_id: string): Promise<void> {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
@@ -192,7 +203,7 @@ export async function deleteWorkout(workout_id: string) {
 /**************************************************** RECORDS ***************************************************/
 /****************************************************************************************************************/
 
-export async function fetchRecord(params: Record<string, any>, abortCont: { signal: any }) {
+export async function fetchRecord(params: Record<string, any>, abortCont: { signal: any }): Promise<void> {
     const record_id = params.recordId;
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
@@ -211,7 +222,7 @@ export async function fetchRecord(params: Record<string, any>, abortCont: { sign
     return await res.json();
 }
 
-export async function fetchRecords(abortCont: { signal: any }) {
+export async function fetchRecords(abortCont: { signal: any }): Promise<void> {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
@@ -229,7 +240,13 @@ export async function fetchRecords(abortCont: { signal: any }) {
     return await res.json();
 }
 
-export async function updateRecord(record_id: string, date: string, type: string, event: string, score: string) {
+export async function updateRecord(
+    record_id: string,
+    date: string,
+    type: string,
+    event: string,
+    score: string,
+): Promise<void> {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
@@ -246,7 +263,7 @@ export async function updateRecord(record_id: string, date: string, type: string
     return await res.json();
 }
 
-export async function postRecord(date: string, type: string, event: string, score: string) {
+export async function postRecord(date: string, type: string, event: string, score: string): Promise<void> {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
@@ -263,7 +280,7 @@ export async function postRecord(date: string, type: string, event: string, scor
     return await res.json();
 }
 
-export async function deleteRecord(record_id: string) {
+export async function deleteRecord(record_id: string): Promise<void> {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
 
@@ -279,7 +296,7 @@ export async function deleteRecord(record_id: string) {
     return;
 }
 
-export async function fetchEventRecords(params: Record<string, any>, abortCont: { signal: any }) {
+export async function fetchEventRecords(params: Record<string, any>, abortCont: { signal: any }): Promise<void> {
     const event = params.eventToFetch;
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");

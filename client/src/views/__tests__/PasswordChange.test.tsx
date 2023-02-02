@@ -4,11 +4,10 @@ import { render, cleanup, screen, fireEvent } from "@testing-library/react";
 import { server, rest } from "../../mockServer";
 import { Password } from "../PasswordChange";
 
-
 afterEach(cleanup);
 
 describe("passwordChange", () => {
-    const MockedPasswordChange = () => {
+    const MockedPasswordChange = (): JSX.Element => {
         return (
             <MemoryRouter initialEntries={[{ pathname: "/password-change" }]}>
                 <Password />
@@ -27,7 +26,7 @@ describe("passwordChange", () => {
         server.use(
             rest.post("*/dj-rest-auth/password/change", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
-            })
+            }),
         );
 
         const newPassword = "qwerty123";
@@ -45,7 +44,7 @@ describe("passwordChange", () => {
         server.use(
             rest.post("*/dj-rest-auth/password/change", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
-            })
+            }),
         );
 
         const newPassword = "qwerty123";
@@ -59,7 +58,9 @@ describe("passwordChange", () => {
         const submitButton = screen.getByText("Change Password");
         fireEvent.click(submitButton);
         // the mismatched password make the submission fail
-        const successToastMessage = await screen.findByText("The two passwords do not match or don't meet the requirements.");
+        const successToastMessage = await screen.findByText(
+            "The two passwords do not match or don't meet the requirements.",
+        );
         expect(successToastMessage).toBeInTheDocument();
     });
 
@@ -67,7 +68,7 @@ describe("passwordChange", () => {
         server.use(
             rest.post("*/dj-rest-auth/password/change", (req, res, context) => {
                 return res(context.status(500), context.json({ ok: false }));
-            })
+            }),
         );
 
         const newPassword = "qwerty123";
@@ -84,4 +85,3 @@ describe("passwordChange", () => {
         expect(successToastMessage).toBeInTheDocument();
     });
 });
-

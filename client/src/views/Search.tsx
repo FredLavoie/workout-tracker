@@ -17,7 +17,7 @@ import { ServerError } from "../components/ServerError";
 import { fetchSearchResults } from "../services/fetchData";
 import { tConditionalEntry } from "../types";
 
-export function Search() {
+export function Search(): JSX.Element {
     const [checkedWorkout, setCheckedWorkout] = useState(true);
     const [checkedRecord, setCheckedRecord] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -25,20 +25,20 @@ export function Search() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    function handleClear() {
+    function handleClear(): void {
         setSearchQuery("");
         setSearchResults(null);
         setError(null);
     }
 
-    function handleTextInput(value: React.SetStateAction<string>) {
+    function handleTextInput(value: React.SetStateAction<string>): void {
         setSearchQuery(value);
         if (value === "") {
             setSearchResults(null);
         }
     }
 
-    async function handleSubmit(event: { preventDefault: () => void }) {
+    async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
         setIsLoading(true);
         try {

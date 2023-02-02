@@ -33,7 +33,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-export function Login() {
+export function Login(): JSX.Element {
     const history = useHistory();
     const [username, changeUsername] = useState("");
     const [password, changePassword] = useState("");
@@ -41,7 +41,7 @@ export function Login() {
     const [open, setOpen] = useState(false);
     const [error, setError] = useState(null);
 
-    async function handleSubmit(event: { preventDefault: () => void }) {
+    async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
         try {
             const data = await login(username, password);
@@ -64,15 +64,15 @@ export function Login() {
         return <Redirect to="/dashboard" />;
     }
 
-    function handleClose() {
+    function handleClose(): void {
         setOpen(false);
     }
 
-    function handleClickShowPassword() {
+    function handleClickShowPassword(): void {
         setShowPassword(!showPassword);
     }
 
-    function handleMouseDownPassword(event) {
+    function handleMouseDownPassword(event): void {
         event.preventDefault();
     }
 

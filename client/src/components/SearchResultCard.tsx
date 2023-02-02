@@ -7,10 +7,10 @@ import { SearchResultBody } from "./SearchResultBody";
 
 import { tCombinedEntry } from "../types";
 
-export function SearchResultCard({ content, searchQuery }) {
+export function SearchResultCard({ content, searchQuery }): JSX.Element {
     const history = useHistory();
 
-    function handleClickActive(target: Element, isWorkoutContent: boolean) {
+    function handleClickActive(target: Element, isWorkoutContent: boolean): void {
         if (isWorkoutContent) {
             history.push(`/workouts/${target.id}`);
         } else {

@@ -12,7 +12,7 @@ const currentDate = new Date().toLocaleDateString("en-US").split("/");
 const currentYear = currentDate[2];
 const monthNumbersArr = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
-export function Dashboard() {
+export function Dashboard(): JSX.Element {
     // fetch data to be displayed on the Dashboard page
     const { data, isLoading, error } = useFetchDashboardData(currentYear);
 
@@ -21,7 +21,7 @@ export function Dashboard() {
     const yearCounts = data?.yearlyCountData ?? [];
 
     // return the number of workouts for each month
-    function filterWorkoutsForMonth(workouts: tWorkout[], monthNumber: string) {
+    function filterWorkoutsForMonth(workouts: tWorkout[], monthNumber: string): string {
         const numberOfWorkouts = workouts.filter((ea) => {
             return ea.date.split("-")[1] === monthNumber;
         });
@@ -103,7 +103,7 @@ function useFetchDashboardData(currentYear: string): Record<string, any> {
 
     useEffect(() => {
         const abortCont = new AbortController();
-        const setupPage = async () => {
+        const setupPage = async (): Promise<void> => {
             try {
                 setIsLoading(true);
 

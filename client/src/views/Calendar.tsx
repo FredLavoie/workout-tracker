@@ -12,7 +12,7 @@ import { fetchMonthData } from "../services/fetchData";
 import { calculateMonth } from "../utils";
 import { months } from "../lib/months";
 
-export function Calendar() {
+export function Calendar(): JSX.Element {
     const history = useHistory();
     const location = useLocation();
     const [workouts, setWorkouts] = useState(null);
@@ -36,17 +36,17 @@ export function Calendar() {
         }
     }, [data]);
 
-    function handleClickPrevious() {
+    function handleClickPrevious(): void {
         setWorkouts(null);
         history.push(`/cal/${prevMonth}`);
     }
 
-    function handleClickNext() {
+    function handleClickNext(): void {
         setWorkouts(null);
         history.push(`/cal/${nextMonth}`);
     }
 
-    function handleReturnToCurrent() {
+    function handleReturnToCurrent(): void {
         const currentDate = new Date().toLocaleDateString("en-US").split("/");
         const currentDateString = `${currentDate[2]}-${currentDate[0].padStart(2, "0")}`;
         const pathDateString = location.pathname.split("/")[2];

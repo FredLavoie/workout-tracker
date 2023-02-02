@@ -8,7 +8,7 @@ import { Record } from "../Record";
 afterEach(cleanup);
 
 describe("Record view - new", () => {
-    const MockedNewRecord = () => {
+    const MockedNewRecord = (): JSX.Element => {
         return (
             <MemoryRouter initialEntries={[{ pathname: "/records/new" }]}>
                 <Record />
@@ -56,7 +56,7 @@ describe("Record view - new", () => {
 });
 
 describe("Record view - existing", () => {
-    const MockedExistingRecord = () => {
+    const MockedExistingRecord = (): JSX.Element => {
         return (
             <MemoryRouter initialEntries={[{ pathname: "/records/qwerty123456" }]}>
                 <Record />

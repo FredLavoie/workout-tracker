@@ -11,7 +11,7 @@ import {
     InputAdornment,
     OutlinedInput,
     Snackbar,
-    Typography
+    Typography,
 } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -24,7 +24,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-export function Password() {
+export function Password(): JSX.Element {
     const history = useHistory();
     const [newPassword1, changeNewPassword1] = useState("");
     const [newPassword2, changeNewPassword2] = useState("");
@@ -32,11 +32,14 @@ export function Password() {
     const [alertMessage, setAlertMessage] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
 
-    async function handleSubmit(event: { preventDefault: () => void }) {
+    async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
         const validatedInput = validatePasswordChange(newPassword1, newPassword2);
         if (!validatedInput) {
-            setAlertMessage({ severity: "error", message: "The two passwords do not match or don't meet the requirements." });
+            setAlertMessage({
+                severity: "error",
+                message: "The two passwords do not match or don't meet the requirements.",
+            });
             setOpenSnackbar(true);
             return;
         }
@@ -49,32 +52,26 @@ export function Password() {
         }
     }
 
-    function handleClose() {
+    function handleClose(): void {
         setOpenSnackbar(false);
     }
 
-    function handleClickShowPassword() {
+    function handleClickShowPassword(): void {
         setShowPassword(!showPassword);
     }
 
-    function handleMouseDownPassword(event) {
+    function handleMouseDownPassword(event): void {
         event.preventDefault();
     }
 
     return (
         <Container>
-            <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                sx={style.root}
-            >
+            <Grid container direction="column" alignItems="center" justifyContent="center" sx={style.root}>
                 <Typography variant="h4" gutterBottom>
-          Password Reset
+                    Password Reset
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-          Your password must contain at least 8 characters and cannot be entirely numeric.
+                    Your password must contain at least 8 characters and cannot be entirely numeric.
                 </Typography>
                 <Grid item xs={12} md={3}>
                     <Box component="form" noValidate onSubmit={handleSubmit}>
@@ -122,12 +119,17 @@ export function Password() {
                             key={`${!newPassword1 || !newPassword2 ? true : false}`}
                             disabled={!newPassword1 || !newPassword2 ? true : false}
                         >
-              Change Password
+                            Change Password
                         </Button>
                     </Box>
                 </Grid>
             </Grid>
-            <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={4000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
                 {alertMessage && <Alert severity={alertMessage.severity}>{alertMessage.message}</Alert>}
             </Snackbar>
         </Container>
@@ -136,7 +138,7 @@ export function Password() {
 
 const style = {
     root: {
-        minHeight: "calc(100vh - 64px)"
+        minHeight: "calc(100vh - 64px)",
     },
     btn: {
         marginTop: "20px",
