@@ -6,6 +6,7 @@ import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Grid, Typ
 import { fetchEventRecords } from "../services/fetchData";
 import { ServerError } from "../components/ServerError";
 import { useFetch } from "../hooks/useFetch";
+import { tRecord } from "../types";
 
 export function DetailRecord(): JSX.Element {
     const history = useHistory();
@@ -40,7 +41,7 @@ export function DetailRecord(): JSX.Element {
                 <Card elevation={2} sx={style.cardStyle}>
                     <CardHeader title={records[0].event} />
                     <CardContent sx={style.content}>
-                        {records.map((ea, index) => (
+                        {records.map((ea: tRecord, index: React.Key) => (
                             <Box
                                 key={index}
                                 id={ea.id}

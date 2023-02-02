@@ -151,7 +151,7 @@ export function Record(): JSX.Element {
                             id="record-event"
                             value={recordEvent}
                         >
-                            {recordList[recordType].map((ea, index) => (
+                            {recordList[recordType].map((ea: string, index: React.Key) => (
                                 <MenuItem data-testid="event-option" key={index} value={ea}>
                                     {ea}
                                 </MenuItem>

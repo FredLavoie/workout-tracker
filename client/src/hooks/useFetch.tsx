@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { tFetchFunction } from "../types";
+import { tCombinedEntry, tFetchFunction } from "../types";
 
 type tUseFetch = {
-    data: Record<string, any>[];
+    data: tCombinedEntry & tCombinedEntry[];
     isLoading?: boolean;
     error?: Record<string, any>;
 };
