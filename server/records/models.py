@@ -5,6 +5,54 @@ from django.conf import settings
 
 
 class Record(models.Model):
+
+    RECORD_TYPE_EVENT_LIST = {
+        "strength": [
+            "Back Squat",
+            "Bench Press",
+            "Clean",
+            "Clean & Jerk",
+            "Deadlift",
+            "Dead Hang",
+            "Front Squat",
+            "Press",
+            "Push Press",
+            "Power Clean",
+            "Push Jerk",
+            "Snatch",
+            "Thruster",
+        ],
+        "endurance": [
+            "10 min Air Bike",
+            "30 min Air Bike",
+            "Bike Erg 30 min",
+            "Bike Erg 60 min",
+            "Bike Erg Marathon",
+            "Row 500m",
+            "Row 1,000m",
+            "Row 2,000m",
+            "Row 5,000m",
+            "Row 10,000m",
+            "Run 5km",
+            "Run 10km",
+        ],
+        "wod": [
+            "Angie",
+            "Cindy",
+            "Diane",
+            "DT",
+            "Fight Gone Badge",
+            "Filthy Fifty",
+            "Fran",
+            "Grace",
+            "Helen",
+            "Isabelle",
+            "Jackie",
+            "Linda",
+            "Murph",
+        ],
+    }
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     date = models.DateField()
