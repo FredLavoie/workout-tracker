@@ -1,8 +1,8 @@
 
 def latest_record_for_event(queryset):
     """
-    Given a list of dictionaries with an even type, return
-    the latest object per event type
+    Given a list of dictionaries with an event type,
+    return the latest object per event type
     """
     filtered_list = []
     tempEventDict = {}

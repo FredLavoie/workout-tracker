@@ -19,11 +19,9 @@ import {
 
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
-import { fetchRecord, updateRecord, postRecord, deleteRecord } from "../services/fetchData";
+import { fetchRecord, updateRecord, postRecord, deleteRecord, fetchRecordList } from "../services/fetchData";
 import { validateRecord } from "../utils";
 import { ServerError } from "../components/ServerError";
-import { recordList } from "../lib/recordList";
-import { useFetch } from "../hooks/useFetch";
 
 // eslint-disable-next-line prefer-arrow-callback
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
@@ -46,17 +44,17 @@ export function Record(): JSX.Element {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
 
-    const { data, isLoading, error } = useFetch(fetchRecord, { recordId }, recordId === "new");
+    const { data, isLoading, error } = useFetchRecordData(recordId, recordId === "new");
 
     useEffect(() => {
         if (recordId === "new") {
             setSelectedDate(currentDate);
             changeNewOrEdit(1);
-        } else if (data) {
-            setSelectedDate(data.date);
-            setRecordType(data.type);
-            setRecordEvent(data.event);
-            setRecordScore(data.score);
+        } else if (data?.recordData) {
+            setSelectedDate(data.recordData.date);
+            setRecordType(data.recordData.type);
+            setRecordEvent(data.recordData.event);
+            setRecordScore(data.recordData.score);
             changeNewOrEdit(0);
         }
     }, [data]);
@@ -64,34 +62,22 @@ export function Record(): JSX.Element {
     async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
 
-        if (recordId === "new") {
-            const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
-            if (valid) {
-                try {
+        const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore, data.eventList);
+        if (valid) {
+            try {
+                if (recordId === "new") {
                     await postRecord(selectedDate, recordType, recordEvent, recordScore);
-                    history.push("/dashboard");
-                } catch (error) {
-                    setAlertMessage({ severity: "error", message: error.message });
-                    setOpenSnackbar(true);
+                } else {
+                    await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
                 }
-            } else {
-                setAlertMessage({ severity: "error", message: "One or more inputted values is invalid." });
+                history.push("/dashboard");
+            } catch (error) {
+                setAlertMessage({ severity: "error", message: error.message });
                 setOpenSnackbar(true);
             }
         } else {
-            const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore);
-            if (valid) {
-                try {
-                    await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
-                    history.push("/dashboard");
-                } catch (error) {
-                    setAlertMessage({ severity: "error", message: error.message });
-                    setOpenSnackbar(true);
-                }
-            } else {
-                setAlertMessage({ severity: "error", message: "One or more inputted values is invalid." });
-                setOpenSnackbar(true);
-            }
+            setAlertMessage({ severity: "error", message: "One or more inputted values is invalid." });
+            setOpenSnackbar(true);
         }
     }
 
@@ -120,7 +106,7 @@ export function Record(): JSX.Element {
             </Typography>
             {error && <ServerError errorMessage={error} />}
             {isLoading && <CircularProgress />}
-            {!error && !isLoading && (
+            {!error && !isLoading && data && (
                 <Grid sx={style.formSize}>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={style.formContainer}>
                         <Typography sx={style.elementMargin}>Date</Typography>
@@ -151,7 +137,7 @@ export function Record(): JSX.Element {
                             id="record-event"
                             value={recordEvent}
                         >
-                            {recordList[recordType].map((ea: string, index: React.Key) => (
+                            {data.eventList[recordType].map((ea: string, index: React.Key) => (
                                 <MenuItem data-testid="event-option" key={index} value={ea}>
                                     {ea}
                                 </MenuItem>
@@ -199,6 +185,41 @@ export function Record(): JSX.Element {
             </Snackbar>
         </Grid>
     );
+}
+
+/**
+ * Custom hook to abstract the data fetching for the Record view
+ *
+ * @param recordId
+ * @returns {object}
+ */
+function useFetchRecordData(recordId: string, skip: boolean): Record<string, any> {
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const abortCont = new AbortController();
+        const setupPage = async (): Promise<void> => {
+            try {
+                setIsLoading(true);
+
+                const recordData = skip ? {} : await fetchRecord(recordId, abortCont);
+                const eventList = await fetchRecordList(abortCont);
+
+                setData({ recordData, eventList });
+                setIsLoading(false);
+            } catch (error) {
+                if (error.name === "AbortError") return;
+                setIsLoading(false);
+                setError(error.message);
+            }
+        };
+        setupPage();
+        return () => abortCont.abort();
+    }, []);
+
+    return { data, isLoading, error };
 }
 
 const style = {

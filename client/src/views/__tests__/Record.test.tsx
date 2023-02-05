@@ -2,7 +2,9 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import { server, rest } from "../../mockServer";
+import { recordList } from "../../lib/recordList";
 import { Record } from "../Record";
 
 afterEach(cleanup);
@@ -20,6 +22,12 @@ describe("Record view - new", () => {
         const today = new Date().toLocaleDateString("en-US").split("/");
         const todayFormatted = `${today[2]}-${today[0]?.padStart(2, "0")}-${today[1]?.padStart(2, "0")}`;
 
+        server.use(
+            rest.get("*/records/event-list/", (req, res, context) => {
+                return res(context.status(200), context.json(recordList));
+            }),
+        );
+
         render(<MockedNewRecord />);
         // check that todays date is automatically set in the date input
         const dateValue = await screen.findByDisplayValue(todayFormatted);
@@ -32,6 +40,12 @@ describe("Record view - new", () => {
         server.use(
             rest.post("*/1/records", (req, res, context) => {
                 return res(context.status(200), context.json({ ok: true }));
+            }),
+        );
+
+        server.use(
+            rest.get("*/records/event-list/", (req, res, context) => {
+                return res(context.status(200), context.json(recordList));
             }),
         );
 
@@ -74,6 +88,9 @@ describe("Record view - existing", () => {
         localStorage.setItem("accountId", "1");
 
         server.use(
+            rest.get("*/records/event-list/", (req, res, context) => {
+                return res(context.status(200), context.json(recordList));
+            }),
             rest.get("*/1/records/qwerty123456", (req, res, context) => {
                 return res(
                     context.status(200),
@@ -108,6 +125,9 @@ describe("Record view - existing", () => {
         localStorage.setItem("accountId", "1");
 
         server.use(
+            rest.get("*/records/event-list/", (req, res, context) => {
+                return res(context.status(200), context.json(recordList));
+            }),
             rest.get("*/1/records/qwerty123456", (req, res, context) => {
                 return res(
                     context.status(200),
@@ -150,6 +170,9 @@ describe("Record view - existing", () => {
         const updatedScore = "3:00";
 
         server.use(
+            rest.get("*/records/event-list/", (req, res, context) => {
+                return res(context.status(200), context.json(recordList));
+            }),
             rest.get("*/1/records/qwerty123456", (req, res, context) => {
                 return res(
                     context.status(200),

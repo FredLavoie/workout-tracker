@@ -3,12 +3,11 @@ import { useHistory } from "react-router-dom";
 
 import { Box, CardContent, Typography } from "@mui/material";
 
-import { recordList } from "../lib/recordList";
 import { tRecord } from "../types";
 
-export function RecordTable({ type, records }): JSX.Element {
+export function RecordTable({ type, eventList, records }): JSX.Element {
     const history = useHistory();
-    const filteredEventList = recordList[type].filter((ea: string) => records.find((rec: tRecord) => rec.event === ea));
+    const filteredEventList = eventList[type].filter((ea: string) => records.find((rec: tRecord) => rec.event === ea));
 
     function handleClickActive(target: Element): void {
         const encodedString = target.id.toLowerCase().replace(/ /g, "-");
