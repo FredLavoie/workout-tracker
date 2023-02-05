@@ -203,13 +203,12 @@ export async function deleteWorkout(workout_id: string): Promise<void> {
 /**************************************************** RECORDS ***************************************************/
 /****************************************************************************************************************/
 
-export async function fetchRecord(params: Record<string, any>, abortCont: { signal: any }): Promise<void> {
-    const record_id = params.recordId;
+export async function fetchRecord(recordId: string, abortCont: { signal: any }): Promise<void> {
     const token = localStorage.getItem("token");
     const accountId = localStorage.getItem("accountId");
     const signal = abortCont === null ? null : abortCont.signal;
 
-    const res = await fetch(`${BASE_URL}/${accountId}/records/${record_id}/`, {
+    const res = await fetch(`${BASE_URL}/${accountId}/records/${recordId}/`, {
         method: "GET",
         signal: signal,
         headers: {
@@ -303,6 +302,23 @@ export async function fetchEventRecords(params: Record<string, any>, abortCont: 
     const signal = abortCont === null ? null : abortCont.signal;
 
     const res = await fetch(`${BASE_URL}/${accountId}/records/event/${event}/`, {
+        method: "GET",
+        signal: signal,
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization: `Token ${token}`,
+        },
+    });
+    if (!res.ok) throw new Error(`Server error - status ${res.status}`);
+    return await res.json();
+}
+
+export async function fetchRecordList(abortCont: { signal: any }): Promise<void> {
+    const token = localStorage.getItem("token");
+    const signal = abortCont === null ? null : abortCont.signal;
+
+    const res = await fetch(`${BASE_URL}/records/event-list/`, {
         method: "GET",
         signal: signal,
         headers: {

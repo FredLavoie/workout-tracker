@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Box, Card, CardHeader, CardContent, CircularProgress, Grid, Typography } from "@mui/material";
 
-import { fetchYearData, fetchRecords, fetchYearlyCount } from "../services/fetchData";
+import { fetchYearData, fetchRecords, fetchYearlyCount, fetchRecordList } from "../services/fetchData";
 import { months } from "../lib/months";
 import { RecordTable } from "../components/RecordTable";
 import { ServerError } from "../components/ServerError";
@@ -35,7 +35,7 @@ export function Dashboard(): JSX.Element {
             </Typography>
             {error && <ServerError errorMessage={error} />}
             {isLoading && <CircularProgress />}
-            {!error && !isLoading && (
+            {!error && !isLoading && data && (
                 <Box sx={style.dashboardContainer}>
                     {/**************************************** MONTH SUMMARY **************************************/}
                     <Card elevation={3} sx={style.cardStyle}>
@@ -72,17 +72,29 @@ export function Dashboard(): JSX.Element {
                     {/**************************************** STRENGTH PRs ***************************************/}
                     <Card elevation={3} sx={style.cardStyle}>
                         <CardHeader title="Strength PRs" sx={style.header} />
-                        <RecordTable type={"strength"} records={records.filter((ea) => ea.type === "strength")} />
+                        <RecordTable
+                            type={"strength"}
+                            eventList={data.eventList}
+                            records={records.filter((ea) => ea.type === "strength")}
+                        />
                     </Card>
                     {/**************************************** ENDURANCE PRs **************************************/}
                     <Card elevation={3} sx={style.cardStyle}>
                         <CardHeader title="Endurance PRs" sx={style.header} />
-                        <RecordTable type={"endurance"} records={records.filter((ea) => ea.type === "endurance")} />
+                        <RecordTable
+                            type={"endurance"}
+                            eventList={data.eventList}
+                            records={records.filter((ea) => ea.type === "endurance")}
+                        />
                     </Card>
                     {/******************************************* WOD PRs *****************************************/}
                     <Card elevation={3} sx={style.cardStyle}>
                         <CardHeader title="WOD PRs" sx={style.header} />
-                        <RecordTable type={"wod"} records={records.filter((ea) => ea.type === "wod")} />
+                        <RecordTable
+                            type={"wod"}
+                            eventList={data.eventList}
+                            records={records.filter((ea) => ea.type === "wod")}
+                        />
                     </Card>
                 </Box>
             )}
@@ -110,8 +122,9 @@ function useFetchDashboardData(currentYear: string): Record<string, any> {
                 const recordData = await fetchRecords(abortCont);
                 const yearData = await fetchYearData(currentYear, abortCont);
                 const yearlyCountData = await fetchYearlyCount(abortCont);
+                const eventList = await fetchRecordList(abortCont);
 
-                setData({ recordData, yearData, yearlyCountData });
+                setData({ recordData, yearData, yearlyCountData, eventList });
                 setIsLoading(false);
             } catch (error) {
                 if (error.name === "AbortError") return;
