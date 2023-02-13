@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
 import {
@@ -33,18 +33,28 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
+type tLoginState = {
+    username?: string;
+    password?: string;
+    showPassword?: boolean;
+};
+
 export function Login(): JSX.Element {
     const history = useHistory();
-    const [username, changeUsername] = useState("");
-    const [password, changePassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
     const [open, setOpen] = useState(false);
     const [error, setError] = useState(null);
+
+    const [loginState, updateLoginState] = useReducer(
+        (prev: tLoginState, next: tLoginState) => {
+            return { ...prev, ...next };
+        },
+        { username: "", password: "", showPassword: false },
+    );
 
     async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
         try {
-            const data = await login(username, password);
+            const data = await login(loginState.username, loginState.password);
             if (data.non_field_errors) {
                 return setOpen(true);
             }
@@ -69,7 +79,7 @@ export function Login(): JSX.Element {
     }
 
     function handleClickShowPassword(): void {
-        setShowPassword(!showPassword);
+        updateLoginState({ showPassword: !loginState.showPassword });
     }
 
     function handleMouseDownPassword(event): void {
@@ -95,11 +105,11 @@ export function Login(): JSX.Element {
                 <Grid item xs={12} md={3}>
                     <Box component="form" noValidate onSubmit={handleSubmit}>
                         <TextField
-                            onChange={(e) => changeUsername(e.target.value)}
+                            onChange={(e) => updateLoginState({ username: e.target.value })}
                             sx={style.textField}
                             label="Username"
                             variant="outlined"
-                            value={username}
+                            value={loginState.username}
                             type={"input"}
                             name={"username"}
                             color="primary"
@@ -107,9 +117,9 @@ export function Login(): JSX.Element {
                         <FormControl sx={style.textField} variant="outlined">
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                             <OutlinedInput
-                                onChange={(e) => changePassword(e.target.value)}
-                                value={password}
-                                type={showPassword ? "input" : "password"}
+                                onChange={(e) => updateLoginState({ password: e.target.value })}
+                                value={loginState.password}
+                                type={loginState.showPassword ? "input" : "password"}
                                 name={"password"}
                                 label="Password"
                                 id="outlined-adornment-password"
@@ -120,7 +130,7 @@ export function Login(): JSX.Element {
                                             onMouseDown={handleMouseDownPassword}
                                             size="large"
                                         >
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            {loginState.showPassword ? <Visibility /> : <VisibilityOff />}
                                         </IconButton>
                                     </InputAdornment>
                                 }
@@ -132,9 +142,9 @@ export function Login(): JSX.Element {
                             sx={style.btn}
                             color="primary"
                             variant="contained"
-                            key={`${!username || !password ? true : false}`}
+                            key={`${!loginState.username || !loginState.password ? true : false}`}
                             endIcon={<KeyboardArrowRightIcon />}
-                            disabled={!username || !password ? true : false}
+                            disabled={!loginState.username || !loginState.password ? true : false}
                         >
                             Login
                         </Button>

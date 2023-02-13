@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import {
@@ -28,6 +28,14 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
+type tRecordState = {
+    selectedDate?: string;
+    recordType?: string;
+    recordEvent?: string;
+    recordScore?: string;
+    newOrEdit?: number;
+};
+
 export function Record(): JSX.Element {
     const location = useLocation();
     const history = useHistory();
@@ -36,39 +44,57 @@ export function Record(): JSX.Element {
     const newDate = new Date().toLocaleDateString("en-US").split("/");
     const currentDate = `${newDate[2]}-${newDate[0]?.padStart(2, "0")}-${newDate[1]?.padStart(2, "0")}`;
 
-    const [selectedDate, setSelectedDate] = useState(currentDate);
-    const [recordType, setRecordType] = useState("strength");
-    const [recordEvent, setRecordEvent] = useState("");
-    const [recordScore, setRecordScore] = useState("");
-    const [newOrEdit, changeNewOrEdit] = useState(1);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
+
+    const [recordState, updateRecordState] = useReducer(
+        (prev: tRecordState, next: tRecordState) => {
+            return { ...prev, ...next };
+        },
+        { selectedDate: currentDate, recordType: "strength", recordEvent: "", recordScore: "", newOrEdit: 1 },
+    );
 
     const { data, isLoading, error } = useFetchRecordData(recordId, recordId === "new");
 
     useEffect(() => {
-        if (recordId === "new") {
-            setSelectedDate(currentDate);
-            changeNewOrEdit(1);
-        } else if (data?.recordData) {
-            setSelectedDate(data.recordData.date);
-            setRecordType(data.recordData.type);
-            setRecordEvent(data.recordData.event);
-            setRecordScore(data.recordData.score);
-            changeNewOrEdit(0);
+        if (data?.recordData && recordId !== "new") {
+            updateRecordState({
+                selectedDate: data.recordData.date,
+                recordType: data.recordData.type,
+                recordEvent: data.recordData.event,
+                recordScore: data.recordData.score,
+                newOrEdit: 0,
+            });
         }
     }, [data]);
 
     async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
 
-        const valid = validateRecord(selectedDate, recordType, recordEvent, recordScore, data.eventList);
+        const valid = validateRecord(
+            recordState.selectedDate,
+            recordState.recordType,
+            recordState.recordEvent,
+            recordState.recordScore,
+            data.eventList,
+        );
         if (valid) {
             try {
                 if (recordId === "new") {
-                    await postRecord(selectedDate, recordType, recordEvent, recordScore);
+                    await postRecord(
+                        recordState.selectedDate,
+                        recordState.recordType,
+                        recordState.recordEvent,
+                        recordState.recordScore,
+                    );
                 } else {
-                    await updateRecord(recordId, selectedDate, recordType, recordEvent, recordScore);
+                    await updateRecord(
+                        recordId,
+                        recordState.selectedDate,
+                        recordState.recordType,
+                        recordState.recordEvent,
+                        recordState.recordScore,
+                    );
                 }
                 history.push("/dashboard");
             } catch (error) {
@@ -111,20 +137,20 @@ export function Record(): JSX.Element {
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={style.formContainer}>
                         <Typography sx={style.elementMargin}>Date</Typography>
                         <TextField
-                            onChange={(e) => setSelectedDate(e.target.value)}
+                            onChange={(e) => updateRecordState({ selectedDate: e.target.value })}
                             margin="normal"
                             placeholder="Date"
                             id="date-picker"
                             type="date"
-                            value={selectedDate}
+                            value={recordState.selectedDate}
                         />
                         <Typography sx={style.elementMargin}>Event Type</Typography>
                         <RadioGroup
                             row
                             name="recordType"
-                            value={recordType}
+                            value={recordState.recordType}
                             sx={style.elementMargin}
-                            onChange={(e) => setRecordType(e.target.value)}
+                            onChange={(e) => updateRecordState({ recordType: e.target.value })}
                         >
                             <FormControlLabel value="strength" control={<Radio color="primary" />} label="Strength" />
                             <FormControlLabel value="endurance" control={<Radio color="primary" />} label="Endurance" />
@@ -132,12 +158,12 @@ export function Record(): JSX.Element {
                         </RadioGroup>
                         <Typography sx={style.elementMargin}>Event</Typography>
                         <Select
-                            onChange={(e) => setRecordEvent(e.target.value)}
+                            onChange={(e) => updateRecordState({ recordEvent: e.target.value })}
                             sx={style.elementMargin}
                             id="record-event"
-                            value={recordEvent}
+                            value={recordState.recordEvent}
                         >
-                            {data.eventList[recordType].map((ea: string, index: React.Key) => (
+                            {data?.eventList[recordState?.recordType]?.map((ea: string, index: React.Key) => (
                                 <MenuItem data-testid="event-option" key={index} value={ea}>
                                     {ea}
                                 </MenuItem>
@@ -145,11 +171,11 @@ export function Record(): JSX.Element {
                         </Select>
                         <Typography sx={style.elementMargin}>Score</Typography>
                         <TextField
-                            onChange={(e) => setRecordScore(e.target.value)}
+                            onChange={(e) => updateRecordState({ recordScore: e.target.value })}
                             sx={style.elementMargin}
                             placeholder="Score"
                             id="record-score"
-                            value={recordScore}
+                            value={recordState.recordScore}
                         />
                         <Button
                             fullWidth
@@ -157,12 +183,20 @@ export function Record(): JSX.Element {
                             sx={style.elementMargin}
                             color="primary"
                             variant="contained"
-                            key={`${!selectedDate || !recordEvent || !recordScore ? true : false}`}
-                            disabled={!selectedDate || !recordEvent || !recordScore ? true : false}
+                            key={`${
+                                !recordState.selectedDate || !recordState.recordEvent || !recordState.recordScore
+                                    ? true
+                                    : false
+                            }`}
+                            disabled={
+                                !recordState.selectedDate || !recordState.recordEvent || !recordState.recordScore
+                                    ? true
+                                    : false
+                            }
                         >
                             Save
                         </Button>
-                        {newOrEdit === 1 ? (
+                        {recordState.newOrEdit === 1 ? (
                             <Button onClick={handleCancel} sx={style.elementMargin} variant="outlined">
                                 Cancel
                             </Button>
@@ -194,32 +228,33 @@ export function Record(): JSX.Element {
  * @returns {object}
  */
 function useFetchRecordData(recordId: string, skip: boolean): Record<string, any> {
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [response, updateResponse] = useReducer(
+        (prev: any, next: any) => {
+            return { ...prev, ...next };
+        },
+        { data: null, isLoading: false, error: null },
+    );
 
     useEffect(() => {
         const abortCont = new AbortController();
         const setupPage = async (): Promise<void> => {
             try {
-                setIsLoading(true);
+                updateResponse({ isLoading: true });
 
                 const recordData = skip ? {} : await fetchRecord(recordId, abortCont);
                 const eventList = await fetchRecordList(abortCont);
 
-                setData({ recordData, eventList });
-                setIsLoading(false);
+                updateResponse({ data: { recordData, eventList }, isLoading: false });
             } catch (error) {
                 if (error.name === "AbortError") return;
-                setIsLoading(false);
-                setError(error.message);
+                updateResponse({ error: error.message, isLoading: false });
             }
         };
         setupPage();
         return () => abortCont.abort();
     }, []);
 
-    return { data, isLoading, error };
+    return response;
 }
 
 const style = {

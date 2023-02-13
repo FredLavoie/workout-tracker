@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
@@ -107,6 +107,12 @@ export function Calendar(): JSX.Element {
     );
 }
 
+type tResponseState = {
+    data?: Record<string, any>;
+    isLoading?: boolean;
+    error?: string;
+};
+
 /**
  * Custom hook to abstract the data fetching for the Calendar view
  *
@@ -114,28 +120,28 @@ export function Calendar(): JSX.Element {
  * @returns {object}
  */
 function useFetchCalendarData(monthToFetch: string): Record<string, any> {
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [responseState, updateResponseState] = useReducer(
+        (prev: tResponseState, next: tResponseState) => {
+            return { ...prev, ...next };
+        },
+        { data: null, isLoading: false, error: null },
+    );
 
     useEffect(() => {
         const abortCont = new AbortController();
 
-        setIsLoading(true);
+        updateResponseState({ isLoading: true });
         fetchMonthData(monthToFetch, abortCont)
             .then((responseData) => {
-                setData(responseData);
-                setIsLoading(false);
+                updateResponseState({ data: responseData, isLoading: false });
             })
             .catch((error) => {
-                setError(error.message);
-                setIsLoading(false);
+                updateResponseState({ error: error.message, isLoading: false });
             });
 
         return () => abortCont.abort();
     }, [monthToFetch]);
-
-    return { data, isLoading, error };
+    return responseState;
 }
 
 const style = {

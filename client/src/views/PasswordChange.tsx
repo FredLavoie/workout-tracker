@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import {
@@ -24,17 +24,27 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
+type tPasswordState = {
+    newPassword1?: string;
+    newPassword2?: string;
+    showPassword?: boolean;
+};
+
 export function Password(): JSX.Element {
     const history = useHistory();
-    const [newPassword1, changeNewPassword1] = useState("");
-    const [newPassword2, changeNewPassword2] = useState("");
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
+
+    const [passwordState, updatePasswordState] = useReducer(
+        (prev: tPasswordState, next: tPasswordState) => {
+            return { ...prev, ...next };
+        },
+        { newPassword1: "", newPassword2: "", showPassword: false },
+    );
 
     async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();
-        const validatedInput = validatePasswordChange(newPassword1, newPassword2);
+        const validatedInput = validatePasswordChange(passwordState.newPassword1, passwordState.newPassword2);
         if (!validatedInput) {
             setAlertMessage({
                 severity: "error",
@@ -44,7 +54,7 @@ export function Password(): JSX.Element {
             return;
         }
         try {
-            await changePassword(newPassword1, newPassword2);
+            await changePassword(passwordState.newPassword1, passwordState.newPassword2);
             history.push("/dashboard");
         } catch (error) {
             setAlertMessage({ severity: "error", message: error.message });
@@ -57,10 +67,10 @@ export function Password(): JSX.Element {
     }
 
     function handleClickShowPassword(): void {
-        setShowPassword(!showPassword);
+        updatePasswordState({ showPassword: !passwordState.showPassword });
     }
 
-    function handleMouseDownPassword(event): void {
+    function handleMouseDownPassword(event: { preventDefault: () => void }): void {
         event.preventDefault();
     }
 
@@ -77,9 +87,9 @@ export function Password(): JSX.Element {
                     <Box component="form" noValidate onSubmit={handleSubmit}>
                         <FormControl sx={style.textField} variant="outlined">
                             <OutlinedInput
-                                onChange={(e) => changeNewPassword1(e.target.value)}
-                                value={newPassword1}
-                                type={showPassword ? "input" : "password"}
+                                onChange={(e) => updatePasswordState({ newPassword1: e.target.value })}
+                                value={passwordState.newPassword1}
+                                type={passwordState.showPassword ? "input" : "password"}
                                 name="newPassword1"
                                 color="secondary"
                                 id="outlined-adornment-password"
@@ -92,7 +102,7 @@ export function Password(): JSX.Element {
                                             onMouseDown={handleMouseDownPassword}
                                             size="large"
                                         >
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            {passwordState.showPassword ? <Visibility /> : <VisibilityOff />}
                                         </IconButton>
                                     </InputAdornment>
                                 }
@@ -100,9 +110,9 @@ export function Password(): JSX.Element {
                         </FormControl>
                         <FormControl sx={style.textField} variant="outlined">
                             <OutlinedInput
-                                onChange={(e) => changeNewPassword2(e.target.value)}
-                                value={newPassword2}
-                                type={showPassword ? "input" : "password"}
+                                onChange={(e) => updatePasswordState({ newPassword2: e.target.value })}
+                                value={passwordState.newPassword2}
+                                type={passwordState.showPassword ? "input" : "password"}
                                 name="newPassword2"
                                 color="secondary"
                                 id="outlined-adornment-password2"
@@ -116,8 +126,8 @@ export function Password(): JSX.Element {
                             sx={style.btn}
                             color="primary"
                             variant="contained"
-                            key={`${!newPassword1 || !newPassword2 ? true : false}`}
-                            disabled={!newPassword1 || !newPassword2 ? true : false}
+                            key={`${!passwordState.newPassword1 || !passwordState.newPassword2 ? true : false}`}
+                            disabled={!passwordState.newPassword1 || !passwordState.newPassword2 ? true : false}
                         >
                             Change Password
                         </Button>
