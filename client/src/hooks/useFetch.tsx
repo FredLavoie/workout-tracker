@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { tCombinedEntry, tFetchFunction } from "../types";
 
 type tUseFetch = {
-    data: tCombinedEntry & tCombinedEntry[];
+    data?: tCombinedEntry & tCombinedEntry[];
     isLoading?: boolean;
-    error?: Record<string, any>;
+    error?: string;
 };
 
 /**
@@ -17,28 +17,28 @@ type tUseFetch = {
  * @returns object containing the fetched data, isLoading boolean and an error message
  */
 export function useFetch(fetchFunction: tFetchFunction, params: Record<string, any> | null, skip: boolean): tUseFetch {
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [responseState, updateResponseState] = useReducer(
+        (prev: tUseFetch, next: tUseFetch) => {
+            return { ...prev, ...next };
+        },
+        { data: null, isLoading: false, error: null },
+    );
 
-    if (skip) return { data, isLoading, error };
+    if (skip) return responseState;
 
     useEffect(() => {
         const abortCont = new AbortController();
 
-        setIsLoading(true);
+        updateResponseState({ isLoading: true });
         fetchFunction(params, abortCont)
             .then((responseData) => {
-                setData(responseData);
-                setIsLoading(false);
+                updateResponseState({ data: responseData, isLoading: false });
             })
             .catch((error) => {
-                setError(error.message);
-                setIsLoading(false);
+                updateResponseState({ error: error.message, isLoading: false });
             });
 
         return () => abortCont.abort();
     }, []);
-
-    return { data, isLoading, error };
+    return responseState;
 }

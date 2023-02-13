@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 
 import {
     Box,
@@ -17,22 +17,32 @@ import { ServerError } from "../components/ServerError";
 import { fetchSearchResults } from "../services/fetchData";
 import { tConditionalEntry } from "../types";
 
+type tSearchQueryState = {
+    searchQuery?: string;
+    checkedWorkout?: boolean;
+    checkedRecord?: boolean;
+};
+
 export function Search(): JSX.Element {
-    const [checkedWorkout, setCheckedWorkout] = useState(true);
-    const [checkedRecord, setCheckedRecord] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const [searchQueryState, updateSearchQueryState] = useReducer(
+        (prev: tSearchQueryState, next: tSearchQueryState) => {
+            return { ...prev, ...next };
+        },
+        { checkedWorkout: true, checkedRecord: false, searchQuery: "" },
+    );
+
     function handleClear(): void {
-        setSearchQuery("");
+        updateSearchQueryState({ searchQuery: "" });
         setSearchResults(null);
         setError(null);
     }
 
     function handleTextInput(value: React.SetStateAction<string>): void {
-        setSearchQuery(value);
+        updateSearchQueryState({ searchQuery: String(value) });
         if (value === "") {
             setSearchResults(null);
         }
@@ -42,7 +52,11 @@ export function Search(): JSX.Element {
         event.preventDefault();
         setIsLoading(true);
         try {
-            const results = await fetchSearchResults(checkedWorkout, checkedRecord, searchQuery);
+            const results = await fetchSearchResults(
+                searchQueryState.checkedWorkout,
+                searchQueryState.checkedRecord,
+                searchQueryState.searchQuery,
+            );
             const sortedResults = results.sort((a: tConditionalEntry, b: tConditionalEntry) => {
                 const aSeconds = new Date(a.date).getTime();
                 const bSeconds = new Date(b.date).getTime();
@@ -71,14 +85,14 @@ export function Search(): JSX.Element {
                     sx={style.searchBox}
                     id="record-score"
                     placeholder="Search workouts/records..."
-                    value={searchQuery}
+                    value={searchQueryState.searchQuery}
                 />
                 <FormGroup row sx={style.checkboxes}>
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={checkedWorkout}
-                                onChange={(e) => setCheckedWorkout(e.target.checked)}
+                                checked={searchQueryState.checkedWorkout}
+                                onChange={(e) => updateSearchQueryState({ checkedWorkout: e.target.checked })}
                                 name="checkedWorkout"
                                 color="primary"
                             />
@@ -88,8 +102,8 @@ export function Search(): JSX.Element {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={checkedRecord}
-                                onChange={(e) => setCheckedRecord(e.target.checked)}
+                                checked={searchQueryState.checkedRecord}
+                                onChange={(e) => updateSearchQueryState({ checkedRecord: e.target.checked })}
                                 name="checkedRecord"
                                 color="primary"
                                 data-testid="checkedRecord"
@@ -105,8 +119,8 @@ export function Search(): JSX.Element {
                         color="primary"
                         variant="contained"
                         data-testid="submit-search"
-                        key={`${searchQuery === "" ? true : false}`}
-                        disabled={searchQuery === "" ? true : false}
+                        key={`${searchQueryState.searchQuery === "" ? true : false}`}
+                        disabled={searchQueryState.searchQuery === "" ? true : false}
                     >
                         Search
                     </Button>
@@ -133,7 +147,7 @@ export function Search(): JSX.Element {
                 ""
             )}
             {searchResults && searchResults.length > 0 ? (
-                <SearchResultCard content={searchResults} searchQuery={searchQuery} />
+                <SearchResultCard content={searchResults} searchQuery={searchQueryState.searchQuery} />
             ) : (
                 <></>
             )}
