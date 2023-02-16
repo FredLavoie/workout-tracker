@@ -87,7 +87,7 @@ export function Workout(): JSX.Element {
     }
 
     function handleCancel(): void {
-        history.goBack();
+        history.push(`/cal/${navDate}`);
     }
 
     async function handleDelete(): Promise<void> {

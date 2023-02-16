@@ -116,7 +116,7 @@ export function Record(): JSX.Element {
     }
 
     function handleCancel(): void {
-        history.goBack();
+        history.push("/dashboard");
     }
 
     async function handleDelete(): Promise<void> {
