@@ -57,7 +57,15 @@ export function Record(): JSX.Element {
     const { data, isLoading, error } = useFetchRecordData(recordId, recordId === "new");
 
     useEffect(() => {
-        if (data?.recordData && recordId !== "new") {
+        if (recordId === "new") {
+            updateRecordState({
+                selectedDate: currentDate,
+                recordType: "strength",
+                recordEvent: "",
+                recordScore: "",
+                newOrEdit: 1,
+            });
+        } else if (data) {
             updateRecordState({
                 selectedDate: data.recordData.date,
                 recordType: data.recordData.type,
@@ -66,7 +74,7 @@ export function Record(): JSX.Element {
                 newOrEdit: 0,
             });
         }
-    }, [data]);
+    }, [data, recordId]);
 
     async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();

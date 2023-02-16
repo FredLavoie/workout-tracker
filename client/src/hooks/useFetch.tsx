@@ -24,20 +24,18 @@ export function useFetch(fetchFunction: tFetchFunction, params: Record<string, a
         { data: null, isLoading: false, error: null },
     );
 
-    if (skip) return responseState;
-
     useEffect(() => {
         const abortCont = new AbortController();
-
-        updateResponseState({ isLoading: true });
-        fetchFunction(params, abortCont)
-            .then((responseData) => {
-                updateResponseState({ data: responseData, isLoading: false });
-            })
-            .catch((error) => {
-                updateResponseState({ error: error.message, isLoading: false });
-            });
-
+        if (!skip) {
+            updateResponseState({ isLoading: true });
+            fetchFunction(params, abortCont)
+                .then((responseData) => {
+                    updateResponseState({ data: responseData, isLoading: false });
+                })
+                .catch((error) => {
+                    updateResponseState({ error: error.message, isLoading: false });
+                });
+        }
         return () => abortCont.abort();
     }, []);
     return responseState;

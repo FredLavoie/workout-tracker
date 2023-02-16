@@ -48,7 +48,7 @@ export function Workout(): JSX.Element {
     useEffect(() => {
         if (workoutId === "new") {
             const newDate = newWorkoutDate !== null ? newWorkoutDate : currentDate;
-            updateWorkoutState({ selectedDate: newDate, selectedTime: currentTime });
+            updateWorkoutState({ selectedDate: newDate, selectedTime: currentTime, workoutBody: "", newOrEdit: 1 });
         } else if (data) {
             updateWorkoutState({
                 selectedDate: data.date,
@@ -57,7 +57,7 @@ export function Workout(): JSX.Element {
                 newOrEdit: 0,
             });
         }
-    }, [data]);
+    }, [data, workoutId]);
 
     async function handleSubmit(event: { preventDefault: () => void }): Promise<void> {
         event.preventDefault();

@@ -15,6 +15,8 @@ export function DetailRecord(): JSX.Element {
     const eventToFetch = location.pathname.split("/")[3];
 
     const { data, isLoading, error } = useFetch(fetchEventRecords, { eventToFetch }, false);
+    // TODO: clean this up, probably don't need to instantiate
+    // a "records" variable
     const records = data ?? null;
 
     function handleClickActive(target): void {
