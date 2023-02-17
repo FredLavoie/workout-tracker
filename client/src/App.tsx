@@ -40,10 +40,10 @@ export function App(): JSX.Element {
                         <Route exact path="/login" component={Login} />
                         <Layout userTheme={userTheme} setUserTheme={setUserTheme}>
                             <Switch>
-                                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                                <PrivateRoute exact path="/workouts/:id" component={Workout} />
+                                <PrivateRoute path="/dashboard" component={Dashboard} />
+                                <PrivateRoute path="/workouts" component={Workout} />
                                 <PrivateRoute exact path="/records/event/:event" component={DetailRecord} />
-                                <PrivateRoute exact path="/records/:id" component={Record} />
+                                <PrivateRoute path="/records" component={Record} />
                                 <PrivateRoute exact path="/cal/:date" component={Calendar} />
                                 <PrivateRoute exact path="/search" component={Search} />
                                 <PrivateRoute exact path="/password-change" component={Password} />
