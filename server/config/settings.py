@@ -37,8 +37,6 @@ print("DEBUG: ", DEBUG)
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "workout-tracker.xyz",
-    "www.workout-tracker.xyz",
     "workouttracker.ca",
     "www.workouttracker.ca"
     ]
@@ -217,8 +215,6 @@ if DEBUG:
     )
 else:
     CORS_ORIGIN_WHITELIST = (
-        "https://workout-tracker.xyz",
-        "http://workout-tracker.xyz",
         "https://workouttracker.ca",
         "http://workouttracker.ca",
     )

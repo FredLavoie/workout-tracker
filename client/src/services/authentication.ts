@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL || "https://workout-tracker.xyz/api";
+const BASE_URL = import.meta.env.VITE_BASE_URL || "https://workouttracker.ca/api";
 
 export async function login(username: string, password: string): Promise<Record<string, any>> {
     const res = await fetch(`${BASE_URL}/dj-rest-auth/login/`, {
