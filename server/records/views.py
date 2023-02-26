@@ -67,9 +67,9 @@ class EventRecordList(generics.ListAPIView):
         Get the list of records for a specific event
         Return results sorted in reverse chronological order
         """
-        id = self.kwargs["author_id"]
-        event = self.kwargs["event"]
-        queryset = Record.objects.filter(author_id=id, event=event).order_by("date").reverse()
+        arg_id = self.kwargs["author_id"]
+        arg_event = self.kwargs["event"]
+        queryset = Record.objects.filter(author_id=arg_id, event=arg_event).order_by("date").reverse()
         return queryset
 
 
