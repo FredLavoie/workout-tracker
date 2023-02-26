@@ -68,11 +68,8 @@ class EventRecordList(generics.ListAPIView):
         Return results sorted in reverse chronological order
         """
         id = self.kwargs["author_id"]
-        event = self.kwargs["event"].replace("-", " ").title()
-        eventFixedKm = event.replace("Km", "km")
-        eventFixedM = eventFixedKm.replace("0M", "0m")
-        eventFixedMin = eventFixedM.replace(" Min", " min")
-        queryset = Record.objects.filter(author_id=id, event=eventFixedMin).order_by("date").reverse()
+        event = self.kwargs["event"]
+        queryset = Record.objects.filter(author_id=id, event=event).order_by("date").reverse()
         return queryset
 
 

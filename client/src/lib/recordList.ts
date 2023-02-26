@@ -35,7 +35,7 @@ export const recordList: recordListTypes = {
         "Cindy",
         "Diane",
         "DT",
-        "Fight Gone Badge",
+        "Fight Gone Bad",
         "Filthy Fifty",
         "Fran",
         "Grace",
@@ -44,5 +44,5 @@ export const recordList: recordListTypes = {
         "Jackie",
         "Linda",
         "Murph",
-    ]
+    ],
 };

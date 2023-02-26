@@ -41,7 +41,7 @@ class Record(models.Model):
             "Cindy",
             "Diane",
             "DT",
-            "Fight Gone Badge",
+            "Fight Gone Bad",
             "Filthy Fifty",
             "Fran",
             "Grace",

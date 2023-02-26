@@ -10,7 +10,7 @@ export function RecordTable({ type, eventList, records }): JSX.Element {
     const filteredEventList = eventList[type].filter((ea: string) => records.find((rec: tRecord) => rec.event === ea));
 
     function handleClickActive(target: Element): void {
-        const encodedString = target.id.toLowerCase().replace(/ /g, "-");
+        const encodedString = encodeURI(target.id);
         history.push(`/records/event/${encodedString}`);
     }
 
