@@ -8,5 +8,7 @@ class RecordAdmin(admin.ModelAdmin):
                     "score", "created_at", "updated_at",
                     )
 
+    list_filter = ["author", "type", "event"]
+
 
 admin.site.register(Record, RecordAdmin)

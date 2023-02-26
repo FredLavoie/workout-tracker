@@ -8,5 +8,8 @@ class WorkoutAdmin(admin.ModelAdmin):
                     "created_at", "updated_at",
                     )
 
+    list_filter = ["author", "date"]
+    search_fields = ["workout_body"]
+
 
 admin.site.register(Workout, WorkoutAdmin)
