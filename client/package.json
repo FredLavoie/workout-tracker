@@ -35,7 +35,7 @@
         "@vitest/ui": "^0.28.1",
         "cross-fetch": "^4.0.0",
         "eslint-plugin-import": "^2.29.1",
-        "jsdom": "^21.1.0",
+        "jsdom": "^24.0.0",
         "prettier": "^2.8.3",
         "vite": "^4.5.3",
         "vitest": "^0.28.1"
