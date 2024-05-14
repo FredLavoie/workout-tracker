@@ -1,7 +1,6 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, screen, fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
 import { server, rest } from "../../mockServer";
 import { recordList } from "../../lib/recordList";
@@ -55,10 +54,8 @@ describe("Record view - new", () => {
         fireEvent.click(enduranceEventType);
         // select the event dropdown and click it
         const eventDropdown = await screen.findByRole("combobox", { expanded: false });
-        userEvent.click(eventDropdown);
         // select the event to choose and click it
-        const selectedEvent = screen.getByText("Row 500m");
-        userEvent.click(selectedEvent);
+        fireEvent.select(eventDropdown, "Row 500m");
         // enter in the score value
         fireEvent.change(screen.getByPlaceholderText("Score"), { target: { value: "1:22" } });
         // find and click the submit button
