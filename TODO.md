@@ -1,6 +1,6 @@
 ## General Improvements
 
--   [ ] convert project from `yarn` to `npm`
+-   [x] convert project from `yarn` to `npm`
 -   [ ] Update frontend libraries
 -   [ ] Remove MSW and convert to mocking fetch
 -   [ ] update backend libraries
