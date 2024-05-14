@@ -1,9 +1,8 @@
 ## General Improvements
 
 -   [x] convert project from `yarn` to `npm`
--   [ ] Update frontend libraries
 -   [ ] Remove MSW and convert to mocking fetch
--   [ ] update backend libraries
+-   [ ] Update react-router-dom from v5 to v6
 -   [ ] Upgrade the postgres version from 11 to either 15
 
 ## Backlog
