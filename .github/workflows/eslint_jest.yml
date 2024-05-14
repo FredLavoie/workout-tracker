@@ -1,23 +1,23 @@
 name: ESLint + Jest
 
 on:
-  push:
-    branches-ignore:
-    - main
-    paths:
-    - 'client/**'
+    push:
+        branches-ignore:
+            - main
+        paths:
+            - "client/**"
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Install modules
-      run: yarn
-      working-directory: client
-    - name: Run ESLint
-      run: yarn lint
-      working-directory: client
-    - name: Run Jest tests
-      run: yarn test
-      working-directory: client
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Install modules
+              run: npm
+              working-directory: client
+            - name: Run ESLint
+              run: npm run lint
+              working-directory: client
+            - name: Run Jest tests
+              run: npm run test
+              working-directory: client
