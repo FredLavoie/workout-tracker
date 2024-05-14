@@ -54,7 +54,7 @@ describe("Record view - new", () => {
         const enduranceEventType = await screen.findByText("Endurance");
         fireEvent.click(enduranceEventType);
         // select the event dropdown and click it
-        const eventDropdown = await screen.findByRole("button", { expanded: false });
+        const eventDropdown = await screen.findByRole("combobox", { expanded: false });
         userEvent.click(eventDropdown);
         // select the event to choose and click it
         const selectedEvent = screen.getByText("Row 500m");
