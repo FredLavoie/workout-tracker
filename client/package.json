@@ -40,17 +40,11 @@
         "cross-fetch": "^4.0.0",
         "eslint": "^8.57.0",
         "eslint-plugin-import": "^2.29.1",
-        "eslint-plugin-react": "^7.30.0",
+        "eslint-plugin-react": "^7.34.1",
         "jsdom": "^24.0.0",
         "msw": "^1",
         "prettier": "^3.2.5",
         "vite": "^5.2.7",
         "vitest": "^1.6.0"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
     }
 }
