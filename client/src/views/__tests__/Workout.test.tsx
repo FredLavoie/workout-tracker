@@ -1,7 +1,6 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, screen, fireEvent } from "@testing-library/react";
-import { server, rest } from "../../mockServer";
 import { Workout } from "../Workout";
 import { convertTime } from "../../utils";
 
@@ -35,11 +34,13 @@ describe("Workout view - new", () => {
     it("renders Workout view and successfully saves a new workout", async () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
-        server.use(
-            rest.post("*/1/workouts", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true }));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn(() => {
+            return Promise.resolve({
+                status: 200,
+                ok: true,
+            });
+        });
 
         render(<MockedNewWorkout />);
         // enter in a new workout body
@@ -54,11 +55,15 @@ describe("Workout view - new", () => {
     it("renders Workout view and fails form validation", async () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
-        server.use(
-            rest.post("*/1/workouts", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true }));
-            }),
-        );
+
+        // @ts-ignore
+        global.fetch = vi.fn(() => {
+            return Promise.resolve({
+                json: () => Promise.resolve([]),
+                status: 200,
+                ok: true,
+            });
+        });
 
         const invalidDate = "202-02-1";
         const invalidtime = "8:01";
@@ -97,14 +102,19 @@ describe("Workout view - existing", () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
 
-        server.use(
-            rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }),
-                );
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn(() => {
+            return Promise.resolve({
+                json: () =>
+                    Promise.resolve({
+                        date: workoutDate,
+                        time: workoutTime,
+                        workout_body: workoutBody,
+                    }),
+                status: 200,
+                ok: true,
+            });
+        });
 
         render(<MockedExistingWorkout />);
         // find the workout date, time and body
@@ -123,17 +133,28 @@ describe("Workout view - existing", () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
 
-        server.use(
-            rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }),
-                );
-            }),
-            rest.delete("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true }));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url, type) => {
+            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/workouts/qwerty123456/") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve({
+                            date: workoutDate,
+                            time: workoutTime,
+                            workout_body: workoutBody,
+                        }),
+                    status: 200,
+                    ok: true,
+                });
+            }
+
+            if (type.method === "DELETE" && url === "https://workouttracker.ca/api/1/workouts/qwerty123456/") {
+                return Promise.resolve({
+                    status: 200,
+                    ok: true,
+                });
+            }
+        });
 
         render(<MockedExistingWorkout />);
         // find the workout date, time and body
@@ -157,20 +178,34 @@ describe("Workout view - existing", () => {
 
         const updatedWorkoutBody = "updated workout body";
 
-        server.use(
-            rest.get("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: workoutBody }),
-                );
-            }),
-            rest.patch("*/1/workouts/qwerty123456", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json({ ok: true, date: workoutDate, time: workoutTime, workout_body: updatedWorkoutBody }),
-                );
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url, type) => {
+            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/workouts/qwerty123456/") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve({
+                            date: workoutDate,
+                            time: workoutTime,
+                            workout_body: workoutBody,
+                        }),
+                    status: 200,
+                    ok: true,
+                });
+            }
+
+            if (type.method === "PATCH" && url === "https://workouttracker.ca/api/1/workouts/qwerty123456/") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve({
+                            date: workoutDate,
+                            time: workoutTime,
+                            workout_body: updatedWorkoutBody,
+                        }),
+                    status: 200,
+                    ok: true,
+                });
+            }
+        });
 
         render(<MockedExistingWorkout />);
         // enter in a new workout body

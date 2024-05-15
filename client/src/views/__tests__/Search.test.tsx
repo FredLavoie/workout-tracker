@@ -1,7 +1,6 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, screen, fireEvent } from "@testing-library/react";
-import { server, rest } from "../../mockServer";
 import { Search } from "../Search";
 
 afterEach(cleanup);
@@ -27,33 +26,39 @@ describe("Search view", () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
         const searchTerm = "squat";
-        server.use(
-            rest.get("*/1/records/search/", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json([
-                        {
-                            date: "2021-04-25",
-                            type: "strength",
-                            event: "squat",
-                            score: "300",
-                        },
-                    ]),
-                );
-            }),
-            rest.get("*/1/workouts/search/", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json([
-                        {
-                            date: "2022-05-20",
-                            time: "13:30:00",
-                            workout_body: "squat 5x5 @225",
-                        },
-                    ]),
-                );
-            }),
-        );
+
+        // @ts-ignore
+        global.fetch = vi.fn((url) => {
+            if (url === "https://workouttracker.ca/api/1/records/search/?q=squat") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve([
+                            {
+                                date: "2021-04-25",
+                                type: "strength",
+                                event: "squat",
+                                score: "300",
+                            },
+                        ]),
+                    status: 200,
+                    ok: true,
+                });
+            }
+            if (url === "https://workouttracker.ca/api/1/workouts/search/?q=squat") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve([
+                            {
+                                date: "2022-05-20",
+                                time: "13:30:00",
+                                workout_body: "squat 5x5 @225",
+                            },
+                        ]),
+                    status: 200,
+                    ok: true,
+                });
+            }
+        });
 
         render(<MockedSearch />);
         // find and check the PRs checkbox

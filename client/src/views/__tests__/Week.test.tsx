@@ -1,7 +1,6 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, screen, fireEvent } from "@testing-library/react";
-import { server, rest } from "../../mockServer";
 import { calculateWeek, correctDate } from "../../utils";
 import { months } from "../../lib/months";
 import { Week } from "../Week";
@@ -39,11 +38,14 @@ describe("Week view", () => {
     };
 
     it("renders the Week view without crashing", async () => {
-        server.use(
-            rest.get("*/1/cal/:month", (req, res, context) => {
-                return res(context.status(200), context.json([]));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn(() => {
+            return Promise.resolve({
+                json: () => Promise.resolve([]),
+                status: 200,
+                ok: true,
+            });
+        });
         render(<MockedWeek />);
         // find all the rest days and assert that there are 7 rest days
         const searchBox = await screen.findAllByText("Rest");
@@ -56,11 +58,14 @@ describe("Week view", () => {
     });
 
     it("renders the Week view and navigates back successfully", async () => {
-        server.use(
-            rest.get("*/1/cal/:month", (req, res, context) => {
-                return res(context.status(200), context.json([]));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn(() => {
+            return Promise.resolve({
+                json: () => Promise.resolve([]),
+                status: 200,
+                ok: true,
+            });
+        });
         render(<MockedWeek />);
         // find current week title and assert it exists
         const weekTitle =
@@ -78,11 +83,14 @@ describe("Week view", () => {
     });
 
     it("renders the Week view and navigates forwrard successfully", async () => {
-        server.use(
-            rest.get("*/1/cal/:month", (req, res, context) => {
-                return res(context.status(200), context.json([]));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn(() => {
+            return Promise.resolve({
+                json: () => Promise.resolve([]),
+                status: 200,
+                ok: true,
+            });
+        });
         render(<MockedWeek />);
         // find current week title and assert it exists
         const weekTitle =

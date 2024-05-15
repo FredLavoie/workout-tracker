@@ -30,7 +30,7 @@
     },
     "rules": {
         "react/prop-types": 0,
-        "no-console": "warn",
+        "no-console": ["error", { "allow": ["info", "error"] }],
         "semi": ["error", "always"],
         "indent": ["error", 4],
         "no-trailing-spaces": [
