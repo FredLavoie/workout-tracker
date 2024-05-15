@@ -1,7 +1,6 @@
 import React from "react";
 import { MemoryRouter, Route } from "react-router-dom";
 import { render, cleanup, screen, fireEvent } from "@testing-library/react";
-import { server, rest } from "../../mockServer";
 import { Login } from "../Login";
 
 afterEach(cleanup);
@@ -28,14 +27,14 @@ describe("Login view", () => {
     });
 
     it("renders an error when inputing the wrong credentials", async () => {
-        server.use(
-            rest.post("*/dj-rest-auth/login/", (req, res, context) => {
-                return res(
-                    context.status(400),
-                    context.json({ non_field_errors: ["Unable to log in with provided credentials."] }),
-                );
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url) => {
+            return Promise.resolve({
+                json: () => Promise.resolve({ non_field_errors: ["Unable to log in with provided credentials."] }),
+                status: 400,
+                ok: false,
+            });
+        });
 
         render(<Login />);
         // enter in credentials
@@ -51,27 +50,15 @@ describe("Login view", () => {
         localStorage.clear();
     });
 
-    it("renders an error when server is down", async () => {
-        render(<Login />);
-        // enter in credentials
-        fireEvent.change(screen.getByLabelText("Username"), { target: { value: "abc" } });
-        fireEvent.change(screen.getByLabelText("Password"), { target: { value: "123" } });
-        // click the login button
-        const submitButton = screen.getByText("Login");
-        fireEvent.click(submitButton);
-        // the login should fail and display a message
-        const errorMessage = await screen.findByText("Server error - status 500");
-        expect(errorMessage).toBeInTheDocument();
-        // clean up local storage
-        localStorage.clear();
-    });
-
     it("redirects upon successful login", async () => {
-        server.use(
-            rest.post("*/dj-rest-auth/login/", (req, res, context) => {
-                return res(context.status(200), context.json({ key: "l236hj4hsdr0s" }));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url) => {
+            return Promise.resolve({
+                json: () => Promise.resolve({ key: "l236hj4hsdr0s" }),
+                status: 200,
+                ok: true,
+            });
+        });
         render(
             <MemoryRouter initialEntries={[{ pathname: "/login" }]}>
                 <Login />

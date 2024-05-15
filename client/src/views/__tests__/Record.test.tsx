@@ -2,7 +2,6 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, screen, fireEvent } from "@testing-library/react";
 
-import { server, rest } from "../../mockServer";
 import { recordList } from "../../lib/recordList";
 import { Record } from "../Record";
 
@@ -21,11 +20,14 @@ describe("Record view - new", () => {
         const today = new Date().toLocaleDateString("en-US").split("/");
         const todayFormatted = `${today[2]}-${today[0]?.padStart(2, "0")}-${today[1]?.padStart(2, "0")}`;
 
-        server.use(
-            rest.get("*/records/event-list/", (req, res, context) => {
-                return res(context.status(200), context.json(recordList));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url) => {
+            return Promise.resolve({
+                json: () => Promise.resolve(recordList),
+                status: 200,
+                ok: true,
+            });
+        });
 
         render(<MockedNewRecord />);
         // check that todays date is automatically set in the date input
@@ -36,17 +38,15 @@ describe("Record view - new", () => {
     it("renders Record view and successfully saves a new record", async () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
-        server.use(
-            rest.post("*/1/records", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true }));
-            }),
-        );
 
-        server.use(
-            rest.get("*/records/event-list/", (req, res, context) => {
-                return res(context.status(200), context.json(recordList));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url) => {
+            return Promise.resolve({
+                json: () => Promise.resolve(recordList),
+                status: 200,
+                ok: true,
+            });
+        });
 
         render(<MockedNewRecord />);
         // select the event type
@@ -84,23 +84,30 @@ describe("Record view - existing", () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
 
-        server.use(
-            rest.get("*/records/event-list/", (req, res, context) => {
-                return res(context.status(200), context.json(recordList));
-            }),
-            rest.get("*/1/records/qwerty123456", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json({
-                        ok: true,
-                        date: recordDate,
-                        type: recordType,
-                        event: recordEvent,
-                        score: recordScore,
-                    }),
-                );
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url, type) => {
+            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve({
+                            date: recordDate,
+                            type: recordType,
+                            event: recordEvent,
+                            score: recordScore,
+                        }),
+                    status: 200,
+                    ok: true,
+                });
+            }
+
+            if (url === "https://workouttracker.ca/api/records/event-list/") {
+                return Promise.resolve({
+                    json: () => Promise.resolve(recordList),
+                    status: 200,
+                    ok: true,
+                });
+            }
+        });
 
         render(<MockedExistingRecord />);
         // find the record date, type, event and score
@@ -121,26 +128,35 @@ describe("Record view - existing", () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
 
-        server.use(
-            rest.get("*/records/event-list/", (req, res, context) => {
-                return res(context.status(200), context.json(recordList));
-            }),
-            rest.get("*/1/records/qwerty123456", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json({
-                        ok: true,
-                        date: recordDate,
-                        type: recordType,
-                        event: recordEvent,
-                        score: recordScore,
-                    }),
-                );
-            }),
-            rest.delete("*/1/records/qwerty123456", (req, res, context) => {
-                return res(context.status(200), context.json({ ok: true }));
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url, type) => {
+            if (type.method === "DELETE" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+                return Promise.resolve({
+                    status: 200,
+                    ok: true,
+                });
+            }
+            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve({
+                            date: recordDate,
+                            type: recordType,
+                            event: recordEvent,
+                            score: recordScore,
+                        }),
+                    status: 200,
+                    ok: true,
+                });
+            }
+            if (url === "https://workouttracker.ca/api/records/event-list/") {
+                return Promise.resolve({
+                    json: () => Promise.resolve(recordList),
+                    status: 200,
+                    ok: true,
+                });
+            }
+        });
 
         render(<MockedExistingRecord />);
         // find the record date, type, event and score
@@ -166,35 +182,42 @@ describe("Record view - existing", () => {
 
         const updatedScore = "3:00";
 
-        server.use(
-            rest.get("*/records/event-list/", (req, res, context) => {
-                return res(context.status(200), context.json(recordList));
-            }),
-            rest.get("*/1/records/qwerty123456", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json({
-                        ok: true,
-                        date: recordDate,
-                        type: recordType,
-                        event: recordEvent,
-                        score: recordScore,
-                    }),
-                );
-            }),
-            rest.patch("*/1/records/qwerty123456", (req, res, context) => {
-                return res(
-                    context.status(200),
-                    context.json({
-                        ok: true,
-                        date: recordDate,
-                        type: recordType,
-                        event: recordEvent,
-                        score: updatedScore,
-                    }),
-                );
-            }),
-        );
+        // @ts-ignore
+        global.fetch = vi.fn((url, type) => {
+            if (type.method === "PATCH" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve({
+                            date: recordDate,
+                            type: recordType,
+                            event: recordEvent,
+                            score: updatedScore,
+                        }),
+                    status: 200,
+                    ok: true,
+                });
+            }
+            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+                return Promise.resolve({
+                    json: () =>
+                        Promise.resolve({
+                            date: recordDate,
+                            type: recordType,
+                            event: recordEvent,
+                            score: recordScore,
+                        }),
+                    status: 200,
+                    ok: true,
+                });
+            }
+            if (url === "https://workouttracker.ca/api/records/event-list/") {
+                return Promise.resolve({
+                    json: () => Promise.resolve(recordList),
+                    status: 200,
+                    ok: true,
+                });
+            }
+        });
 
         render(<MockedExistingRecord />);
         // enter in a new record score
