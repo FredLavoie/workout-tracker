@@ -4,6 +4,7 @@
 -   [ ] Remove MSW and convert to mocking fetch
 -   [ ] Update react-router-dom from v5 to v6
 -   [ ] Upgrade the postgres version from 11 to either 15
+-   [ ] upgrade django to v4.2 LTS
 
 ## Backlog
 
