@@ -23,7 +23,7 @@ describe("passwordChange", () => {
 
     it("renders password change view and successfully saves the updated password", async () => {
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve(),
                 status: 200,
@@ -44,7 +44,7 @@ describe("passwordChange", () => {
 
     it("renders password change view and fails to update due to mismatched password", async () => {
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve(),
                 status: 200,

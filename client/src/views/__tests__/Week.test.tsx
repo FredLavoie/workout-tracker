@@ -39,7 +39,7 @@ describe("Week view", () => {
 
     it("renders the Week view without crashing", async () => {
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve([]),
                 status: 200,
@@ -59,7 +59,7 @@ describe("Week view", () => {
 
     it("renders the Week view and navigates back successfully", async () => {
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve([]),
                 status: 200,
@@ -84,7 +84,7 @@ describe("Week view", () => {
 
     it("renders the Week view and navigates forwrard successfully", async () => {
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve([]),
                 status: 200,

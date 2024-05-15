@@ -28,7 +28,7 @@ describe("Login view", () => {
 
     it("renders an error when inputing the wrong credentials", async () => {
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve({ non_field_errors: ["Unable to log in with provided credentials."] }),
                 status: 400,
@@ -52,7 +52,7 @@ describe("Login view", () => {
 
     it("redirects upon successful login", async () => {
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve({ key: "l236hj4hsdr0s" }),
                 status: 200,

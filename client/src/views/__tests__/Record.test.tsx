@@ -21,7 +21,7 @@ describe("Record view - new", () => {
         const todayFormatted = `${today[2]}-${today[0]?.padStart(2, "0")}-${today[1]?.padStart(2, "0")}`;
 
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve(recordList),
                 status: 200,
@@ -40,7 +40,7 @@ describe("Record view - new", () => {
         localStorage.setItem("accountId", "1");
 
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve(recordList),
                 status: 200,

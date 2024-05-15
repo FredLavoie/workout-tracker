@@ -17,7 +17,7 @@ describe("Calendar view", () => {
     localStorage.setItem("token", "asdf");
     localStorage.setItem("accountId", "1");
     // @ts-ignore
-    global.fetch = vi.fn((url) => {
+    global.fetch = vi.fn(() => {
         return Promise.resolve({
             json: () => Promise.resolve([]),
             status: 200,

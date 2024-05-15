@@ -35,7 +35,7 @@ describe("Workout view - new", () => {
         localStorage.setItem("token", "asdf");
         localStorage.setItem("accountId", "1");
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 status: 200,
                 ok: true,
@@ -57,7 +57,7 @@ describe("Workout view - new", () => {
         localStorage.setItem("accountId", "1");
 
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () => Promise.resolve([]),
                 status: 200,
@@ -103,7 +103,7 @@ describe("Workout view - existing", () => {
         localStorage.setItem("accountId", "1");
 
         // @ts-ignore
-        global.fetch = vi.fn((url) => {
+        global.fetch = vi.fn(() => {
             return Promise.resolve({
                 json: () =>
                     Promise.resolve({
