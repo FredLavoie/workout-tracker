@@ -1,10 +1,11 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { isAuthenticated } from "../services/authentication";
 
-export function Home(): JSX.Element {
+export function Home() {
+    const location = useLocation();
     if (isAuthenticated() === true) {
-        return <Redirect to="/dashboard" />;
+        return <Navigate to="/dashboard" state={{ from: location }} replace />;
     }
-    return <Redirect to="/login" />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
 }

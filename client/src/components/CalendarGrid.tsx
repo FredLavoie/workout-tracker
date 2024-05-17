@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Box, Typography } from "@mui/material";
 
@@ -13,8 +13,8 @@ type propTypes = {
     workouts: tWorkout[];
 };
 
-export function CalendarGrid(props: propTypes): JSX.Element {
-    const history = useHistory();
+export function CalendarGrid(props: propTypes) {
+    const navigate = useNavigate();
 
     // The day of the week that the fist day of the month lands on.
     // 0 = Sunday, 7 = Saturday
@@ -33,9 +33,9 @@ export function CalendarGrid(props: propTypes): JSX.Element {
     function handleClickActive(id: string, dayNum: number): void {
         if (dayNum === 0) return;
         if (!id) {
-            history.push(`/workouts/new/${props.year}-${props.month}-${String(dayNum).padStart(2, "0")}`);
+            navigate(`/workouts/new/${props.year}-${props.month}-${String(dayNum).padStart(2, "0")}`);
         } else {
-            history.push(`/workouts/${id}`);
+            navigate(`/workouts/${id}`);
         }
     }
 

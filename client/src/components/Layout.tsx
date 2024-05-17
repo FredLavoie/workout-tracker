@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import {
     AppBar,
@@ -36,22 +36,23 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
 import { logout, isAuthenticated } from "../services/authentication";
 
-// eslint-disable-next-line prefer-arrow-callback
+//@ts-ignore
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
 
-export function Layout({ children, userTheme, setUserTheme }): JSX.Element {
+export function Layout({ userTheme, setUserTheme }) {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     if (isAuthenticated() === false) {
-        return <Redirect to="/login" />;
+        return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
     // dateArray example: Jan 31, 2020 -> ["1", "31", "2020"]
     const dateArray: string[] = new Date().toLocaleDateString("en-US").split("/");
     const calPath = `/cal/${dateArray[2]}-${dateArray[0].padStart(2, "0")}`;
 
-    const history = useHistory();
-    const location = useLocation();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -64,7 +65,7 @@ export function Layout({ children, userTheme, setUserTheme }): JSX.Element {
         event.preventDefault();
         try {
             await logout();
-            history.push("/login");
+            navigate("/login");
         } catch (error) {
             return setOpenSnackbar(true);
         }
@@ -88,12 +89,12 @@ export function Layout({ children, userTheme, setUserTheme }): JSX.Element {
 
     function handleMenuItemClick(path: string): void {
         if (mobileOpen) handleDrawerToggle();
-        history.push(path);
+        navigate(path);
     }
 
     function handleChangePasswordClick(): void {
         handleClose();
-        history.push("/password-change");
+        navigate("/password-change");
     }
 
     function handleThemeToggle(event): void {
@@ -268,7 +269,7 @@ export function Layout({ children, userTheme, setUserTheme }): JSX.Element {
             <Box sx={style.page}>
                 {/* this element adds margin to push content below the appbar */}
                 <Box sx={style.toolbarMargin} />
-                {children}
+                <Outlet />
             </Box>
             <Snackbar
                 open={openSnackbar}

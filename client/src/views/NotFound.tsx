@@ -2,7 +2,7 @@ import React from "react";
 
 import { AppBar, Container, Toolbar, Typography } from "@mui/material";
 
-export function NotFound(): JSX.Element {
+export function NotFound() {
     return (
         <Container>
             <AppBar sx={style.appBar} position="fixed" elevation={1}>

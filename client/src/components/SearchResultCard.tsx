@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, CardContent, Grid, Typography } from "@mui/material";
 
@@ -7,14 +7,14 @@ import { SearchResultBody } from "./SearchResultBody";
 
 import { tCombinedEntry } from "../types";
 
-export function SearchResultCard({ content, searchQuery }): JSX.Element {
-    const history = useHistory();
+export function SearchResultCard({ content, searchQuery }) {
+    const navigate = useNavigate();
 
     function handleClickActive(target: Element, isWorkoutContent: boolean): void {
         if (isWorkoutContent) {
-            history.push(`/workouts/${target.id}`);
+            navigate(`/workouts/${target.id}`);
         } else {
-            history.push(`/records/${target.id}`);
+            navigate(`/records/${target.id}`);
         }
     }
 

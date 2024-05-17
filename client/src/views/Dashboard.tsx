@@ -12,7 +12,7 @@ const currentDate = new Date().toLocaleDateString("en-US").split("/");
 const currentYear = currentDate[2];
 const monthNumbersArr = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
-export function Dashboard(): JSX.Element {
+export function Dashboard() {
     // fetch data to be displayed on the Dashboard page
     const { data, isLoading, error } = useFetchDashboardData(currentYear);
 

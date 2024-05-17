@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
 
@@ -12,8 +12,8 @@ import { fetchMonthData } from "../services/fetchData";
 import { calculateMonth } from "../utils";
 import { months } from "../lib/months";
 
-export function Calendar(): JSX.Element {
-    const history = useHistory();
+export function Calendar() {
+    const navigate = useNavigate();
     const location = useLocation();
     const [workouts, setWorkouts] = useState(null);
 
@@ -22,8 +22,8 @@ export function Calendar(): JSX.Element {
     const currentMonth = monthToFetch.split("-")[1]; // 05
     const currentYear = monthToFetch.split("-")[0]; // 2021
     if (!currentMonthString || Number(currentYear) % 1 !== 0) {
-        history.push("/");
-        history.push("/404");
+        navigate("/");
+        navigate("/404");
     }
     const prevMonth = calculateMonth(currentMonth, currentYear, "prev");
     const nextMonth = calculateMonth(currentMonth, currentYear, "next");
@@ -38,12 +38,12 @@ export function Calendar(): JSX.Element {
 
     function handleClickPrevious(): void {
         setWorkouts(null);
-        history.push(`/cal/${prevMonth}`);
+        navigate(`/cal/${prevMonth}`);
     }
 
     function handleClickNext(): void {
         setWorkouts(null);
-        history.push(`/cal/${nextMonth}`);
+        navigate(`/cal/${nextMonth}`);
     }
 
     function handleReturnToCurrent(): void {
@@ -52,7 +52,7 @@ export function Calendar(): JSX.Element {
         const pathDateString = location.pathname.split("/")[2];
         if (currentDateString !== pathDateString) {
             setWorkouts(null);
-            history.push(`/cal/${currentDateString}`);
+            navigate(`/cal/${currentDateString}`);
         }
     }
 

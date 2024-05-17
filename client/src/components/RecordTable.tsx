@@ -1,17 +1,17 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Box, CardContent, Typography } from "@mui/material";
 
 import { tRecord } from "../types";
 
-export function RecordTable({ type, eventList, records }): JSX.Element {
-    const history = useHistory();
+export function RecordTable({ type, eventList, records }) {
+    const navigate = useNavigate();
     const filteredEventList = eventList[type].filter((ea: string) => records.find((rec: tRecord) => rec.event === ea));
 
     function handleClickActive(target: Element): void {
         const encodedString = encodeURI(target.id);
-        history.push(`/records/event/${encodedString}`);
+        navigate(`/records/event/${encodedString}`);
     }
 
     return (
@@ -23,7 +23,9 @@ export function RecordTable({ type, eventList, records }): JSX.Element {
                     sx={style.eventContainer}
                     onClick={(e) => handleClickActive(e.currentTarget)}
                 >
-                    <Typography variant={"subtitle1"}>{event}</Typography>
+                    <Typography sx={style.event} variant={"subtitle1"}>
+                        {event}
+                    </Typography>
 
                     {[records.find((ea: { event: string }) => ea.event === event)].map((ea) => {
                         return (
@@ -49,6 +51,9 @@ const style = {
         display: "flex",
         justifyContent: "space-between",
         cursor: "pointer",
+    },
+    event: {
+        textDecoration: "underline",
     },
     score: {
         backgroundColor: "secondary.main",

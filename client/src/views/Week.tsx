@@ -10,7 +10,7 @@ import { weekdayNames } from "../lib/weekdayNames";
 import { fetchMonthData } from "../services/fetchData";
 import { calculateWeek, correctDate, determineNextMonth } from "../utils";
 
-export function Week(): JSX.Element {
+export function Week() {
     // newDate example: Jan 31, 2020 -> ["1", "31", "2020"]
     const newDate = new Date().toLocaleDateString("en-US").split("/");
     const [dateArr, setDateArr] = useState(newDate);

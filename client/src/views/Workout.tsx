@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Box, Button, ButtonGroup, CircularProgress, Grid, Snackbar, Typography, TextField } from "@mui/material";
 
@@ -22,9 +22,9 @@ type tWorkoutState = {
     newOrEdit?: number;
 };
 
-export function Workout(): JSX.Element {
+export function Workout() {
     const location = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const workoutId = location.pathname.split("/")[2];
     const newWorkoutDate = location.pathname.split("/")[3] || null;
@@ -75,7 +75,7 @@ export function Workout(): JSX.Element {
                         workoutState.workoutBody,
                     );
                 }
-                history.push(`/cal/${navDate}`);
+                navigate(`/cal/${navDate}`);
             } catch (error) {
                 setAlertMessage({ severity: "error", message: error.message });
                 setOpenSnackbar(true);
@@ -87,13 +87,13 @@ export function Workout(): JSX.Element {
     }
 
     function handleCancel(): void {
-        history.push(`/cal/${navDate}`);
+        navigate(`/cal/${navDate}`);
     }
 
     async function handleDelete(): Promise<void> {
         try {
             await deleteWorkout(workoutId);
-            history.push(`/cal/${navDate}`);
+            navigate(`/cal/${navDate}`);
         } catch (error) {
             setAlertMessage({ severity: "error", message: error.message });
             setOpenSnackbar(true);

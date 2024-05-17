@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
     AppBar,
@@ -28,7 +28,7 @@ import { ServerError } from "../components/ServerError";
 import { isAuthenticated, login } from "../services/authentication";
 import { fetchAccountId } from "../services/fetchData";
 
-// eslint-disable-next-line prefer-arrow-callback
+// @ts-ignore
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
     return <MuiAlert elevation={4} ref={ref} {...props} />;
 });
@@ -39,8 +39,9 @@ type tLoginState = {
     showPassword?: boolean;
 };
 
-export function Login(): JSX.Element {
-    const history = useHistory();
+export function Login() {
+    const navigate = useNavigate();
+
     const [open, setOpen] = useState(false);
     const [error, setError] = useState(null);
 
@@ -60,7 +61,7 @@ export function Login(): JSX.Element {
             }
             try {
                 await fetchAccountId();
-                history.push("/dashboard");
+                navigate("/dashboard");
             } catch (error) {
                 return setError(error.message);
             }
@@ -71,7 +72,8 @@ export function Login(): JSX.Element {
 
     // redirect to dashboard if already authenticated
     if (isAuthenticated() === true) {
-        return <Redirect to="/dashboard" />;
+        navigate("/dashboard");
+        return;
     }
 
     function handleClose(): void {

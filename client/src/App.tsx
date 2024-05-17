@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider, StyledEngineProvider, PaletteMode } from "@mui/material";
 import { Layout } from "./components/Layout";
-import { PrivateRoute } from "./components/PrivateRoute";
 import { Home } from "./views/Home";
 import { Login } from "./views/Login";
 import { Dashboard } from "./views/Dashboard";
@@ -16,7 +15,7 @@ import { Password } from "./views/PasswordChange";
 import { NotFound } from "./views/NotFound";
 import "./App.css";
 
-export function App(): JSX.Element {
+export function App() {
     const [userTheme, setUserTheme] = useState(localStorage.getItem("userTheme") ?? "light");
 
     const myTheme = createTheme({
@@ -35,24 +34,24 @@ export function App(): JSX.Element {
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={myTheme}>
                 <Router>
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/login" component={Login} />
-                        <Layout userTheme={userTheme} setUserTheme={setUserTheme}>
-                            <Switch>
-                                <PrivateRoute path="/dashboard" component={Dashboard} />
-                                <PrivateRoute path="/workouts" component={Workout} />
-                                <PrivateRoute exact path="/records/event/:event" component={DetailRecord} />
-                                <PrivateRoute path="/records" component={Record} />
-                                <PrivateRoute exact path="/cal/:date" component={Calendar} />
-                                <PrivateRoute exact path="/search" component={Search} />
-                                <PrivateRoute exact path="/password-change" component={Password} />
-                                <PrivateRoute path="/week" component={Week} />
-                                <Route exact path="/404" component={NotFound} />
-                                <Route component={NotFound} />
-                            </Switch>
-                        </Layout>
-                    </Switch>
+                    <Routes>
+                        <Route index element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<Layout userTheme={userTheme} setUserTheme={setUserTheme} />}>
+                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/workouts/new" element={<Workout />} />
+                            <Route path="/workouts/:id" element={<Workout />} />
+                            <Route path="/records/event/:event" element={<DetailRecord />} />
+                            <Route path="/records/new" element={<Record />} />
+                            <Route path="/records/:id" element={<Record />} />
+                            <Route path="/cal/:date" element={<Calendar />} />
+                            <Route path="/search" element={<Search />} />
+                            <Route path="/password-change" element={<Password />} />
+                            <Route path="/week" element={<Week />} />
+                            <Route path="/404" element={<NotFound />} />
+                            <Route path="*" element={<NotFound />} />
+                        </Route>
+                    </Routes>
                 </Router>
             </ThemeProvider>
         </StyledEngineProvider>

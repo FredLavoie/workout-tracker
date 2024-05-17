@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import {
     Box,
@@ -36,9 +36,9 @@ type tRecordState = {
     newOrEdit?: number;
 };
 
-export function Record(): JSX.Element {
+export function Record() {
     const location = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const recordId = location.pathname.split("/")[2];
     const newDate = new Date().toLocaleDateString("en-US").split("/");
@@ -104,7 +104,7 @@ export function Record(): JSX.Element {
                         recordState.recordScore,
                     );
                 }
-                history.push("/dashboard");
+                navigate("/dashboard");
             } catch (error) {
                 setAlertMessage({ severity: "error", message: error.message });
                 setOpenSnackbar(true);
@@ -116,13 +116,13 @@ export function Record(): JSX.Element {
     }
 
     function handleCancel(): void {
-        history.push("/dashboard");
+        navigate("/dashboard");
     }
 
     async function handleDelete(): Promise<void> {
         try {
             await deleteRecord(recordId);
-            history.push("/dashboard");
+            navigate("/dashboard");
         } catch (error) {
             setAlertMessage({ severity: "error", message: error.message });
             setOpenSnackbar(true);

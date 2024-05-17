@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
     Box,
@@ -30,8 +30,8 @@ type tPasswordState = {
     showPassword?: boolean;
 };
 
-export function Password(): JSX.Element {
-    const history = useHistory();
+export function Password() {
+    const navigate = useNavigate();
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
 
@@ -55,7 +55,7 @@ export function Password(): JSX.Element {
         }
         try {
             await changePassword(passwordState.newPassword1, passwordState.newPassword2);
-            history.push("/dashboard");
+            navigate("/dashboard");
         } catch (error) {
             setAlertMessage({ severity: "error", message: error.message });
             return setOpenSnackbar(true);

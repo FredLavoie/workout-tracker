@@ -25,7 +25,7 @@ describe("Calendar view", () => {
         });
     });
 
-    const MockedCalendar = (): JSX.Element => {
+    const MockedCalendar = () => {
         return (
             <MemoryRouter initialEntries={[{ pathname: calPath }]}>
                 <Calendar />

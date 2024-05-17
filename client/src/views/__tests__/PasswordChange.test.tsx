@@ -6,7 +6,7 @@ import { Password } from "../PasswordChange";
 afterEach(cleanup);
 
 describe("passwordChange", () => {
-    const MockedPasswordChange = (): JSX.Element => {
+    const MockedPasswordChange = () => {
         return (
             <MemoryRouter initialEntries={[{ pathname: "/password-change" }]}>
                 <Password />

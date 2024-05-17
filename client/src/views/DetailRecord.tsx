@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Grid, Typography } from "@mui/material";
 
@@ -8,8 +8,8 @@ import { ServerError } from "../components/ServerError";
 import { useFetch } from "../hooks/useFetch";
 import { tRecord } from "../types";
 
-export function DetailRecord(): JSX.Element {
-    const history = useHistory();
+export function DetailRecord() {
+    const navigate = useNavigate();
     const location = useLocation();
 
     const eventToFetch = location.pathname.split("/")[3];
@@ -20,12 +20,13 @@ export function DetailRecord(): JSX.Element {
     const records = data ?? null;
 
     function handleClickActive(target): void {
-        if (target.id) history.push(`/records/${target.id}`);
-        else history.push(`/records/${target.parentNode.id}`);
+        if (target.id) navigate(`/records/${target.id}`);
+        else navigate(`/records/${target.parentNode.id}`);
     }
 
     function handleCancel(): void {
-        history.goBack();
+        // TODO: navigate backwards in the history
+        // navigate.back();
     }
 
     return (

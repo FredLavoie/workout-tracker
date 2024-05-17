@@ -23,7 +23,7 @@ type tSearchQueryState = {
     checkedRecord?: boolean;
 };
 
-export function Search(): JSX.Element {
+export function Search() {
     const [searchResults, setSearchResults] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
