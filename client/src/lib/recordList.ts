@@ -1,5 +1,7 @@
 import { recordListTypes } from "../types";
 
+// used only for frontend tests. The real list comes
+// from the backend through an API cal.
 export const recordList: recordListTypes = {
     strength: [
         "Back Squat",
