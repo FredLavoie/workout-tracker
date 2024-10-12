@@ -6,7 +6,7 @@
     "scripts": {
         "start": "vite",
         "build": "vite build",
-        "prod": "vite preview --port 3000",
+        "prod": "vite preview --port 3000 --host",
         "test": "vitest --run",
         "test-watch": "vitest watch",
         "type-check": "tsc --noEmit",
