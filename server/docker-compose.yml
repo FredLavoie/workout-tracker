@@ -1,8 +1,8 @@
 services:
-    web:
+    server:
         build: .
-        container_name: workout-tracker-web
-        command: "${SERVER_RUN_COMMAND:-gunicorn config.wsgi -b 0.0.0.0:8000}"
+        container_name: workout-tracker-server
+        command: "${SERVER_RUN_COMMAND}"
         volumes:
             - .:/server_src
         ports:
