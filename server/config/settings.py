@@ -37,8 +37,7 @@ print("DEBUG: ", DEBUG)
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "workouttracker.ca",
-    "www.workouttracker.ca"
+    "192.168.2.205",
     ]
 
 if DEBUG:
@@ -208,13 +207,9 @@ REST_FRAMEWORK = {
     ],
 }
 
-if DEBUG:
-    CORS_ORIGIN_WHITELIST = (
-        "http://localhost:3000",  # React frontend
-        "http://localhost:8000",  # Django API
-    )
-else:
-    CORS_ORIGIN_WHITELIST = (
-        "https://workouttracker.ca",
-        "http://workouttracker.ca",
-    )
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:3000",  # React frontend
+    "http://localhost:8000",  # Django API
+    "http://192.168.2.205:3000",  # React frontend
+    "http://192.168.2.205:8000",  # Django API
+)

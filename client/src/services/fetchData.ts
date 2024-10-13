@@ -1,6 +1,6 @@
 import { tConditionalEntry } from "../types";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || "https://workouttracker.ca/api";
+const BASE_URL = import.meta.env.VITE_BASE_URL || "http://192.168.2.205:8000/api";
 
 export async function fetchAccountId(): Promise<void> {
     if (localStorage.getItem("accountId")) return;
