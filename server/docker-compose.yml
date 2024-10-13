@@ -2,7 +2,7 @@ services:
     server:
         build: .
         container_name: workout-tracker-server
-        command: "${SERVER_RUN_COMMAND}"
+        command: "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
         volumes:
             - .:/server_src
         ports:
