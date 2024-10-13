@@ -207,12 +207,4 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CORS_ORIGIN_WHITELIST = (
-#     "http://*:3000",
-#     "http://localhost:3000",  # React frontend
-#     "http://localhost:8000",  # Django API
-#     "http://192.168.2.205:3000",  # React frontend
-#     "http://192.168.2.205:8000",  # Django API
-# )
-
 CORS_ORIGIN_ALLOW_ALL = True
