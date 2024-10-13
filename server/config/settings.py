@@ -215,4 +215,4 @@ REST_FRAMEWORK = {
 #     "http://192.168.2.205:8000",  # Django API
 # )
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
