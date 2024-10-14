@@ -4,6 +4,7 @@ file_name="`date +%Y-%m-%d`.dump"
 
 echo "Backing up workout database";
 pg_dump -Fc -h localhost -U flavoie workout > "/home/pi/workout-tracker/BACKUP/$file_name";
+echo "Saving file $file_name"
 echo "Deleting old backup files (> 15 days)";
 find /home/pi/workout-tracker/BACKUP -type f -iname '*.dump' -mtime +15 -delete;
-echo "Saving database backup complete";
+echo "Database backup complete";
