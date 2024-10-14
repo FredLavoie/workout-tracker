@@ -1,0 +1,8 @@
+services:
+    web:
+        build: .
+        container_name: workout-tracker-web
+        restart: always
+        ports:
+            - "3000:3000"
+        command: npm run prod

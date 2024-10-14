@@ -135,7 +135,7 @@ describe("Workout view - existing", () => {
 
         // @ts-ignore
         global.fetch = vi.fn((url, type) => {
-            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/workouts/qwerty123456/") {
+            if (type.method === "GET" && url === "http://localhost:8000/api/1/workouts/qwerty123456/") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve({
@@ -148,7 +148,7 @@ describe("Workout view - existing", () => {
                 });
             }
 
-            if (type.method === "DELETE" && url === "https://workouttracker.ca/api/1/workouts/qwerty123456/") {
+            if (type.method === "DELETE" && url === "http://localhost:8000/api/1/workouts/qwerty123456/") {
                 return Promise.resolve({
                     status: 200,
                     ok: true,
@@ -180,7 +180,7 @@ describe("Workout view - existing", () => {
 
         // @ts-ignore
         global.fetch = vi.fn((url, type) => {
-            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/workouts/qwerty123456/") {
+            if (type.method === "GET" && url === "http://localhost:8000/api/1/workouts/qwerty123456/") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve({
@@ -193,7 +193,7 @@ describe("Workout view - existing", () => {
                 });
             }
 
-            if (type.method === "PATCH" && url === "https://workouttracker.ca/api/1/workouts/qwerty123456/") {
+            if (type.method === "PATCH" && url === "http://localhost:8000/api/1/workouts/qwerty123456/") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve({

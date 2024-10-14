@@ -29,7 +29,7 @@ describe("Search view", () => {
 
         // @ts-ignore
         global.fetch = vi.fn((url) => {
-            if (url === "https://workouttracker.ca/api/1/records/search/?q=squat") {
+            if (url === "http://localhost:8000/api/api/1/records/search/?q=squat") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve([
@@ -44,7 +44,7 @@ describe("Search view", () => {
                     ok: true,
                 });
             }
-            if (url === "https://workouttracker.ca/api/1/workouts/search/?q=squat") {
+            if (url === "http://localhost:8000/api/api/1/workouts/search/?q=squat") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve([
