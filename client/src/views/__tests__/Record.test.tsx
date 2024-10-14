@@ -86,7 +86,7 @@ describe("Record view - existing", () => {
 
         // @ts-ignore
         global.fetch = vi.fn((url, type) => {
-            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+            if (type.method === "GET" && url === "http://localhost:8000/api/1/records/qwerty123456/") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve({
@@ -100,7 +100,7 @@ describe("Record view - existing", () => {
                 });
             }
 
-            if (url === "https://workouttracker.ca/api/records/event-list/") {
+            if (url === "http://localhost:8000/api/records/event-list/") {
                 return Promise.resolve({
                     json: () => Promise.resolve(recordList),
                     status: 200,
@@ -130,13 +130,13 @@ describe("Record view - existing", () => {
 
         // @ts-ignore
         global.fetch = vi.fn((url, type) => {
-            if (type.method === "DELETE" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+            if (type.method === "DELETE" && url === "http://localhost:8000/api/1/records/qwerty123456/") {
                 return Promise.resolve({
                     status: 200,
                     ok: true,
                 });
             }
-            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+            if (type.method === "GET" && url === "http://localhost:8000/api/1/records/qwerty123456/") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve({
@@ -149,7 +149,7 @@ describe("Record view - existing", () => {
                     ok: true,
                 });
             }
-            if (url === "https://workouttracker.ca/api/records/event-list/") {
+            if (url === "http://localhost:8000/api/records/event-list/") {
                 return Promise.resolve({
                     json: () => Promise.resolve(recordList),
                     status: 200,
@@ -184,7 +184,7 @@ describe("Record view - existing", () => {
 
         // @ts-ignore
         global.fetch = vi.fn((url, type) => {
-            if (type.method === "PATCH" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+            if (type.method === "PATCH" && url === "http://localhost:8000/api/1/records/qwerty123456/") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve({
@@ -197,7 +197,7 @@ describe("Record view - existing", () => {
                     ok: true,
                 });
             }
-            if (type.method === "GET" && url === "https://workouttracker.ca/api/1/records/qwerty123456/") {
+            if (type.method === "GET" && url === "http://localhost:8000/api/1/records/qwerty123456/") {
                 return Promise.resolve({
                     json: () =>
                         Promise.resolve({
@@ -210,7 +210,7 @@ describe("Record view - existing", () => {
                     ok: true,
                 });
             }
-            if (url === "https://workouttracker.ca/api/records/event-list/") {
+            if (url === "http://localhost:8000/api/records/event-list/") {
                 return Promise.resolve({
                     json: () => Promise.resolve(recordList),
                     status: 200,

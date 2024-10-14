@@ -1,8 +1,9 @@
 services:
-    web:
+    server:
         build: .
-        container_name: workout-tracker-web
-        command: "${SERVER_RUN_COMMAND:-gunicorn config.wsgi -b 0.0.0.0:8000}"
+        container_name: workout-tracker-server
+        restart: always
+        command: "${SERVER_RUN_COMMAND}"
         volumes:
             - .:/server_src
         ports:
@@ -13,6 +14,7 @@ services:
     db:
         image: postgres:11
         container_name: workout-tracker-db
+        restart: always
         ports:
             - "5432:5432"
         environment:
